@@ -154,6 +154,22 @@ test("chooses the question with the highest expected information gain", () => {
   assert.equal(engine.nextQuestion().id, "split");
 });
 
+test("ships a substantially larger useful question catalogue", () => {
+  assert.ok(questions.length >= 135);
+  for (const id of ["entertainment", "journalist", "composer", "gamer", "boxer", "physicist", "architect", "screenwriter", "scienceFiction"]) {
+    assert.ok(questions.some((question) => question.id === id), `missing ${id}`);
+  }
+});
+
+test("prefers a known near-half split over a weaker unbalanced question", () => {
+  const localQuestions = [{ id:"rare" }, { id:"balanced" }];
+  const localCharacters = Array.from({ length:10 }, (_, index) => ({
+    id:String(index), name:String(index), attributes:{ rare:index === 0 ? 1 : -1, balanced:index < 5 ? 1 : -1 }
+  }));
+  const engine = new GuessEngine(localCharacters, localQuestions);
+  assert.equal(engine.nextQuestion().id, "balanced");
+});
+
 test("skips dependent questions after a clear no", () => {
   const engine = new GuessEngine(characters, questions);
   engine.answer("athlete", -1);

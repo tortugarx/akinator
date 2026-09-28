@@ -1,23 +1,37 @@
+import { enrichCharacterAttributes } from "./attribute-enrichment.js";
+
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]);
 const exactCountries = new Set(["american", "british", "german", "french", "spanish", "italian", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese"]);
+const regionQuestions = new Set(["european", "latinAmerican", "asian", "african"]);
 const nonEuropeanCountries = new Set(["american", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese"]);
 const topicBranches = new Map([
-  ["musician", new Set(["musicGroup", "singer", "rapper"])],
-  ["athlete", new Set(["football", "basketball", "tennis", "motorsport"])],
-  ["politician", new Set(["nationalLeader", "usPresident", "activist", "military", "militaryLeader", "royalty"])],
+  ["entertainment", new Set(["actor", "musician", "comedian", "dancer", "model", "director", "producer", "presenter"])],
+  ["musician", new Set(["musicGroup", "singer", "rapper", "composer", "dj", "instrumentalist"])],
+  ["athlete", new Set(["football", "basketball", "tennis", "motorsport", "boxer", "wrestler", "racingDriver", "coach", "golfer", "cyclist", "swimmer", "runner", "baseball", "iceHockey", "gymnast", "esports"])],
+  ["politician", new Set(["nationalLeader", "usPresident", "activist", "military", "militaryLeader", "royalty", "ministerDiplomat"])],
   ["military", new Set(["militaryLeader"])],
-  ["actor", new Set(["movie", "tv", "comedian", "model", "adultCreator"])],
-  ["creator", new Set(["internet", "adultCreator"])],
-  ["scientist", new Set(["space", "electric"])],
-  ["artist", new Set()], ["entrepreneur", new Set(["internet"])], ["writer", new Set(["book"])],
+  ["actor", new Set(["movie", "tv", "comedian", "model", "adultCreator", "voiceActor"])],
+  ["creator", new Set(["internet", "adultCreator", "gamer", "esports"])],
+  ["scientist", new Set(["space", "electric", "physicist", "mathematician", "chemist", "biologist", "astronaut", "engineer", "inventor", "academic"])],
+  ["artist", new Set(["photographer", "architect"])], ["entrepreneur", new Set(["internet", "industrialist"])], ["writer", new Set(["book", "poet", "screenwriter", "philosopher"])],
   ["comedian", new Set()], ["model", new Set()], ["director", new Set(["movie"])], ["internet", new Set()],
-  ["adultCreator", new Set()], ["industrialist", new Set()], ["medical", new Set()], ["legal", new Set()], ["religious", new Set()]
+  ["adultCreator", new Set()], ["industrialist", new Set()], ["medical", new Set()], ["legal", new Set()], ["religious", new Set()],
+  ["journalist", new Set(["presenter"])], ["producer", new Set()], ["dancer", new Set()], ["chef", new Set()]
 ]);
+
+function topicDescendants(root, found = new Set()) {
+  for (const child of topicBranches.get(root) || []) {
+    if (found.has(child)) continue;
+    found.add(child);
+    topicDescendants(child, found);
+  }
+  return found;
+}
 
 export class GuessEngine {
   constructor(characters, questions, model = {}) {
-    this.characters = [...characters];
+    this.characters = characters.map((item) => enrichCharacterAttributes(item));
     this.questions = questions;
     this.model = model;
     this.charactersById = new Map(this.characters.map((item) => [this.key(item), item]));
@@ -46,6 +60,7 @@ export class GuessEngine {
   }
 
   addCharacter(character) {
+    enrichCharacterAttributes(character);
     const existing = this.charactersById.get(this.key(character)) || this.charactersByName.get(this.nameKey(character));
     if (existing) {
       existing.image ||= character.image;
@@ -97,9 +112,9 @@ export class GuessEngine {
     for (const [answeredId, answer] of this.responses) {
       if (answer >= .5 && this.model.exclusions?.[answeredId]?.includes(id)) return false;
     }
-    const publicQuestions = new Set(["historical", "musician", "musicGroup", "singer", "rapper", "athlete", "football", "basketball", "tennis", "motorsport", "creator", "comedian", "model", "director", "politician", "nationalLeader", "usPresident", "activist", "military", "militaryLeader", "adultCreator", "industrialist", "medical", "legal", "religious", "scientist", "artist", "entrepreneur", "internet", "royalty", "american", "european", "british", "german", "french", "spanish", "italian", "canadian", "latinAmerican", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "fictional", "magic", "superhero", "masked", "animated", "anime", "game", "space", "detective", "villain", "powers", "electric", "nonhuman", "movie", "tv", "book", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "glasses", "hat", "blonde", "actor", "writer", "animal", "robot", "red"]);
-    const fictionalOnly = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist"]);
-    const realOnly = new Set(["alive", "historical", ...exactCountries, "european", "latinAmerican", "scientist", "artist", "entrepreneur", "internet", "nationalLeader", "usPresident", "activist", "military", "militaryLeader", "adultCreator", "industrialist", "medical", "legal", "religious"]);
+    const publicQuestions = new Set(this.questions.map(({ id:questionId }) => questionId).filter((questionId) => !relationshipQuestions.has(questionId)));
+    const fictionalOnly = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "comic", "scienceFiction", "fantasy", "alien", "monster", "harryPotter", "lordOfTheRings", "mario", "sonic"]);
+    const realOnly = new Set(["alive", "historical", ...exactCountries, ...regionQuestions, "scientist", "artist", "entrepreneur", "internet", "nationalLeader", "usPresident", "activist", "military", "militaryLeader", "adultCreator", "industrialist", "medical", "legal", "religious", "journalist", "presenter", "producer", "dancer", "composer", "dj", "instrumentalist", "gamer", "esports", "boxer", "wrestler", "racingDriver", "coach", "golfer", "cyclist", "swimmer", "runner", "baseball", "iceHockey", "gymnast", "physicist", "mathematician", "chemist", "biologist", "astronaut", "engineer", "inventor", "photographer", "architect", "chef", "poet", "philosopher", "screenwriter", "voiceActor", "academic", "ministerDiplomat"]);
 
     if (id === "fictional" && (this.answeredYes("real") || this.answeredNo("real"))) return false;
     if (id === "real" && (this.answeredYes("fictional") || this.answeredNo("fictional"))) return false;
@@ -116,13 +131,13 @@ export class GuessEngine {
     if (this.answeredYes("schoolWork") && ["romantic", "partner", "friend"].includes(id)) return false;
     const familyRoles = ["parent", "sibling", "grandparent", "yourChild"];
     if (familyRoles.includes(id) && familyRoles.some((role) => role !== id && this.answeredYes(role))) return false;
-    for (const [root, children] of topicBranches) {
-      if (children.has(id) && this.answeredNo(root)) return false;
+    for (const [root] of topicBranches) {
+      if (topicDescendants(root).has(id) && this.answeredNo(root)) return false;
     }
     const activeTopics = [...topicBranches].filter(([root]) => this.answeredYes(root));
     if (realPerson && activeTopics.length) {
-      const allowed = new Set(activeTopics.flatMap(([root, children]) => [root, ...children]));
-      const universal = new Set(["real", "personallyKnown", "alive", "female", "historical", ...exactCountries, "european", "latinAmerican"]);
+      const allowed = new Set(activeTopics.flatMap(([root]) => [root, ...topicDescendants(root)]));
+      const universal = new Set(["real", "personallyKnown", "alive", "female", "historical", ...exactCountries, ...regionQuestions]);
       if (!allowed.has(id) && !universal.has(id)) return false;
     }
     if (id === "musicGroup" && this.answeredNo("musician")) return false;
@@ -136,9 +151,11 @@ export class GuessEngine {
     if (id === "robot" && this.answeredYes("animal")) return false;
 
     const confirmedCountry = [...exactCountries].find((country) => this.answeredYes(country));
-    if (confirmedCountry && ((exactCountries.has(id) && id !== confirmedCountry) || id === "european" || id === "latinAmerican")) return false;
-    if (this.answeredYes("european") && (nonEuropeanCountries.has(id) || id === "latinAmerican")) return false;
-    if (this.answeredYes("latinAmerican") && (id === "european" || (exactCountries.has(id) && id !== "brazilian"))) return false;
+    if (confirmedCountry && ((exactCountries.has(id) && id !== confirmedCountry) || regionQuestions.has(id))) return false;
+    if (this.answeredYes("european") && (nonEuropeanCountries.has(id) || [...regionQuestions].some((region) => region !== "european" && region === id))) return false;
+    if (this.answeredYes("latinAmerican") && (["european", "asian", "african"].includes(id) || (exactCountries.has(id) && id !== "brazilian"))) return false;
+    if (this.answeredYes("asian") && (["european", "latinAmerican", "african"].includes(id) || ["american", "british", "german", "french", "spanish", "italian", "canadian", "brazilian", "australian"].includes(id))) return false;
+    if (this.answeredYes("african") && (["european", "latinAmerican", "asian"].includes(id) || exactCountries.has(id))) return false;
     const universes = ["marvel", "dc", "disney", "starWars", "pokemon"];
     if (universes.includes(id) && universes.some((universe) => universe !== id && this.answeredYes(universe))) return false;
 
@@ -162,10 +179,14 @@ export class GuessEngine {
     const currentEntropy = -candidates.reduce((sum, { probability }) => sum + probability * Math.log(Math.max(probability, 1e-12)), 0);
     let best = null;
     let bestValue = 0.0001;
+    let bestBalanced = null;
+    let bestBalancedValue = 0.0001;
     for (const question of unasked) {
       let yesMass = 0;
+      let knownMass = 0;
       for (const { item, probability } of candidates) {
         const expected = item.attributes[question.id] ?? 0;
+        if (Math.abs(expected) >= .5) knownMass += probability;
         const yesLikelihood = expected >= .5 ? .88 : expected <= -.5 ? .12 : .5;
         yesMass += probability * yesLikelihood;
       }
@@ -181,9 +202,18 @@ export class GuessEngine {
         yesEntropy -= yesPosterior * Math.log(Math.max(yesPosterior, 1e-12));
         noEntropy -= noPosterior * Math.log(Math.max(noPosterior, 1e-12));
       }
-      const value = (currentEntropy - yesMass * yesEntropy - noMass * noEntropy) * (this.model.weights?.[question.id] || 1);
+      const gain = currentEntropy - yesMass * yesEntropy - noMass * noEntropy;
+      const splitQuality = 1 - Math.abs(yesMass - noMass);
+      const value = gain * (this.model.weights?.[question.id] || 1) * (.72 + .28 * splitQuality);
       if (value > bestValue) { best = question; bestValue = value; }
+      // Prefer a genuine near-half split when enough of the remaining probability
+      // mass has a known trait. Fall back to maximum information gain otherwise.
+      if (knownMass >= .55 && Math.max(yesMass, noMass) <= .62 && value > bestBalancedValue) {
+        bestBalanced = question;
+        bestBalancedValue = value;
+      }
     }
+    best = bestBalanced || best;
     if (!best) return null;
     this.asked.add(best.id);
     return best;

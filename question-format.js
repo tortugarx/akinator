@@ -1,6 +1,6 @@
 const highlightTerms = {
-  de:["Inhalte für Erwachsene", "Schauspiel", "Wissenschaft", "Basketball", "Motorsport", "Produktion", "Fabriken", "Industrie", "Fußball", "Internet", "Politik", "Militär", "Medizin", "Gerichte", "religiös", "Musik", "Tennis", "Film", "Recht", "Magie"],
-  en:["adult content", "social media", "manufacturing", "acting", "science", "basketball", "motorsport", "industry", "football", "internet", "politics", "military", "medicine", "courts", "religious", "music", "tennis", "movies", "law", "magic"]
+  de:["Inhalte für Erwachsene", "Science-Fiction", "Unterhaltung", "Journalismus", "Ingenieurwesen", "Schauspiel", "Wissenschaft", "Basketball", "Motorsport", "Produktion", "Fabriken", "Industrie", "Fußball", "E-Sport", "Internet", "Politik", "Militär", "Medizin", "Gerichte", "religiös", "Musik", "Tennis", "Gaming", "Film", "Recht", "Magie"],
+  en:["adult content", "science fiction", "entertainment", "social media", "journalism", "engineering", "manufacturing", "acting", "science", "basketball", "motorsport", "industry", "football", "esports", "internet", "politics", "military", "medicine", "courts", "religious", "gaming", "music", "tennis", "movies", "law", "magic"]
 };
 
 export function contextualQuestionText(question, language, isPerson) {

@@ -2,9 +2,9 @@
 
 Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine kuratierte Wissensbasis mit einer vorab erzeugten Wikidata-Datenbank, einer lokalen Active-Learning-Engine und einem Lernmodus, der bestätigte Figuren im Browser speichert.
 
-Die ausgelieferte Version umfasst mehr als 17.500 eindeutige Personen, Figuren und private Rollen. Über 14.000 Wiki-Einträge besitzen ein Porträt aus Wikimedia Commons. Für jede Antwort berechnet die Engine die neue Kandidatenverteilung und wählt anschließend die Frage mit der größten erwarteten Entropiereduktion. Bestätigte Themen aktivieren passende Unterfragen und sperren sachfremde Themen. Buchstaben- und Geburtsjahrfragen werden nicht verwendet.
+Die ausgelieferte Version umfasst mehr als 17.500 eindeutige Personen, Figuren und private Rollen. Über 14.000 Wiki-Einträge besitzen ein Porträt aus Wikimedia Commons. Der Katalog enthält 139 Fragen. Für jede Antwort berechnet die Engine die neue Kandidatenverteilung und bevorzugt belastbare Fragen, die sie möglichst nahe an 50/50 teilen; andernfalls wählt sie die größte erwartete Entropiereduktion. Bestätigte Themen aktivieren passende Unterfragen und sperren sachfremde Themen. Buchstaben- und Geburtsjahrfragen werden nicht verwendet.
 
-Die Wissensbasis unterscheidet neben Unterhaltung, Politik, Sport und Wissenschaft auch Militär, Erwachsenen-Inhalte, Industrie/Fertigung, Medizin, Recht und Religion. Zentrale Themenwörter werden in Fragen optisch hervorgehoben.
+Die Wissensbasis unterscheidet neben Unterhaltung, Politik, Sport und Wissenschaft auch Journalismus, Produktion, Gaming, zahlreiche einzelne Sportarten und Wissenschaftsgebiete, Militär, Erwachsenen-Inhalte, Industrie/Fertigung, Medizin, Recht und Religion. Zusätzliche Fragen grenzen fiktive Figuren nach Genre, Art und Universum ein. Zentrale Themenwörter werden in Fragen optisch hervorgehoben.
 
 ## Lokal starten
 

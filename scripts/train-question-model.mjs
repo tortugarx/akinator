@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { questions, characters as curated } from "../data.js";
+import { enrichCharacterAttributes } from "../attribute-enrichment.js";
 
 const database = JSON.parse(await readFile(new URL("../wikidata-people.json", import.meta.url), "utf8"));
 const byName = new Map(curated.map((item) => [item.name.toLocaleLowerCase(), { ...item, attributes:{ ...item.attributes } }]));
@@ -9,7 +10,7 @@ for (const item of database.characters) {
   if (!existing) byName.set(key, item);
   else for (const [id, value] of Object.entries(item.attributes || {})) if (value === 1) existing.attributes[id] = 1;
 }
-const characters = [...byName.values()];
+const characters = [...byName.values()].map(enrichCharacterAttributes);
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const weights = {};
 for (const { id } of questions) {
@@ -21,7 +22,7 @@ for (const { id } of questions) {
   weights[id] = Number(clamp(.7 + .6 * Math.sqrt(coverage) * (.5 + .5 * balance), .7, 1.3).toFixed(4));
 }
 
-const geography = ["american", "european", "british", "german", "french", "spanish", "italian", "canadian", "latinAmerican", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese"];
+const geography = ["american", "european", "british", "german", "french", "spanish", "italian", "canadian", "latinAmerican", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "asian", "african"];
 const exclusions = {};
 for (const answered of geography) {
   const matching = characters.filter((item) => item.attributes[answered] === 1);

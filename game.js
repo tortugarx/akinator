@@ -1,10 +1,10 @@
-import { characters, questions } from "./data.js?v=13";
-import { GuessEngine } from "./engine.js?v=13";
+import { characters, questions } from "./data.js?v=14";
+import { GuessEngine } from "./engine.js?v=14";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=13";
-import { questionModel } from "./question-model.js?v=13";
-import { playCount, recordConfirmedPlay } from "./play-stats.js?v=13";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=13";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=14";
+import { questionModel } from "./question-model.js?v=14";
+import { playCount, recordConfirmedPlay } from "./play-stats.js?v=14";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=14";
 
 const translations = {
   en: {
@@ -18,7 +18,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 13;
+const buildVersion = 14;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
