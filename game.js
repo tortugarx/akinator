@@ -1,7 +1,8 @@
-import { characters, questions } from "./data.js?v=11";
-import { GuessEngine } from "./engine.js?v=11";
+import { characters, questions } from "./data.js?v=12";
+import { GuessEngine } from "./engine.js?v=12";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=11";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=12";
+import { questionModel } from "./question-model.js?v=12";
 
 const translations = {
   en: {
@@ -15,13 +16,13 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 11;
+const buildVersion = 12;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
 };
 const learnedCharacters = readLearned();
-const engine = new GuessEngine([...characters, ...learnedCharacters], questions);
+const engine = new GuessEngine([...characters, ...learnedCharacters], questions, questionModel);
 let language = "de";
 let currentQuestion = null;
 let currentGuess = null;
@@ -30,6 +31,20 @@ let acceptingAnswer = true;
 
 function showScreen(id) {
   screens.forEach((screen) => screen.classList.toggle("active", screen.id === id));
+}
+
+function questionText(question) {
+  const text = question[language];
+  if (!engine.answeredYes("real") && !engine.answeredNo("fictional")) return text;
+  if (language === "de") return text
+    .replaceAll("deine Figur oder Person", "diese Person")
+    .replaceAll("deine Figur", "diese Person")
+    .replaceAll("deiner Figur", "dieser Person")
+    .replaceAll("Figur", "Person");
+  return text
+    .replaceAll("your character or person", "this person")
+    .replaceAll("your character", "this person")
+    .replaceAll("character", "person");
 }
 
 function setLanguage(next) {
@@ -41,7 +56,7 @@ function setLanguage(next) {
     if (typeof value === "string") node.innerHTML = value;
   });
   $("#character-input").placeholder = language === "de" ? "z. B. Pippi Langstrumpf" : "e.g. Pippi Longstocking";
-  if (currentQuestion) $("#question-text").textContent = currentQuestion[language];
+  if (currentQuestion) $("#question-text").textContent = questionText(currentQuestion);
   updateQuestionMeta();
 }
 
@@ -75,7 +90,7 @@ function askNext() {
   currentQuestion = engine.nextQuestion();
   acceptingAnswer = true;
   if (!currentQuestion) return engine.probabilities().length ? revealGuess() : showLearn();
-  $("#question-text").textContent = currentQuestion[language];
+  $("#question-text").textContent = questionText(currentQuestion);
   updateQuestionMeta();
   $("#question-text").animate?.([{ opacity:0, transform:"translateY(8px)" }, { opacity:1, transform:"none" }], { duration:220 });
 }

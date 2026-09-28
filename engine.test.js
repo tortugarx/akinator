@@ -116,6 +116,9 @@ test("a specific country suppresses contradictory region questions", () => {
   engine.answer("german", 1);
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "american")), false);
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "canadian")), false);
+  for (const id of ["american", "british", "french", "spanish", "italian", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "european", "latinAmerican"]) {
+    assert.equal(engine.isRelevant(questions.find((question) => question.id === id)), false, `kept contradictory geography ${id}`);
+  }
 });
 
 test("treats probable answers as decisions for inverse questions", () => {

@@ -2,7 +2,7 @@
 
 Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine kuratierte Wissensbasis mit einer vorab erzeugten Wikidata-Datenbank, einer lokalen Active-Learning-Engine und einem Lernmodus, der bestätigte Figuren im Browser speichert.
 
-Die ausgelieferte Version umfasst mehr als 8.200 eindeutige Personen, Figuren und private Rollen. Über 7.200 Wiki-Einträge besitzen ein Porträt aus Wikimedia Commons. Für jede Antwort berechnet die Engine die neue Kandidatenverteilung und wählt anschließend die Frage mit der größten erwarteten Entropiereduktion. Bestätigte Themen aktivieren passende Unterfragen und sperren sachfremde Themen. Buchstaben- und Geburtsjahrfragen werden nicht verwendet.
+Die ausgelieferte Version umfasst mehr als 17.500 eindeutige Personen, Figuren und private Rollen. Über 14.000 Wiki-Einträge besitzen ein Porträt aus Wikimedia Commons. Für jede Antwort berechnet die Engine die neue Kandidatenverteilung und wählt anschließend die Frage mit der größten erwarteten Entropiereduktion. Bestätigte Themen aktivieren passende Unterfragen und sperren sachfremde Themen. Buchstaben- und Geburtsjahrfragen werden nicht verwendet.
 
 ## Lokal starten
 
@@ -26,7 +26,13 @@ Die Tests prüfen unter anderem den früheren Abbruch nach sechs Fragen sowie ei
 npm run build:wikidata
 ```
 
-Der Generator wertet populäre deutsch- und englischsprachige Wikipedia-Seiten aus, löst die zugehörigen Wikidata-Entitäten auf und schreibt eine statische `wikidata-people.json`. So benötigt das veröffentlichte Spiel keine langsamen SPARQL-Abfragen. Wikidata-Daten werden unter CC0 bereitgestellt; Bilder verbleiben auf Wikimedia Commons und sind über den jeweiligen Wikidata-Quellenlink erreichbar.
+Der Generator wertet populäre Seiten aus zwölf Wikipedia-Sprachräumen aus, löst die zugehörigen Wikidata-Entitäten auf und schreibt eine statische `wikidata-people.json`. Anschließend trainiert er Fragengewichte und geografische Ausschlussbeziehungen in `question-model.js`. So benötigt das veröffentlichte Spiel keine langsamen SPARQL-Abfragen. Wikidata-Daten werden unter CC0 bereitgestellt; Bilder verbleiben auf Wikimedia Commons und sind über den jeweiligen Wikidata-Quellenlink erreichbar.
+
+Das Modell kann ohne erneuten Datenimport separat trainiert werden:
+
+```bash
+npm run train:model
+```
 
 ## CrazyGames-Paket bauen
 

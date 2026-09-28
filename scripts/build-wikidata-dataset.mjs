@@ -10,16 +10,22 @@ async function getJson(url, retries = 6) {
   for (let attempt = 0; attempt < retries; attempt += 1) {
     const response = await fetch(url, { headers:{ "User-Agent":agent } });
     if (response.ok) return response.json();
+    if (response.status === 414) throw new Error(`414 from ${url}`);
     if (attempt === retries - 1) throw new Error(`${response.status} from ${url}`);
     await pause(response.status === 429 ? 3000 * (attempt + 1) : 700 * (attempt + 1));
   }
 }
 
 const popularity = new Map();
-const titlesByLanguage = new Map([["en", new Set()], ["de", new Set()]]);
-const years = [2022, 2023, 2024, 2025];
-for (const language of ["en", "de"]) {
-  for (const year of years) {
+const sourceLanguages = new Map([
+  ["en", [2022, 2023, 2024, 2025]], ["de", [2022, 2023, 2024, 2025]],
+  ["es", [2024, 2025]], ["fr", [2024, 2025]], ["pt", [2024, 2025]], ["it", [2024, 2025]],
+  ["pl", [2024, 2025]], ["tr", [2024, 2025]], ["ja", [2024, 2025]], ["ko", [2024, 2025]],
+  ["id", [2024, 2025]], ["hi", [2024, 2025]]
+]);
+const titlesByLanguage = new Map([...sourceLanguages].map(([language]) => [language, new Set()]));
+for (const [language, languageYears] of sourceLanguages) {
+  for (const year of languageYears) {
     for (let month = 1; month <= 12; month += 1) {
       const stamp = `${year}/${String(month).padStart(2, "0")}/all-days`;
       const url = `https://wikimedia.org/api/rest_v1/metrics/pageviews/top/${language}.wikipedia/all-access/${stamp}`;
@@ -41,20 +47,42 @@ for (const language of ["en", "de"]) {
 process.stdout.write("\n");
 
 const qidScores = new Map();
-for (const [language, titles] of titlesByLanguage) {
-  for (const batch of chunks([...titles], 50)) {
-    const params = new URLSearchParams({ action:"query", format:"json", origin:"*", redirects:"1", prop:"pageprops", ppprop:"wikibase_item", titles:batch.join("|") });
-    const data = await getJson(`https://${language}.wikipedia.org/w/api.php?${params}`);
-    for (const page of Object.values(data.query?.pages || {})) {
-      const qid = page.pageprops?.wikibase_item;
-      if (!qid) continue;
-      const originalTitle = page.title.replaceAll(" ", "_");
-      const score = popularity.get(`${language}:${originalTitle}`) || 1;
-      qidScores.set(qid, Math.max(qidScores.get(qid) || 0, score));
+const pageTasks = [...titlesByLanguage].flatMap(([language, titles]) => chunks([...titles], 50).map((batch) => ({ language, batch })));
+const totalPages = pageTasks.reduce((sum, task) => sum + task.batch.length, 0);
+let pageCursor = 0;
+let mappedPages = 0;
+async function mapPageBatch(language, batch) {
+  const params = new URLSearchParams({ action:"query", format:"json", origin:"*", redirects:"1", prop:"pageprops", ppprop:"wikibase_item", titles:batch.join("|") });
+  let data;
+  try {
+    data = await getJson(`https://${language}.wikipedia.org/w/api.php?${params}`);
+  } catch (error) {
+    if (error.message.startsWith("414") && batch.length > 1) {
+      const middle = Math.ceil(batch.length / 2);
+      await mapPageBatch(language, batch.slice(0, middle));
+      await mapPageBatch(language, batch.slice(middle));
+      return;
     }
-    await pause(120);
+    throw error;
+  }
+  for (const page of Object.values(data.query?.pages || {})) {
+    const qid = page.pageprops?.wikibase_item;
+    if (!qid) continue;
+    const originalTitle = page.title.replaceAll(" ", "_");
+    const score = popularity.get(`${language}:${originalTitle}`) || 1;
+    qidScores.set(qid, Math.max(qidScores.get(qid) || 0, score));
+  }
+  mappedPages += batch.length;
+  process.stdout.write(`\rMapped Wikipedia pages: ${mappedPages}/${totalPages}`);
+}
+async function mapPageWorker() {
+  while (pageCursor < pageTasks.length) {
+    const { language, batch } = pageTasks[pageCursor++];
+    await mapPageBatch(language, batch);
   }
 }
+await Promise.all(Array.from({ length:8 }, mapPageWorker));
+process.stdout.write("\n");
 
 const occupationMap = new Map([
   ["Q33999","actor"], ["Q177220","singer"], ["Q639669","musician"], ["Q2252262","rapper"],
@@ -89,8 +117,8 @@ function convert(entity, score) {
       const trait = occupationMap.get(occupation);
       if (trait) attributes[trait] = 1;
     }
-    if (attributes.singer || attributes.rapper) attributes.musician = 1;
-    if (attributes.football || attributes.basketball || attributes.tennis) attributes.athlete = 1;
+    if (attributes.singer === 1 || attributes.rapper === 1) attributes.musician = 1;
+    if (attributes.football === 1 || attributes.basketball === 1 || attributes.tennis === 1) attributes.athlete = 1;
     const text = `${name} ${description}`.toLowerCase();
     const infer = (trait, pattern) => { if (pattern.test(text)) attributes[trait] = 1; };
     infer("actor", /actor|actress|schauspiel/);
@@ -108,7 +136,7 @@ function convert(entity, score) {
     infer("scientist", /scientist|physicist|chemist|biologist|mathematician|wissenschaftler|physiker|chemiker|biologe|mathematiker/);
     infer("artist", /painter|visual artist|sculptor|maler|künstler|bildhauer/);
     infer("entrepreneur", /entrepreneur|businessman|businesswoman|unternehmer|unternehmerin/);
-    infer("creator", /youtuber|streamer|influencer|content creator|tiktoker/);
+    infer("creator", /youtuber|streamer|influencer|content creator|social media personality|webvideoproduzent|livestreamer|tiktoker/);
     infer("comedian", /comedian|komiker|komikerin/);
     infer("model", /fashion model|fotomodell/);
     infer("director", /film director|filmmaker|regisseur|regisseurin/);
@@ -120,13 +148,22 @@ function convert(entity, score) {
     if (/\bfilm\b|movie/.test(text) && attributes.actor === 1) attributes.movie = 1;
     if (/television|tv |fernseh/.test(text)) attributes.tv = 1;
     const countries = claimIds(entity,"P27");
+    for (const trait of ["american","british","german","french","spanish","italian","canadian","latinAmerican","brazilian","australian","indian","japanese","southKorean","chinese"]) attributes[trait] = -1;
     if (countries.includes("Q30")) attributes.american = 1;
     if (countries.includes("Q145")) attributes.british = 1;
     if (countries.includes("Q183")) attributes.german = 1;
+    if (countries.includes("Q142")) attributes.french = 1;
+    if (countries.includes("Q29")) attributes.spanish = 1;
+    if (countries.includes("Q38")) attributes.italian = 1;
     if (countries.includes("Q16")) attributes.canadian = 1;
     if (countries.includes("Q408")) attributes.australian = 1;
+    if (countries.includes("Q668")) attributes.indian = 1;
+    if (countries.includes("Q17")) attributes.japanese = 1;
+    if (countries.includes("Q884")) attributes.southKorean = 1;
+    if (countries.includes("Q148")) attributes.chinese = 1;
     const latinAmericanCountries = new Set(["Q155","Q414","Q96","Q298","Q739","Q77","Q419","Q736","Q717","Q750","Q733"]);
     if (countries.some((country) => latinAmericanCountries.has(country))) attributes.latinAmerican = 1;
+    if (countries.includes("Q155")) attributes.brazilian = 1;
     if (countries.some((country) => europeanCountries.has(country))) attributes.european = 1;
     if (countries.some((country) => asianCountries.has(country))) attributes.asian = 1;
     const birth = claimValue(entity,"P569")?.time;
@@ -151,7 +188,8 @@ function convert(entity, score) {
   return { id:`wiki-${entity.id.toLowerCase()}`, name, description, icon:isHuman ? "👤" : "✨", image, source:`https://www.wikidata.org/wiki/${entity.id}`, popularity:score, attributes };
 }
 
-const sortedQids = [...qidScores].sort((a,b) => b[1] - a[1]).slice(0, 15000);
+for (const qid of ["Q61053", "Q123118096", "Q128567830"]) qidScores.set(qid, Number.MAX_SAFE_INTEGER);
+const sortedQids = [...qidScores].sort((a,b) => b[1] - a[1]).slice(0, 30000);
 const records = [];
 const entityBatches = chunks(sortedQids, 50);
 let cursor = 0;
