@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#100b24" />
+    <meta name="description" content="Mindseer is an adaptive character guessing game." />
+    <title>Mindseer — The Character Guessing Game</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
+  </head>
+  <body>
+    <main class="game-shell" aria-live="polite">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Mindseer home">
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <span>MINDSEER</span>
+        </a>
+        <div class="top-actions">
+          <button id="sound-button" class="icon-button" type="button" aria-label="Toggle sound">♪</button>
+          <button id="language-button" class="language-button" type="button" aria-label="Change language">EN</button>
+        </div>
+      </header>
+
+      <section id="loading-screen" class="screen active centered" aria-label="Loading">
+        <div class="loader-orb"><span></span></div>
+        <p class="eyebrow">READING THE STARS</p>
+      </section>
+
+      <section id="start-screen" class="screen centered">
+        <div class="stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="oracle" aria-hidden="true">
+          <div class="halo halo-one"></div>
+          <div class="halo halo-two"></div>
+          <div class="orb"><span class="orb-glint"></span><span class="orb-symbol">?</span></div>
+          <div class="pedestal"></div>
+        </div>
+        <p class="eyebrow" data-i18n="welcomeEyebrow">THE MIND-READING GAME</p>
+        <h1 data-i18n="welcomeTitle">Think of a character.<br /><em>I’ll find them.</em></h1>
+        <p class="lead" data-i18n="welcomeText">Real or fictional, famous or mysterious. Keep your character secret and answer honestly.</p>
+        <button id="start-button" class="primary-button" type="button">
+          <span data-i18n="start">Begin the ritual</span><b aria-hidden="true">→</b>
+        </button>
+        <p class="hint" data-i18n="welcomeHint">No typing. No tricks. Just questions.</p>
+      </section>
+
+      <section id="question-screen" class="screen question-layout">
+        <div class="progress-row">
+          <span id="question-label">QUESTION 1</span>
+          <div class="progress-track"><span id="progress-bar"></span></div>
+          <span id="focus-label">FOCUSING</span>
+        </div>
+        <div class="mini-oracle" aria-hidden="true"><span>?</span></div>
+        <div class="question-card">
+          <p class="eyebrow" data-i18n="oracleAsks">THE ORACLE ASKS</p>
+          <h2 id="question-text">Is your character real?</h2>
+        </div>
+        <div id="answer-grid" class="answer-grid">
+          <button type="button" data-answer="1"><span class="answer-icon yes">✓</span><span data-i18n="yes">Yes</span><small data-i18n="yesHint">Definitely</small></button>
+          <button type="button" data-answer="0.55"><span class="answer-icon probably">↗</span><span data-i18n="probably">Probably</span><small data-i18n="probablyHint">I think so</small></button>
+          <button type="button" data-answer="0"><span class="answer-icon unknown">?</span><span data-i18n="unknown">Don't know</span><small data-i18n="unknownHint">Not sure</small></button>
+          <button type="button" data-answer="-0.55"><span class="answer-icon probably-not">↘</span><span data-i18n="probablyNot">Probably not</span><small data-i18n="probablyNotHint">I doubt it</small></button>
+          <button type="button" data-answer="-1"><span class="answer-icon no">×</span><span data-i18n="no">No</span><small data-i18n="noHint">Definitely not</small></button>
+        </div>
+      </section>
+
+      <section id="guess-screen" class="screen centered">
+        <p class="eyebrow" data-i18n="vision">THE VISION IS CLEAR</p>
+        <h2 data-i18n="thinkingOf">You are thinking of…</h2>
+        <div class="reveal-card">
+          <div id="guess-portrait" class="portrait" aria-hidden="true">🧙</div>
+          <div class="reveal-copy">
+            <h3 id="guess-name">Harry Potter</h3>
+            <p id="guess-description">The young wizard from Hogwarts</p>
+            <div class="confidence"><span data-i18n="confidence">Mind match</span><b id="confidence-value">92%</b></div>
+          </div>
+        </div>
+        <p class="confirm-question" data-i18n="wasRight">Did I read your mind?</p>
+        <div class="confirm-actions">
+          <button id="correct-button" class="primary-button success" type="button"><span data-i18n="correct">Yes, incredible!</span><b>✓</b></button>
+          <button id="wrong-button" class="secondary-button" type="button"><span data-i18n="wrong">No, keep trying</span></button>
+        </div>
+      </section>
+
+      <section id="result-screen" class="screen centered">
+        <div id="result-symbol" class="result-symbol">✦</div>
+        <p id="result-eyebrow" class="eyebrow">MIND READ</p>
+        <h2 id="result-title">The stars never lie.</h2>
+        <p id="result-text" class="lead">I found your character in 8 questions.</p>
+        <button id="again-button" class="primary-button" type="button"><span data-i18n="playAgain">Play again</span><b>↻</b></button>
+      </section>
+    </main>
+
+    <script type="module" src="game.js"></script>
+  </body>
+</html>
