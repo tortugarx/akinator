@@ -1,5 +1,15 @@
 export const questions = [
   { id: "real", en: "Is your character a real person?", de: "Ist deine Figur eine echte Person?" },
+  { id: "personallyKnown", en: "Do you know this person personally?", de: "Kennst du diese Person persönlich?" },
+  { id: "family", en: "Is this person part of your family?", de: "Gehört diese Person zu deiner Familie?" },
+  { id: "parent", en: "Is this person one of your parents?", de: "Ist diese Person ein Elternteil von dir?" },
+  { id: "sibling", en: "Is this person your sibling?", de: "Ist diese Person dein Bruder oder deine Schwester?" },
+  { id: "grandparent", en: "Is this person one of your grandparents?", de: "Ist diese Person ein Großelternteil von dir?" },
+  { id: "yourChild", en: "Is this person your child?", de: "Ist diese Person dein Kind?" },
+  { id: "romantic", en: "Do you have romantic feelings for this person?", de: "Hast du romantische Gefühle für diese Person?" },
+  { id: "partner", en: "Are you in a relationship with this person?", de: "Bist du mit dieser Person zusammen?" },
+  { id: "friend", en: "Is this person a friend of yours?", de: "Ist diese Person mit dir befreundet?" },
+  { id: "schoolWork", en: "Do you mainly know this person from school or work?", de: "Kennst du diese Person hauptsächlich aus Schule oder Arbeit?" },
   { id: "alive", en: "Is your character alive today?", de: "Lebt deine Figur heute noch?" },
   { id: "female", en: "Is your character female?", de: "Ist deine Figur weiblich?" },
   { id: "musician", en: "Is your character famous for making music?", de: "Ist deine Figur für Musik bekannt?" },
@@ -39,7 +49,11 @@ export const questions = [
   { id: "book", en: "Did your character first become famous through books?", de: "Wurde deine Figur zuerst durch Bücher bekannt?" },
 ];
 
-const c = (name, icon, description, attributes) => ({ id: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"), name, icon, description, attributes });
+const relationshipIds = ["personallyKnown", "family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"];
+const c = (name, icon, description, attributes) => ({
+  id: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"), name, icon, description,
+  attributes: { ...Object.fromEntries(relationshipIds.map((id) => [id, -1])), ...attributes }
+});
 export const characters = [
   c("Albert Einstein", "🧑‍🔬", "The physicist who reshaped our view of space and time", { real:1, alive:-1, female:-1, scientist:1, historical:-1, european:1, american:1 }),
   c("Marie Curie", "👩‍🔬", "The pioneering scientist of radioactivity", { real:1, alive:-1, female:1, scientist:1, historical:-1, european:1 }),
@@ -142,4 +156,19 @@ export const characters = [
   c("Totoro", "🌳", "The gentle forest spirit", { real:-1, fictional:1, anime:1, animated:1, movie:1, magic:1, nonhuman:1 }),
   c("Godzilla", "🦖", "The colossal king of the monsters", { real:-1, fictional:1, movie:1, animal:1, nonhuman:1, powers:1 }),
   c("R2-D2", "🤖", "The brave astromech droid", { real:-1, fictional:1, robot:1, nonhuman:1, space:1, movie:1 }),
+  c("Deine Mutter", "👩", "Deine Mutter oder eine mütterliche Bezugsperson", { real:1, alive:1, female:1, personallyKnown:1, family:1, parent:1 }),
+  c("Dein Vater", "👨", "Dein Vater oder eine väterliche Bezugsperson", { real:1, alive:1, female:-1, personallyKnown:1, family:1, parent:1 }),
+  c("Dein Bruder", "👦", "Dein Bruder", { real:1, alive:1, female:-1, personallyKnown:1, family:1, sibling:1 }),
+  c("Deine Schwester", "👧", "Deine Schwester", { real:1, alive:1, female:1, personallyKnown:1, family:1, sibling:1 }),
+  c("Deine Oma", "👵", "Deine Großmutter", { real:1, female:1, personallyKnown:1, family:1, grandparent:1 }),
+  c("Dein Opa", "👴", "Dein Großvater", { real:1, female:-1, personallyKnown:1, family:1, grandparent:1 }),
+  c("Dein Sohn", "👦", "Dein Sohn", { real:1, alive:1, female:-1, personallyKnown:1, family:1, yourChild:1, young:1 }),
+  c("Deine Tochter", "👧", "Deine Tochter", { real:1, alive:1, female:1, personallyKnown:1, family:1, yourChild:1, young:1 }),
+  c("Deine Freundin oder Partnerin", "💞", "Deine romantische Partnerin", { real:1, alive:1, female:1, personallyKnown:1, romantic:1, partner:1 }),
+  c("Dein Freund oder Partner", "💞", "Dein romantischer Partner", { real:1, alive:1, female:-1, personallyKnown:1, romantic:1, partner:1 }),
+  c("Dein Crush", "💘", "Eine Person, in die du verliebt bist", { real:1, alive:1, female:0, personallyKnown:1, romantic:1, partner:-1 }),
+  c("Deine beste Freundin", "🤝", "Eine enge Freundin ohne romantische Beziehung", { real:1, alive:1, female:1, personallyKnown:1, friend:1, romantic:-1 }),
+  c("Dein bester Freund", "🤝", "Ein enger Freund ohne romantische Beziehung", { real:1, alive:1, female:-1, personallyKnown:1, friend:1, romantic:-1 }),
+  c("Deine Lehrerin oder Kollegin", "📚", "Eine Frau aus Schule, Ausbildung oder Arbeit", { real:1, alive:1, female:1, personallyKnown:1, schoolWork:1 }),
+  c("Dein Lehrer oder Kollege", "📚", "Ein Mann aus Schule, Ausbildung oder Arbeit", { real:1, alive:1, female:-1, personallyKnown:1, schoolWork:1 }),
 ];

@@ -89,3 +89,22 @@ test("skips dependent questions after a clear no", () => {
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "football")), false);
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "musicGroup")), false);
 });
+
+test("switches to private relationship questions for a personally known person", () => {
+  const engine = new GuessEngine(characters, questions);
+  engine.answer("real", 1);
+  engine.answer("personallyKnown", 1);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "parent")), true);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "romantic")), true);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "politician")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "european")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "movie")), false);
+});
+
+test("skips private questions for a public person", () => {
+  const engine = new GuessEngine(characters, questions);
+  engine.answer("personallyKnown", -1);
+  for (const id of ["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]) {
+    assert.equal(engine.isRelevant(questions.find((question) => question.id === id)), false, `kept ${id}`);
+  }
+});

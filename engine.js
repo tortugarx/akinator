@@ -45,13 +45,26 @@ export class GuessEngine {
     const id = question.id;
     const realPerson = this.answeredYes("real") || this.answeredNo("fictional");
     const fictionalCharacter = this.answeredNo("real") || this.answeredYes("fictional");
+    const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]);
+    const publicQuestions = new Set(["historical", "musician", "musicGroup", "athlete", "football", "politician", "scientist", "artist", "entrepreneur", "internet", "royalty", "american", "european", "fictional", "magic", "superhero", "masked", "animated", "anime", "game", "space", "detective", "villain", "powers", "electric", "nonhuman", "movie", "tv", "book", "actor", "writer", "animal", "robot", "red"]);
     const fictionalOnly = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot"]);
     const realOnly = new Set(["alive", "historical", "scientist", "artist", "entrepreneur", "internet"]);
 
     if (id === "fictional" && (this.answeredYes("real") || this.answeredNo("real"))) return false;
     if (id === "real" && (this.answeredYes("fictional") || this.answeredNo("fictional"))) return false;
+    if (id === "personallyKnown" && fictionalCharacter) return false;
+    if (this.answeredNo("personallyKnown") && relationshipQuestions.has(id)) return false;
+    if (this.answeredYes("personallyKnown") && publicQuestions.has(id)) return false;
     if (realPerson && fictionalOnly.has(id)) return false;
     if (fictionalCharacter && realOnly.has(id)) return false;
+    if (relationshipQuestions.has(id) && this.answeredNo("real")) return false;
+    if (["parent", "sibling", "grandparent", "yourChild"].includes(id) && this.answeredNo("family")) return false;
+    if (this.answeredYes("family") && ["romantic", "partner", "friend", "schoolWork"].includes(id)) return false;
+    if (this.answeredYes("romantic") && ["friend", "schoolWork"].includes(id)) return false;
+    if (this.answeredYes("friend") && ["romantic", "partner", "schoolWork"].includes(id)) return false;
+    if (this.answeredYes("schoolWork") && ["romantic", "partner", "friend"].includes(id)) return false;
+    const familyRoles = ["parent", "sibling", "grandparent", "yourChild"];
+    if (familyRoles.includes(id) && familyRoles.some((role) => role !== id && this.answeredYes(role))) return false;
     if (id === "musicGroup" && this.answeredNo("musician")) return false;
     if (id === "football" && this.answeredNo("athlete")) return false;
     if (id === "anime" && this.answeredNo("animated")) return false;
@@ -111,7 +124,10 @@ export class GuessEngine {
 
   shouldGuess() {
     const best = this.bestGuess();
-    if (!best || this.answerCount < 8) return false;
+    if (!best) return false;
+    const hasRelevantQuestion = this.questions.some((question) => !this.asked.has(question.id) && this.isRelevant(question));
+    if (this.answerCount >= 4 && !hasRelevantQuestion) return true;
+    if (this.answerCount < 8) return false;
     return (best.probability >= .34 && best.ratio >= 2.4) || this.answerCount >= 17;
   }
 
