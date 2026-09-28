@@ -37,18 +37,20 @@ export class GuessEngine {
 
   response(id) { return this.responses.get(id); }
 
-  answeredYes(id) { return (this.response(id) ?? 0) >= .8; }
+  answeredYes(id) { return (this.response(id) ?? 0) >= .5; }
 
-  answeredNo(id) { return (this.response(id) ?? 0) <= -.8; }
+  answeredNo(id) { return (this.response(id) ?? 0) <= -.5; }
 
   isRelevant(question) {
     const id = question.id;
     const realPerson = this.answeredYes("real") || this.answeredNo("fictional");
     const fictionalCharacter = this.answeredNo("real") || this.answeredYes("fictional");
     const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]);
-    const publicQuestions = new Set(["historical", "musician", "musicGroup", "athlete", "football", "politician", "scientist", "artist", "entrepreneur", "internet", "royalty", "american", "european", "fictional", "magic", "superhero", "masked", "animated", "anime", "game", "space", "detective", "villain", "powers", "electric", "nonhuman", "movie", "tv", "book", "actor", "writer", "animal", "robot", "red"]);
-    const fictionalOnly = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot"]);
+    const publicQuestions = new Set(["historical", "musician", "musicGroup", "singer", "rapper", "athlete", "football", "basketball", "tennis", "motorsport", "creator", "comedian", "model", "director", "politician", "scientist", "artist", "entrepreneur", "internet", "royalty", "american", "european", "fictional", "magic", "superhero", "masked", "animated", "anime", "game", "space", "detective", "villain", "powers", "electric", "nonhuman", "movie", "tv", "book", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "glasses", "hat", "blonde", "actor", "writer", "animal", "robot", "red", "initialAM", "initialAF", "initialAC", "initialGI", "initialNS", "initialNP", "initialTW"]);
+    const fictionalOnly = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist"]);
     const realOnly = new Set(["alive", "historical", "scientist", "artist", "entrepreneur", "internet"]);
+
+    if (id.startsWith("initial") && this.answerCount < 9) return false;
 
     if (id === "fictional" && (this.answeredYes("real") || this.answeredNo("real"))) return false;
     if (id === "real" && (this.answeredYes("fictional") || this.answeredNo("fictional"))) return false;
@@ -66,7 +68,9 @@ export class GuessEngine {
     const familyRoles = ["parent", "sibling", "grandparent", "yourChild"];
     if (familyRoles.includes(id) && familyRoles.some((role) => role !== id && this.answeredYes(role))) return false;
     if (id === "musicGroup" && this.answeredNo("musician")) return false;
+    if ((id === "singer" || id === "rapper") && this.answeredNo("musician")) return false;
     if (id === "football" && this.answeredNo("athlete")) return false;
+    if (["basketball", "tennis", "motorsport"].includes(id) && this.answeredNo("athlete")) return false;
     if (id === "anime" && this.answeredNo("animated")) return false;
     if ((id === "animal" || id === "robot" || id === "nonhuman") && this.answeredYes("human")) return false;
     if (id === "animal" && this.answeredNo("nonhuman")) return false;
@@ -74,6 +78,15 @@ export class GuessEngine {
 
     const regions = ["american", "european"];
     if (regions.includes(id) && regions.some((region) => region !== id && this.answeredYes(region))) return false;
+    const universes = ["marvel", "dc", "disney", "starWars", "pokemon"];
+    if (universes.includes(id) && universes.some((universe) => universe !== id && this.answeredYes(universe))) return false;
+
+    if (["initialAF", "initialAC", "initialGI"].includes(id) && this.answeredNo("initialAM")) return false;
+    if (["initialNS", "initialNP", "initialTW"].includes(id) && this.answeredYes("initialAM")) return false;
+    if (id === "initialAC" && this.answeredNo("initialAF")) return false;
+    if (id === "initialGI" && this.answeredYes("initialAF")) return false;
+    if (id === "initialNP" && this.answeredNo("initialNS")) return false;
+    if (id === "initialTW" && this.answeredYes("initialNS")) return false;
     return true;
   }
 
@@ -81,6 +94,11 @@ export class GuessEngine {
     const candidates = this.probabilities();
     const unasked = this.questions.filter((question) => !this.asked.has(question.id) && this.isRelevant(question));
     if (!unasked.length || !candidates.length) return null;
+    const personalBranch = unasked.find(({ id }) => id === "personallyKnown");
+    if (personalBranch && (this.answeredYes("real") || this.answeredNo("fictional"))) {
+      this.asked.add(personalBranch.id);
+      return personalBranch;
+    }
     let best = unasked[0];
     let bestValue = -1;
     for (const question of unasked) {

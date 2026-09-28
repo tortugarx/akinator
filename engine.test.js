@@ -77,9 +77,23 @@ test("does not ask fictional follow-ups after a person is confirmed real", () =>
 
 test("does not ask a second region after a clear regional answer", () => {
   const engine = new GuessEngine(characters, questions);
-  engine.answer("european", 1);
+  engine.answer("european", .55);
   const american = questions.find(({ id }) => id === "american");
   assert.equal(engine.isRelevant(american), false);
+});
+
+test("treats probable answers as decisions for inverse questions", () => {
+  const engine = new GuessEngine(characters, questions);
+  engine.answer("real", .55);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "fictional")), false);
+});
+
+test("only asks name-range questions after semantic narrowing", () => {
+  const engine = new GuessEngine(characters, questions);
+  const initialQuestion = questions.find(({ id }) => id === "initialAM");
+  assert.equal(engine.isRelevant(initialQuestion), false);
+  engine.answerCount = 9;
+  assert.equal(engine.isRelevant(initialQuestion), true);
 });
 
 test("skips dependent questions after a clear no", () => {
@@ -99,6 +113,13 @@ test("switches to private relationship questions for a personally known person",
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "politician")), false);
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "european")), false);
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "movie")), false);
+});
+
+test("asks about personal acquaintance immediately after confirming a real person", () => {
+  const engine = new GuessEngine(characters, questions);
+  engine.asked.add("real");
+  engine.answer("real", 1);
+  assert.equal(engine.nextQuestion().id, "personallyKnown");
 });
 
 test("skips private questions for a public person", () => {

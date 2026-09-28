@@ -1,5 +1,5 @@
-import { characters, questions } from "./data.js?v=7";
-import { GuessEngine } from "./engine.js?v=7";
+import { characters, questions } from "./data.js?v=8";
+import { GuessEngine } from "./engine.js?v=8";
 import { platform } from "./platform.js";
 
 const translations = {
@@ -14,6 +14,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
+const buildVersion = 8;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -175,3 +176,13 @@ document.addEventListener("dblclick", (event) => event.preventDefault(), { passi
 setLanguage((navigator.language || "de").toLowerCase().startsWith("de") ? "de" : "en");
 setTimeout(() => showScreen("start-screen"), 320);
 platform.init().then(() => { setLanguage(platform.locale().toLowerCase().startsWith("de") ? "de" : "en"); platform.loadingDone(); });
+
+fetch(`version.json?t=${Date.now()}`, { cache:"no-store" })
+  .then((response) => response.json())
+  .then(({ version }) => {
+    if (Number(version) <= buildVersion) return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("v", String(version));
+    window.location.replace(url);
+  })
+  .catch(() => {});
