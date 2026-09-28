@@ -19,6 +19,7 @@ test("the start button opens the first question", async () => {
   const screens = ["loading-screen","start-screen","question-screen","guess-screen","learn-screen","result-screen"].map(element);
   globalThis.document = {
     documentElement: { lang: "" },
+    addEventListener() {},
     querySelector(selector) {
       if (selector === "#learn-form button[type='submit']") return element("submit");
       return elements[selector.slice(1)] || null;

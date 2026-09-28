@@ -12,6 +12,7 @@ export class GuessEngine {
     this.asked = new Set();
     this.rejected = new Set();
     this.history = [];
+    this.responses = new Map();
     this.answerCount = 0;
   }
 
@@ -34,9 +35,38 @@ export class GuessEngine {
       .sort((a, b) => b.probability - a.probability);
   }
 
+  response(id) { return this.responses.get(id); }
+
+  answeredYes(id) { return (this.response(id) ?? 0) >= .8; }
+
+  answeredNo(id) { return (this.response(id) ?? 0) <= -.8; }
+
+  isRelevant(question) {
+    const id = question.id;
+    const realPerson = this.answeredYes("real") || this.answeredNo("fictional");
+    const fictionalCharacter = this.answeredNo("real") || this.answeredYes("fictional");
+    const fictionalOnly = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot"]);
+    const realOnly = new Set(["alive", "historical", "scientist", "artist", "entrepreneur", "internet"]);
+
+    if (id === "fictional" && (this.answeredYes("real") || this.answeredNo("real"))) return false;
+    if (id === "real" && (this.answeredYes("fictional") || this.answeredNo("fictional"))) return false;
+    if (realPerson && fictionalOnly.has(id)) return false;
+    if (fictionalCharacter && realOnly.has(id)) return false;
+    if (id === "musicGroup" && this.answeredNo("musician")) return false;
+    if (id === "football" && this.answeredNo("athlete")) return false;
+    if (id === "anime" && this.answeredNo("animated")) return false;
+    if ((id === "animal" || id === "robot" || id === "nonhuman") && this.answeredYes("human")) return false;
+    if (id === "animal" && this.answeredNo("nonhuman")) return false;
+    if (id === "robot" && this.answeredYes("animal")) return false;
+
+    const regions = ["american", "european"];
+    if (regions.includes(id) && regions.some((region) => region !== id && this.answeredYes(region))) return false;
+    return true;
+  }
+
   nextQuestion() {
     const candidates = this.probabilities();
-    const unasked = this.questions.filter(({ id }) => !this.asked.has(id));
+    const unasked = this.questions.filter((question) => !this.asked.has(question.id) && this.isRelevant(question));
     if (!unasked.length || !candidates.length) return null;
     let best = unasked[0];
     let bestValue = -1;
@@ -58,6 +88,7 @@ export class GuessEngine {
     const response = clamp(Number(answer), -1, 1);
     this.answerCount += 1;
     this.history.push({ questionId, answer: response });
+    this.responses.set(questionId, response);
     if (response === 0) return;
     for (const character of this.characters) {
       const key = this.key(character);

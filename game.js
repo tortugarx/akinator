@@ -83,9 +83,14 @@ function answer(value) {
   acceptingAnswer = false;
   const answeredQuestion = currentQuestion;
   currentQuestion = null;
-  engine.answer(answeredQuestion.id, value);
-  tone(value > 0 ? 610 : value < 0 ? 340 : 460);
-  if (engine.shouldGuess()) revealGuess(); else askNext();
+  try {
+    engine.answer(answeredQuestion.id, value);
+    tone(value > 0 ? 610 : value < 0 ? 340 : 460);
+    if (engine.shouldGuess()) revealGuess(); else askNext();
+  } catch (error) {
+    console.error("The question flow recovered from an error.", error);
+    showLearn();
+  }
 }
 
 function revealGuess() {
@@ -164,6 +169,8 @@ $("#language-button").addEventListener("click", () => setLanguage(language === "
 $("#sound-button").addEventListener("click", () => { soundEnabled = !soundEnabled; $("#sound-button").textContent = soundEnabled ? "♪" : "×"; tone(); });
 window.addEventListener("keydown", (event) => { if (!$("#question-screen").classList.contains("active")) return; const keys={"1":1,"2":.55,"3":0,"4":-.55,"5":-1}; if (event.key in keys) answer(keys[event.key]); });
 window.addEventListener("platformmute", () => { $("#sound-button").disabled = platform.muted; });
+document.addEventListener("gesturestart", (event) => event.preventDefault(), { passive:false });
+document.addEventListener("dblclick", (event) => event.preventDefault(), { passive:false });
 
 setLanguage((navigator.language || "de").toLowerCase().startsWith("de") ? "de" : "en");
 setTimeout(() => showScreen("start-screen"), 320);

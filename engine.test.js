@@ -61,3 +61,31 @@ test("truthful play can identify every bundled character", () => {
     assert.equal(found, true, `did not identify ${target.name}`);
   }
 });
+
+test("does not ask fictional follow-ups after a person is confirmed real", () => {
+  const engine = new GuessEngine(characters, questions);
+  engine.asked.add("real");
+  engine.answer("real", 1);
+  const forbidden = new Set(["fictional", "book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot"]);
+  for (let index = 0; index < questions.length; index += 1) {
+    const question = engine.nextQuestion();
+    if (!question) break;
+    assert.equal(forbidden.has(question.id), false, `asked irrelevant question ${question.id}`);
+    engine.answer(question.id, 0);
+  }
+});
+
+test("does not ask a second region after a clear regional answer", () => {
+  const engine = new GuessEngine(characters, questions);
+  engine.answer("european", 1);
+  const american = questions.find(({ id }) => id === "american");
+  assert.equal(engine.isRelevant(american), false);
+});
+
+test("skips dependent questions after a clear no", () => {
+  const engine = new GuessEngine(characters, questions);
+  engine.answer("athlete", -1);
+  engine.answer("musician", -1);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "football")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "musicGroup")), false);
+});
