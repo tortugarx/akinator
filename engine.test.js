@@ -32,3 +32,32 @@ test("rejected guesses are removed from consideration", () => {
   engine.reject(first);
   assert.notEqual(engine.bestGuess().character.name, first);
 });
+
+test("never interrupts the question flow after only six answers", () => {
+  const engine = new GuessEngine(characters, questions);
+  const target = characters.find((character) => character.name === "Cristiano Ronaldo");
+  for (let index = 0; index < 6; index += 1) {
+    const question = engine.nextQuestion();
+    engine.answer(question.id, target.attributes[question.id] ?? 0);
+  }
+  assert.equal(engine.answerCount, 6);
+  assert.equal(engine.shouldGuess(), false);
+  assert.ok(engine.nextQuestion());
+});
+
+test("truthful play can identify every bundled character", () => {
+  for (const target of characters) {
+    const engine = new GuessEngine(characters, questions);
+    let found = false;
+    for (let index = 0; index < 22; index += 1) {
+      const question = engine.nextQuestion();
+      assert.ok(question, `ran out of questions for ${target.name}`);
+      engine.answer(question.id, target.attributes[question.id] ?? 0);
+      if (!engine.shouldGuess()) continue;
+      const guess = engine.bestGuess().character;
+      if (guess.name === target.name) { found = true; break; }
+      engine.reject(guess.id ?? guess.name);
+    }
+    assert.equal(found, true, `did not identify ${target.name}`);
+  }
+});

@@ -1,21 +1,23 @@
-# Mindseer
+# Nazar
 
-An adaptive browser-based character guessing game built for CrazyGames. The game uses a lightweight information-gain engine to choose each question and supports English and German.
+Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine lokale Wissensbasis mit 100+ echten und fiktiven Figuren, einer probabilistischen Fragenwahl und einem Lernmodus, der unbekannte Figuren über Wikidata nachschlägt und im Browser speichert.
 
-## Run locally
+## Lokal starten
 
 ```bash
 npm start
 ```
 
-Open `http://localhost:4173`.
+Danach `http://localhost:4173` öffnen.
 
-## Test
+## Tests
 
 ```bash
 npm test
 ```
 
-## CrazyGames integration
+Die Tests prüfen unter anderem den früheren Abbruch nach sechs Fragen sowie einen vollständigen Durchlauf für jede mitgelieferte Figur.
 
-The project includes the CrazyGames SDK v3 and reports loading, gameplay start/stop, mute settings and happy-time events. On localhost, the SDK uses its development behavior.
+## Datenschutz und Lernen
+
+Neu gelernte Figuren und die dazugehörigen Antworten werden ausschließlich in `localStorage` des jeweiligen Browsers abgelegt. Für die optionale Namenssuche wird die öffentliche Wikidata-API verwendet; es gibt keinen eigenen Server und keinen API-Schlüssel.

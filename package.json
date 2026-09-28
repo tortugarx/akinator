@@ -1,6 +1,6 @@
 {
-  "name": "mindseer",
-  "version": "0.1.0",
+  "name": "nazar-character-game",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
