@@ -8,11 +8,12 @@ test("asks each question at most once", () => {
   const seen = new Set();
   for (let index = 0; index < questions.length; index += 1) {
     const question = engine.nextQuestion();
-    assert.ok(question);
+    if (!question) break;
     assert.equal(seen.has(question.id), false);
     seen.add(question.id);
     engine.answer(question.id, 0);
   }
+  assert.ok(seen.size > 10);
   assert.equal(engine.nextQuestion(), null);
 });
 
@@ -123,12 +124,31 @@ test("treats probable answers as decisions for inverse questions", () => {
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "fictional")), false);
 });
 
-test("only asks name-range questions after semantic narrowing", () => {
+test("does not contain letter or birth-year questions", () => {
+  assert.equal(questions.some(({ id }) => id.startsWith("initial")), false);
+  assert.equal(questions.some(({ id }) => id.startsWith("born")), false);
+});
+
+test("focuses on political follow-ups after politics is confirmed", () => {
   const engine = new GuessEngine(characters, questions);
-  const initialQuestion = questions.find(({ id }) => id === "initialAM");
-  assert.equal(engine.isRelevant(initialQuestion), false);
-  engine.answerCount = 9;
-  assert.equal(engine.isRelevant(initialQuestion), true);
+  engine.answer("real", 1);
+  engine.answer("politician", 1);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "nationalLeader")), true);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "musician")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "athlete")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "actor")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "blonde")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "masked")), false);
+});
+
+test("chooses the question with the highest expected information gain", () => {
+  const localQuestions = [{ id:"unknown" }, { id:"split" }];
+  const localCharacters = [
+    { id:"a", name:"A", attributes:{ unknown:0, split:1 } },
+    { id:"b", name:"B", attributes:{ unknown:0, split:-1 } }
+  ];
+  const engine = new GuessEngine(localCharacters, localQuestions);
+  assert.equal(engine.nextQuestion().id, "split");
 });
 
 test("skips dependent questions after a clear no", () => {

@@ -69,12 +69,6 @@ const claimIds = (entity, property) => (entity.claims?.[property] || []).map((cl
 const claimValue = (entity, property) => entity.claims?.[property]?.[0]?.mainsnak?.datavalue?.value;
 const has = (entity, property, qid) => claimIds(entity, property).includes(qid);
 
-function initialAttributes(name) {
-  const letter = name.normalize("NFD").replace(/[^A-Za-z]/g, "").charAt(0).toUpperCase();
-  const between = (start, end) => letter >= start && letter <= end ? 1 : -1;
-  return { initialAM:between("A","M"), initialAF:between("A","F"), initialAC:between("A","C"), initialGI:between("G","I"), initialNS:between("N","S"), initialNP:between("N","P"), initialTW:between("T","W") };
-}
-
 function convert(entity, score) {
   const name = entity.labels?.de?.value || entity.labels?.en?.value;
   if (!name || name.length > 80) return null;
@@ -84,9 +78,9 @@ function convert(entity, score) {
   const isFictional = !isHuman && /fictional|fiktiv|romanfigur|filmfigur|comicfigur|videospielcharakter|character/i.test(description);
   if (!isHuman && !isFictional) return null;
 
-  const attributes = { ...initialAttributes(name), real:isHuman ? 1 : -1, fictional:isFictional ? 1 : -1, personallyKnown:-1 };
+  const attributes = { real:isHuman ? 1 : -1, fictional:isFictional ? 1 : -1, personallyKnown:-1 };
   if (isHuman) {
-    for (const trait of ["actor","singer","musician","rapper","politician","writer","scientist","artist","entrepreneur","creator","comedian","model","director","athlete","football","basketball","tennis","motorsport"]) attributes[trait] = -1;
+    for (const trait of ["actor","singer","musician","rapper","politician","nationalLeader","usPresident","activist","militaryLeader","writer","scientist","artist","entrepreneur","creator","comedian","model","director","athlete","football","basketball","tennis","motorsport"]) attributes[trait] = -1;
     attributes.alive = entity.claims?.P570?.length ? -1 : 1;
     if (has(entity,"P21","Q6581072")) attributes.female = 1;
     else if (has(entity,"P21","Q6581097")) attributes.female = -1;
@@ -104,6 +98,12 @@ function convert(entity, score) {
     infer("rapper", /rapper|rap artist/);
     infer("musician", /musician|composer|songwriter|musiker|musikerin|komponist|singer|sänger|rapper/);
     infer("politician", /politician|political|president|prime minister|chancellor|politiker|politisch|präsident|bundeskanzler/);
+    infer("nationalLeader", /president of|prime minister|head of government|chancellor|president von|staatspräsident|premierminister|bundeskanzler/);
+    infer("usPresident", /president of the united states|u\.s\. president|us-amerikanischer präsident|präsident der vereinigten staaten/);
+    infer("activist", /activist|civil rights leader|campaigner|aktivist|bürgerrechtler|menschenrechtler/);
+    infer("militaryLeader", /military leader|military commander|army general|field marshal|militärführer|feldherr|general /);
+    if (attributes.usPresident === 1) attributes.nationalLeader = 1;
+    if (["nationalLeader", "usPresident", "activist", "militaryLeader"].some((trait) => attributes[trait] === 1)) attributes.politician = 1;
     infer("writer", /writer|author|novelist|poet|schriftsteller|schriftstellerin|autor|dichter/);
     infer("scientist", /scientist|physicist|chemist|biologist|mathematician|wissenschaftler|physiker|chemiker|biologe|mathematiker/);
     infer("artist", /painter|visual artist|sculptor|maler|künstler|bildhauer/);
@@ -132,8 +132,6 @@ function convert(entity, score) {
     const birth = claimValue(entity,"P569")?.time;
     if (birth) {
       const year = Number(birth.slice(1,5));
-      attributes.bornBefore1950 = year < 1950 ? 1 : -1;
-      attributes.bornAfter1990 = year > 1990 ? 1 : -1;
       if (year < 1900) attributes.historical = 1;
     }
   } else {

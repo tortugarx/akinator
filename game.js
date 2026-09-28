@@ -1,20 +1,21 @@
-import { characters, questions } from "./data.js?v=10";
-import { GuessEngine } from "./engine.js?v=10";
+import { characters, questions } from "./data.js?v=11";
+import { GuessEngine } from "./engine.js?v=11";
 import { platform } from "./platform.js";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=11";
 
 const translations = {
   en: {
-    speech:"Psst… I bet I know!", welcomeEyebrow:"THE SELF-LEARNING GUESSING GAME", welcomeTitle:"Think of <em>any</em><br>character.", welcomeText:"A star, a fictional character or someone from your own life. Answer honestly – my magic does the rest.", start:"Let’s play!", welcomeHint:"The more you play, the smarter I get.", oracleAsks:"NAZAR ASKS", yes:"Yes", yesHint:"Definitely", probably:"Probably", probablyHint:"I think so", unknown:"Don't know", unknownHint:"Not sure", probablyNot:"Probably not", probablyNotHint:"I doubt it", no:"No", noHint:"Definitely not", vision:"I’VE GOT IT!", thinkingOf:"You are thinking of…", confidence:"Mind match", wasRight:"Did I read your mind?", correct:"Yes, incredible!", wrong:"No, keep trying", playAgain:"Play again", question:"QUESTION", focusing:"I’M THINKING", teachEyebrow:"YOU GOT ME", teachTitle:"Who were you thinking of?", teachText:"Tell me the name. I’ll search my local knowledge and remember your answers for the next game.", nameLabel:"Name of the person or character", learnButton:"Teach me", skip:"Start over instead", searching:"Searching local knowledge…", learned:(name)=>`Got it! I’ll remember ${name}.`, learnedTitle:"I learned something new!", learnedText:(name)=>`${name} is now part of my local memory.`, successEyebrow:"MIND READ", successTitle:"Nazar knows!", successText:(n)=>`I found your character in ${n} questions.`
+    speech:"Psst… I bet I know!", welcomeEyebrow:"THE SELF-LEARNING GUESSING GAME", welcomeTitle:"Think of <em>any</em><br>character.", welcomeText:"A star, a fictional character or someone from your own life. Answer honestly – my magic does the rest.", start:"Let’s play!", welcomeHint:"The more you play, the smarter I get.", oracleAsks:"NAZAR ASKS", yes:"Yes", yesHint:"Definitely", probably:"Probably", probablyHint:"I think so", unknown:"Don't know", unknownHint:"Not sure", probablyNot:"Probably not", probablyNotHint:"I doubt it", no:"No", noHint:"Definitely not", vision:"I’VE GOT IT!", thinkingOf:"You are thinking of…", confidence:"Mind match", wasRight:"Did I read your mind?", correct:"Yes, incredible!", wrong:"No, keep trying", playAgain:"Play again", question:"QUESTION", focusing:"I’M THINKING", teachEyebrow:"YOU GOT ME", teachTitle:"Who were you thinking of?", teachText:"Tell me the name. I’ll search my local knowledge and remember your answers for the next game.", nameLabel:"Name of the person or character", learnButton:"Teach me", skip:"Start over instead", searching:"Searching local knowledge…", notVerified:"I could not verify this public person in the local knowledge base. Private people can only be added after answering that you know them personally.", learned:(name)=>`Got it! I’ll remember ${name}.`, learnedTitle:"I learned something new!", learnedText:(name)=>`${name} is now part of my local memory.`, successEyebrow:"MIND READ", successTitle:"Nazar knows!", successText:(n)=>`I found your character in ${n} questions.`
   },
   de: {
-    speech:"Psst … ich weiß es bestimmt!", welcomeEyebrow:"DAS SELBSTLERNENDE RATESPIEL", welcomeTitle:"Denk an <em>irgendeine</em><br>Figur.", welcomeText:"Ein Star, eine fiktive Figur oder jemand aus deinem eigenen Leben. Antworte ehrlich – den Rest erledigt meine Magie.", start:"Los geht’s!", welcomeHint:"Je öfter du spielst, desto schlauer werde ich.", oracleAsks:"NAZAR FRAGT", yes:"Ja", yesHint:"Ganz sicher", probably:"Wahrscheinlich", probablyHint:"Ich denke schon", unknown:"Weiß nicht", unknownHint:"Nicht sicher", probablyNot:"Eher nicht", probablyNotHint:"Ich bezweifle es", no:"Nein", noHint:"Ganz sicher nicht", vision:"ICH HAB’S!", thinkingOf:"Du denkst an …", confidence:"Gedanken-Treffer", wasRight:"Habe ich deine Gedanken gelesen?", correct:"Ja, unglaublich!", wrong:"Nein, weiterfragen", playAgain:"Noch einmal", question:"FRAGE", focusing:"ICH DENKE NACH", teachEyebrow:"DU HAST MICH ERWISCHT", teachTitle:"Wen hattest du im Kopf?", teachText:"Verrate mir den Namen. Ich suche lokal und merke mir deine Antworten für das nächste Spiel.", nameLabel:"Name der Person oder Figur", learnButton:"Beibringen", skip:"Lieber neu starten", searching:"Ich durchsuche mein lokales Wissen …", learned:(name)=>`Verstanden! ${name} merke ich mir.`, learnedTitle:"Wieder etwas gelernt!", learnedText:(name)=>`${name} gehört jetzt zu meinem lokalen Gedächtnis.`, successEyebrow:"GEDANKEN GELESEN", successTitle:"Nazar weiß es!", successText:(n)=>`Ich habe deine Figur mit ${n} Fragen gefunden.`
+    speech:"Psst … ich weiß es bestimmt!", welcomeEyebrow:"DAS SELBSTLERNENDE RATESPIEL", welcomeTitle:"Denk an <em>irgendeine</em><br>Figur.", welcomeText:"Ein Star, eine fiktive Figur oder jemand aus deinem eigenen Leben. Antworte ehrlich – den Rest erledigt meine Magie.", start:"Los geht’s!", welcomeHint:"Je öfter du spielst, desto schlauer werde ich.", oracleAsks:"NAZAR FRAGT", yes:"Ja", yesHint:"Ganz sicher", probably:"Wahrscheinlich", probablyHint:"Ich denke schon", unknown:"Weiß nicht", unknownHint:"Nicht sicher", probablyNot:"Eher nicht", probablyNotHint:"Ich bezweifle es", no:"Nein", noHint:"Ganz sicher nicht", vision:"ICH HAB’S!", thinkingOf:"Du denkst an …", confidence:"Gedanken-Treffer", wasRight:"Habe ich deine Gedanken gelesen?", correct:"Ja, unglaublich!", wrong:"Nein, weiterfragen", playAgain:"Noch einmal", question:"FRAGE", focusing:"ICH DENKE NACH", teachEyebrow:"DU HAST MICH ERWISCHT", teachTitle:"Wen hattest du im Kopf?", teachText:"Verrate mir den Namen. Ich suche lokal und merke mir deine Antworten für das nächste Spiel.", nameLabel:"Name der Person oder Figur", learnButton:"Beibringen", skip:"Lieber neu starten", searching:"Ich durchsuche mein lokales Wissen …", notVerified:"Diese öffentliche Person konnte ich in der lokalen Wissensbasis nicht überprüfen. Private Personen lassen sich nur hinzufügen, wenn du zuvor angegeben hast, dass du sie persönlich kennst.", learned:(name)=>`Verstanden! ${name} merke ich mir.`, learnedTitle:"Wieder etwas gelernt!", learnedText:(name)=>`${name} gehört jetzt zu meinem lokalen Gedächtnis.`, successEyebrow:"GEDANKEN GELESEN", successTitle:"Nazar weiß es!", successText:(n)=>`Ich habe deine Figur mit ${n} Fragen gefunden.`
   }
 };
 
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 10;
+const buildVersion = 11;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -142,11 +143,7 @@ function showSuccess() {
 }
 
 async function findKnowledge(name) {
-  const normalized = name.trim().toLocaleLowerCase();
-  const match = engine.characters.find((item) => item.name.toLocaleLowerCase() === normalized)
-    || engine.characters.find((item) => item.name.toLocaleLowerCase().includes(normalized));
-  if (!match) return { name, description:"" };
-  return { name:match.name, description:match.description || "", sourceId:match.id, image:match.image || "", source:match.source || "" };
+  return findLocalKnowledge(name, engine.characters);
 }
 
 async function learnCharacter(event) {
@@ -157,8 +154,14 @@ async function learnCharacter(event) {
   const submit = $("#learn-form button[type='submit']"); submit.disabled = true;
   $("#learn-status").textContent = translations[language].searching;
   const knowledge = await findKnowledge(requestedName);
-  const attributes = Object.fromEntries(questions.map(({ id }) => [id, 0]));
-  for (const { questionId, answer } of engine.history) attributes[questionId] = answer;
+  const privatePerson = engine.answeredYes("personallyKnown");
+  if (!canStoreLearnedCharacter(knowledge, privatePerson, engine.response("real"))) {
+    $("#learn-status").textContent = translations[language].notVerified;
+    submit.disabled = false;
+    return;
+  }
+  const attributes = { ...Object.fromEntries(questions.map(({ id }) => [id, 0])), ...knowledge.attributes };
+  for (const { questionId, answer } of engine.history) if (answer !== 0) attributes[questionId] = answer;
   const character = {
     id: `learned-${(knowledge.sourceId || knowledge.name).toLowerCase().replace(/[^a-z0-9]+/g,"-")}`,
     name: knowledge.name, icon:"🧠", description: knowledge.description, image:knowledge.image, source:knowledge.source, attributes, learned:true

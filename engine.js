@@ -1,4 +1,15 @@
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]);
+const topicBranches = new Map([
+  ["musician", new Set(["musicGroup", "singer", "rapper"])],
+  ["athlete", new Set(["football", "basketball", "tennis", "motorsport"])],
+  ["politician", new Set(["nationalLeader", "usPresident", "activist", "militaryLeader", "royalty"])],
+  ["actor", new Set(["movie", "tv", "comedian", "model"])],
+  ["creator", new Set(["internet"])],
+  ["scientist", new Set(["space", "electric"])],
+  ["artist", new Set()], ["entrepreneur", new Set(["internet"])], ["writer", new Set(["book"])],
+  ["comedian", new Set()], ["model", new Set()], ["director", new Set(["movie"])], ["internet", new Set()]
+]);
 
 export class GuessEngine {
   constructor(characters, questions) {
@@ -36,7 +47,7 @@ export class GuessEngine {
       existing.source ||= character.source;
       existing.popularity = Math.max(existing.popularity || 0, character.popularity || 0);
       for (const [id, value] of Object.entries(character.attributes || {})) {
-        if (value === 1) existing.attributes[id] = 1;
+        if (value === 1 || (character.learned && value !== 0)) existing.attributes[id] = value;
       }
       this.probabilityCache = null;
       return;
@@ -78,12 +89,9 @@ export class GuessEngine {
     const id = question.id;
     const realPerson = this.answeredYes("real") || this.answeredNo("fictional");
     const fictionalCharacter = this.answeredNo("real") || this.answeredYes("fictional");
-    const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]);
-    const publicQuestions = new Set(["historical", "bornBefore1950", "bornAfter1990", "musician", "musicGroup", "singer", "rapper", "athlete", "football", "basketball", "tennis", "motorsport", "creator", "comedian", "model", "director", "politician", "scientist", "artist", "entrepreneur", "internet", "royalty", "american", "european", "british", "german", "canadian", "latinAmerican", "australian", "fictional", "magic", "superhero", "masked", "animated", "anime", "game", "space", "detective", "villain", "powers", "electric", "nonhuman", "movie", "tv", "book", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "glasses", "hat", "blonde", "actor", "writer", "animal", "robot", "red", "initialAM", "initialAF", "initialAC", "initialGI", "initialNS", "initialNP", "initialTW"]);
+    const publicQuestions = new Set(["historical", "musician", "musicGroup", "singer", "rapper", "athlete", "football", "basketball", "tennis", "motorsport", "creator", "comedian", "model", "director", "politician", "nationalLeader", "usPresident", "activist", "militaryLeader", "scientist", "artist", "entrepreneur", "internet", "royalty", "american", "european", "british", "german", "canadian", "latinAmerican", "australian", "fictional", "magic", "superhero", "masked", "animated", "anime", "game", "space", "detective", "villain", "powers", "electric", "nonhuman", "movie", "tv", "book", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "glasses", "hat", "blonde", "actor", "writer", "animal", "robot", "red"]);
     const fictionalOnly = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist"]);
-    const realOnly = new Set(["alive", "historical", "bornBefore1950", "bornAfter1990", "british", "german", "canadian", "latinAmerican", "australian", "scientist", "artist", "entrepreneur", "internet"]);
-
-    if (id.startsWith("initial") && this.answerCount < 9) return false;
+    const realOnly = new Set(["alive", "historical", "british", "german", "canadian", "latinAmerican", "australian", "scientist", "artist", "entrepreneur", "internet", "nationalLeader", "usPresident", "activist", "militaryLeader"]);
 
     if (id === "fictional" && (this.answeredYes("real") || this.answeredNo("real"))) return false;
     if (id === "real" && (this.answeredYes("fictional") || this.answeredNo("fictional"))) return false;
@@ -100,6 +108,15 @@ export class GuessEngine {
     if (this.answeredYes("schoolWork") && ["romantic", "partner", "friend"].includes(id)) return false;
     const familyRoles = ["parent", "sibling", "grandparent", "yourChild"];
     if (familyRoles.includes(id) && familyRoles.some((role) => role !== id && this.answeredYes(role))) return false;
+    for (const [root, children] of topicBranches) {
+      if (children.has(id) && this.answeredNo(root)) return false;
+    }
+    const activeTopics = [...topicBranches].filter(([root]) => this.answeredYes(root));
+    if (realPerson && activeTopics.length) {
+      const allowed = new Set(activeTopics.flatMap(([root, children]) => [root, ...children]));
+      const universal = new Set(["real", "personallyKnown", "alive", "female", "historical", "american", "european", "british", "german", "canadian", "latinAmerican", "australian"]);
+      if (!allowed.has(id) && !universal.has(id)) return false;
+    }
     if (id === "musicGroup" && this.answeredNo("musician")) return false;
     if ((id === "singer" || id === "rapper") && this.answeredNo("musician")) return false;
     if (id === "football" && this.answeredNo("athlete")) return false;
@@ -122,12 +139,6 @@ export class GuessEngine {
     const universes = ["marvel", "dc", "disney", "starWars", "pokemon"];
     if (universes.includes(id) && universes.some((universe) => universe !== id && this.answeredYes(universe))) return false;
 
-    if (["initialAF", "initialAC", "initialGI"].includes(id) && this.answeredNo("initialAM")) return false;
-    if (["initialNS", "initialNP", "initialTW"].includes(id) && this.answeredYes("initialAM")) return false;
-    if (id === "initialAC" && this.answeredNo("initialAF")) return false;
-    if (id === "initialGI" && this.answeredYes("initialAF")) return false;
-    if (id === "initialNP" && this.answeredNo("initialNS")) return false;
-    if (id === "initialTW" && this.answeredYes("initialNS")) return false;
     return true;
   }
 
@@ -145,18 +156,32 @@ export class GuessEngine {
       this.asked.add(personalBranch.id);
       return personalBranch;
     }
-    let best = unasked[0];
-    let bestValue = -1;
+    const currentEntropy = -candidates.reduce((sum, { probability }) => sum + probability * Math.log(Math.max(probability, 1e-12)), 0);
+    let best = null;
+    let bestValue = 0.0001;
     for (const question of unasked) {
-      const mean = candidates.reduce((sum, { item, probability }) => sum + probability * (item.attributes[question.id] ?? 0), 0);
-      const variance = candidates.reduce((sum, { item, probability }) => {
+      let yesMass = 0;
+      for (const { item, probability } of candidates) {
         const expected = item.attributes[question.id] ?? 0;
-        return sum + probability * ((expected - mean) ** 2);
-      }, 0);
-      const coverage = candidates.reduce((sum, { item, probability }) => sum + probability * Math.abs(item.attributes[question.id] ?? 0), 0);
-      const value = variance * (.35 + .65 * coverage);
+        const yesLikelihood = expected >= .5 ? .88 : expected <= -.5 ? .12 : .5;
+        yesMass += probability * yesLikelihood;
+      }
+      const noMass = 1 - yesMass;
+      if (yesMass <= 1e-9 || noMass <= 1e-9) continue;
+      let yesEntropy = 0;
+      let noEntropy = 0;
+      for (const { item, probability } of candidates) {
+        const expected = item.attributes[question.id] ?? 0;
+        const yesLikelihood = expected >= .5 ? .88 : expected <= -.5 ? .12 : .5;
+        const yesPosterior = probability * yesLikelihood / yesMass;
+        const noPosterior = probability * (1 - yesLikelihood) / noMass;
+        yesEntropy -= yesPosterior * Math.log(Math.max(yesPosterior, 1e-12));
+        noEntropy -= noPosterior * Math.log(Math.max(noPosterior, 1e-12));
+      }
+      const value = currentEntropy - yesMass * yesEntropy - noMass * noEntropy;
       if (value > bestValue) { best = question; bestValue = value; }
     }
+    if (!best) return null;
     this.asked.add(best.id);
     return best;
   }

@@ -1,8 +1,8 @@
 # Nazar
 
-Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine kuratierte Wissensbasis mit einer vorab erzeugten Wikidata-Datenbank, einer probabilistischen Fragenwahl und einem Lernmodus, der unbekannte Figuren im Browser speichert.
+Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine kuratierte Wissensbasis mit einer vorab erzeugten Wikidata-Datenbank, einer lokalen Active-Learning-Engine und einem Lernmodus, der bestätigte Figuren im Browser speichert.
 
-Die ausgelieferte Version umfasst derzeit 8.262 eindeutige Personen, Figuren und private Rollen. 7.232 Wiki-Einträge besitzen ein Porträt aus Wikimedia Commons. Fragen werden anhand des erwarteten Informationsgewinns ausgewählt; geraten wird, sobald die Kandidatenwahrscheinlichkeit ausreicht – nicht nach einer festen Fragenzahl.
+Die ausgelieferte Version umfasst mehr als 8.200 eindeutige Personen, Figuren und private Rollen. Über 7.200 Wiki-Einträge besitzen ein Porträt aus Wikimedia Commons. Für jede Antwort berechnet die Engine die neue Kandidatenverteilung und wählt anschließend die Frage mit der größten erwarteten Entropiereduktion. Bestätigte Themen aktivieren passende Unterfragen und sperren sachfremde Themen. Buchstaben- und Geburtsjahrfragen werden nicht verwendet.
 
 ## Lokal starten
 
@@ -39,4 +39,4 @@ Der Build enthält alle Spiel-, Engine- und Wissensdaten und lädt das CrazyGame
 
 ## Datenschutz und Lernen
 
-Neu gelernte Figuren und die dazugehörigen Antworten werden ausschließlich in `localStorage` des jeweiligen Browsers abgelegt. Namenssuche, Fragenwahl und Erkennung laufen gegen die mitgelieferte lokale Wissensbasis; es gibt keinen eigenen Server, keine Laufzeit-API und keinen API-Schlüssel.
+Neu gelernte Figuren und die dazugehörigen Antworten werden ausschließlich in `localStorage` des jeweiligen Browsers abgelegt. Öffentliche Personen werden vor dem Speichern eindeutig gegen die lokale Wiki-Basis geprüft und übernehmen vorhandene Merkmale, Beschreibung, Quelle und Porträt. Nicht überprüfbare Namen sind nur erlaubt, wenn zuvor der private Zweig gewählt wurde. Namenssuche, Fragenwahl und Erkennung laufen lokal; es gibt keinen eigenen Server, keine Laufzeit-API und keinen API-Schlüssel.
