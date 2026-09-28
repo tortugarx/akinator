@@ -33,14 +33,14 @@ button, input { font: inherit; } button, a { -webkit-tap-highlight-color: transp
 .sun-disc { position: absolute; z-index: -1; width: 87%; aspect-ratio: 1; border-radius: 50%; background: repeating-conic-gradient(from -3deg, rgba(245,185,66,.16) 0 4deg, transparent 4deg 13deg), radial-gradient(circle, rgba(245,185,66,.28), transparent 68%); }
 .mascot { width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 26px 26px rgba(0,0,0,.34)); mix-blend-mode: screen; }
 .speech-bubble { position: absolute; top: 12%; right: -12%; max-width: 170px; padding: 12px 16px; border-radius: 18px 18px 18px 5px; background: var(--cream); color: var(--ink); font: 700 13px "Nunito"; transform: rotate(3deg); box-shadow: 0 8px 20px rgba(0,0,0,.22); }
-.start-copy { width: min(520px, 47vw); }
+.start-copy { width: min(520px, 47vw); position: relative; z-index: 3; }
 .eyebrow { margin: 0 0 12px; color: var(--gold); font-size: 11px; font-weight: 900; letter-spacing: .18em; }
 h1,h2,h3,p { text-wrap: balance; } h1,h2,h3 { font-family: "Baloo 2", system-ui; }
 h1 { margin: 0; font-size: clamp(42px, 6vw, 76px); line-height: .98; letter-spacing: -.035em; }
 h1 em { color: var(--gold); font-style: normal; position: relative; }
 h2 { margin: 0; font-size: clamp(34px, 5vw, 58px); line-height: 1.05; }
 .lead { margin: 18px 0 25px; max-width: 590px; color: var(--muted); font-size: 16px; line-height: 1.6; }
-.primary-button,.secondary-button { min-width: 210px; min-height: 54px; padding: 0 20px; border-radius: 16px; cursor: pointer; display: inline-flex; align-items: center; justify-content: space-between; gap: 22px; font-weight: 900; transition: transform .16s, filter .16s; }
+.primary-button,.secondary-button { position: relative; z-index: 4; min-width: 210px; min-height: 54px; padding: 0 20px; border-radius: 16px; cursor: pointer; touch-action: manipulation; display: inline-flex; align-items: center; justify-content: space-between; gap: 22px; font-weight: 900; transition: transform .16s, filter .16s; }
 .primary-button { color: #183532; background: linear-gradient(#ffd36a,#f4ad38); border: 2px solid #ffe59d; box-shadow: 0 5px 0 #a84926, 0 15px 28px rgba(0,0,0,.2); }
 .primary-button:hover { transform: translateY(-2px); filter: brightness(1.07); } .primary-button:active { transform: translateY(3px); box-shadow: 0 2px 0 #a84926; }
 .primary-button.success { background: linear-gradient(#65de9a,#32b574); border-color: #9af1bd; }
