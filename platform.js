@@ -2,6 +2,7 @@ class CrazyGamesBridge {
   constructor() {
     this.ready = false;
     this.muted = false;
+    this.wantsGameplay = false;
   }
 
   async init() {
@@ -20,9 +21,21 @@ class CrazyGamesBridge {
     }
   }
 
-  loadingDone() { if (this.ready) window.CrazyGames.SDK.game.loadingStop(); }
-  gameplayStart() { if (this.ready) window.CrazyGames.SDK.game.gameplayStart(); }
-  gameplayStop() { if (this.ready) window.CrazyGames.SDK.game.gameplayStop(); }
+  loadingDone() {
+    if (!this.ready) return;
+    window.CrazyGames.SDK.game.loadingStop();
+    if (this.wantsGameplay) window.CrazyGames.SDK.game.gameplayStart();
+  }
+
+  gameplayStart() {
+    this.wantsGameplay = true;
+    if (this.ready) window.CrazyGames.SDK.game.gameplayStart();
+  }
+
+  gameplayStop() {
+    this.wantsGameplay = false;
+    if (this.ready) window.CrazyGames.SDK.game.gameplayStop();
+  }
   happyTime() { if (this.ready) window.CrazyGames.SDK.game.happytime(); }
 
   locale() {

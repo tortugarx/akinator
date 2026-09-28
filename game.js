@@ -148,7 +148,12 @@ window.addEventListener("keydown", (event) => {
 window.addEventListener("wheel", (event) => event.preventDefault(), { passive: false });
 window.addEventListener("platformmute", () => { $("#sound-button").disabled = platform.muted; });
 
-await platform.init();
-setLanguage(platform.locale().toLowerCase().startsWith("de") ? "de" : "en");
-platform.loadingDone();
+setLanguage((navigator.language || "en").toLowerCase().startsWith("de") ? "de" : "en");
 setTimeout(() => showScreen("start-screen"), 450);
+
+// The public preview is hosted outside CrazyGames. Its SDK initialization can
+// remain pending there, so the game must never wait for it before becoming playable.
+platform.init().then(() => {
+  setLanguage(platform.locale().toLowerCase().startsWith("de") ? "de" : "en");
+  platform.loadingDone();
+});
