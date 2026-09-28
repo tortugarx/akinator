@@ -8,7 +8,7 @@ export class GuessEngine {
   }
 
   reset() {
-    this.scores = new Map(this.characters.map((item) => [this.key(item), 0]));
+    this.scores = new Map(this.characters.map((item) => [this.key(item), this.prior(item)]));
     this.asked = new Set();
     this.rejected = new Set();
     this.history = [];
@@ -18,10 +18,27 @@ export class GuessEngine {
 
   key(item) { return item.id ?? item.name; }
 
+  nameKey(item) { return item.name.trim().toLocaleLowerCase(); }
+
+  prior(item) {
+    if (item.learned) return .35;
+    if (!item.source) return .25;
+    return Math.min(.32, Math.log10(1 + (item.popularity || 1)) * .045);
+  }
+
   addCharacter(character) {
-    if (this.characters.some((item) => this.key(item) === this.key(character))) return;
+    const existing = this.characters.find((item) => this.key(item) === this.key(character) || this.nameKey(item) === this.nameKey(character));
+    if (existing) {
+      existing.image ||= character.image;
+      existing.source ||= character.source;
+      existing.popularity = Math.max(existing.popularity || 0, character.popularity || 0);
+      for (const [id, value] of Object.entries(character.attributes || {})) {
+        if (value === 1) existing.attributes[id] = 1;
+      }
+      return;
+    }
     this.characters.push(character);
-    this.scores.set(this.key(character), 0);
+    this.scores.set(this.key(character), this.prior(character));
   }
 
   probabilities() {
@@ -35,6 +52,13 @@ export class GuessEngine {
       .sort((a, b) => b.probability - a.probability);
   }
 
+  certainty() {
+    const probabilities = this.probabilities().map(({ probability }) => probability);
+    if (probabilities.length <= 1) return 1;
+    const entropy = -probabilities.reduce((sum, probability) => sum + probability * Math.log(Math.max(probability, 1e-12)), 0);
+    return clamp(1 - entropy / Math.log(probabilities.length), 0, 1);
+  }
+
   response(id) { return this.responses.get(id); }
 
   answeredYes(id) { return (this.response(id) ?? 0) >= .5; }
@@ -46,9 +70,9 @@ export class GuessEngine {
     const realPerson = this.answeredYes("real") || this.answeredNo("fictional");
     const fictionalCharacter = this.answeredNo("real") || this.answeredYes("fictional");
     const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]);
-    const publicQuestions = new Set(["historical", "musician", "musicGroup", "singer", "rapper", "athlete", "football", "basketball", "tennis", "motorsport", "creator", "comedian", "model", "director", "politician", "scientist", "artist", "entrepreneur", "internet", "royalty", "american", "european", "fictional", "magic", "superhero", "masked", "animated", "anime", "game", "space", "detective", "villain", "powers", "electric", "nonhuman", "movie", "tv", "book", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "glasses", "hat", "blonde", "actor", "writer", "animal", "robot", "red", "initialAM", "initialAF", "initialAC", "initialGI", "initialNS", "initialNP", "initialTW"]);
+    const publicQuestions = new Set(["historical", "bornBefore1950", "bornAfter1990", "musician", "musicGroup", "singer", "rapper", "athlete", "football", "basketball", "tennis", "motorsport", "creator", "comedian", "model", "director", "politician", "scientist", "artist", "entrepreneur", "internet", "royalty", "american", "european", "british", "german", "canadian", "latinAmerican", "australian", "fictional", "magic", "superhero", "masked", "animated", "anime", "game", "space", "detective", "villain", "powers", "electric", "nonhuman", "movie", "tv", "book", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "glasses", "hat", "blonde", "actor", "writer", "animal", "robot", "red", "initialAM", "initialAF", "initialAC", "initialGI", "initialNS", "initialNP", "initialTW"]);
     const fictionalOnly = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist"]);
-    const realOnly = new Set(["alive", "historical", "scientist", "artist", "entrepreneur", "internet"]);
+    const realOnly = new Set(["alive", "historical", "bornBefore1950", "bornAfter1990", "british", "german", "canadian", "latinAmerican", "australian", "scientist", "artist", "entrepreneur", "internet"]);
 
     if (id.startsWith("initial") && this.answerCount < 9) return false;
 
@@ -78,6 +102,8 @@ export class GuessEngine {
 
     const regions = ["american", "european"];
     if (regions.includes(id) && regions.some((region) => region !== id && this.answeredYes(region))) return false;
+    const countries = ["british", "german", "canadian", "latinAmerican", "australian"];
+    if (countries.includes(id) && countries.some((country) => country !== id && this.answeredYes(country))) return false;
     const universes = ["marvel", "dc", "disney", "starWars", "pokemon"];
     if (universes.includes(id) && universes.some((universe) => universe !== id && this.answeredYes(universe))) return false;
 
@@ -94,6 +120,11 @@ export class GuessEngine {
     const candidates = this.probabilities();
     const unasked = this.questions.filter((question) => !this.asked.has(question.id) && this.isRelevant(question));
     if (!unasked.length || !candidates.length) return null;
+    const realityQuestion = unasked.find(({ id }) => id === "real");
+    if (realityQuestion && this.answerCount === 0) {
+      this.asked.add(realityQuestion.id);
+      return realityQuestion;
+    }
     const personalBranch = unasked.find(({ id }) => id === "personallyKnown");
     if (personalBranch && (this.answeredYes("real") || this.answeredNo("fictional"))) {
       this.asked.add(personalBranch.id);
@@ -144,9 +175,10 @@ export class GuessEngine {
     const best = this.bestGuess();
     if (!best) return false;
     const hasRelevantQuestion = this.questions.some((question) => !this.asked.has(question.id) && this.isRelevant(question));
-    if (this.answerCount >= 4 && !hasRelevantQuestion) return true;
-    if (this.answerCount < 8) return false;
-    return (best.probability >= .34 && best.ratio >= 2.4) || this.answerCount >= 17;
+    if (this.answerCount > 0 && !hasRelevantQuestion) return true;
+    return (best.probability >= .82 && best.ratio >= 7)
+      || (best.probability >= .62 && best.ratio >= 4)
+      || best.probability >= .42;
   }
 
   reject(idOrName) {

@@ -33,7 +33,15 @@ test("rejected guesses are removed from consideration", () => {
   assert.notEqual(engine.bestGuess().character.name, first);
 });
 
-test("never interrupts the question flow after only six answers", () => {
+test("Wikidata enriches an existing curated character instead of duplicating it", () => {
+  const engine = new GuessEngine([{ id:"known", name:"Known Person", icon:"👤", attributes:{ real:1, singer:-1 } }], questions);
+  engine.addCharacter({ id:"wiki-q1", name:"Known Person", image:"portrait.jpg", source:"wikidata", popularity:100, attributes:{ real:1, singer:1 } });
+  assert.equal(engine.characters.length, 1);
+  assert.equal(engine.characters[0].image, "portrait.jpg");
+  assert.equal(engine.characters[0].attributes.singer, 1);
+});
+
+test("does not guess early while candidates are still tied", () => {
   const engine = new GuessEngine(characters, questions);
   const target = characters.find((character) => character.name === "Cristiano Ronaldo");
   for (let index = 0; index < 6; index += 1) {
@@ -45,13 +53,31 @@ test("never interrupts the question flow after only six answers", () => {
   assert.ok(engine.nextQuestion());
 });
 
+test("can guess immediately when the evidence is already decisive", () => {
+  const tinyQuestions = [{ id:"only", en:"", de:"" }];
+  const tinyCharacters = [
+    { id:"yes", name:"Yes", attributes:{ only:1 } },
+    { id:"no", name:"No", attributes:{ only:-1 } }
+  ];
+  const engine = new GuessEngine(tinyCharacters, tinyQuestions);
+  const question = engine.nextQuestion();
+  engine.answer(question.id, 1);
+  assert.equal(engine.shouldGuess(), true);
+  assert.equal(engine.bestGuess().character.name, "Yes");
+});
+
 test("truthful play can identify every bundled character", () => {
   for (const target of characters) {
     const engine = new GuessEngine(characters, questions);
     let found = false;
-    for (let index = 0; index < 22; index += 1) {
+    for (let index = 0; index < questions.length + 10; index += 1) {
       const question = engine.nextQuestion();
-      assert.ok(question, `ran out of questions for ${target.name}`);
+      if (!question) {
+        const guess = engine.bestGuess().character;
+        if (guess.name === target.name) { found = true; break; }
+        engine.reject(guess.id ?? guess.name);
+        continue;
+      }
       engine.answer(question.id, target.attributes[question.id] ?? 0);
       if (!engine.shouldGuess()) continue;
       const guess = engine.bestGuess().character;

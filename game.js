@@ -1,5 +1,5 @@
-import { characters, questions } from "./data.js?v=8";
-import { GuessEngine } from "./engine.js?v=8";
+import { characters, questions } from "./data.js?v=9";
+import { GuessEngine } from "./engine.js?v=9";
 import { platform } from "./platform.js";
 
 const translations = {
@@ -14,7 +14,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 8;
+const buildVersion = 9;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -47,7 +47,7 @@ function setLanguage(next) {
 function updateQuestionMeta() {
   $("#question-label").textContent = `${translations[language].question} ${engine.answerCount + 1}`;
   $("#focus-label").textContent = translations[language].focusing;
-  $("#progress-bar").style.width = `${Math.min(96, Math.max(5, engine.answerCount / 18 * 100))}%`;
+  $("#progress-bar").style.width = `${Math.round(5 + engine.certainty() * 91)}%`;
   $("#brain-count").textContent = `${engine.characters.length} ${language === "de" ? "Figuren" : "characters"}`;
 }
 
@@ -73,7 +73,7 @@ function startGame() {
 function askNext() {
   currentQuestion = engine.nextQuestion();
   acceptingAnswer = true;
-  if (!currentQuestion) return showLearn();
+  if (!currentQuestion) return engine.probabilities().length ? revealGuess() : showLearn();
   $("#question-text").textContent = currentQuestion[language];
   updateQuestionMeta();
   $("#question-text").animate?.([{ opacity:0, transform:"translateY(8px)" }, { opacity:1, transform:"none" }], { duration:220 });
@@ -98,9 +98,23 @@ function revealGuess() {
   currentGuess = engine.bestGuess();
   if (!currentGuess) return showLearn();
   platform.gameplayStop();
-  $("#guess-portrait").textContent = currentGuess.character.icon || "🧠";
+  const portrait = $("#guess-portrait");
+  portrait.replaceChildren();
+  if (currentGuess.character.image) {
+    const image = document.createElement("img");
+    image.src = currentGuess.character.image;
+    image.alt = currentGuess.character.name;
+    image.referrerPolicy = "no-referrer";
+    image.addEventListener("error", () => { portrait.textContent = currentGuess.character.icon || "👤"; }, { once:true });
+    portrait.append(image);
+  } else {
+    portrait.textContent = currentGuess.character.icon || "🧠";
+  }
   $("#guess-name").textContent = currentGuess.character.name;
   $("#guess-description").textContent = currentGuess.character.description || (language === "de" ? "Eine Figur aus Nazars Gedächtnis" : "A character from Nazar’s memory");
+  const source = $("#guess-source");
+  source.hidden = !currentGuess.character.source;
+  source.href = currentGuess.character.source || "#";
   $("#confidence-value").textContent = `${Math.round(currentGuess.confidence * 100)}%`;
   showScreen("guess-screen"); tone(720);
 }
@@ -109,7 +123,7 @@ function continueAfterWrong() {
   if (!currentGuess) return showLearn();
   engine.reject(currentGuess.character.id ?? currentGuess.character.name);
   currentGuess = null;
-  if (engine.rejected.size >= 5 || engine.answerCount >= 22 || !engine.probabilities().length) return showLearn();
+  if (engine.rejected.size >= 8 || !engine.probabilities().length) return showLearn();
   platform.gameplayStart(); showScreen("question-screen"); askNext();
 }
 
@@ -173,8 +187,24 @@ window.addEventListener("platformmute", () => { $("#sound-button").disabled = pl
 document.addEventListener("gesturestart", (event) => event.preventDefault(), { passive:false });
 document.addEventListener("dblclick", (event) => event.preventDefault(), { passive:false });
 
+async function loadKnowledgeBase() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 9000);
+  try {
+    const response = await fetch(`wikidata-people.json?v=${buildVersion}`, { signal:controller.signal });
+    if (!response.ok) throw new Error("Knowledge base unavailable");
+    const database = await response.json();
+    for (const character of database.characters || []) engine.addCharacter(character);
+  } catch (error) {
+    console.info("Using the compact offline knowledge base.", error);
+  } finally {
+    clearTimeout(timeout);
+    updateQuestionMeta();
+  }
+}
+
 setLanguage((navigator.language || "de").toLowerCase().startsWith("de") ? "de" : "en");
-setTimeout(() => showScreen("start-screen"), 320);
+loadKnowledgeBase().finally(() => showScreen("start-screen"));
 platform.init().then(() => { setLanguage(platform.locale().toLowerCase().startsWith("de") ? "de" : "en"); platform.loadingDone(); });
 
 fetch(`version.json?t=${Date.now()}`, { cache:"no-store" })

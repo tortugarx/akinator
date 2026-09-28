@@ -12,7 +12,7 @@ test("the start button opens the first question", async () => {
       contains(name) { return name === "active" && this.active; }
     },
     addEventListener(type, handler) { listeners.set(`${id}:${type}`, handler); },
-    focus() {}, animate() {}
+    focus() {}, animate() {}, replaceChildren() {}, append() {}
   });
   const ids = ["language-button","character-input","question-text","question-label","focus-label","progress-bar","brain-count","learn-status","guess-portrait","guess-name","guess-description","confidence-value","result-symbol","result-eyebrow","result-title","result-text","start-button","again-button","correct-button","wrong-button","skip-learn-button","learn-form","answer-grid","sound-button"];
   const elements = Object.fromEntries(ids.map((id) => [id, element(id)]));
@@ -32,6 +32,7 @@ test("the start button opens the first question", async () => {
   globalThis.window = { addEventListener() {}, CrazyGames: undefined };
   Object.defineProperty(globalThis, "navigator", { value: { language: "de" }, configurable: true });
   globalThis.localStorage = { getItem() { return null; }, setItem() {} };
+  globalThis.fetch = async () => ({ ok:true, json:async () => ({ characters:[] }) });
 
   await import(`./game.js?start-test=${Date.now()}`);
   assert.equal(typeof listeners.get("start-button:click"), "function");
