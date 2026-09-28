@@ -17,18 +17,25 @@ async function getJson(url, retries = 6) {
 
 const popularity = new Map();
 const titlesByLanguage = new Map([["en", new Set()], ["de", new Set()]]);
+const years = [2022, 2023, 2024, 2025];
 for (const language of ["en", "de"]) {
-  for (let month = 1; month <= 12; month += 1) {
-    const stamp = `2025/${String(month).padStart(2, "0")}/all-days`;
-    const url = `https://wikimedia.org/api/rest_v1/metrics/pageviews/top/${language}.wikipedia/all-access/${stamp}`;
-    const data = await getJson(url);
-    for (const [rank, article] of data.items[0].articles.entries()) {
-      if (!cleanTitle(article.article)) continue;
-      titlesByLanguage.get(language).add(article.article);
-      const key = `${language}:${article.article}`;
-      popularity.set(key, Math.max(popularity.get(key) || 0, article.views + (1000 - rank) * 100));
+  for (const year of years) {
+    for (let month = 1; month <= 12; month += 1) {
+      const stamp = `${year}/${String(month).padStart(2, "0")}/all-days`;
+      const url = `https://wikimedia.org/api/rest_v1/metrics/pageviews/top/${language}.wikipedia/all-access/${stamp}`;
+      try {
+        const data = await getJson(url);
+        for (const [rank, article] of data.items[0].articles.entries()) {
+          if (!cleanTitle(article.article)) continue;
+          titlesByLanguage.get(language).add(article.article);
+          const key = `${language}:${article.article}`;
+          popularity.set(key, Math.max(popularity.get(key) || 0, article.views + (1000 - rank) * 100));
+        }
+        process.stdout.write(`\rCollected popular pages: ${language} ${year}-${String(month).padStart(2,"0")}`);
+      } catch (error) {
+        process.stdout.write(`\nSkipped unavailable pageview month ${language} ${year}-${String(month).padStart(2,"0")}: ${error.message}\n`);
+      }
     }
-    process.stdout.write(`\rCollected popular pages: ${language} ${month}/12`);
   }
 }
 process.stdout.write("\n");
@@ -146,7 +153,7 @@ function convert(entity, score) {
   return { id:`wiki-${entity.id.toLowerCase()}`, name, description, icon:isHuman ? "👤" : "✨", image, source:`https://www.wikidata.org/wiki/${entity.id}`, popularity:score, attributes };
 }
 
-const sortedQids = [...qidScores].sort((a,b) => b[1] - a[1]).slice(0, 5000);
+const sortedQids = [...qidScores].sort((a,b) => b[1] - a[1]).slice(0, 15000);
 const records = [];
 const entityBatches = chunks(sortedQids, 50);
 let cursor = 0;

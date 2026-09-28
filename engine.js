@@ -4,6 +4,8 @@ export class GuessEngine {
   constructor(characters, questions) {
     this.characters = [...characters];
     this.questions = questions;
+    this.charactersById = new Map(this.characters.map((item) => [this.key(item), item]));
+    this.charactersByName = new Map(this.characters.map((item) => [this.nameKey(item), item]));
     this.reset();
   }
 
@@ -14,6 +16,7 @@ export class GuessEngine {
     this.history = [];
     this.responses = new Map();
     this.answerCount = 0;
+    this.probabilityCache = null;
   }
 
   key(item) { return item.id ?? item.name; }
@@ -27,7 +30,7 @@ export class GuessEngine {
   }
 
   addCharacter(character) {
-    const existing = this.characters.find((item) => this.key(item) === this.key(character) || this.nameKey(item) === this.nameKey(character));
+    const existing = this.charactersById.get(this.key(character)) || this.charactersByName.get(this.nameKey(character));
     if (existing) {
       existing.image ||= character.image;
       existing.source ||= character.source;
@@ -35,21 +38,27 @@ export class GuessEngine {
       for (const [id, value] of Object.entries(character.attributes || {})) {
         if (value === 1) existing.attributes[id] = 1;
       }
+      this.probabilityCache = null;
       return;
     }
     this.characters.push(character);
+    this.charactersById.set(this.key(character), character);
+    this.charactersByName.set(this.nameKey(character), character);
     this.scores.set(this.key(character), this.prior(character));
+    this.probabilityCache = null;
   }
 
   probabilities() {
+    if (this.probabilityCache) return this.probabilityCache;
     const available = this.characters.filter((item) => !this.rejected.has(this.key(item)));
     if (!available.length) return [];
     const ceiling = Math.max(...available.map((item) => this.scores.get(this.key(item)) ?? 0));
     const weighted = available.map((item) => ({ item, weight: Math.exp((this.scores.get(this.key(item)) ?? 0) - ceiling) }));
     const total = weighted.reduce((sum, entry) => sum + entry.weight, 0) || 1;
-    return weighted
+    this.probabilityCache = weighted
       .map((entry) => ({ ...entry, probability: entry.weight / total }))
       .sort((a, b) => b.probability - a.probability);
+    return this.probabilityCache;
   }
 
   certainty() {
@@ -104,6 +113,12 @@ export class GuessEngine {
     if (regions.includes(id) && regions.some((region) => region !== id && this.answeredYes(region))) return false;
     const countries = ["british", "german", "canadian", "latinAmerican", "australian"];
     if (countries.includes(id) && countries.some((country) => country !== id && this.answeredYes(country))) return false;
+    const europeanCountries = ["british", "german"];
+    const nonEuropeanCountries = ["american", "canadian", "latinAmerican", "australian"];
+    if (this.answeredYes("european") && nonEuropeanCountries.includes(id)) return false;
+    if (europeanCountries.some((country) => this.answeredYes(country)) && nonEuropeanCountries.includes(id)) return false;
+    if (nonEuropeanCountries.some((country) => this.answeredYes(country)) && (id === "european" || europeanCountries.includes(id))) return false;
+    if (this.answeredYes("american") && countries.includes(id)) return false;
     const universes = ["marvel", "dc", "disney", "starWars", "pokemon"];
     if (universes.includes(id) && universes.some((universe) => universe !== id && this.answeredYes(universe))) return false;
 
@@ -151,6 +166,7 @@ export class GuessEngine {
     this.answerCount += 1;
     this.history.push({ questionId, answer: response });
     this.responses.set(questionId, response);
+    this.probabilityCache = null;
     if (response === 0) return;
     for (const character of this.characters) {
       const key = this.key(character);
@@ -184,5 +200,6 @@ export class GuessEngine {
   reject(idOrName) {
     const match = this.characters.find((item) => this.key(item) === idOrName || item.name === idOrName);
     this.rejected.add(match ? this.key(match) : idOrName);
+    this.probabilityCache = null;
   }
 }

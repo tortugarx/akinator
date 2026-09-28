@@ -1,20 +1,20 @@
-import { characters, questions } from "./data.js?v=9";
-import { GuessEngine } from "./engine.js?v=9";
+import { characters, questions } from "./data.js?v=10";
+import { GuessEngine } from "./engine.js?v=10";
 import { platform } from "./platform.js";
 
 const translations = {
   en: {
-    speech:"Psst… I bet I know!", welcomeEyebrow:"THE SELF-LEARNING GUESSING GAME", welcomeTitle:"Think of <em>any</em><br>character.", welcomeText:"A star, a fictional character or someone from your own life. Answer honestly – my magic does the rest.", start:"Let’s play!", welcomeHint:"The more you play, the smarter I get.", oracleAsks:"NAZAR ASKS", yes:"Yes", yesHint:"Definitely", probably:"Probably", probablyHint:"I think so", unknown:"Don't know", unknownHint:"Not sure", probablyNot:"Probably not", probablyNotHint:"I doubt it", no:"No", noHint:"Definitely not", vision:"I’VE GOT IT!", thinkingOf:"You are thinking of…", confidence:"Mind match", wasRight:"Did I read your mind?", correct:"Yes, incredible!", wrong:"No, keep trying", playAgain:"Play again", question:"QUESTION", focusing:"I’M THINKING", teachEyebrow:"YOU GOT ME", teachTitle:"Who were you thinking of?", teachText:"Tell me the name. I’ll look them up and remember your answers for the next game.", nameLabel:"Name of the person or character", learnButton:"Teach me", skip:"Start over instead", searching:"Searching the world’s knowledge…", learned:(name)=>`Got it! I’ll remember ${name}.`, learnedTitle:"I learned something new!", learnedText:(name)=>`${name} is now part of my local memory.`, successEyebrow:"MIND READ", successTitle:"Nazar knows!", successText:(n)=>`I found your character in ${n} questions.`
+    speech:"Psst… I bet I know!", welcomeEyebrow:"THE SELF-LEARNING GUESSING GAME", welcomeTitle:"Think of <em>any</em><br>character.", welcomeText:"A star, a fictional character or someone from your own life. Answer honestly – my magic does the rest.", start:"Let’s play!", welcomeHint:"The more you play, the smarter I get.", oracleAsks:"NAZAR ASKS", yes:"Yes", yesHint:"Definitely", probably:"Probably", probablyHint:"I think so", unknown:"Don't know", unknownHint:"Not sure", probablyNot:"Probably not", probablyNotHint:"I doubt it", no:"No", noHint:"Definitely not", vision:"I’VE GOT IT!", thinkingOf:"You are thinking of…", confidence:"Mind match", wasRight:"Did I read your mind?", correct:"Yes, incredible!", wrong:"No, keep trying", playAgain:"Play again", question:"QUESTION", focusing:"I’M THINKING", teachEyebrow:"YOU GOT ME", teachTitle:"Who were you thinking of?", teachText:"Tell me the name. I’ll search my local knowledge and remember your answers for the next game.", nameLabel:"Name of the person or character", learnButton:"Teach me", skip:"Start over instead", searching:"Searching local knowledge…", learned:(name)=>`Got it! I’ll remember ${name}.`, learnedTitle:"I learned something new!", learnedText:(name)=>`${name} is now part of my local memory.`, successEyebrow:"MIND READ", successTitle:"Nazar knows!", successText:(n)=>`I found your character in ${n} questions.`
   },
   de: {
-    speech:"Psst … ich weiß es bestimmt!", welcomeEyebrow:"DAS SELBSTLERNENDE RATESPIEL", welcomeTitle:"Denk an <em>irgendeine</em><br>Figur.", welcomeText:"Ein Star, eine fiktive Figur oder jemand aus deinem eigenen Leben. Antworte ehrlich – den Rest erledigt meine Magie.", start:"Los geht’s!", welcomeHint:"Je öfter du spielst, desto schlauer werde ich.", oracleAsks:"NAZAR FRAGT", yes:"Ja", yesHint:"Ganz sicher", probably:"Wahrscheinlich", probablyHint:"Ich denke schon", unknown:"Weiß nicht", unknownHint:"Nicht sicher", probablyNot:"Eher nicht", probablyNotHint:"Ich bezweifle es", no:"Nein", noHint:"Ganz sicher nicht", vision:"ICH HAB’S!", thinkingOf:"Du denkst an …", confidence:"Gedanken-Treffer", wasRight:"Habe ich deine Gedanken gelesen?", correct:"Ja, unglaublich!", wrong:"Nein, weiterfragen", playAgain:"Noch einmal", question:"FRAGE", focusing:"ICH DENKE NACH", teachEyebrow:"DU HAST MICH ERWISCHT", teachTitle:"Wen hattest du im Kopf?", teachText:"Verrate mir den Namen. Ich suche die Figur und merke mir deine Antworten für das nächste Spiel.", nameLabel:"Name der Person oder Figur", learnButton:"Beibringen", skip:"Lieber neu starten", searching:"Ich durchsuche das Weltwissen …", learned:(name)=>`Verstanden! ${name} merke ich mir.`, learnedTitle:"Wieder etwas gelernt!", learnedText:(name)=>`${name} gehört jetzt zu meinem lokalen Gedächtnis.`, successEyebrow:"GEDANKEN GELESEN", successTitle:"Nazar weiß es!", successText:(n)=>`Ich habe deine Figur mit ${n} Fragen gefunden.`
+    speech:"Psst … ich weiß es bestimmt!", welcomeEyebrow:"DAS SELBSTLERNENDE RATESPIEL", welcomeTitle:"Denk an <em>irgendeine</em><br>Figur.", welcomeText:"Ein Star, eine fiktive Figur oder jemand aus deinem eigenen Leben. Antworte ehrlich – den Rest erledigt meine Magie.", start:"Los geht’s!", welcomeHint:"Je öfter du spielst, desto schlauer werde ich.", oracleAsks:"NAZAR FRAGT", yes:"Ja", yesHint:"Ganz sicher", probably:"Wahrscheinlich", probablyHint:"Ich denke schon", unknown:"Weiß nicht", unknownHint:"Nicht sicher", probablyNot:"Eher nicht", probablyNotHint:"Ich bezweifle es", no:"Nein", noHint:"Ganz sicher nicht", vision:"ICH HAB’S!", thinkingOf:"Du denkst an …", confidence:"Gedanken-Treffer", wasRight:"Habe ich deine Gedanken gelesen?", correct:"Ja, unglaublich!", wrong:"Nein, weiterfragen", playAgain:"Noch einmal", question:"FRAGE", focusing:"ICH DENKE NACH", teachEyebrow:"DU HAST MICH ERWISCHT", teachTitle:"Wen hattest du im Kopf?", teachText:"Verrate mir den Namen. Ich suche lokal und merke mir deine Antworten für das nächste Spiel.", nameLabel:"Name der Person oder Figur", learnButton:"Beibringen", skip:"Lieber neu starten", searching:"Ich durchsuche mein lokales Wissen …", learned:(name)=>`Verstanden! ${name} merke ich mir.`, learnedTitle:"Wieder etwas gelernt!", learnedText:(name)=>`${name} gehört jetzt zu meinem lokalen Gedächtnis.`, successEyebrow:"GEDANKEN GELESEN", successTitle:"Nazar weiß es!", successText:(n)=>`Ich habe deine Figur mit ${n} Fragen gefunden.`
   }
 };
 
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 9;
+const buildVersion = 10;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -113,7 +113,7 @@ function revealGuess() {
   $("#guess-name").textContent = currentGuess.character.name;
   $("#guess-description").textContent = currentGuess.character.description || (language === "de" ? "Eine Figur aus Nazars Gedächtnis" : "A character from Nazar’s memory");
   const source = $("#guess-source");
-  source.hidden = !currentGuess.character.source;
+  source.hidden = !currentGuess.character.source || !platform.externalLinksAllowed();
   source.href = currentGuess.character.source || "#";
   $("#confidence-value").textContent = `${Math.round(currentGuess.confidence * 100)}%`;
   showScreen("guess-screen"); tone(720);
@@ -142,13 +142,11 @@ function showSuccess() {
 }
 
 async function findKnowledge(name) {
-  const params = new URLSearchParams({ action:"wbsearchentities", search:name, language, uselang:language, type:"item", limit:"1", origin:"*", format:"json" });
-  try {
-    const response = await fetch(`https://www.wikidata.org/w/api.php?${params}`, { signal: AbortSignal.timeout?.(5000) });
-    if (!response.ok) throw new Error("Search failed");
-    const match = (await response.json()).search?.[0];
-    return match ? { name:match.label, description:match.description || "", sourceId:match.id } : { name, description:"" };
-  } catch { return { name, description:"" }; }
+  const normalized = name.trim().toLocaleLowerCase();
+  const match = engine.characters.find((item) => item.name.toLocaleLowerCase() === normalized)
+    || engine.characters.find((item) => item.name.toLocaleLowerCase().includes(normalized));
+  if (!match) return { name, description:"" };
+  return { name:match.name, description:match.description || "", sourceId:match.id, image:match.image || "", source:match.source || "" };
 }
 
 async function learnCharacter(event) {
@@ -163,7 +161,7 @@ async function learnCharacter(event) {
   for (const { questionId, answer } of engine.history) attributes[questionId] = answer;
   const character = {
     id: `learned-${(knowledge.sourceId || knowledge.name).toLowerCase().replace(/[^a-z0-9]+/g,"-")}`,
-    name: knowledge.name, icon:"🧠", description: knowledge.description, attributes, learned:true
+    name: knowledge.name, icon:"🧠", description: knowledge.description, image:knowledge.image, source:knowledge.source, attributes, learned:true
   };
   const saved = readLearned().filter(({ id }) => id !== character.id);
   saved.unshift(character);
@@ -189,7 +187,7 @@ document.addEventListener("dblclick", (event) => event.preventDefault(), { passi
 
 async function loadKnowledgeBase() {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 9000);
+  const timeout = setTimeout(() => controller.abort(), 20000);
   try {
     const response = await fetch(`wikidata-people.json?v=${buildVersion}`, { signal:controller.signal });
     if (!response.ok) throw new Error("Knowledge base unavailable");
@@ -204,8 +202,13 @@ async function loadKnowledgeBase() {
 }
 
 setLanguage((navigator.language || "de").toLowerCase().startsWith("de") ? "de" : "en");
-loadKnowledgeBase().finally(() => showScreen("start-screen"));
-platform.init().then(() => { setLanguage(platform.locale().toLowerCase().startsWith("de") ? "de" : "en"); platform.loadingDone(); });
+const knowledgeReady = loadKnowledgeBase().finally(() => showScreen("start-screen"));
+const platformReady = platform.init().then(() => setLanguage(platform.locale().toLowerCase().startsWith("de") ? "de" : "en"));
+Promise.allSettled([knowledgeReady, platformReady]).then(() => platform.loadingDone());
+
+if ("serviceWorker" in navigator && (globalThis.location?.hostname || "").endsWith("github.io")) {
+  navigator.serviceWorker.register("./sw.js").catch(() => {});
+}
 
 fetch(`version.json?t=${Date.now()}`, { cache:"no-store" })
   .then((response) => response.json())

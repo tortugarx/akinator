@@ -5,8 +5,40 @@ class CrazyGamesBridge {
     this.wantsGameplay = false;
   }
 
+  isCrazyGamesHost() {
+    const hostname = globalThis.location?.hostname || "";
+    const referrer = globalThis.document?.referrer || "";
+    return /(^|\.)crazygames\./i.test(hostname)
+      || /(^|\.)game-cdn\./i.test(hostname)
+      || /crazygames\./i.test(referrer);
+  }
+
+  async loadSdk() {
+    if (globalThis.window?.CrazyGames?.SDK || !this.isCrazyGamesHost()) return;
+
+    await new Promise((resolve) => {
+      const existing = document.querySelector("script[data-crazygames-sdk]");
+      if (existing) {
+        existing.addEventListener("load", resolve, { once: true });
+        existing.addEventListener("error", resolve, { once: true });
+        setTimeout(resolve, 5000);
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://sdk.crazygames.com/crazygames-sdk-v3.js";
+      script.async = true;
+      script.dataset.crazygamesSdk = "true";
+      script.addEventListener("load", resolve, { once: true });
+      script.addEventListener("error", resolve, { once: true });
+      document.head.append(script);
+      setTimeout(resolve, 5000);
+    });
+  }
+
   async init() {
     try {
+      await this.loadSdk();
       if (!window.CrazyGames?.SDK) return;
       await window.CrazyGames.SDK.init();
       this.ready = true;
@@ -41,6 +73,10 @@ class CrazyGamesBridge {
   locale() {
     if (!this.ready) return navigator.language || "en";
     return window.CrazyGames.SDK.user.systemInfo?.locale || navigator.language || "en";
+  }
+
+  externalLinksAllowed() {
+    return !this.isCrazyGamesHost();
   }
 }
 

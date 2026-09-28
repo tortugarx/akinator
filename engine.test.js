@@ -106,6 +106,15 @@ test("does not ask a second region after a clear regional answer", () => {
   engine.answer("european", .55);
   const american = questions.find(({ id }) => id === "american");
   assert.equal(engine.isRelevant(american), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "canadian")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "australian")), false);
+});
+
+test("a specific country suppresses contradictory region questions", () => {
+  const engine = new GuessEngine(characters, questions);
+  engine.answer("german", 1);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "american")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "canadian")), false);
 });
 
 test("treats probable answers as decisions for inverse questions", () => {
