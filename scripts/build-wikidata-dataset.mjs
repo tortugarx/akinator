@@ -108,7 +108,7 @@ function convert(entity, score) {
 
   const attributes = { real:isHuman ? 1 : -1, fictional:isFictional ? 1 : -1, personallyKnown:-1 };
   if (isHuman) {
-    for (const trait of ["actor","singer","musician","rapper","politician","nationalLeader","usPresident","activist","militaryLeader","writer","scientist","artist","entrepreneur","creator","comedian","model","director","athlete","football","basketball","tennis","motorsport"]) attributes[trait] = -1;
+    for (const trait of ["actor","singer","musician","rapper","politician","nationalLeader","usPresident","activist","military","militaryLeader","adultCreator","industrialist","medical","legal","religious","writer","scientist","artist","entrepreneur","creator","comedian","model","director","athlete","football","basketball","tennis","motorsport"]) attributes[trait] = -1;
     attributes.alive = entity.claims?.P570?.length ? -1 : 1;
     if (has(entity,"P21","Q6581072")) attributes.female = 1;
     else if (has(entity,"P21","Q6581097")) attributes.female = -1;
@@ -130,6 +130,13 @@ function convert(entity, score) {
     infer("usPresident", /president of the united states|u\.s\. president|us-amerikanischer präsident|präsident der vereinigten staaten/);
     infer("activist", /activist|civil rights leader|campaigner|aktivist|bürgerrechtler|menschenrechtler/);
     infer("militaryLeader", /military leader|military commander|army general|field marshal|militärführer|feldherr|general /);
+    infer("military", /military|army officer|soldier|admiral|general|militär|soldat|offizier|admiral/);
+    infer("adultCreator", /pornographic|porn actor|porn actress|adult film|adult content|onlyfans|erotic model|pornodarsteller/);
+    infer("industrialist", /industrialist|manufacturer|manufacturing|factory owner|industriell|industrieller|fabrikant/);
+    infer("medical", /physician|doctor|surgeon|medical researcher|mediziner|arzt|ärztin|chirurg/);
+    infer("legal", /lawyer|attorney|judge|jurist|rechtsanwalt|richter|jurist/);
+    infer("religious", /religious leader|priest|bishop|pope|imam|rabbi|pastor|geistlicher|bischof|papst/);
+    if (attributes.militaryLeader === 1) attributes.military = 1;
     if (attributes.usPresident === 1) attributes.nationalLeader = 1;
     if (["nationalLeader", "usPresident", "activist", "militaryLeader"].some((trait) => attributes[trait] === 1)) attributes.politician = 1;
     infer("writer", /writer|author|novelist|poet|schriftsteller|schriftstellerin|autor|dichter/);

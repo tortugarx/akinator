@@ -1,8 +1,10 @@
-import { characters, questions } from "./data.js?v=12";
-import { GuessEngine } from "./engine.js?v=12";
+import { characters, questions } from "./data.js?v=13";
+import { GuessEngine } from "./engine.js?v=13";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=12";
-import { questionModel } from "./question-model.js?v=12";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=13";
+import { questionModel } from "./question-model.js?v=13";
+import { playCount, recordConfirmedPlay } from "./play-stats.js?v=13";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=13";
 
 const translations = {
   en: {
@@ -16,7 +18,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 12;
+const buildVersion = 13;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -34,18 +36,20 @@ function showScreen(id) {
 }
 
 function questionText(question) {
-  const text = question[language];
-  if (!engine.answeredYes("real") && !engine.answeredNo("fictional")) return text;
-  if (language === "de") return text
-    .replaceAll("deine Figur oder Person", "diese Person")
-    .replaceAll("deine Figur", "diese Person")
-    .replaceAll("deiner Figur", "dieser Person")
-    .replaceAll("Figur", "Person");
-  return text
-    .replaceAll("your character or person", "this person")
-    .replaceAll("your character", "this person")
-    .replaceAll("character", "person");
+  return contextualQuestionText(question, language, engine.answeredYes("real") || engine.answeredNo("fictional"));
 }
+
+function renderQuestion(question) {
+  const node = $("#question-text");
+  const text = questionText(question);
+  node.textContent = text;
+  node.innerHTML = highlightedQuestionHtml(text, language);
+}
+
+const characterKey = (character) => character.id ?? character.name;
+const localPlayText = (count) => language === "de"
+  ? `${count}-mal auf diesem Gerät bestätigt`
+  : `Confirmed ${count} time${count === 1 ? "" : "s"} on this device`;
 
 function setLanguage(next) {
   language = next;
@@ -56,7 +60,7 @@ function setLanguage(next) {
     if (typeof value === "string") node.innerHTML = value;
   });
   $("#character-input").placeholder = language === "de" ? "z. B. Pippi Langstrumpf" : "e.g. Pippi Longstocking";
-  if (currentQuestion) $("#question-text").textContent = questionText(currentQuestion);
+  if (currentQuestion) renderQuestion(currentQuestion);
   updateQuestionMeta();
 }
 
@@ -90,7 +94,7 @@ function askNext() {
   currentQuestion = engine.nextQuestion();
   acceptingAnswer = true;
   if (!currentQuestion) return engine.probabilities().length ? revealGuess() : showLearn();
-  $("#question-text").textContent = questionText(currentQuestion);
+  renderQuestion(currentQuestion);
   updateQuestionMeta();
   $("#question-text").animate?.([{ opacity:0, transform:"translateY(8px)" }, { opacity:1, transform:"none" }], { duration:220 });
 }
@@ -131,6 +135,7 @@ function revealGuess() {
   const source = $("#guess-source");
   source.hidden = !currentGuess.character.source || !platform.externalLinksAllowed();
   source.href = currentGuess.character.source || "#";
+  $("#guess-play-count").textContent = localPlayText(playCount(characterKey(currentGuess.character)));
   $("#confidence-value").textContent = `${Math.round(currentGuess.confidence * 100)}%`;
   showScreen("guess-screen"); tone(720);
 }
@@ -154,7 +159,8 @@ function showResult(title, text, learned = false) {
 
 function showSuccess() {
   platform.happyTime();
-  showResult(translations[language].successTitle, translations[language].successText(engine.answerCount));
+  const count = currentGuess ? recordConfirmedPlay(characterKey(currentGuess.character)) : 0;
+  showResult(translations[language].successTitle, `${translations[language].successText(engine.answerCount)} ${localPlayText(count)}.`);
 }
 
 async function findKnowledge(name) {

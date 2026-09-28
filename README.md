@@ -4,6 +4,8 @@ Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine ku
 
 Die ausgelieferte Version umfasst mehr als 17.500 eindeutige Personen, Figuren und private Rollen. Über 14.000 Wiki-Einträge besitzen ein Porträt aus Wikimedia Commons. Für jede Antwort berechnet die Engine die neue Kandidatenverteilung und wählt anschließend die Frage mit der größten erwarteten Entropiereduktion. Bestätigte Themen aktivieren passende Unterfragen und sperren sachfremde Themen. Buchstaben- und Geburtsjahrfragen werden nicht verwendet.
 
+Die Wissensbasis unterscheidet neben Unterhaltung, Politik, Sport und Wissenschaft auch Militär, Erwachsenen-Inhalte, Industrie/Fertigung, Medizin, Recht und Religion. Zentrale Themenwörter werden in Fragen optisch hervorgehoben.
+
 ## Lokal starten
 
 ```bash
@@ -46,3 +48,5 @@ Der Build enthält alle Spiel-, Engine- und Wissensdaten und lädt das CrazyGame
 ## Datenschutz und Lernen
 
 Neu gelernte Figuren und die dazugehörigen Antworten werden ausschließlich in `localStorage` des jeweiligen Browsers abgelegt. Öffentliche Personen werden vor dem Speichern eindeutig gegen die lokale Wiki-Basis geprüft und übernehmen vorhandene Merkmale, Beschreibung, Quelle und Porträt. Nicht überprüfbare Namen sind nur erlaubt, wenn zuvor der private Zweig gewählt wurde. Namenssuche, Fragenwahl und Erkennung laufen lokal; es gibt keinen eigenen Server, keine Laufzeit-API und keinen API-Schlüssel.
+
+Bestätigte Treffer werden pro Figur ebenfalls nur lokal gezählt und ausdrücklich als Gerätewert angezeigt. Ein globaler Zähler oder gemeinsames Lernen zwischen Nutzern benötigt einen externen, moderierten API-Dienst. Ungeprüfte Antworten sollten niemals direkt das globale Modell verändern, da einzelne Nutzer die Wissensbasis sonst vergiften könnten.

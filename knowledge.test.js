@@ -22,3 +22,13 @@ test("includes correctly classified requested public people", () => {
   assert.ok(papaplatte.image);
   assert.deepEqual([rain.attributes.real, rain.attributes.creator, rain.attributes.american, rain.attributes.female], [1, 1, 1, 1]);
 });
+
+test("covers additional real-world fields", () => {
+  const count = (trait) => database.characters.filter(({ attributes }) => attributes[trait] === 1).length;
+  assert.ok(count("military") >= 180);
+  assert.ok(count("adultCreator") >= 30);
+  assert.ok(count("industrialist") >= 15);
+  assert.ok(count("medical") >= 60);
+  assert.ok(count("legal") >= 200);
+  assert.ok(count("religious") >= 80);
+});

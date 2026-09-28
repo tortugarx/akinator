@@ -5,12 +5,14 @@ const nonEuropeanCountries = new Set(["american", "canadian", "brazilian", "aust
 const topicBranches = new Map([
   ["musician", new Set(["musicGroup", "singer", "rapper"])],
   ["athlete", new Set(["football", "basketball", "tennis", "motorsport"])],
-  ["politician", new Set(["nationalLeader", "usPresident", "activist", "militaryLeader", "royalty"])],
-  ["actor", new Set(["movie", "tv", "comedian", "model"])],
-  ["creator", new Set(["internet"])],
+  ["politician", new Set(["nationalLeader", "usPresident", "activist", "military", "militaryLeader", "royalty"])],
+  ["military", new Set(["militaryLeader"])],
+  ["actor", new Set(["movie", "tv", "comedian", "model", "adultCreator"])],
+  ["creator", new Set(["internet", "adultCreator"])],
   ["scientist", new Set(["space", "electric"])],
   ["artist", new Set()], ["entrepreneur", new Set(["internet"])], ["writer", new Set(["book"])],
-  ["comedian", new Set()], ["model", new Set()], ["director", new Set(["movie"])], ["internet", new Set()]
+  ["comedian", new Set()], ["model", new Set()], ["director", new Set(["movie"])], ["internet", new Set()],
+  ["adultCreator", new Set()], ["industrialist", new Set()], ["medical", new Set()], ["legal", new Set()], ["religious", new Set()]
 ]);
 
 export class GuessEngine {
@@ -95,9 +97,9 @@ export class GuessEngine {
     for (const [answeredId, answer] of this.responses) {
       if (answer >= .5 && this.model.exclusions?.[answeredId]?.includes(id)) return false;
     }
-    const publicQuestions = new Set(["historical", "musician", "musicGroup", "singer", "rapper", "athlete", "football", "basketball", "tennis", "motorsport", "creator", "comedian", "model", "director", "politician", "nationalLeader", "usPresident", "activist", "militaryLeader", "scientist", "artist", "entrepreneur", "internet", "royalty", "american", "european", "british", "german", "french", "spanish", "italian", "canadian", "latinAmerican", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "fictional", "magic", "superhero", "masked", "animated", "anime", "game", "space", "detective", "villain", "powers", "electric", "nonhuman", "movie", "tv", "book", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "glasses", "hat", "blonde", "actor", "writer", "animal", "robot", "red"]);
+    const publicQuestions = new Set(["historical", "musician", "musicGroup", "singer", "rapper", "athlete", "football", "basketball", "tennis", "motorsport", "creator", "comedian", "model", "director", "politician", "nationalLeader", "usPresident", "activist", "military", "militaryLeader", "adultCreator", "industrialist", "medical", "legal", "religious", "scientist", "artist", "entrepreneur", "internet", "royalty", "american", "european", "british", "german", "french", "spanish", "italian", "canadian", "latinAmerican", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "fictional", "magic", "superhero", "masked", "animated", "anime", "game", "space", "detective", "villain", "powers", "electric", "nonhuman", "movie", "tv", "book", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "glasses", "hat", "blonde", "actor", "writer", "animal", "robot", "red"]);
     const fictionalOnly = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist"]);
-    const realOnly = new Set(["alive", "historical", ...exactCountries, "european", "latinAmerican", "scientist", "artist", "entrepreneur", "internet", "nationalLeader", "usPresident", "activist", "militaryLeader"]);
+    const realOnly = new Set(["alive", "historical", ...exactCountries, "european", "latinAmerican", "scientist", "artist", "entrepreneur", "internet", "nationalLeader", "usPresident", "activist", "military", "militaryLeader", "adultCreator", "industrialist", "medical", "legal", "religious"]);
 
     if (id === "fictional" && (this.answeredYes("real") || this.answeredNo("real"))) return false;
     if (id === "real" && (this.answeredYes("fictional") || this.answeredNo("fictional"))) return false;
@@ -127,6 +129,7 @@ export class GuessEngine {
     if ((id === "singer" || id === "rapper") && this.answeredNo("musician")) return false;
     if (id === "football" && this.answeredNo("athlete")) return false;
     if (["basketball", "tennis", "motorsport"].includes(id) && this.answeredNo("athlete")) return false;
+    if (id === "militaryLeader" && this.answeredNo("military")) return false;
     if (id === "anime" && this.answeredNo("animated")) return false;
     if ((id === "animal" || id === "robot" || id === "nonhuman") && this.answeredYes("human")) return false;
     if (id === "animal" && this.answeredNo("nonhuman")) return false;
