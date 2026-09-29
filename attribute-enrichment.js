@@ -47,6 +47,16 @@ const rules = {
   mario:/mario franchise|mario series|super mario/i,
   sonic:/sonic the hedgehog/i,
   retired:/\bretired\b|\bformer\b|ehemalig|im ruhestand|career ended/i,
+  singer:/\bsinger\b|\bvocalist\b|sänger|sängerin|gesangssolist/i,
+  songwriter:/singer-songwriter|songwriter|liedermacher|songschreiber/i,
+  soloSinger:/solo singer|solo artist|solosänger|solosängerin/i,
+  rnbSoulSinger:/r&b|rhythm and blues|soul singer|soulsänger/i,
+  jazzSinger:/jazz singer|jazz vocalist|jazzsänger/i,
+  operaSinger:/opera singer|operatic singer|operasänger/i,
+  kpopSinger:/k-pop|kpop/i,
+  latinSinger:/latin singer|latin music|reggaeton|salsa singer|latin-pop/i,
+  schlagerSinger:/schlager/i,
+  folkSinger:/folk singer|folk musician|singer-songwriter|liedermacher/i,
   popMusician:/pop singer|pop musician|pop ?star|popsänger|popmusiker/i,
   rockMusician:/rock singer|rock musician|rock guitarist|heavy metal|rockmusiker|rocksänger|metal-musiker/i,
   classicalMusician:/classical musician|classical composer|opera singer|klassische musik|operasänger/i,
@@ -60,7 +70,18 @@ const rules = {
   americanFootball:/american football player|nfl player|american-football-spieler/i,
   winterSports:/skier|ski jumper|snowboarder|biathlete|speed skater|skispringer|biathlet|eisschnellläufer/i,
   youtuber:/youtuber|youtube personality|webvideoproduzent/i,
-  streamer:/livestreamer|live streamer|twitch streamer/i,
+  streamer:/\bstreamer\b|livestreamer|live streamer/i,
+  twitchStreamer:/twitch/i,
+  youtubeStreamer:/youtube streamer|streams? on youtube/i,
+  gamingStreamer:/gaming streamer|game streamer|videospiel-streamer/i,
+  minecraftStreamer:/minecraft (?:streamer|youtuber|creator)|minecraft content/i,
+  competitiveGameStreamer:/esports streamer|competitive gamer|counter-strike|valorant|league of legends|fortnite streamer/i,
+  irlStreamer:/irl streamer|just chatting/i,
+  politicalStreamer:/political streamer|political commentator|politics streamer/i,
+  vtuber:/\bvtuber\b|virtual youtuber/i,
+  varietyStreamer:/variety streamer/i,
+  challengeCreator:/challenge youtuber|online challenges|stunt youtuber/i,
+  commentaryCreator:/commentary youtuber|reaction youtuber|video essayist/i,
   tiktoker:/tiktoker|tik tok personality/i,
   podcaster:/podcaster|podcast host/i,
   mayor:/\bmayor\b|bürgermeister/i,
@@ -110,6 +131,62 @@ const rules = {
   danish:/\bdanish\b|dänisch/i
 };
 
+const singerDetails = ["songwriter","soloSinger","rnbSoulSinger","jazzSinger","operaSinger","kpopSinger","latinSinger","schlagerSinger","folkSinger"];
+const streamerDetails = ["twitchStreamer","youtubeStreamer","gamingStreamer","minecraftStreamer","competitiveGameStreamer","irlStreamer","politicalStreamer","vtuber","varietyStreamer"];
+
+// Short Wikidata descriptions cannot express every useful distinction. These
+// local profiles cover especially popular singers and streamers deterministically;
+// they are also fed back into the generated question model during training.
+const knownProfiles = new Map(Object.entries({
+  "Taylor Swift": ["singer","songwriter","soloSinger","popMusician","countryMusician"],
+  "Beyoncé": ["singer","songwriter","soloSinger","popMusician","rnbSoulSinger","musicGroup"],
+  "Michael Jackson": ["singer","songwriter","soloSinger","popMusician","rnbSoulSinger","musicGroup"],
+  "Elvis Presley": ["singer","soloSinger","rockMusician","countryMusician"],
+  "Freddie Mercury": ["singer","songwriter","rockMusician","musicGroup"],
+  "Adele": ["singer","songwriter","soloSinger","popMusician","rnbSoulSinger"],
+  "Rihanna": ["singer","soloSinger","popMusician","rnbSoulSinger"],
+  "Billie Eilish": ["singer","songwriter","soloSinger","popMusician"],
+  "Ed Sheeran": ["singer","songwriter","soloSinger","popMusician","folkSinger"],
+  "Lady Gaga": ["singer","songwriter","soloSinger","popMusician"],
+  "Ariana Grande": ["singer","soloSinger","popMusician","rnbSoulSinger"],
+  "Selena Gomez": ["singer","soloSinger","popMusician"],
+  "Justin Bieber": ["singer","soloSinger","popMusician"],
+  "Drake": ["singer","songwriter","soloSinger","rnbSoulSinger","rapper"],
+  "Whitney Houston": ["singer","soloSinger","popMusician","rnbSoulSinger"],
+  "Madonna": ["singer","songwriter","soloSinger","popMusician"],
+  "Britney Spears": ["singer","soloSinger","popMusician"],
+  "Bruno Mars": ["singer","songwriter","soloSinger","popMusician","rnbSoulSinger"],
+  "Dua Lipa": ["singer","songwriter","soloSinger","popMusician"],
+  "Shakira": ["singer","songwriter","soloSinger","popMusician","latinSinger"],
+  "Bad Bunny": ["singer","soloSinger","latinSinger","rapper"],
+  "The Weeknd": ["singer","songwriter","soloSinger","popMusician","rnbSoulSinger"],
+  "Post Malone": ["singer","songwriter","soloSinger","popMusician","rapper"],
+  "Miley Cyrus": ["singer","songwriter","soloSinger","popMusician","rockMusician"],
+  "Olivia Rodrigo": ["singer","songwriter","soloSinger","popMusician","rockMusician"],
+  "Harry Styles": ["singer","songwriter","soloSinger","popMusician","rockMusician","musicGroup"],
+  "Mariah Carey": ["singer","songwriter","soloSinger","popMusician","rnbSoulSinger"],
+  "Céline Dion": ["singer","soloSinger","popMusician"],
+  "Celine Dion": ["singer","soloSinger","popMusician"],
+  "Frank Sinatra": ["singer","soloSinger","jazzSinger"],
+  "Andrea Bocelli": ["singer","soloSinger","operaSinger","classicalMusician"],
+  "Helene Fischer": ["singer","soloSinger","schlagerSinger","popMusician"],
+  "BTS": ["singer","kpopSinger","popMusician","musicGroup"],
+  "Jungkook": ["singer","soloSinger","kpopSinger","popMusician","musicGroup"],
+  "Papaplatte": ["streamer","twitchStreamer","gamingStreamer","minecraftStreamer","varietyStreamer","podcaster"],
+  "IShowSpeed": ["streamer","youtubeStreamer","gamingStreamer","varietyStreamer"],
+  "Hasan Piker": ["streamer","twitchStreamer","politicalStreamer","irlStreamer"],
+  "Ibai Llanos": ["streamer","twitchStreamer","gamingStreamer","competitiveGameStreamer","varietyStreamer"],
+  "Kai Cenat": ["streamer","twitchStreamer","irlStreamer","varietyStreamer"],
+  "Adin Ross": ["streamer","twitchStreamer","irlStreamer"],
+  "Amouranth": ["streamer","twitchStreamer","irlStreamer","varietyStreamer"],
+  "Dr Disrespect": ["streamer","youtubeStreamer","gamingStreamer","competitiveGameStreamer","varietyStreamer"],
+  "Angryginge": ["streamer","twitchStreamer","gamingStreamer"],
+  "Sketch": ["streamer","twitchStreamer","gamingStreamer"],
+  "Inoxtag": ["streamer","youtubeStreamer","gamingStreamer"],
+  "PewDiePie": ["youtuber","gamingStreamer","commentaryCreator"],
+  "MrBeast": ["youtuber","challengeCreator"]
+}));
+
 const sports = ["boxer","wrestler","racingDriver","golfer","cyclist","swimmer","runner","baseball","iceHockey","gymnast","esports","martialArts","cricket","volleyball","handball","americanFootball","winterSports"];
 const sciences = ["physicist","mathematician","chemist","biologist","astronaut","engineer","inventor","academic","computerScientist","economist","psychologist","astronomer","environmentalScientist"];
 
@@ -117,6 +194,35 @@ export function enrichCharacterAttributes(character) {
   character.attributes ||= {};
   const text = `${character.name || ""} ${character.description || ""}`;
   for (const [id, pattern] of Object.entries(rules)) if (pattern.test(text)) character.attributes[id] = 1;
+  for (const id of knownProfiles.get(character.name) || []) character.attributes[id] = 1;
+
+  // Wikidata occupations often include singing as a minor side activity. The
+  // question explicitly asks whether singing is the person's main identity, so
+  // actor/director-only descriptions remain unknown instead of polluting the
+  // singer branch.
+  const mainSinger = rules.singer.test(text) || singerDetails.some((id) => character.attributes[id] === 1) || knownProfiles.get(character.name)?.includes("singer");
+  const clearlyDifferentMainRole = /actor|actress|schauspiel|film director|regisseur|politician|politiker|athlete|sportler|model|comedian|komiker/i.test(character.description || "");
+  if (character.attributes.singer === 1 && !mainSinger && clearlyDifferentMainRole) character.attributes.singer = 0;
+  const explicitlyActor = /actor|actress|schauspiel/i.test(character.description || "");
+  if (character.attributes.actor === 1 && mainSinger && !explicitlyActor) character.attributes.actor = 0;
+  const primaryStreamer = character.attributes.streamer === 1;
+  if (primaryStreamer && !explicitlyActor) character.attributes.actor = 0;
+  if (primaryStreamer && !/musician|music|singer|songwriter|rapper|musiker|sänger/i.test(character.description || "")) {
+    character.attributes.musician = 0;
+    character.attributes.rapper = 0;
+  }
+  if (character.attributes.musician === 1 && character.attributes.singer === 0
+      && !/musician|composer|songwriter|rapper|music|musiker|komponist|sänger|rapper/i.test(text)) character.attributes.musician = 0;
+  if (character.attributes.singer === 1) {
+    character.attributes.musician = 1;
+    for (const id of singerDetails) character.attributes[id] ??= -1;
+    character.attributes.soloSinger ??= character.attributes.musicGroup === 1 ? -1 : 1;
+  }
+  if (character.attributes.streamer === 1) {
+    for (const id of streamerDetails) character.attributes[id] ??= -1;
+  } else if (character.attributes.creator === 1 && character.attributes.streamer == null) {
+    character.attributes.streamer = -1;
+  }
   if (["composer","dj","instrumentalist"].some((id) => character.attributes[id] === 1)) character.attributes.musician = 1;
   if (["popMusician","rockMusician","classicalMusician","electronicMusician","countryMusician","musicProducer"].some((id) => character.attributes[id] === 1)) character.attributes.musician = 1;
   if (sports.some((id) => character.attributes[id] === 1)) character.attributes.athlete = 1;
@@ -129,6 +235,7 @@ export function enrichCharacterAttributes(character) {
     character.attributes.creator = 1;
     character.attributes.internet = 1;
   }
+  if (character.attributes.creator === 1 && character.attributes.streamer == null) character.attributes.streamer = -1;
   if (["mayor","legislator","chancellor","governor"].some((id) => character.attributes[id] === 1)) character.attributes.politician = 1;
   if (["novelist","playwright","childrensAuthor"].some((id) => character.attributes[id] === 1)) character.attributes.writer = 1;
   if (["techEntrepreneur","finance","fashionBusiness"].some((id) => character.attributes[id] === 1)) character.attributes.entrepreneur = 1;

@@ -42,6 +42,24 @@ test("rejected guesses are removed from consideration", () => {
   assert.notEqual(engine.bestGuess().character.name, first);
 });
 
+test("requires new evidence instead of rattling through guesses after a rejection", () => {
+  const localQuestions = ["one", "two", "three", "four"].map((id) => ({ id, en:id, de:id }));
+  const localCharacters = [
+    { id:"a", name:"A", attributes:{ one:1, two:1, three:1, four:1 } },
+    { id:"b", name:"B", attributes:{ one:-1, two:-1, three:-1, four:-1 } }
+  ];
+  const engine = new GuessEngine(localCharacters, localQuestions);
+  engine.answer("one", 1);
+  assert.equal(engine.shouldGuess(), true);
+  engine.reject("a");
+  assert.equal(engine.shouldGuess(), false);
+  engine.answer("two", -1);
+  engine.answer("three", -1);
+  assert.equal(engine.shouldGuess(), false);
+  engine.answer("four", -1);
+  assert.equal(engine.shouldGuess(), true);
+});
+
 test("Wikidata enriches an existing curated character instead of duplicating it", () => {
   const engine = new GuessEngine([{ id:"known", name:"Known Person", icon:"👤", attributes:{ real:1, singer:-1 } }], questions);
   engine.addCharacter({ id:"wiki-q1", name:"Known Person", image:"portrait.jpg", source:"wikidata", popularity:100, attributes:{ real:1, singer:1 } });
@@ -163,10 +181,39 @@ test("chooses the question with the highest expected information gain", () => {
 });
 
 test("ships a substantially larger useful question catalogue", () => {
-  assert.ok(questions.length >= 205);
-  for (const id of ["entertainment", "journalist", "popMusician", "martialArts", "youtuber", "chancellor", "computerScientist", "novelist", "techEntrepreneur", "army", "gameOfThrones", "retired"]) {
+  assert.ok(questions.length >= 225);
+  for (const id of ["entertainment", "journalist", "popMusician", "martialArts", "youtuber", "chancellor", "computerScientist", "novelist", "techEntrepreneur", "army", "gameOfThrones", "retired", "songwriter", "rnbSoulSinger", "twitchStreamer", "minecraftStreamer", "politicalStreamer"]) {
     assert.ok(questions.some((question) => question.id === id), `missing ${id}`);
   }
+});
+
+test("focuses on singer details once the singer branch is confirmed", () => {
+  const engine = new GuessEngine(characters, questions, questionModel);
+  engine.answer("real", 1);
+  engine.answer("musician", 1);
+  engine.answer("singer", 1);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "songwriter")), true);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "rnbSoulSinger")), true);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "composer")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "dj")), false);
+});
+
+test("focuses on streamer details once the streamer branch is confirmed", () => {
+  const engine = new GuessEngine(characters, questions, questionModel);
+  engine.answer("real", 1);
+  engine.answer("creator", 1);
+  engine.answer("streamer", 1);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "twitchStreamer")), true);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "gamingStreamer")), true);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "tiktoker")), false);
+});
+
+test("recognizes plain streamer descriptions and removes actor-only singer noise", () => {
+  const streamer = new GuessEngine([{ id:"s", name:"Streamer", description:"spanischer Streamer und Moderator", attributes:{ real:1, creator:1 } }], questions);
+  assert.equal(streamer.characters[0].attributes.streamer, 1);
+  const actor = new GuessEngine([{ id:"a", name:"Actor", description:"US-amerikanische Schauspielerin", attributes:{ real:1, actor:1, singer:1, musician:1 } }], questions);
+  assert.equal(actor.characters[0].attributes.singer, 0);
+  assert.equal(actor.characters[0].attributes.musician, 0);
 });
 
 test("gates countries behind their region and subregion", () => {

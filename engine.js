@@ -19,11 +19,13 @@ const nonEuropeanCountries = new Set(["american", "canadian", "brazilian", "aust
 const topicBranches = new Map([
   ["entertainment", new Set(["actor", "musician", "comedian", "dancer", "model", "director", "producer", "presenter", "creator", "journalist"])],
   ["musician", new Set(["musicGroup", "singer", "rapper", "composer", "dj", "instrumentalist", "popMusician", "rockMusician", "classicalMusician", "electronicMusician", "countryMusician", "musicProducer"])],
+  ["singer", new Set(["musicGroup", "songwriter", "soloSinger", "popMusician", "rockMusician", "classicalMusician", "electronicMusician", "countryMusician", "rnbSoulSinger", "jazzSinger", "operaSinger", "kpopSinger", "latinSinger", "schlagerSinger", "folkSinger", "rapper", "retired"])],
   ["athlete", new Set(["football", "basketball", "tennis", "motorsport", "boxer", "wrestler", "racingDriver", "coach", "golfer", "cyclist", "swimmer", "runner", "baseball", "iceHockey", "gymnast", "esports", "martialArts", "cricket", "volleyball", "handball", "americanFootball", "winterSports", "retired"])],
   ["politician", new Set(["nationalLeader", "usPresident", "activist", "military", "militaryLeader", "royalty", "ministerDiplomat", "mayor", "legislator", "chancellor", "governor", "retired"])],
   ["military", new Set(["militaryLeader", "army", "navy", "airForce", "retired"])],
   ["actor", new Set(["movie", "tv", "comedian", "model", "adultCreator", "voiceActor", "theaterActor", "realityTV", "awardWinningActor", "retired"])],
-  ["creator", new Set(["internet", "adultCreator", "gamer", "esports", "youtuber", "streamer", "tiktoker", "podcaster", "retired"])],
+  ["creator", new Set(["internet", "adultCreator", "gamer", "esports", "youtuber", "streamer", "tiktoker", "podcaster", "challengeCreator", "commentaryCreator", "retired"])],
+  ["streamer", new Set(["twitchStreamer", "youtubeStreamer", "gamingStreamer", "minecraftStreamer", "competitiveGameStreamer", "irlStreamer", "politicalStreamer", "vtuber", "varietyStreamer", "youtuber", "podcaster", "retired"])],
   ["scientist", new Set(["space", "electric", "physicist", "mathematician", "chemist", "biologist", "astronaut", "engineer", "inventor", "academic", "computerScientist", "economist", "psychologist", "astronomer", "environmentalScientist", "retired"])],
   ["artist", new Set(["photographer", "architect", "retired"])], ["entrepreneur", new Set(["internet", "industrialist", "techEntrepreneur", "finance", "fashionBusiness", "retired"])], ["writer", new Set(["book", "poet", "screenwriter", "philosopher", "novelist", "playwright", "childrensAuthor", "retired"])],
   ["comedian", new Set()], ["model", new Set()], ["director", new Set(["movie"])], ["internet", new Set()],
@@ -63,6 +65,7 @@ export class GuessEngine {
     this.history = [];
     this.responses = new Map();
     this.answerCount = 0;
+    this.lastRejectionAnswerCount = null;
     this.probabilityCache = null;
   }
 
@@ -151,7 +154,11 @@ export class GuessEngine {
     for (const [root] of topicBranches) {
       if (topicDescendants(root).has(id) && this.answeredNo(root)) return false;
     }
-    const activeTopics = [...topicBranches].filter(([root]) => this.answeredYes(root));
+    const confirmedTopics = [...topicBranches].filter(([root]) => this.answeredYes(root));
+    // Once a precise branch is known (for example singer or streamer), stop
+    // wandering back into sibling professions. Keep unrelated confirmed roots,
+    // but discard their broader ancestors.
+    const activeTopics = confirmedTopics.filter(([root]) => !confirmedTopics.some(([other]) => other !== root && topicDescendants(root).has(other)));
     if (realPerson && activeTopics.length) {
       const allowed = new Set(activeTopics.flatMap(([root]) => [root, ...topicDescendants(root)]));
       const universal = new Set(["real", "personallyKnown", "alive", "female", "historical", ...exactCountries, ...regionQuestions, ...subregionQuestions]);
@@ -269,6 +276,7 @@ export class GuessEngine {
   shouldGuess() {
     const best = this.bestGuess();
     if (!best) return false;
+    if (this.lastRejectionAnswerCount !== null && this.answerCount - this.lastRejectionAnswerCount < 3) return false;
     const hasRelevantQuestion = this.questions.some((question) => !this.asked.has(question.id) && this.isRelevant(question));
     if (this.answerCount > 0 && !hasRelevantQuestion) return true;
     return (best.probability >= .82 && best.ratio >= 7)
@@ -279,6 +287,7 @@ export class GuessEngine {
   reject(idOrName) {
     const match = this.characters.find((item) => this.key(item) === idOrName || item.name === idOrName);
     this.rejected.add(match ? this.key(match) : idOrName);
+    this.lastRejectionAnswerCount = this.answerCount;
     this.probabilityCache = null;
   }
 }

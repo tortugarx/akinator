@@ -1,10 +1,10 @@
-import { characters, questions } from "./data.js?v=16";
-import { GuessEngine } from "./engine.js?v=16";
+import { characters, questions } from "./data.js?v=17";
+import { GuessEngine } from "./engine.js?v=17";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=16";
-import { questionModel } from "./question-model.js?v=16";
-import { playCount, recordConfirmedPlay } from "./play-stats.js?v=16";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=16";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=17";
+import { questionModel } from "./question-model.js?v=17";
+import { playCount, recordConfirmedPlay } from "./play-stats.js?v=17";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=17";
 
 const translations = {
   en: {
@@ -18,7 +18,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 16;
+const buildVersion = 17;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -93,7 +93,7 @@ function startGame() {
 function askNext() {
   currentQuestion = engine.nextQuestion();
   acceptingAnswer = true;
-  if (!currentQuestion) return engine.probabilities().length ? revealGuess() : showLearn();
+  if (!currentQuestion) return engine.shouldGuess() ? revealGuess() : showLearn();
   renderQuestion(currentQuestion);
   updateQuestionMeta();
   $("#question-text").animate?.([{ opacity:0, transform:"translateY(8px)" }, { opacity:1, transform:"none" }], { duration:220 });
