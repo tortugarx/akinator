@@ -1,6 +1,10 @@
 import { enrichCharacterAttributes } from "./attribute-enrichment.js";
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+const binaryEntropy = (probability) => {
+  if (probability <= 1e-12 || probability >= 1 - 1e-12) return 0;
+  return -probability * Math.log(probability) - (1 - probability) * Math.log(1 - probability);
+};
 const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]);
 const exactCountries = new Set(["american", "british", "german", "french", "spanish", "italian", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "austrian", "swiss", "dutch", "swedish", "polish", "russian", "ukrainian", "turkish", "mexican", "argentine", "nigerian", "southAfrican", "portuguese", "belgian", "irish", "norwegian", "danish"]);
 const regionQuestions = new Set(["european", "latinAmerican", "asian", "african"]);
@@ -16,20 +20,20 @@ const countryParents = new Map([
   ...["nigerian","southAfrican"].map((id) => [id,["african"]])
 ]);
 const nonEuropeanCountries = new Set(["american", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "mexican", "argentine", "nigerian", "southAfrican"]);
-const topicBranches = new Map([
+export const topicBranches = new Map([
   ["entertainment", new Set(["actor", "musician", "comedian", "dancer", "model", "director", "producer", "presenter", "creator", "journalist"])],
-  ["musician", new Set(["musicGroup", "singer", "rapper", "composer", "dj", "instrumentalist", "popMusician", "rockMusician", "classicalMusician", "electronicMusician", "countryMusician", "musicProducer"])],
-  ["singer", new Set(["musicGroup", "songwriter", "soloSinger", "popMusician", "rockMusician", "classicalMusician", "electronicMusician", "countryMusician", "rnbSoulSinger", "jazzSinger", "operaSinger", "kpopSinger", "latinSinger", "schlagerSinger", "folkSinger", "rapper", "retired"])],
+  ["musician", new Set(["musicGroup", "singer", "rapper", "composer", "dj", "instrumentalist", "popMusician", "rockMusician", "classicalMusician", "electronicMusician", "countryMusician", "musicProducer", "guitarist", "pianist", "drummer", "violinist", "conductor", "metalMusician", "reggaeMusician", "gospelSinger"])],
+  ["singer", new Set(["musicGroup", "songwriter", "soloSinger", "popMusician", "rockMusician", "classicalMusician", "electronicMusician", "countryMusician", "rnbSoulSinger", "jazzSinger", "operaSinger", "kpopSinger", "latinSinger", "schlagerSinger", "folkSinger", "metalMusician", "reggaeMusician", "gospelSinger", "rapper", "retired"])],
   ["athlete", new Set(["football", "basketball", "tennis", "motorsport", "boxer", "wrestler", "racingDriver", "coach", "golfer", "cyclist", "swimmer", "runner", "baseball", "iceHockey", "gymnast", "esports", "martialArts", "cricket", "volleyball", "handball", "americanFootball", "winterSports", "retired"])],
-  ["politician", new Set(["nationalLeader", "usPresident", "activist", "military", "militaryLeader", "royalty", "ministerDiplomat", "mayor", "legislator", "chancellor", "governor", "retired"])],
-  ["military", new Set(["militaryLeader", "army", "navy", "airForce", "retired"])],
-  ["actor", new Set(["movie", "tv", "comedian", "model", "adultCreator", "voiceActor", "theaterActor", "realityTV", "awardWinningActor", "retired"])],
-  ["creator", new Set(["internet", "adultCreator", "gamer", "esports", "youtuber", "streamer", "tiktoker", "podcaster", "challengeCreator", "commentaryCreator", "retired"])],
-  ["streamer", new Set(["twitchStreamer", "youtubeStreamer", "gamingStreamer", "minecraftStreamer", "competitiveGameStreamer", "irlStreamer", "politicalStreamer", "vtuber", "varietyStreamer", "youtuber", "podcaster", "retired"])],
+  ["politician", new Set(["nationalLeader", "usPresident", "president", "primeMinister", "partyLeader", "cabinetMinister", "diplomat", "activist", "military", "militaryLeader", "royalty", "ministerDiplomat", "mayor", "legislator", "chancellor", "governor", "retired"])],
+  ["military", new Set(["militaryLeader", "army", "navy", "airForce", "generalOfficer", "admiral", "militaryPilot", "retired"])],
+  ["actor", new Set(["movie", "tv", "filmActor", "seriesActor", "childActor", "actionActor", "horrorActor", "bollywoodActor", "soapActor", "comedian", "model", "adultCreator", "adultFilmPerformer", "onlyFansCreator", "adultDirector", "voiceActor", "theaterActor", "realityTV", "awardWinningActor", "retired"])],
+  ["creator", new Set(["internet", "adultCreator", "adultFilmPerformer", "onlyFansCreator", "gamer", "esports", "youtuber", "streamer", "tiktoker", "podcaster", "challengeCreator", "commentaryCreator", "vlogger", "beautyCreator", "techCreator", "educationCreator", "foodCreator", "travelCreator", "fitnessCreator", "comedyCreator", "kidsCreator", "musicCreator", "sportsCreator", "prankCreator", "retired"])],
+  ["streamer", new Set(["twitchStreamer", "youtubeStreamer", "gamingStreamer", "minecraftStreamer", "competitiveGameStreamer", "irlStreamer", "politicalStreamer", "vtuber", "varietyStreamer", "roleplayStreamer", "sportsGameStreamer", "battleRoyaleStreamer", "mobaStreamer", "shooterStreamer", "speedrunner", "youtuber", "podcaster", "retired"])],
   ["scientist", new Set(["space", "electric", "physicist", "mathematician", "chemist", "biologist", "astronaut", "engineer", "inventor", "academic", "computerScientist", "economist", "psychologist", "astronomer", "environmentalScientist", "retired"])],
-  ["artist", new Set(["photographer", "architect", "retired"])], ["entrepreneur", new Set(["internet", "industrialist", "techEntrepreneur", "finance", "fashionBusiness", "retired"])], ["writer", new Set(["book", "poet", "screenwriter", "philosopher", "novelist", "playwright", "childrensAuthor", "retired"])],
+  ["artist", new Set(["photographer", "architect", "retired"])], ["entrepreneur", new Set(["internet", "industrialist", "techEntrepreneur", "finance", "fashionBusiness", "chiefExecutive", "billionaire", "retired"])], ["writer", new Set(["book", "poet", "screenwriter", "philosopher", "novelist", "playwright", "childrensAuthor", "fantasyAuthor", "scifiAuthor", "crimeAuthor", "nonfictionAuthor", "retired"])],
   ["comedian", new Set()], ["model", new Set()], ["director", new Set(["movie"])], ["internet", new Set()],
-  ["adultCreator", new Set()], ["industrialist", new Set()], ["medical", new Set()], ["legal", new Set()], ["religious", new Set()],
+  ["adultCreator", new Set(["adultFilmPerformer", "onlyFansCreator", "adultDirector"])], ["industrialist", new Set()], ["medical", new Set()], ["legal", new Set()], ["religious", new Set()],
   ["journalist", new Set(["presenter", "podcaster", "retired"])], ["producer", new Set(["musicProducer", "retired"])], ["dancer", new Set(["retired"])], ["chef", new Set(["retired"])]
 ]);
 
@@ -44,7 +48,7 @@ function collectTopicDescendants(root, found = new Set()) {
 const topicDescendantCache = new Map([...topicBranches.keys()].map((root) => [root, collectTopicDescendants(root)]));
 const topicDescendants = (root) => topicDescendantCache.get(root) || new Set();
 const fictionalOnlyQuestions = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "comic", "scienceFiction", "fantasy", "alien", "monster", "harryPotter", "lordOfTheRings", "mario", "sonic", "wizard", "warrior", "policeCharacter", "studentCharacter", "sitcom", "crimeFiction", "gameOfThrones"]);
-const realOnlyQuestions = new Set(["alive", "historical", "retired", ...exactCountries, ...regionQuestions, ...subregionQuestions, "medical", "legal", "religious", "chef"]);
+const realOnlyQuestions = new Set(["alive", "retired", ...exactCountries, ...regionQuestions, ...subregionQuestions, "medical", "legal", "religious", "chef"]);
 for (const [root] of topicBranches) for (const topicId of [root, ...topicDescendants(root)]) realOnlyQuestions.add(topicId);
 for (const shared of ["movie", "tv", "book", "space", "electric", "royalty"]) realOnlyQuestions.delete(shared);
 
@@ -151,19 +155,10 @@ export class GuessEngine {
     if (this.answeredYes("schoolWork") && ["romantic", "partner", "friend"].includes(id)) return false;
     const familyRoles = ["parent", "sibling", "grandparent", "yourChild"];
     if (familyRoles.includes(id) && familyRoles.some((role) => role !== id && this.answeredYes(role))) return false;
-    for (const [root] of topicBranches) {
-      if (topicDescendants(root).has(id) && this.answeredNo(root)) return false;
-    }
-    const confirmedTopics = [...topicBranches].filter(([root]) => this.answeredYes(root));
-    // Once a precise branch is known (for example singer or streamer), stop
-    // wandering back into sibling professions. Keep unrelated confirmed roots,
-    // but discard their broader ancestors.
-    const activeTopics = confirmedTopics.filter(([root]) => !confirmedTopics.some(([other]) => other !== root && topicDescendants(root).has(other)));
-    if (realPerson && activeTopics.length) {
-      const allowed = new Set(activeTopics.flatMap(([root]) => [root, ...topicDescendants(root)]));
-      const universal = new Set(["real", "personallyKnown", "alive", "female", "historical", ...exactCountries, ...regionQuestions, ...subregionQuestions]);
-      if (!allowed.has(id) && !universal.has(id)) return false;
-    }
+    const parentTopics = [...topicBranches].filter(([, children]) => children.has(id) || [...children].some((child) => topicDescendants(child).has(id)));
+    // A detail can belong to several careers. It is impossible only when every
+    // possible parent was denied; one denied sibling must never close the path.
+    if (parentTopics.length && parentTopics.every(([root]) => this.answeredNo(root))) return false;
     if (id === "musicGroup" && this.answeredNo("musician")) return false;
     if ((id === "singer" || id === "rapper") && this.answeredNo("musician")) return false;
     if (id === "football" && this.answeredNo("athlete")) return false;
@@ -190,6 +185,22 @@ export class GuessEngine {
     return true;
   }
 
+  focusedTopics() {
+    const confirmed = [...topicBranches].filter(([root]) => this.answeredYes(root));
+    return confirmed.filter(([root]) => !confirmed.some(([other]) => other !== root && topicDescendants(root).has(other)));
+  }
+
+  questionFocusWeight(id, focused = this.focusedTopics()) {
+    if (!focused.length) return 1;
+    const universal = new Set(["real", "personallyKnown", "alive", "female", ...exactCountries, ...regionQuestions, ...subregionQuestions]);
+    if (universal.has(id)) return .82;
+    if (focused.some(([root]) => root === id || topicDescendants(root).has(id))) return 1.2;
+    // Other profession roots remain available to discover overlapping careers,
+    // but their low priority prevents a tour through every unrelated industry.
+    if (topicBranches.has(id)) return .42;
+    return .18;
+  }
+
   nextQuestion() {
     const candidates = this.probabilities();
     const unasked = this.questions.filter((question) => !this.asked.has(question.id) && this.isRelevant(question));
@@ -204,35 +215,35 @@ export class GuessEngine {
       this.asked.add(personalBranch.id);
       return personalBranch;
     }
-    const currentEntropy = -candidates.reduce((sum, { probability }) => sum + probability * Math.log(Math.max(probability, 1e-12)), 0);
+    // The most probable candidates carry the useful decision boundary. Limiting
+    // scoring to this normalized beam keeps 17k-person games responsive without
+    // changing the final probability table or removing any candidate.
+    const beam = candidates.length > 4000 ? candidates.slice(0, 4000) : candidates;
+    const beamMass = beam.reduce((sum, { probability }) => sum + probability, 0) || 1;
+    const selectionCandidates = beam.map((entry) => ({ ...entry, probability:entry.probability / beamMass }));
     let best = null;
     let bestValue = 0.0001;
     let bestBalanced = null;
     let bestBalancedValue = 0.0001;
+    const focusedTopics = this.focusedTopics();
     for (const question of unasked) {
       let yesMass = 0;
       let knownMass = 0;
-      for (const { item, probability } of candidates) {
+      let conditionalEntropy = 0;
+      for (const { item, probability } of selectionCandidates) {
         const expected = item.attributes[question.id] ?? 0;
         if (Math.abs(expected) >= .5) knownMass += probability;
         const yesLikelihood = expected >= .5 ? .88 : expected <= -.5 ? .12 : .5;
         yesMass += probability * yesLikelihood;
+        conditionalEntropy += probability * binaryEntropy(yesLikelihood);
       }
       const noMass = 1 - yesMass;
       if (yesMass <= 1e-9 || noMass <= 1e-9) continue;
-      let yesEntropy = 0;
-      let noEntropy = 0;
-      for (const { item, probability } of candidates) {
-        const expected = item.attributes[question.id] ?? 0;
-        const yesLikelihood = expected >= .5 ? .88 : expected <= -.5 ? .12 : .5;
-        const yesPosterior = probability * yesLikelihood / yesMass;
-        const noPosterior = probability * (1 - yesLikelihood) / noMass;
-        yesEntropy -= yesPosterior * Math.log(Math.max(yesPosterior, 1e-12));
-        noEntropy -= noPosterior * Math.log(Math.max(noPosterior, 1e-12));
-      }
-      const gain = currentEntropy - yesMass * yesEntropy - noMass * noEntropy;
+      const gain = binaryEntropy(yesMass) - conditionalEntropy;
       const splitQuality = 1 - Math.abs(yesMass - noMass);
-      const value = gain * (this.model.weights?.[question.id] || 1) * (.72 + .28 * splitQuality);
+      const trainedBranchWeights = focusedTopics.map(([root]) => this.model.branchWeights?.[root]?.[question.id]).filter(Number.isFinite);
+      const branchWeight = trainedBranchWeights.length ? Math.max(...trainedBranchWeights) : 1;
+      const value = gain * (this.model.weights?.[question.id] || 1) * branchWeight * this.questionFocusWeight(question.id, focusedTopics) * (.72 + .28 * splitQuality);
       if (value > bestValue) { best = question; bestValue = value; }
       // Prefer a genuine near-half split when enough of the remaining probability
       // mass has a known trait. Fall back to maximum information gain otherwise.

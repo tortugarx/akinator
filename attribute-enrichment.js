@@ -3,7 +3,7 @@
 const rules = {
   journalist:/journalist|reporter|publizist|reporterin/i,
   presenter:/presenter|television host|radio host|show host|fernsehmoderator|radiomoderator/i,
-  producer:/film producer|music producer|record producer|produzent/i,
+  producer:/film producer|music producer|record producer|filmproduzent|musikproduzent/i,
   dancer:/dancer|tänzer|tänzerin/i,
   composer:/composer|komponist|komponistin/i,
   dj:/disc jockey|\bdj\b/i,
@@ -35,8 +35,23 @@ const rules = {
   philosopher:/philosopher|philosoph|philosophin/i,
   screenwriter:/screenwriter|drehbuchautor|drehbuchautorin/i,
   voiceActor:/voice actor|voice actress|synchronsprecher|synchronsprecherin/i,
+  filmActor:/film actor|film actress|movie actor|movie actress|filmschauspiel/i,
+  seriesActor:/television actor|television actress|tv actor|series actor|fernsehschauspiel/i,
+  childActor:/child actor|child actress|kinderdarsteller/i,
+  actionActor:/action star|action actor|actionfilm/i,
+  horrorActor:/horror actor|horror actress|horrorfilm/i,
+  bollywoodActor:/bollywood|indian film actor|indian film actress/i,
+  soapActor:/soap opera actor|soap opera actress|soapdarsteller/i,
+  adultFilmPerformer:/pornographic actor|pornographic actress|porn actor|porn actress|adult film actor|adult film actress|pornodarsteller/i,
+  onlyFansCreator:/onlyfans/i,
+  adultDirector:/porn director|adult film director|pornoregisseur/i,
   academic:/professor|academic|hochschullehrer|hochschullehrerin/i,
   ministerDiplomat:/diplomat|government minister|foreign minister|innenminister|außenminister|diplomatin/i,
+  primeMinister:/prime minister|premierminister/i,
+  president:/president of|president von|staatspräsident/i,
+  partyLeader:/party leader|parteivorsitz|parteichef/i,
+  cabinetMinister:/cabinet minister|government minister|bundesminister|staatsminister/i,
+  diplomat:/\bdiplomat|diplomatin|ambassador|botschafter/i,
   comic:/comic book character|comics character|comicfigur/i,
   scienceFiction:/science fiction|sci-fi/i,
   fantasy:/fantasy character|fantasy novel|fantasy film/i,
@@ -82,6 +97,24 @@ const rules = {
   varietyStreamer:/variety streamer/i,
   challengeCreator:/challenge youtuber|online challenges|stunt youtuber/i,
   commentaryCreator:/commentary youtuber|reaction youtuber|video essayist/i,
+  vlogger:/\bvlogger\b|video blogger/i,
+  beautyCreator:/beauty youtuber|beauty influencer|make-?up artist|fashion influencer/i,
+  techCreator:/technology youtuber|tech youtuber|technology reviewer/i,
+  educationCreator:/educational youtuber|science youtuber|educational content creator/i,
+  foodCreator:/food youtuber|cooking youtuber|food blogger|mukbang|mok-bang/i,
+  travelCreator:/travel youtuber|travel vlogger|travel blogger/i,
+  fitnessCreator:/fitness youtuber|fitness influencer|bodybuilder.*youtuber/i,
+  comedyCreator:/comedy youtuber|comedy creator|sketch comedian/i,
+  kidsCreator:/children's youtuber|kids youtuber|family youtuber/i,
+  musicCreator:/music youtuber|musical youtuber/i,
+  sportsCreator:/sports youtuber|football youtuber|sports influencer/i,
+  prankCreator:/prankster|prank youtuber/i,
+  roleplayStreamer:/gta roleplay|roleplay streamer/i,
+  sportsGameStreamer:/fifa streamer|ea sports fc streamer|sports game streamer/i,
+  battleRoyaleStreamer:/fortnite streamer|pubg streamer|battle royale streamer/i,
+  mobaStreamer:/league of legends streamer|dota streamer|moba streamer/i,
+  shooterStreamer:/counter-strike streamer|valorant streamer|call of duty streamer|shooter streamer/i,
+  speedrunner:/speedrunner|speedrunning/i,
   tiktoker:/tiktoker|tik tok personality/i,
   podcaster:/podcaster|podcast host/i,
   mayor:/\bmayor\b|bürgermeister/i,
@@ -96,6 +129,10 @@ const rules = {
   novelist:/novelist|romanautor|romanschriftsteller/i,
   playwright:/playwright|dramatist|dramatiker|theaterautor/i,
   childrensAuthor:/children's author|children’s author|kinderbuchautor/i,
+  fantasyAuthor:/fantasy author|fantasy writer|fantasy novelist/i,
+  scifiAuthor:/science fiction author|science-fiction writer|sci-fi author/i,
+  crimeAuthor:/crime writer|crime novelist|detective fiction writer|krimiautor/i,
+  nonfictionAuthor:/nonfiction writer|non-fiction writer|sachbuchautor/i,
   theaterActor:/stage actor|theatre actor|theater actor|theaterschauspieler/i,
   realityTV:/reality television|reality tv|reality-tv/i,
   awardWinningActor:/academy award-winning actor|oscar-winning actor|emmy award-winning actor|oscarpreisträger/i,
@@ -105,6 +142,19 @@ const rules = {
   army:/army officer|army general|army soldier|heeresoffizier/i,
   navy:/naval officer|navy admiral|navy officer|marineoffizier/i,
   airForce:/air force officer|air force general|luftwaffenoffizier/i,
+  generalOfficer:/army general|general officer|field marshal|feldmarschall|heer.*general/i,
+  admiral:/\badmiral\b/i,
+  militaryPilot:/military pilot|fighter pilot|luftwaffenpilot/i,
+  chiefExecutive:/chief executive|\bceo\b|business executive|vorstandsvorsitz/i,
+  billionaire:/\bbillionaire\b|milliardär/i,
+  guitarist:/guitarist|gitarrist/i,
+  pianist:/pianist|pianistin/i,
+  drummer:/drummer|schlagzeuger/i,
+  violinist:/violinist|geiger|geigerin/i,
+  conductor:/orchestra conductor|music conductor|dirigent/i,
+  metalMusician:/heavy metal|metal musician|metal singer|metal band/i,
+  reggaeMusician:/reggae musician|reggae singer/i,
+  gospelSinger:/gospel singer|gospel musician/i,
   wizard:/wizard|witch|zauberer|hexe/i,
   warrior:/warrior|fighter character|krieger|kämpfer/i,
   policeCharacter:/fictional police|police officer character|polizist.*figur/i,
@@ -131,8 +181,18 @@ const rules = {
   danish:/\bdanish\b|dänisch/i
 };
 
-const singerDetails = ["songwriter","soloSinger","rnbSoulSinger","jazzSinger","operaSinger","kpopSinger","latinSinger","schlagerSinger","folkSinger"];
-const streamerDetails = ["twitchStreamer","youtubeStreamer","gamingStreamer","minecraftStreamer","competitiveGameStreamer","irlStreamer","politicalStreamer","vtuber","varietyStreamer"];
+const singerDetails = ["songwriter","soloSinger","rnbSoulSinger","jazzSinger","operaSinger","kpopSinger","latinSinger","schlagerSinger","folkSinger","metalMusician","reggaeMusician","gospelSinger"];
+const streamerDetails = ["twitchStreamer","youtubeStreamer","gamingStreamer","minecraftStreamer","competitiveGameStreamer","irlStreamer","politicalStreamer","vtuber","varietyStreamer","roleplayStreamer","sportsGameStreamer","battleRoyaleStreamer","mobaStreamer","shooterStreamer","speedrunner"];
+const creatorDetails = ["challengeCreator","commentaryCreator","vlogger","beautyCreator","techCreator","educationCreator","foodCreator","travelCreator","fitnessCreator","comedyCreator","kidsCreator","musicCreator","sportsCreator","prankCreator"];
+const branchDetailDefaults = {
+  actor:["filmActor","seriesActor","childActor","actionActor","horrorActor","bollywoodActor","soapActor","adultFilmPerformer","onlyFansCreator","adultDirector"],
+  musician:["guitarist","pianist","drummer","violinist","conductor","metalMusician","reggaeMusician","gospelSinger"],
+  creator:creatorDetails,
+  politician:["primeMinister","president","partyLeader","cabinetMinister","diplomat"],
+  writer:["fantasyAuthor","scifiAuthor","crimeAuthor","nonfictionAuthor"],
+  military:["generalOfficer","admiral","militaryPilot"],
+  entrepreneur:["chiefExecutive","billionaire"]
+};
 
 // Short Wikidata descriptions cannot express every useful distinction. These
 // local profiles cover especially popular singers and streamers deterministically;
@@ -172,17 +232,19 @@ const knownProfiles = new Map(Object.entries({
   "Helene Fischer": ["singer","soloSinger","schlagerSinger","popMusician"],
   "BTS": ["singer","kpopSinger","popMusician","musicGroup"],
   "Jungkook": ["singer","soloSinger","kpopSinger","popMusician","musicGroup"],
-  "Papaplatte": ["streamer","twitchStreamer","gamingStreamer","minecraftStreamer","varietyStreamer","podcaster"],
-  "IShowSpeed": ["streamer","youtubeStreamer","gamingStreamer","varietyStreamer"],
-  "Hasan Piker": ["streamer","twitchStreamer","politicalStreamer","irlStreamer"],
-  "Ibai Llanos": ["streamer","twitchStreamer","gamingStreamer","competitiveGameStreamer","varietyStreamer"],
-  "Kai Cenat": ["streamer","twitchStreamer","irlStreamer","varietyStreamer"],
+  "Papaplatte": ["streamer","twitchStreamer","gamingStreamer","minecraftStreamer","varietyStreamer","podcaster","vlogger"],
+  "IShowSpeed": ["streamer","youtubeStreamer","gamingStreamer","sportsGameStreamer","varietyStreamer","musicCreator","sportsCreator"],
+  "Hasan Piker": ["streamer","twitchStreamer","politicalStreamer","irlStreamer","commentaryCreator"],
+  "Ibai Llanos": ["streamer","twitchStreamer","gamingStreamer","competitiveGameStreamer","sportsGameStreamer","varietyStreamer","sportsCreator"],
+  "Kai Cenat": ["streamer","twitchStreamer","irlStreamer","varietyStreamer","comedyCreator"],
   "Adin Ross": ["streamer","twitchStreamer","irlStreamer"],
-  "Amouranth": ["streamer","twitchStreamer","irlStreamer","varietyStreamer"],
-  "Dr Disrespect": ["streamer","youtubeStreamer","gamingStreamer","competitiveGameStreamer","varietyStreamer"],
-  "Angryginge": ["streamer","twitchStreamer","gamingStreamer"],
-  "Sketch": ["streamer","twitchStreamer","gamingStreamer"],
-  "Inoxtag": ["streamer","youtubeStreamer","gamingStreamer"],
+  "Amouranth": ["streamer","twitchStreamer","irlStreamer","varietyStreamer","adultCreator","onlyFansCreator"],
+  "Sophie Rain": ["creator","adultCreator","onlyFansCreator"],
+  "Mia Khalifa": ["creator","adultCreator","adultFilmPerformer"],
+  "Dr Disrespect": ["streamer","youtubeStreamer","gamingStreamer","competitiveGameStreamer","shooterStreamer","varietyStreamer"],
+  "Angryginge": ["streamer","twitchStreamer","gamingStreamer","sportsGameStreamer"],
+  "Sketch": ["streamer","twitchStreamer","gamingStreamer","sportsGameStreamer"],
+  "Inoxtag": ["streamer","youtubeStreamer","gamingStreamer","vlogger"],
   "PewDiePie": ["youtuber","gamingStreamer","commentaryCreator"],
   "MrBeast": ["youtuber","challengeCreator"]
 }));
@@ -224,6 +286,10 @@ export function enrichCharacterAttributes(character) {
     character.attributes.streamer = -1;
   }
   if (["composer","dj","instrumentalist"].some((id) => character.attributes[id] === 1)) character.attributes.musician = 1;
+  if (["guitarist","pianist","drummer","violinist","conductor"].some((id) => character.attributes[id] === 1)) {
+    character.attributes.instrumentalist = 1;
+    character.attributes.musician = 1;
+  }
   if (["popMusician","rockMusician","classicalMusician","electronicMusician","countryMusician","musicProducer"].some((id) => character.attributes[id] === 1)) character.attributes.musician = 1;
   if (sports.some((id) => character.attributes[id] === 1)) character.attributes.athlete = 1;
   if (sciences.some((id) => character.attributes[id] === 1)) character.attributes.scientist = 1;
@@ -235,6 +301,17 @@ export function enrichCharacterAttributes(character) {
     character.attributes.creator = 1;
     character.attributes.internet = 1;
   }
+  if (creatorDetails.some((id) => character.attributes[id] === 1)) {
+    character.attributes.creator = 1;
+    character.attributes.internet = 1;
+  }
+  if (["adultFilmPerformer","onlyFansCreator","adultDirector"].some((id) => character.attributes[id] === 1)) character.attributes.adultCreator = 1;
+  if (character.attributes.adultFilmPerformer === 1) character.attributes.actor = 1;
+  if (["primeMinister","president","partyLeader","cabinetMinister","diplomat"].some((id) => character.attributes[id] === 1)) character.attributes.politician = 1;
+  if (["primeMinister","president"].some((id) => character.attributes[id] === 1)) character.attributes.nationalLeader = 1;
+  if (["fantasyAuthor","scifiAuthor","crimeAuthor","nonfictionAuthor"].some((id) => character.attributes[id] === 1)) character.attributes.writer = 1;
+  if (["generalOfficer","admiral","militaryPilot"].some((id) => character.attributes[id] === 1)) character.attributes.military = 1;
+  if (["chiefExecutive","billionaire"].some((id) => character.attributes[id] === 1)) character.attributes.entrepreneur = 1;
   if (character.attributes.creator === 1 && character.attributes.streamer == null) character.attributes.streamer = -1;
   if (["mayor","legislator","chancellor","governor"].some((id) => character.attributes[id] === 1)) character.attributes.politician = 1;
   if (["novelist","playwright","childrensAuthor"].some((id) => character.attributes[id] === 1)) character.attributes.writer = 1;
@@ -261,6 +338,9 @@ export function enrichCharacterAttributes(character) {
   for (const [region, members] of Object.entries(europeanGroups)) setRegion(region, members);
   const careerRoots = ["athlete","politician","military","actor","creator","scientist","artist","entrepreneur","writer","journalist","producer","dancer","chef","musician"];
   if (character.attributes.real === 1 && character.attributes.alive === 1 && careerRoots.some((id) => character.attributes[id] === 1) && character.attributes.retired !== 1) character.attributes.retired = -1;
+  for (const [root, details] of Object.entries(branchDetailDefaults)) {
+    if (character.attributes[root] === 1) for (const id of details) character.attributes[id] ??= -1;
+  }
   if (["comic","scienceFiction","fantasy","alien","monster","harryPotter","lordOfTheRings","mario","sonic","wizard","warrior","policeCharacter","studentCharacter","sitcom","crimeFiction","gameOfThrones"].some((id) => character.attributes[id] === 1)) {
     character.attributes.real = -1;
     character.attributes.fictional = 1;

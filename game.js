@@ -1,24 +1,24 @@
-import { characters, questions } from "./data.js?v=17";
-import { GuessEngine } from "./engine.js?v=17";
+import { characters, questions } from "./data.js?v=18";
+import { GuessEngine } from "./engine.js?v=18";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=17";
-import { questionModel } from "./question-model.js?v=17";
-import { playCount, recordConfirmedPlay } from "./play-stats.js?v=17";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=17";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=18";
+import { questionModel } from "./question-model.js?v=18";
+import { playCount, recordConfirmedPlay } from "./play-stats.js?v=18";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=18";
 
 const translations = {
   en: {
-    speech:"Psst… I bet I know!", welcomeEyebrow:"THE SELF-LEARNING GUESSING GAME", welcomeTitle:"Think of <em>any</em><br>character.", welcomeText:"A star, a fictional character or someone from your own life. Answer honestly – my magic does the rest.", start:"Let’s play!", welcomeHint:"The more you play, the smarter I get.", oracleAsks:"NAZAR ASKS", yes:"Yes", yesHint:"Definitely", probably:"Probably", probablyHint:"I think so", unknown:"Don't know", unknownHint:"Not sure", probablyNot:"Probably not", probablyNotHint:"I doubt it", no:"No", noHint:"Definitely not", vision:"I’VE GOT IT!", thinkingOf:"You are thinking of…", confidence:"Mind match", wasRight:"Did I read your mind?", correct:"Yes, incredible!", wrong:"No, keep trying", playAgain:"Play again", question:"QUESTION", focusing:"I’M THINKING", teachEyebrow:"YOU GOT ME", teachTitle:"Who were you thinking of?", teachText:"Tell me the name. I’ll search my local knowledge and remember your answers for the next game.", nameLabel:"Name of the person or character", learnButton:"Teach me", skip:"Start over instead", searching:"Searching local knowledge…", notVerified:"I could not verify this public person in the local knowledge base. Private people can only be added after answering that you know them personally.", learned:(name)=>`Got it! I’ll remember ${name}.`, learnedTitle:"I learned something new!", learnedText:(name)=>`${name} is now part of my local memory.`, successEyebrow:"MIND READ", successTitle:"Nazar knows!", successText:(n)=>`I found your character in ${n} questions.`
+    speech:"Psst… I bet I know!", welcomeEyebrow:"THE SELF-LEARNING GUESSING GAME", welcomeTitle:"Think of <em>any</em><br>character.", welcomeText:"A star, a fictional character or someone from your own life. Answer honestly – my magic does the rest.", start:"Let’s play!", welcomeHint:"The more you play, the smarter I get.", oracleAsks:"NAZAR ASKS", thinkingWait:"Nazar is narrowing down the people…", yes:"Yes", yesHint:"Definitely", probably:"Probably", probablyHint:"I think so", unknown:"Don't know", unknownHint:"Not sure", probablyNot:"Probably not", probablyNotHint:"I doubt it", no:"No", noHint:"Definitely not", vision:"I’VE GOT IT!", thinkingOf:"You are thinking of…", confidence:"Mind match", wasRight:"Did I read your mind?", correct:"Yes, incredible!", wrong:"No, keep trying", playAgain:"Play again", question:"QUESTION", focusing:"I’M THINKING", teachEyebrow:"YOU GOT ME", teachTitle:"Who were you thinking of?", teachText:"Tell me the name. I’ll search my local knowledge and remember your answers for the next game.", nameLabel:"Name of the person or character", learnButton:"Teach me", skip:"Start over instead", searching:"Searching local knowledge…", notVerified:"I could not verify this public person in the local knowledge base. Private people can only be added after answering that you know them personally.", learned:(name)=>`Got it! I’ll remember ${name}.`, learnedTitle:"I learned something new!", learnedText:(name)=>`${name} is now part of my local memory.`, successEyebrow:"MIND READ", successTitle:"Nazar knows!", successText:(n)=>`I found your character in ${n} questions.`
   },
   de: {
-    speech:"Psst … ich weiß es bestimmt!", welcomeEyebrow:"DAS SELBSTLERNENDE RATESPIEL", welcomeTitle:"Denk an <em>irgendeine</em><br>Figur.", welcomeText:"Ein Star, eine fiktive Figur oder jemand aus deinem eigenen Leben. Antworte ehrlich – den Rest erledigt meine Magie.", start:"Los geht’s!", welcomeHint:"Je öfter du spielst, desto schlauer werde ich.", oracleAsks:"NAZAR FRAGT", yes:"Ja", yesHint:"Ganz sicher", probably:"Wahrscheinlich", probablyHint:"Ich denke schon", unknown:"Weiß nicht", unknownHint:"Nicht sicher", probablyNot:"Eher nicht", probablyNotHint:"Ich bezweifle es", no:"Nein", noHint:"Ganz sicher nicht", vision:"ICH HAB’S!", thinkingOf:"Du denkst an …", confidence:"Gedanken-Treffer", wasRight:"Habe ich deine Gedanken gelesen?", correct:"Ja, unglaublich!", wrong:"Nein, weiterfragen", playAgain:"Noch einmal", question:"FRAGE", focusing:"ICH DENKE NACH", teachEyebrow:"DU HAST MICH ERWISCHT", teachTitle:"Wen hattest du im Kopf?", teachText:"Verrate mir den Namen. Ich suche lokal und merke mir deine Antworten für das nächste Spiel.", nameLabel:"Name der Person oder Figur", learnButton:"Beibringen", skip:"Lieber neu starten", searching:"Ich durchsuche mein lokales Wissen …", notVerified:"Diese öffentliche Person konnte ich in der lokalen Wissensbasis nicht überprüfen. Private Personen lassen sich nur hinzufügen, wenn du zuvor angegeben hast, dass du sie persönlich kennst.", learned:(name)=>`Verstanden! ${name} merke ich mir.`, learnedTitle:"Wieder etwas gelernt!", learnedText:(name)=>`${name} gehört jetzt zu meinem lokalen Gedächtnis.`, successEyebrow:"GEDANKEN GELESEN", successTitle:"Nazar weiß es!", successText:(n)=>`Ich habe deine Figur mit ${n} Fragen gefunden.`
+    speech:"Psst … ich weiß es bestimmt!", welcomeEyebrow:"DAS SELBSTLERNENDE RATESPIEL", welcomeTitle:"Denk an <em>irgendeine</em><br>Figur.", welcomeText:"Ein Star, eine fiktive Figur oder jemand aus deinem eigenen Leben. Antworte ehrlich – den Rest erledigt meine Magie.", start:"Los geht’s!", welcomeHint:"Je öfter du spielst, desto schlauer werde ich.", oracleAsks:"NAZAR FRAGT", thinkingWait:"Nazar grenzt die Personen ein …", yes:"Ja", yesHint:"Ganz sicher", probably:"Wahrscheinlich", probablyHint:"Ich denke schon", unknown:"Weiß nicht", unknownHint:"Nicht sicher", probablyNot:"Eher nicht", probablyNotHint:"Ich bezweifle es", no:"Nein", noHint:"Ganz sicher nicht", vision:"ICH HAB’S!", thinkingOf:"Du denkst an …", confidence:"Gedanken-Treffer", wasRight:"Habe ich deine Gedanken gelesen?", correct:"Ja, unglaublich!", wrong:"Nein, weiterfragen", playAgain:"Noch einmal", question:"FRAGE", focusing:"ICH DENKE NACH", teachEyebrow:"DU HAST MICH ERWISCHT", teachTitle:"Wen hattest du im Kopf?", teachText:"Verrate mir den Namen. Ich suche lokal und merke mir deine Antworten für das nächste Spiel.", nameLabel:"Name der Person oder Figur", learnButton:"Beibringen", skip:"Lieber neu starten", searching:"Ich durchsuche mein lokales Wissen …", notVerified:"Diese öffentliche Person konnte ich in der lokalen Wissensbasis nicht überprüfen. Private Personen lassen sich nur hinzufügen, wenn du zuvor angegeben hast, dass du sie persönlich kennst.", learned:(name)=>`Verstanden! ${name} merke ich mir.`, learnedTitle:"Wieder etwas gelernt!", learnedText:(name)=>`${name} gehört jetzt zu meinem lokalen Gedächtnis.`, successEyebrow:"GEDANKEN GELESEN", successTitle:"Nazar weiß es!", successText:(n)=>`Ich habe deine Figur mit ${n} Fragen gefunden.`
   }
 };
 
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 17;
+const buildVersion = 18;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -44,6 +44,28 @@ function renderQuestion(question) {
   const text = questionText(question);
   node.textContent = text;
   node.innerHTML = highlightedQuestionHtml(text, language);
+}
+
+const nextPaint = () => new Promise((resolve) => {
+  const frame = globalThis.requestAnimationFrame || ((callback) => setTimeout(callback, 0));
+  frame(() => frame(resolve));
+});
+
+function resetAnswerButtons() {
+  document.querySelectorAll("#answer-grid button[data-answer]").forEach((button) => {
+    button.disabled = false;
+    button.classList.toggle("is-selected", false);
+    button.blur?.();
+  });
+}
+
+function setThinking(active, selectedButton = null) {
+  const lock = $("#thinking-lock");
+  if (lock) lock.hidden = !active;
+  document.querySelectorAll("#answer-grid button[data-answer]").forEach((button) => {
+    button.disabled = active;
+    button.classList.toggle("is-selected", active && button === selectedButton);
+  });
 }
 
 const characterKey = (character) => character.id ?? character.name;
@@ -94,16 +116,20 @@ function askNext() {
   currentQuestion = engine.nextQuestion();
   acceptingAnswer = true;
   if (!currentQuestion) return engine.shouldGuess() ? revealGuess() : showLearn();
+  resetAnswerButtons();
   renderQuestion(currentQuestion);
   updateQuestionMeta();
+  $("#question-text").getAnimations?.().forEach((animation) => animation.cancel());
   $("#question-text").animate?.([{ opacity:0, transform:"translateY(8px)" }, { opacity:1, transform:"none" }], { duration:220 });
 }
 
-function answer(value) {
+async function answer(value, selectedButton = null) {
   if (!currentQuestion || !acceptingAnswer) return;
   acceptingAnswer = false;
   const answeredQuestion = currentQuestion;
   currentQuestion = null;
+  setThinking(true, selectedButton);
+  await nextPaint();
   try {
     engine.answer(answeredQuestion.id, value);
     tone(value > 0 ? 610 : value < 0 ? 340 : 460);
@@ -111,6 +137,8 @@ function answer(value) {
   } catch (error) {
     console.error("The question flow recovered from an error.", error);
     showLearn();
+  } finally {
+    setThinking(false);
   }
 }
 
@@ -149,12 +177,14 @@ function revealGuess() {
   showScreen("guess-screen"); tone(720);
 }
 
-function continueAfterWrong() {
+async function continueAfterWrong() {
   if (!currentGuess) return showLearn();
   engine.reject(currentGuess.character.id ?? currentGuess.character.name);
   currentGuess = null;
   if (engine.rejected.size >= 8 || !engine.probabilities().length) return showLearn();
-  platform.gameplayStart(); showScreen("question-screen"); askNext();
+  platform.gameplayStart(); showScreen("question-screen"); setThinking(true);
+  await nextPaint();
+  try { askNext(); } finally { setThinking(false); }
 }
 
 function showLearn() { platform.gameplayStop(); currentQuestion = null; showScreen("learn-screen"); setTimeout(() => $("#character-input").focus(), 250); }
@@ -210,10 +240,10 @@ $("#correct-button").addEventListener("click", showSuccess);
 $("#wrong-button").addEventListener("click", continueAfterWrong);
 $("#skip-learn-button").addEventListener("click", startGame);
 $("#learn-form").addEventListener("submit", learnCharacter);
-$("#answer-grid").addEventListener("click", (event) => { const button = event.target.closest("button[data-answer]"); if (button) answer(Number(button.dataset.answer)); });
+$("#answer-grid").addEventListener("click", (event) => { const button = event.target.closest("button[data-answer]"); if (button) return answer(Number(button.dataset.answer), button); });
 $("#language-button").addEventListener("click", () => setLanguage(language === "en" ? "de" : "en"));
 $("#sound-button").addEventListener("click", () => { soundEnabled = !soundEnabled; $("#sound-button").textContent = soundEnabled ? "♪" : "×"; tone(); });
-window.addEventListener("keydown", (event) => { if (!$("#question-screen").classList.contains("active")) return; const keys={"1":1,"2":.55,"3":0,"4":-.55,"5":-1}; if (event.key in keys) answer(keys[event.key]); });
+window.addEventListener("keydown", (event) => { if (!$("#question-screen").classList.contains("active")) return; const keys={"1":1,"2":.55,"3":0,"4":-.55,"5":-1}; if (event.key in keys) answer(keys[event.key], document.querySelector(`#answer-grid button[data-answer="${keys[event.key]}"]`)); });
 window.addEventListener("platformmute", () => { $("#sound-button").disabled = platform.muted; });
 document.addEventListener("gesturestart", (event) => event.preventDefault(), { passive:false });
 document.addEventListener("dblclick", (event) => event.preventDefault(), { passive:false });

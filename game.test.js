@@ -40,8 +40,8 @@ test("the start button opens the first question", async () => {
   assert.equal(screens.find(({ id }) => id === "question-screen").classList.active, true);
   assert.match(elements["question-text"].textContent, /\?$/);
   const answer = (value) => listeners.get("answer-grid:click")({ target:{ closest:() => ({ dataset:{ answer:String(value) } }) } });
-  answer(1);
-  answer(-1);
+  await answer(1);
+  await answer(-1);
   assert.doesNotMatch(elements["question-text"].textContent, /Figur/);
   assert.match(elements["question-text"].textContent, /Person/);
 });

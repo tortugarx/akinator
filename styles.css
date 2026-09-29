@@ -59,7 +59,16 @@ h2 { margin: 0; font-size: clamp(34px, 5vw, 58px); line-height: 1.05; }
 .answer-grid { width: min(940px,100%); display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; }
 .answer-grid button { min-height: 116px; border-radius: 18px; border: 1px solid var(--line); color: var(--cream); background: linear-gradient(160deg,rgba(255,255,255,.1),rgba(255,255,255,.035)); cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; font-weight: 800; transition: .15s; }
 .answer-grid button:hover,.answer-grid button:focus-visible { outline: none; transform: translateY(-5px) rotate(-1deg); border-color: var(--gold); background: rgba(245,185,66,.16); }
+.answer-grid button.is-selected { transform:translateY(2px); border-color:var(--gold); background:rgba(245,185,66,.24); box-shadow:inset 0 0 0 2px rgba(245,185,66,.2) }
+.answer-grid button:disabled { cursor:wait; pointer-events:none }
 .answer-grid small { color: #8fa69e; font-size: 10px; }.answer-icon { font: 900 23px ui-rounded, "Arial Rounded MT Bold", system-ui; color: var(--gold); }.answer-yes .answer-icon { color:#65de9a }.answer-no .answer-icon { color:#ff7a69 }
+.thinking-lock { position:absolute; z-index:30; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:24px; background:rgba(6,29,28,.78); backdrop-filter:blur(5px); touch-action:none }
+.thinking-lock[hidden] { display:none }
+.thinking-orb { width:62px;height:62px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--gold);color:var(--gold);font-size:28px;animation:pulse .65s ease-in-out infinite alternate }
+.thinking-lock strong { color:var(--cream);font-size:15px;letter-spacing:.04em }
+.thinking-bar { width:min(310px,72vw);height:8px;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:rgba(0,0,0,.28) }
+.thinking-bar span { display:block;width:38%;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--orange),var(--gold));animation:thinking-slide .8s ease-in-out infinite alternate }
+@keyframes thinking-slide { from{transform:translateX(-100%)} to{transform:translateX(265%)} }
 .reveal-card { width: min(610px,100%); margin-top: 20px; padding: 17px; border: 2px solid #e7b555; border-radius: 24px; background: linear-gradient(145deg,#fff0c8,#edcb80); color: var(--ink); display: grid; grid-template-columns: 138px minmax(0,1fr); text-align: left; align-items: stretch; gap: 20px; overflow: hidden; box-shadow: 0 9px 0 #8a4528,0 30px 60px rgba(0,0,0,.28); }
 .portrait { width: 138px; height: 148px; min-height:0; align-self:center; overflow:hidden; display: grid; place-items: center; border-radius: 17px; background: #174845; font-size: 65px; }
 .portrait img { display:block; width:100%; height:100%; max-height:148px; object-fit:cover; object-position:center top; border-radius:inherit; }

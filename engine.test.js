@@ -163,11 +163,9 @@ test("focuses on political follow-ups after politics is confirmed", () => {
   engine.answer("real", 1);
   engine.answer("politician", 1);
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "nationalLeader")), true);
-  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "musician")), false);
-  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "athlete")), false);
-  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "actor")), false);
-  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "blonde")), false);
-  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "masked")), false);
+  for (const id of ["musician", "athlete", "actor", "blonde", "masked"]) {
+    assert.ok(engine.questionFocusWeight("nationalLeader") > engine.questionFocusWeight(id), `did not deprioritize ${id}`);
+  }
 });
 
 test("chooses the question with the highest expected information gain", () => {
@@ -181,7 +179,7 @@ test("chooses the question with the highest expected information gain", () => {
 });
 
 test("ships a substantially larger useful question catalogue", () => {
-  assert.ok(questions.length >= 225);
+  assert.ok(questions.length >= 270);
   for (const id of ["entertainment", "journalist", "popMusician", "martialArts", "youtuber", "chancellor", "computerScientist", "novelist", "techEntrepreneur", "army", "gameOfThrones", "retired", "songwriter", "rnbSoulSinger", "twitchStreamer", "minecraftStreamer", "politicalStreamer"]) {
     assert.ok(questions.some((question) => question.id === id), `missing ${id}`);
   }
@@ -194,8 +192,8 @@ test("focuses on singer details once the singer branch is confirmed", () => {
   engine.answer("singer", 1);
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "songwriter")), true);
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "rnbSoulSinger")), true);
-  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "composer")), false);
-  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "dj")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "composer")), true);
+  assert.ok(engine.questionFocusWeight("songwriter") > engine.questionFocusWeight("composer"));
 });
 
 test("focuses on streamer details once the streamer branch is confirmed", () => {
@@ -205,7 +203,21 @@ test("focuses on streamer details once the streamer branch is confirmed", () => 
   engine.answer("streamer", 1);
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "twitchStreamer")), true);
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "gamingStreamer")), true);
-  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "tiktoker")), false);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "tiktoker")), true);
+  assert.ok(engine.questionFocusWeight("gamingStreamer") > engine.questionFocusWeight("tiktoker"));
+});
+
+test("keeps overlapping adult-film paths open after acting is confirmed", () => {
+  const engine = new GuessEngine(characters, questions, questionModel);
+  engine.answer("real", 1);
+  engine.answer("actor", 1);
+  engine.answer("creator", -1);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "adultCreator")), true);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "adultFilmPerformer")), true);
+});
+
+test("removes the random century question", () => {
+  assert.equal(questions.some(({ id }) => id === "historical"), false);
 });
 
 test("recognizes plain streamer descriptions and removes actor-only singer noise", () => {
