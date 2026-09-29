@@ -15,6 +15,7 @@ export function findLocalKnowledge(name, characters) {
     description:match.description || "",
     sourceId:match.id,
     image:match.image || "",
+    imageAttribution:match.imageAttribution || null,
     source:match.source || "",
     attributes:{ ...match.attributes }
   };

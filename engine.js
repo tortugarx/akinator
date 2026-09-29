@@ -64,6 +64,7 @@ export class GuessEngine {
     const existing = this.charactersById.get(this.key(character)) || this.charactersByName.get(this.nameKey(character));
     if (existing) {
       existing.image ||= character.image;
+      existing.imageAttribution ||= character.imageAttribution;
       existing.source ||= character.source;
       existing.popularity = Math.max(existing.popularity || 0, character.popularity || 0);
       for (const [id, value] of Object.entries(character.attributes || {})) {

@@ -64,7 +64,8 @@ h2 { margin: 0; font-size: clamp(34px, 5vw, 58px); line-height: 1.05; }
 .portrait { width: 138px; height: 148px; min-height:0; align-self:center; overflow:hidden; display: grid; place-items: center; border-radius: 17px; background: #174845; font-size: 65px; }
 .portrait img { display:block; width:100%; height:100%; max-height:148px; object-fit:cover; object-position:center top; border-radius:inherit; }
 .reveal-copy { min-width:0; align-self:center; }.reveal-copy h3 { margin:0 0 4px;font-size:34px;line-height:1;overflow-wrap:anywhere }.reveal-copy p { margin:0 0 20px;color:#55716a;font-size:13px }.confidence { display:flex;justify-content:space-between;border-top:1px solid rgba(23,59,57,.18);padding-top:11px;font-size:11px;text-transform:uppercase;letter-spacing:.08em }.confidence b { color:#bc4c25 }
-.guess-source { display:inline-block; margin:-13px 0 12px; color:#9b4a2b; font-size:10px; font-weight:800; text-decoration:none; }
+.source-links { display:flex; flex-wrap:wrap; gap:6px 12px; margin:-13px 0 12px; }
+.guess-source { display:inline-block; color:#9b4a2b; font-size:10px; font-weight:800; text-decoration:none; }
 .guess-play-count { margin:-7px 0 10px!important; color:#705b37!important; font-size:10px!important; font-weight:800; }
 .question-card mark { padding:0 .12em; border-radius:.18em; color:var(--gold); background:rgba(245,185,66,.12); box-shadow:inset 0 -.12em 0 rgba(245,185,66,.28); }
 .confirm-question { margin: 28px 0 14px; color: var(--muted); }.confirm-actions { display:flex;gap:10px }

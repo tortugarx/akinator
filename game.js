@@ -1,10 +1,10 @@
-import { characters, questions } from "./data.js?v=14";
-import { GuessEngine } from "./engine.js?v=14";
+import { characters, questions } from "./data.js?v=15";
+import { GuessEngine } from "./engine.js?v=15";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=14";
-import { questionModel } from "./question-model.js?v=14";
-import { playCount, recordConfirmedPlay } from "./play-stats.js?v=14";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=14";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=15";
+import { questionModel } from "./question-model.js?v=15";
+import { playCount, recordConfirmedPlay } from "./play-stats.js?v=15";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=15";
 
 const translations = {
   en: {
@@ -18,7 +18,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 14;
+const buildVersion = 15;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -135,6 +135,15 @@ function revealGuess() {
   const source = $("#guess-source");
   source.hidden = !currentGuess.character.source || !platform.externalLinksAllowed();
   source.href = currentGuess.character.source || "#";
+  const credit = $("#image-credit");
+  const attribution = currentGuess.character.imageAttribution;
+  const creditLinkAllowed = attribution?.sourceUrl && platform.externalLinksAllowed();
+  credit.hidden = !attribution;
+  if (creditLinkAllowed) credit.href = attribution.sourceUrl;
+  else credit.removeAttribute("href");
+  credit.textContent = attribution
+    ? `${language === "de" ? "Bild" : "Image"}: ${attribution.creator} · ${attribution.license}${creditLinkAllowed ? " ↗" : ""}`
+    : "";
   $("#guess-play-count").textContent = localPlayText(playCount(characterKey(currentGuess.character)));
   $("#confidence-value").textContent = `${Math.round(currentGuess.confidence * 100)}%`;
   showScreen("guess-screen"); tone(720);
@@ -185,7 +194,7 @@ async function learnCharacter(event) {
   for (const { questionId, answer } of engine.history) if (answer !== 0) attributes[questionId] = answer;
   const character = {
     id: `learned-${(knowledge.sourceId || knowledge.name).toLowerCase().replace(/[^a-z0-9]+/g,"-")}`,
-    name: knowledge.name, icon:"🧠", description: knowledge.description, image:knowledge.image, source:knowledge.source, attributes, learned:true
+    name: knowledge.name, icon:"🧠", description: knowledge.description, image:knowledge.image, imageAttribution:knowledge.imageAttribution, source:knowledge.source, attributes, learned:true
   };
   const saved = readLearned().filter(({ id }) => id !== character.id);
   saved.unshift(character);

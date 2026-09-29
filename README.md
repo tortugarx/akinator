@@ -2,7 +2,7 @@
 
 Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine kuratierte Wissensbasis mit einer vorab erzeugten Wikidata-Datenbank, einer lokalen Active-Learning-Engine und einem Lernmodus, der bestätigte Figuren im Browser speichert.
 
-Die ausgelieferte Version umfasst mehr als 17.500 eindeutige Personen, Figuren und private Rollen. Über 14.000 Wiki-Einträge besitzen ein Porträt aus Wikimedia Commons. Der Katalog enthält 139 Fragen. Für jede Antwort berechnet die Engine die neue Kandidatenverteilung und bevorzugt belastbare Fragen, die sie möglichst nahe an 50/50 teilen; andernfalls wählt sie die größte erwartete Entropiereduktion. Bestätigte Themen aktivieren passende Unterfragen und sperren sachfremde Themen. Buchstaben- und Geburtsjahrfragen werden nicht verwendet.
+Die ausgelieferte Version umfasst mehr als 17.500 eindeutige Personen, Figuren und private Rollen. Mehr als 14.200 Wiki-Einträge besitzen ein frei lizenziertes Bild aus Wikimedia Commons oder Openverse. Der Katalog enthält 139 Fragen. Für jede Antwort berechnet die Engine die neue Kandidatenverteilung und bevorzugt belastbare Fragen, die sie möglichst nahe an 50/50 teilen; andernfalls wählt sie die größte erwartete Entropiereduktion. Bestätigte Themen aktivieren passende Unterfragen und sperren sachfremde Themen. Buchstaben- und Geburtsjahrfragen werden nicht verwendet.
 
 Die Wissensbasis unterscheidet neben Unterhaltung, Politik, Sport und Wissenschaft auch Journalismus, Produktion, Gaming, zahlreiche einzelne Sportarten und Wissenschaftsgebiete, Militär, Erwachsenen-Inhalte, Industrie/Fertigung, Medizin, Recht und Religion. Zusätzliche Fragen grenzen fiktive Figuren nach Genre, Art und Universum ein. Zentrale Themenwörter werden in Fragen optisch hervorgehoben.
 
@@ -36,6 +36,14 @@ Das Modell kann ohne erneuten Datenimport separat trainiert werden:
 npm run train:model
 ```
 
+Fehlende Personenbilder lassen sich anschließend sicher ergänzen:
+
+```bash
+npm run enrich:images
+```
+
+Die wiederaufnehmbare Pipeline prüft zuerst strukturierte Commons-Daten und verwendet Openverse als streng gefilterten Fallback. Sie akzeptiert nur Public Domain, CC0, CC BY und CC BY-SA, verwirft typische Fehlmotive und speichert Urheber, Lizenz sowie Quellseite. Wegen der anonymen Openverse-Grenze werden standardmäßig höchstens 18 neue Openverse-Suchen pro Lauf ausgeführt; wiederholte Läufe setzen am gespeicherten Stand fort.
+
 ## CrazyGames-Paket bauen
 
 ```bash
@@ -47,6 +55,6 @@ Der Build enthält alle Spiel-, Engine- und Wissensdaten und lädt das CrazyGame
 
 ## Datenschutz und Lernen
 
-Neu gelernte Figuren und die dazugehörigen Antworten werden ausschließlich in `localStorage` des jeweiligen Browsers abgelegt. Öffentliche Personen werden vor dem Speichern eindeutig gegen die lokale Wiki-Basis geprüft und übernehmen vorhandene Merkmale, Beschreibung, Quelle und Porträt. Nicht überprüfbare Namen sind nur erlaubt, wenn zuvor der private Zweig gewählt wurde. Namenssuche, Fragenwahl und Erkennung laufen lokal; es gibt keinen eigenen Server, keine Laufzeit-API und keinen API-Schlüssel.
+Neu gelernte Figuren und die dazugehörigen Antworten werden ausschließlich in `localStorage` des jeweiligen Browsers abgelegt. Öffentliche Personen werden vor dem Speichern eindeutig gegen die lokale Wiki-Basis geprüft und übernehmen vorhandene Merkmale, Beschreibung, Quelle, Porträt und Bildnachweis. Nicht überprüfbare Namen sind nur erlaubt, wenn zuvor der private Zweig gewählt wurde. Namenssuche, Fragenwahl und Erkennung laufen lokal; es gibt keinen eigenen Server und keinen API-Schlüssel. Commons und Openverse werden ausschließlich beim Erzeugen der statischen Wissensbasis abgefragt, nicht während einer Spielrunde.
 
 Bestätigte Treffer werden pro Figur ebenfalls nur lokal gezählt und ausdrücklich als Gerätewert angezeigt. Ein globaler Zähler oder gemeinsames Lernen zwischen Nutzern benötigt einen externen, moderierten API-Dienst. Ungeprüfte Antworten sollten niemals direkt das globale Modell verändern, da einzelne Nutzer die Wissensbasis sonst vergiften könnten.

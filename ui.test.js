@@ -8,3 +8,10 @@ test("the result portrait stays clipped inside its card", async () => {
   assert.match(css, /\.portrait[^}]*overflow:\s*hidden/);
   assert.match(css, /\.portrait img[^}]*height:\s*100%/);
 });
+
+test("the result card provides an image attribution link", async () => {
+  const html = await readFile(new URL("./index.html", import.meta.url), "utf8");
+  const game = await readFile(new URL("./game.js", import.meta.url), "utf8");
+  assert.match(html, /id="image-credit"/);
+  assert.match(game, /imageAttribution/);
+});

@@ -5,6 +5,7 @@ import database from "./wikidata-people.json" with { type:"json" };
 test("ships a large Wikidata knowledge base with portraits", () => {
   assert.ok(database.characters.length >= 17000);
   assert.ok(database.characters.filter(({ image }) => image).length >= 14000);
+  assert.ok(database.characters.filter(({ imageAttribution }) => imageAttribution).length >= 13800);
   assert.ok(database.characters.every(({ id, name, attributes }) => id && name && attributes));
   assert.ok(database.characters.filter(({ attributes }) => attributes.politician === 1).length >= 1000);
   assert.ok(database.characters.filter(({ attributes }) => attributes.nationalLeader === 1).length >= 60);
@@ -21,6 +22,14 @@ test("includes correctly classified requested public people", () => {
   assert.deepEqual([papaplatte.attributes.real, papaplatte.attributes.creator, papaplatte.attributes.german], [1, 1, 1]);
   assert.ok(papaplatte.image);
   assert.deepEqual([rain.attributes.real, rain.attributes.creator, rain.attributes.american, rain.attributes.female], [1, 1, 1, 1]);
+  assert.ok(rain.image);
+  assert.equal(rain.imageAttribution.source, "Openverse");
+});
+
+test("image fallbacks keep reusable licenses and attribution links", () => {
+  const attributed = database.characters.filter(({ imageAttribution }) => imageAttribution);
+  assert.ok(attributed.every(({ imageAttribution }) => imageAttribution.creator && imageAttribution.license && imageAttribution.sourceUrl));
+  assert.equal(attributed.some(({ imageAttribution }) => /\bNC\b|noncommercial/i.test(imageAttribution.license)), false);
 });
 
 test("covers additional real-world fields", () => {
