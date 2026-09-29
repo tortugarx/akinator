@@ -1,6 +1,6 @@
 const highlightTerms = {
-  de:["Inhalte für Erwachsene", "Science-Fiction", "Unterhaltung", "Journalismus", "Ingenieurwesen", "Schauspiel", "Wissenschaft", "Basketball", "Motorsport", "Produktion", "Fabriken", "Industrie", "Fußball", "E-Sport", "Internet", "Politik", "Militär", "Medizin", "Gerichte", "religiös", "Musik", "Tennis", "Gaming", "Film", "Recht", "Magie"],
-  en:["adult content", "science fiction", "entertainment", "social media", "journalism", "engineering", "manufacturing", "acting", "science", "basketball", "motorsport", "industry", "football", "esports", "internet", "politics", "military", "medicine", "courts", "religious", "gaming", "music", "tennis", "movies", "law", "magic"]
+  de:["Inhalte für Erwachsene", "Wirtschaftswissenschaften", "Science-Fiction", "Technologieunternehmen", "American Football", "deutschsprachigen", "Unterhaltung", "Journalismus", "Livestreaming", "Ingenieurwesen", "Schauspiel", "Wissenschaft", "Basketball", "Motorsport", "Produktion", "Fabriken", "Industrie", "Fußball", "E-Sport", "YouTube", "TikTok", "Internet", "Politik", "Militär", "Medizin", "Gerichte", "religiös", "Popmusik", "Rock", "Musik", "Tennis", "Gaming", "Film", "Recht", "Magie"],
+  en:["adult content", "computer science", "science fiction", "technology company", "American football", "German-speaking", "entertainment", "social media", "livestreaming", "journalism", "engineering", "manufacturing", "acting", "science", "basketball", "motorsport", "industry", "football", "esports", "YouTube", "TikTok", "internet", "politics", "military", "medicine", "courts", "religious", "pop music", "rock", "gaming", "music", "tennis", "movies", "law", "magic"]
 };
 
 export function contextualQuestionText(question, language, isPerson) {

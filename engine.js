@@ -2,32 +2,49 @@ import { enrichCharacterAttributes } from "./attribute-enrichment.js";
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]);
-const exactCountries = new Set(["american", "british", "german", "french", "spanish", "italian", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese"]);
+const exactCountries = new Set(["american", "british", "german", "french", "spanish", "italian", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "austrian", "swiss", "dutch", "swedish", "polish", "russian", "ukrainian", "turkish", "mexican", "argentine", "nigerian", "southAfrican", "portuguese", "belgian", "irish", "norwegian", "danish"]);
 const regionQuestions = new Set(["european", "latinAmerican", "asian", "african"]);
-const nonEuropeanCountries = new Set(["american", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese"]);
+const subregionQuestions = new Set(["germanSpeaking", "nordic", "easternEuropean", "southernEuropean", "westernEuropean"]);
+const countryParents = new Map([
+  ...["german","austrian","swiss"].map((id) => [id,["european","germanSpeaking"]]),
+  ...["swedish","norwegian","danish"].map((id) => [id,["european","nordic"]]),
+  ...["polish","russian","ukrainian"].map((id) => [id,["european","easternEuropean"]]),
+  ...["spanish","italian","portuguese"].map((id) => [id,["european","southernEuropean"]]),
+  ...["british","french","dutch","belgian","irish"].map((id) => [id,["european","westernEuropean"]]),
+  ...["indian","japanese","southKorean","chinese","turkish"].map((id) => [id,["asian"]]),
+  ...["brazilian","mexican","argentine"].map((id) => [id,["latinAmerican"]]),
+  ...["nigerian","southAfrican"].map((id) => [id,["african"]])
+]);
+const nonEuropeanCountries = new Set(["american", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "mexican", "argentine", "nigerian", "southAfrican"]);
 const topicBranches = new Map([
-  ["entertainment", new Set(["actor", "musician", "comedian", "dancer", "model", "director", "producer", "presenter"])],
-  ["musician", new Set(["musicGroup", "singer", "rapper", "composer", "dj", "instrumentalist"])],
-  ["athlete", new Set(["football", "basketball", "tennis", "motorsport", "boxer", "wrestler", "racingDriver", "coach", "golfer", "cyclist", "swimmer", "runner", "baseball", "iceHockey", "gymnast", "esports"])],
-  ["politician", new Set(["nationalLeader", "usPresident", "activist", "military", "militaryLeader", "royalty", "ministerDiplomat"])],
-  ["military", new Set(["militaryLeader"])],
-  ["actor", new Set(["movie", "tv", "comedian", "model", "adultCreator", "voiceActor"])],
-  ["creator", new Set(["internet", "adultCreator", "gamer", "esports"])],
-  ["scientist", new Set(["space", "electric", "physicist", "mathematician", "chemist", "biologist", "astronaut", "engineer", "inventor", "academic"])],
-  ["artist", new Set(["photographer", "architect"])], ["entrepreneur", new Set(["internet", "industrialist"])], ["writer", new Set(["book", "poet", "screenwriter", "philosopher"])],
+  ["entertainment", new Set(["actor", "musician", "comedian", "dancer", "model", "director", "producer", "presenter", "creator", "journalist"])],
+  ["musician", new Set(["musicGroup", "singer", "rapper", "composer", "dj", "instrumentalist", "popMusician", "rockMusician", "classicalMusician", "electronicMusician", "countryMusician", "musicProducer"])],
+  ["athlete", new Set(["football", "basketball", "tennis", "motorsport", "boxer", "wrestler", "racingDriver", "coach", "golfer", "cyclist", "swimmer", "runner", "baseball", "iceHockey", "gymnast", "esports", "martialArts", "cricket", "volleyball", "handball", "americanFootball", "winterSports", "retired"])],
+  ["politician", new Set(["nationalLeader", "usPresident", "activist", "military", "militaryLeader", "royalty", "ministerDiplomat", "mayor", "legislator", "chancellor", "governor", "retired"])],
+  ["military", new Set(["militaryLeader", "army", "navy", "airForce", "retired"])],
+  ["actor", new Set(["movie", "tv", "comedian", "model", "adultCreator", "voiceActor", "theaterActor", "realityTV", "awardWinningActor", "retired"])],
+  ["creator", new Set(["internet", "adultCreator", "gamer", "esports", "youtuber", "streamer", "tiktoker", "podcaster", "retired"])],
+  ["scientist", new Set(["space", "electric", "physicist", "mathematician", "chemist", "biologist", "astronaut", "engineer", "inventor", "academic", "computerScientist", "economist", "psychologist", "astronomer", "environmentalScientist", "retired"])],
+  ["artist", new Set(["photographer", "architect", "retired"])], ["entrepreneur", new Set(["internet", "industrialist", "techEntrepreneur", "finance", "fashionBusiness", "retired"])], ["writer", new Set(["book", "poet", "screenwriter", "philosopher", "novelist", "playwright", "childrensAuthor", "retired"])],
   ["comedian", new Set()], ["model", new Set()], ["director", new Set(["movie"])], ["internet", new Set()],
   ["adultCreator", new Set()], ["industrialist", new Set()], ["medical", new Set()], ["legal", new Set()], ["religious", new Set()],
-  ["journalist", new Set(["presenter"])], ["producer", new Set()], ["dancer", new Set()], ["chef", new Set()]
+  ["journalist", new Set(["presenter", "podcaster", "retired"])], ["producer", new Set(["musicProducer", "retired"])], ["dancer", new Set(["retired"])], ["chef", new Set(["retired"])]
 ]);
 
-function topicDescendants(root, found = new Set()) {
+function collectTopicDescendants(root, found = new Set()) {
   for (const child of topicBranches.get(root) || []) {
     if (found.has(child)) continue;
     found.add(child);
-    topicDescendants(child, found);
+    collectTopicDescendants(child, found);
   }
   return found;
 }
+const topicDescendantCache = new Map([...topicBranches.keys()].map((root) => [root, collectTopicDescendants(root)]));
+const topicDescendants = (root) => topicDescendantCache.get(root) || new Set();
+const fictionalOnlyQuestions = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "comic", "scienceFiction", "fantasy", "alien", "monster", "harryPotter", "lordOfTheRings", "mario", "sonic", "wizard", "warrior", "policeCharacter", "studentCharacter", "sitcom", "crimeFiction", "gameOfThrones"]);
+const realOnlyQuestions = new Set(["alive", "historical", "retired", ...exactCountries, ...regionQuestions, ...subregionQuestions, "medical", "legal", "religious", "chef"]);
+for (const [root] of topicBranches) for (const topicId of [root, ...topicDescendants(root)]) realOnlyQuestions.add(topicId);
+for (const shared of ["movie", "tv", "book", "space", "electric", "royalty"]) realOnlyQuestions.delete(shared);
 
 export class GuessEngine {
   constructor(characters, questions, model = {}) {
@@ -112,18 +129,17 @@ export class GuessEngine {
     const fictionalCharacter = this.answeredNo("real") || this.answeredYes("fictional");
     for (const [answeredId, answer] of this.responses) {
       if (answer >= .5 && this.model.exclusions?.[answeredId]?.includes(id)) return false;
+      if (answer >= .5 && this.model.implications?.[answeredId]?.includes(id)) return false;
+      if (answer <= -.5 && this.model.implications?.[id]?.includes(answeredId)) return false;
     }
-    const publicQuestions = new Set(this.questions.map(({ id:questionId }) => questionId).filter((questionId) => !relationshipQuestions.has(questionId)));
-    const fictionalOnly = new Set(["book", "magic", "superhero", "animated", "anime", "game", "villain", "powers", "nonhuman", "animal", "robot", "marvel", "dc", "disney", "starWars", "pokemon", "horror", "princess", "protagonist", "comic", "scienceFiction", "fantasy", "alien", "monster", "harryPotter", "lordOfTheRings", "mario", "sonic"]);
-    const realOnly = new Set(["alive", "historical", ...exactCountries, ...regionQuestions, "scientist", "artist", "entrepreneur", "internet", "nationalLeader", "usPresident", "activist", "military", "militaryLeader", "adultCreator", "industrialist", "medical", "legal", "religious", "journalist", "presenter", "producer", "dancer", "composer", "dj", "instrumentalist", "gamer", "esports", "boxer", "wrestler", "racingDriver", "coach", "golfer", "cyclist", "swimmer", "runner", "baseball", "iceHockey", "gymnast", "physicist", "mathematician", "chemist", "biologist", "astronaut", "engineer", "inventor", "photographer", "architect", "chef", "poet", "philosopher", "screenwriter", "voiceActor", "academic", "ministerDiplomat"]);
-
     if (id === "fictional" && (this.answeredYes("real") || this.answeredNo("real"))) return false;
     if (id === "real" && (this.answeredYes("fictional") || this.answeredNo("fictional"))) return false;
     if (id === "personallyKnown" && fictionalCharacter) return false;
+    if (id === "retired" && !this.answeredYes("alive")) return false;
     if (this.answeredNo("personallyKnown") && relationshipQuestions.has(id)) return false;
-    if (this.answeredYes("personallyKnown") && publicQuestions.has(id)) return false;
-    if (realPerson && fictionalOnly.has(id)) return false;
-    if (fictionalCharacter && realOnly.has(id)) return false;
+    if (this.answeredYes("personallyKnown") && !relationshipQuestions.has(id)) return false;
+    if (realPerson && fictionalOnlyQuestions.has(id)) return false;
+    if (fictionalCharacter && realOnlyQuestions.has(id)) return false;
     if (relationshipQuestions.has(id) && this.answeredNo("real")) return false;
     if (["parent", "sibling", "grandparent", "yourChild"].includes(id) && this.answeredNo("family")) return false;
     if (this.answeredYes("family") && ["romantic", "partner", "friend", "schoolWork"].includes(id)) return false;
@@ -138,7 +154,7 @@ export class GuessEngine {
     const activeTopics = [...topicBranches].filter(([root]) => this.answeredYes(root));
     if (realPerson && activeTopics.length) {
       const allowed = new Set(activeTopics.flatMap(([root]) => [root, ...topicDescendants(root)]));
-      const universal = new Set(["real", "personallyKnown", "alive", "female", "historical", ...exactCountries, ...regionQuestions]);
+      const universal = new Set(["real", "personallyKnown", "alive", "female", "historical", ...exactCountries, ...regionQuestions, ...subregionQuestions]);
       if (!allowed.has(id) && !universal.has(id)) return false;
     }
     if (id === "musicGroup" && this.answeredNo("musician")) return false;
@@ -152,7 +168,11 @@ export class GuessEngine {
     if (id === "robot" && this.answeredYes("animal")) return false;
 
     const confirmedCountry = [...exactCountries].find((country) => this.answeredYes(country));
-    if (confirmedCountry && ((exactCountries.has(id) && id !== confirmedCountry) || regionQuestions.has(id))) return false;
+    if (countryParents.has(id) && countryParents.get(id).some((parent) => !this.answeredYes(parent))) return false;
+    const confirmedSubregion = [...subregionQuestions].find((region) => this.answeredYes(region));
+    if (confirmedSubregion && subregionQuestions.has(id) && id !== confirmedSubregion) return false;
+    if (subregionQuestions.has(id) && !this.answeredYes("european")) return false;
+    if (confirmedCountry && ((exactCountries.has(id) && id !== confirmedCountry) || regionQuestions.has(id) || subregionQuestions.has(id))) return false;
     if (this.answeredYes("european") && (nonEuropeanCountries.has(id) || [...regionQuestions].some((region) => region !== "european" && region === id))) return false;
     if (this.answeredYes("latinAmerican") && (["european", "asian", "african"].includes(id) || (exactCountries.has(id) && id !== "brazilian"))) return false;
     if (this.answeredYes("asian") && (["european", "latinAmerican", "african"].includes(id) || ["american", "british", "german", "french", "spanish", "italian", "canadian", "brazilian", "australian"].includes(id))) return false;

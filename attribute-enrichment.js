@@ -45,29 +45,116 @@ const rules = {
   harryPotter:/harry potter/i,
   lordOfTheRings:/lord of the rings|herr der ringe/i,
   mario:/mario franchise|mario series|super mario/i,
-  sonic:/sonic the hedgehog/i
+  sonic:/sonic the hedgehog/i,
+  retired:/\bretired\b|\bformer\b|ehemalig|im ruhestand|career ended/i,
+  popMusician:/pop singer|pop musician|pop ?star|popsänger|popmusiker/i,
+  rockMusician:/rock singer|rock musician|rock guitarist|heavy metal|rockmusiker|rocksänger|metal-musiker/i,
+  classicalMusician:/classical musician|classical composer|opera singer|klassische musik|operasänger/i,
+  electronicMusician:/electronic musician|electronic music|techno|house music|electro-musiker/i,
+  countryMusician:/country singer|country musician|country-musiker/i,
+  musicProducer:/music producer|record producer|musikproduzent/i,
+  martialArts:/mixed martial artist|martial artist|mma fighter|judoka|karateka|kampfsportler/i,
+  cricket:/cricketer|cricket player/i,
+  volleyball:/volleyball player|volleyballspieler/i,
+  handball:/handball player|handballspieler/i,
+  americanFootball:/american football player|nfl player|american-football-spieler/i,
+  winterSports:/skier|ski jumper|snowboarder|biathlete|speed skater|skispringer|biathlet|eisschnellläufer/i,
+  youtuber:/youtuber|youtube personality|webvideoproduzent/i,
+  streamer:/livestreamer|live streamer|twitch streamer/i,
+  tiktoker:/tiktoker|tik tok personality/i,
+  podcaster:/podcaster|podcast host/i,
+  mayor:/\bmayor\b|bürgermeister/i,
+  legislator:/member of parliament|member of congress|legislator|abgeordnete|abgeordneter/i,
+  chancellor:/\bchancellor\b|bundeskanzler|bundeskanzlerin/i,
+  governor:/\bgovernor\b|ministerpräsident|ministerpräsidentin/i,
+  computerScientist:/computer scientist|informatiker|informatikerin/i,
+  economist:/economist|wirtschaftswissenschaftler|ökonom/i,
+  psychologist:/psychologist|psychologe|psychologin/i,
+  astronomer:/astronomer|astronomin|astronom /i,
+  environmentalScientist:/climate scientist|environmental scientist|klimaforscher|umweltwissenschaftler/i,
+  novelist:/novelist|romanautor|romanschriftsteller/i,
+  playwright:/playwright|dramatist|dramatiker|theaterautor/i,
+  childrensAuthor:/children's author|children’s author|kinderbuchautor/i,
+  theaterActor:/stage actor|theatre actor|theater actor|theaterschauspieler/i,
+  realityTV:/reality television|reality tv|reality-tv/i,
+  awardWinningActor:/academy award-winning actor|oscar-winning actor|emmy award-winning actor|oscarpreisträger/i,
+  techEntrepreneur:/technology entrepreneur|tech entrepreneur|software entrepreneur|internet entrepreneur|technologieunternehmer/i,
+  finance:/investor|financier|investment banker|hedge fund|bankier|investorin/i,
+  fashionBusiness:/fashion designer|fashion entrepreneur|modedesigner|modeunternehmer/i,
+  army:/army officer|army general|army soldier|heeresoffizier/i,
+  navy:/naval officer|navy admiral|navy officer|marineoffizier/i,
+  airForce:/air force officer|air force general|luftwaffenoffizier/i,
+  wizard:/wizard|witch|zauberer|hexe/i,
+  warrior:/warrior|fighter character|krieger|kämpfer/i,
+  policeCharacter:/fictional police|police officer character|polizist.*figur/i,
+  studentCharacter:/fictional student|school student|schüler.*figur|student.*figur/i,
+  sitcom:/sitcom/i,
+  crimeFiction:/crime fiction|crime drama|detective fiction|kriminalroman|krimiserie/i,
+  gameOfThrones:/game of thrones|a song of ice and fire/i,
+  austrian:/austrian|österreichisch/i,
+  swiss:/swiss|schweizerisch/i,
+  dutch:/dutch|niederländisch/i,
+  swedish:/swedish|schwedisch/i,
+  polish:/polish|polnisch/i,
+  russian:/russian|russisch/i,
+  ukrainian:/ukrainian|ukrainisch/i,
+  turkish:/turkish|türkisch/i,
+  mexican:/mexican|mexikanisch/i,
+  argentine:/argentine|argentinian|argentinisch/i,
+  nigerian:/nigerian|nigerianisch/i,
+  southAfrican:/south african|südafrikanisch/i,
+  portuguese:/portuguese|portugiesisch/i,
+  belgian:/belgian|belgisch/i,
+  irish:/\birish\b|irisch/i,
+  norwegian:/norwegian|norwegisch/i,
+  danish:/\bdanish\b|dänisch/i
 };
 
-const sports = ["boxer","wrestler","racingDriver","golfer","cyclist","swimmer","runner","baseball","iceHockey","gymnast","esports"];
-const sciences = ["physicist","mathematician","chemist","biologist","astronaut","engineer","inventor","academic"];
+const sports = ["boxer","wrestler","racingDriver","golfer","cyclist","swimmer","runner","baseball","iceHockey","gymnast","esports","martialArts","cricket","volleyball","handball","americanFootball","winterSports"];
+const sciences = ["physicist","mathematician","chemist","biologist","astronaut","engineer","inventor","academic","computerScientist","economist","psychologist","astronomer","environmentalScientist"];
 
 export function enrichCharacterAttributes(character) {
   character.attributes ||= {};
   const text = `${character.name || ""} ${character.description || ""}`;
   for (const [id, pattern] of Object.entries(rules)) if (pattern.test(text)) character.attributes[id] = 1;
   if (["composer","dj","instrumentalist"].some((id) => character.attributes[id] === 1)) character.attributes.musician = 1;
+  if (["popMusician","rockMusician","classicalMusician","electronicMusician","countryMusician","musicProducer"].some((id) => character.attributes[id] === 1)) character.attributes.musician = 1;
   if (sports.some((id) => character.attributes[id] === 1)) character.attributes.athlete = 1;
   if (sciences.some((id) => character.attributes[id] === 1)) character.attributes.scientist = 1;
   if (character.attributes.gamer === 1 || character.attributes.esports === 1) {
     character.attributes.internet = 1;
     character.attributes.creator ||= character.attributes.gamer === 1 ? 1 : character.attributes.creator;
   }
+  if (["youtuber","streamer","tiktoker","podcaster"].some((id) => character.attributes[id] === 1)) {
+    character.attributes.creator = 1;
+    character.attributes.internet = 1;
+  }
+  if (["mayor","legislator","chancellor","governor"].some((id) => character.attributes[id] === 1)) character.attributes.politician = 1;
+  if (["novelist","playwright","childrensAuthor"].some((id) => character.attributes[id] === 1)) character.attributes.writer = 1;
+  if (["techEntrepreneur","finance","fashionBusiness"].some((id) => character.attributes[id] === 1)) character.attributes.entrepreneur = 1;
+  if (["army","navy","airForce"].some((id) => character.attributes[id] === 1)) character.attributes.military = 1;
   if (character.attributes.poet === 1 || character.attributes.screenwriter === 1) character.attributes.writer = 1;
   if (character.attributes.photographer === 1 || character.attributes.architect === 1) character.attributes.artist = 1;
-  const entertainmentTraits = ["actor","musician","comedian","dancer","model","director","producer","presenter"];
+  const entertainmentTraits = ["actor","musician","comedian","dancer","model","director","producer","presenter","creator","journalist"];
   if (entertainmentTraits.some((id) => character.attributes[id] === 1)) character.attributes.entertainment = 1;
   else if (character.attributes.real === 1 && character.attributes.personallyKnown !== 1) character.attributes.entertainment = -1;
-  if (["comic","scienceFiction","fantasy","alien","monster","harryPotter","lordOfTheRings","mario","sonic"].some((id) => character.attributes[id] === 1)) {
+  const europeanGroups = {
+    germanSpeaking:["german","austrian","swiss"],
+    nordic:["swedish","norwegian","danish"],
+    easternEuropean:["polish","russian","ukrainian"],
+    southernEuropean:["spanish","italian","portuguese"],
+    westernEuropean:["british","french","dutch","belgian","irish"]
+  };
+  if (Object.values(europeanGroups).flat().some((id) => character.attributes[id] === 1)) {
+    for (const region of Object.keys(europeanGroups)) character.attributes[region] = -1;
+  }
+  const setRegion = (region, members) => {
+    if (members.some((id) => character.attributes[id] === 1)) character.attributes[region] = 1;
+  };
+  for (const [region, members] of Object.entries(europeanGroups)) setRegion(region, members);
+  const careerRoots = ["athlete","politician","military","actor","creator","scientist","artist","entrepreneur","writer","journalist","producer","dancer","chef","musician"];
+  if (character.attributes.real === 1 && character.attributes.alive === 1 && careerRoots.some((id) => character.attributes[id] === 1) && character.attributes.retired !== 1) character.attributes.retired = -1;
+  if (["comic","scienceFiction","fantasy","alien","monster","harryPotter","lordOfTheRings","mario","sonic","wizard","warrior","policeCharacter","studentCharacter","sitcom","crimeFiction","gameOfThrones"].some((id) => character.attributes[id] === 1)) {
     character.attributes.real = -1;
     character.attributes.fictional = 1;
   }

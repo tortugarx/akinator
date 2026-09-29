@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { characters, questions } from "./data.js";
 import { GuessEngine } from "./engine.js";
+import { questionModel } from "./question-model.js";
 
 test("asks each question at most once", () => {
   const engine = new GuessEngine(characters, questions);
@@ -15,6 +16,13 @@ test("asks each question at most once", () => {
   }
   assert.ok(seen.size > 10);
   assert.equal(engine.nextQuestion(), null);
+});
+
+test("catalogue contains no duplicate ids or question texts", () => {
+  for (const field of ["id", "de", "en"]) {
+    const values = questions.map((question) => question[field].trim().toLocaleLowerCase());
+    assert.equal(new Set(values).size, values.length, `duplicate ${field}`);
+  }
 });
 
 test("identifies a character from truthful answers", () => {
@@ -155,10 +163,45 @@ test("chooses the question with the highest expected information gain", () => {
 });
 
 test("ships a substantially larger useful question catalogue", () => {
-  assert.ok(questions.length >= 135);
-  for (const id of ["entertainment", "journalist", "composer", "gamer", "boxer", "physicist", "architect", "screenwriter", "scienceFiction"]) {
+  assert.ok(questions.length >= 205);
+  for (const id of ["entertainment", "journalist", "popMusician", "martialArts", "youtuber", "chancellor", "computerScientist", "novelist", "techEntrepreneur", "army", "gameOfThrones", "retired"]) {
     assert.ok(questions.some((question) => question.id === id), `missing ${id}`);
   }
+});
+
+test("gates countries behind their region and subregion", () => {
+  const engine = new GuessEngine(characters, questions, questionModel);
+  const german = questions.find(({ id }) => id === "german");
+  assert.equal(engine.isRelevant(german), false);
+  engine.answer("european", 1);
+  assert.equal(engine.isRelevant(german), false);
+  engine.answer("germanSpeaking", 1);
+  assert.equal(engine.isRelevant(german), true);
+});
+
+test("never asks a contradictory country after Germany is confirmed", () => {
+  const engine = new GuessEngine(characters, questions, questionModel);
+  engine.answer("german", 1);
+  for (const id of ["american", "british", "french", "austrian", "swiss", "japanese", "mexican", "nigerian"]) {
+    assert.equal(engine.isRelevant(questions.find((question) => question.id === id)), false, `kept ${id}`);
+  }
+});
+
+test("trained implications suppress questions whose answer is already known", () => {
+  const engine = new GuessEngine(characters, questions, questionModel);
+  engine.answer("racingDriver", 1);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "motorsport")), false);
+  const inverse = new GuessEngine(characters, questions, questionModel);
+  inverse.answer("motorsport", -1);
+  assert.equal(inverse.isRelevant(questions.find(({ id }) => id === "racingDriver")), false);
+});
+
+test("only asks retirement status for a living person", () => {
+  const retired = questions.find(({ id }) => id === "retired");
+  const engine = new GuessEngine(characters, questions, questionModel);
+  assert.equal(engine.isRelevant(retired), false);
+  engine.answer("alive", 1);
+  assert.equal(engine.isRelevant(retired), true);
 });
 
 test("prefers a known near-half split over a weaker unbalanced question", () => {

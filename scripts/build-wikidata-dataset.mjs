@@ -110,6 +110,7 @@ function convert(entity, score) {
   if (isHuman) {
     for (const trait of ["actor","singer","musician","rapper","politician","nationalLeader","usPresident","activist","military","militaryLeader","adultCreator","industrialist","medical","legal","religious","writer","scientist","artist","entrepreneur","creator","comedian","model","director","athlete","football","basketball","tennis","motorsport"]) attributes[trait] = -1;
     attributes.alive = entity.claims?.P570?.length ? -1 : 1;
+    if (attributes.alive === 1 && entity.claims?.P2031?.length) attributes.retired = 1;
     if (has(entity,"P21","Q6581072")) attributes.female = 1;
     else if (has(entity,"P21","Q6581097")) attributes.female = -1;
     const occupations = claimIds(entity,"P106");
@@ -155,7 +156,7 @@ function convert(entity, score) {
     if (/\bfilm\b|movie/.test(text) && attributes.actor === 1) attributes.movie = 1;
     if (/television|tv |fernseh/.test(text)) attributes.tv = 1;
     const countries = claimIds(entity,"P27");
-    for (const trait of ["american","british","german","french","spanish","italian","canadian","latinAmerican","brazilian","australian","indian","japanese","southKorean","chinese"]) attributes[trait] = -1;
+    for (const trait of ["american","british","german","french","spanish","italian","canadian","latinAmerican","brazilian","australian","indian","japanese","southKorean","chinese","austrian","swiss","dutch","swedish","polish","russian","ukrainian","turkish","mexican","argentine","nigerian","southAfrican","portuguese","belgian","irish","norwegian","danish"]) attributes[trait] = -1;
     if (countries.includes("Q30")) attributes.american = 1;
     if (countries.includes("Q145")) attributes.british = 1;
     if (countries.includes("Q183")) attributes.german = 1;
@@ -168,6 +169,23 @@ function convert(entity, score) {
     if (countries.includes("Q17")) attributes.japanese = 1;
     if (countries.includes("Q884")) attributes.southKorean = 1;
     if (countries.includes("Q148")) attributes.chinese = 1;
+    if (countries.includes("Q40")) attributes.austrian = 1;
+    if (countries.includes("Q39")) attributes.swiss = 1;
+    if (countries.includes("Q55")) attributes.dutch = 1;
+    if (countries.includes("Q34")) attributes.swedish = 1;
+    if (countries.includes("Q36")) attributes.polish = 1;
+    if (countries.includes("Q159")) attributes.russian = 1;
+    if (countries.includes("Q212")) attributes.ukrainian = 1;
+    if (countries.includes("Q43")) attributes.turkish = 1;
+    if (countries.includes("Q96")) attributes.mexican = 1;
+    if (countries.includes("Q414")) attributes.argentine = 1;
+    if (countries.includes("Q1033")) attributes.nigerian = 1;
+    if (countries.includes("Q258")) attributes.southAfrican = 1;
+    if (countries.includes("Q45")) attributes.portuguese = 1;
+    if (countries.includes("Q31")) attributes.belgian = 1;
+    if (countries.includes("Q27")) attributes.irish = 1;
+    if (countries.includes("Q20")) attributes.norwegian = 1;
+    if (countries.includes("Q35")) attributes.danish = 1;
     const latinAmericanCountries = new Set(["Q155","Q414","Q96","Q298","Q739","Q77","Q419","Q736","Q717","Q750","Q733"]);
     if (countries.some((country) => latinAmericanCountries.has(country))) attributes.latinAmerican = 1;
     if (countries.includes("Q155")) attributes.brazilian = 1;

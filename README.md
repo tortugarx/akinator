@@ -2,9 +2,9 @@
 
 Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine kuratierte Wissensbasis mit einer vorab erzeugten Wikidata-Datenbank, einer lokalen Active-Learning-Engine und einem Lernmodus, der bestätigte Figuren im Browser speichert.
 
-Die ausgelieferte Version umfasst mehr als 17.500 eindeutige Personen, Figuren und private Rollen. Mehr als 14.200 Wiki-Einträge besitzen ein frei lizenziertes Bild aus Wikimedia Commons oder Openverse. Der Katalog enthält 139 Fragen. Für jede Antwort berechnet die Engine die neue Kandidatenverteilung und bevorzugt belastbare Fragen, die sie möglichst nahe an 50/50 teilen; andernfalls wählt sie die größte erwartete Entropiereduktion. Bestätigte Themen aktivieren passende Unterfragen und sperren sachfremde Themen. Buchstaben- und Geburtsjahrfragen werden nicht verwendet.
+Die ausgelieferte Version umfasst mehr als 17.500 eindeutige Personen, Figuren und private Rollen. Mehr als 14.200 Wiki-Einträge besitzen ein frei lizenziertes Bild aus Wikimedia Commons oder Openverse. Der Katalog enthält 206 Fragen. Für jede Antwort berechnet die Engine die neue Kandidatenverteilung und bevorzugt belastbare Fragen, die sie möglichst nahe an 50/50 teilen; andernfalls wählt sie die größte erwartete Entropiereduktion. Bestätigte Themen aktivieren passende Unterfragen und sperren sachfremde Themen. Buchstaben- und Geburtsjahrfragen werden nicht verwendet.
 
-Die Wissensbasis unterscheidet neben Unterhaltung, Politik, Sport und Wissenschaft auch Journalismus, Produktion, Gaming, zahlreiche einzelne Sportarten und Wissenschaftsgebiete, Militär, Erwachsenen-Inhalte, Industrie/Fertigung, Medizin, Recht und Religion. Zusätzliche Fragen grenzen fiktive Figuren nach Genre, Art und Universum ein. Zentrale Themenwörter werden in Fragen optisch hervorgehoben.
+Die Wissensbasis unterscheidet neben Unterhaltung, Politik, Sport und Wissenschaft auch Musikgenres, Creator-Plattformen, politische Ämter, Berufsstatus, Journalismus, Produktion, Gaming, zahlreiche einzelne Sportarten und Wissenschaftsgebiete, Militär, Erwachsenen-Inhalte, Industrie/Fertigung, Medizin, Recht und Religion. Länder werden hierarchisch über Region und Teilregion eingegrenzt. Zusätzliche Fragen grenzen fiktive Figuren nach Genre, Rolle und Universum ein. Zentrale Themenwörter werden in Fragen optisch hervorgehoben.
 
 ## Lokal starten
 
@@ -28,7 +28,7 @@ Die Tests prüfen unter anderem den früheren Abbruch nach sechs Fragen sowie ei
 npm run build:wikidata
 ```
 
-Der Generator wertet populäre Seiten aus zwölf Wikipedia-Sprachräumen aus, löst die zugehörigen Wikidata-Entitäten auf und schreibt eine statische `wikidata-people.json`. Anschließend trainiert er Fragengewichte und geografische Ausschlussbeziehungen in `question-model.js`. So benötigt das veröffentlichte Spiel keine langsamen SPARQL-Abfragen. Wikidata-Daten werden unter CC0 bereitgestellt; Bilder verbleiben auf Wikimedia Commons und sind über den jeweiligen Wikidata-Quellenlink erreichbar.
+Der Generator wertet populäre Seiten aus zwölf Wikipedia-Sprachräumen aus, löst die zugehörigen Wikidata-Entitäten auf und schreibt eine statische `wikidata-people.json`. Anschließend trainiert er Fragengewichte, geografische Ausschlussbeziehungen und semantische Implikationen in `question-model.js`. Erkennt das Training beispielsweise, dass „Rennfahrer“ zuverlässig „Motorsportler“ impliziert, wird die bereits beantwortete allgemeinere Frage später übersprungen. So benötigt das veröffentlichte Spiel keine langsamen SPARQL-Abfragen. Wikidata-Daten werden unter CC0 bereitgestellt; Bilder verbleiben auf Wikimedia Commons und sind über den jeweiligen Wikidata-Quellenlink erreichbar.
 
 Das Modell kann ohne erneuten Datenimport separat trainiert werden:
 

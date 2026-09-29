@@ -1,8 +1,8 @@
-const cacheName = "nazar-v15";
+const cacheName = "nazar-v16";
 const localAssets = [
-  "./", "./index.html", "./styles.css?v=15", "./game.js?v=15",
-  "./data.js?v=15", "./engine.js?v=15", "./attribute-enrichment.js", "./learning.js?v=15", "./question-model.js?v=15", "./play-stats.js?v=15", "./question-format.js?v=15", "./platform.js",
-  "./wikidata-people.json?v=15", "./assets/nazar-genie.png"
+  "./", "./index.html", "./styles.css?v=16", "./game.js?v=16",
+  "./data.js?v=16", "./engine.js?v=16", "./attribute-enrichment.js", "./learning.js?v=16", "./question-model.js?v=16", "./play-stats.js?v=16", "./question-format.js?v=16", "./platform.js",
+  "./wikidata-people.json?v=16", "./assets/nazar-genie.png"
 ];
 
 self.addEventListener("install", (event) => {
