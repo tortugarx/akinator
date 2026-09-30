@@ -35,6 +35,32 @@ test("does not repeat equivalent movie and television questions", () => {
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "tv")), false);
 });
 
+test("continues with private-role questions after personally-known yes", () => {
+  const strangers = Array.from({ length:2000 }, (_, index) => ({ id:`stranger-${index}`, name:`Stranger ${index}`, attributes:{ real:1, personallyKnown:-1, family:0, female:0 } }));
+  const family = characters.filter(({ name }) => ["Deine Mutter", "Dein Vater", "Deine Tante", "Dein Onkel"].includes(name));
+  const engine = new GuessEngine([...strangers, ...family], questions, questionModel);
+  engine.answer("real", 1);
+  engine.answer("personallyKnown", 1);
+  assert.ok(engine.probabilities().filter(({ item }) => item.attributes.personallyKnown === 1).reduce((sum, { probability }) => sum + probability, 0) > .9);
+  assert.ok(["female", "family", "parent", "auntUncle"].includes(engine.nextQuestion()?.id));
+});
+
+test("confirmed adult films keep follow-up questions on relevant traits", () => {
+  const unrelated = Array.from({ length:2000 }, (_, index) => ({ id:`unrelated-${index}`, name:`Unrelated ${index}`, attributes:{ real:1, personallyKnown:-1, adultCreator:-1, adultFilmPerformer:-1, politician:index % 2 ? 1 : -1, journalist:index % 3 ? 1 : -1, writer:index % 5 ? 1 : -1 } }));
+  const adults = characters.filter(({ name }) => ["Bonnie Blue", "Abella Danger", "Angela White", "Eva Elfie"].includes(name));
+  const engine = new GuessEngine([...unrelated, ...adults], questions, questionModel);
+  engine.answer("real", 1);
+  engine.answer("personallyKnown", -1);
+  engine.answer("adultFilmPerformer", 1);
+  assert.ok(engine.probabilities().filter(({ item }) => item.attributes.adultCreator === 1).reduce((sum, { probability }) => sum + probability, 0) > .9);
+  for (let index = 0; index < 4; index += 1) {
+    const question = engine.nextQuestion();
+    assert.ok(question);
+    assert.equal(["politician", "journalist", "writer"].includes(question.id), false);
+    engine.answer(question.id, adults[0].attributes[question.id] ?? 0);
+  }
+});
+
 test("identifies a character from truthful answers", () => {
   const engine = new GuessEngine(characters, questions);
   const target = characters.find((character) => character.name === "Spider-Man");
@@ -240,14 +266,14 @@ test("recognizes plain streamer descriptions and removes actor-only singer noise
   const streamer = new GuessEngine([{ id:"s", name:"Streamer", description:"spanischer Streamer und Moderator", attributes:{ real:1, creator:1 } }], questions);
   assert.equal(streamer.characters[0].attributes.streamer, 1);
   const actor = new GuessEngine([{ id:"a", name:"Actor", description:"US-amerikanische Schauspielerin", attributes:{ real:1, actor:1, singer:1, musician:1 } }], questions);
-  assert.equal(actor.characters[0].attributes.singer, 0);
-  assert.equal(actor.characters[0].attributes.musician, 0);
+  assert.equal(actor.characters[0].attributes.singer, -1);
+  assert.equal(actor.characters[0].attributes.musician, -1);
 });
 
 test("removes secondary occupations from unrelated primary categories", () => {
   const racer = new GuessEngine([{ id:"r", name:"Racer", description:"deutscher Automobilrennfahrer", attributes:{ real:1, athlete:1, motorsport:1, creator:1, actor:1 } }], questions);
-  assert.equal(racer.characters[0].attributes.creator, 0);
-  assert.equal(racer.characters[0].attributes.actor, 0);
+  assert.equal(racer.characters[0].attributes.creator, -1);
+  assert.equal(racer.characters[0].attributes.actor, -1);
 });
 
 test("gates countries behind their region and subregion", () => {

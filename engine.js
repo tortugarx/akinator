@@ -5,7 +5,8 @@ const binaryEntropy = (probability) => {
   if (probability <= 1e-12 || probability >= 1 - 1e-12) return 0;
   return -probability * Math.log(probability) - (1 - probability) * Math.log(1 - probability);
 };
-const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]);
+const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork", "auntUncle", "cousin", "nieceNephew", "stepParent", "spouse", "exPartner", "bestFriend", "neighbor", "roommate", "teacher", "coworker", "boss", "classmate"]);
+const adultQuestions = new Set(["adultCreator", "adultFilmPerformer", "onlyFansCreator", "adultDirector"]);
 const equivalentQuestionFamilies = [new Set(["movie", "filmActor"]), new Set(["tv", "seriesActor"])];
 const exactCountries = new Set(["american", "british", "german", "french", "spanish", "italian", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "austrian", "swiss", "dutch", "swedish", "polish", "russian", "ukrainian", "turkish", "mexican", "argentine", "nigerian", "southAfrican", "portuguese", "belgian", "irish", "norwegian", "danish"]);
 const regionQuestions = new Set(["european", "latinAmerican", "asian", "african"]);
@@ -110,7 +111,16 @@ export class GuessEngine {
     const available = this.characters.filter((item) => !this.rejected.has(this.key(item)));
     if (!available.length) return [];
     const ceiling = Math.max(...available.map((item) => this.scores.get(this.key(item)) ?? 0));
-    const weighted = available.map((item) => ({ item, weight: Math.exp((this.scores.get(this.key(item)) ?? 0) - ceiling) }));
+    const personalFocus = this.answeredYes("personallyKnown");
+    const adultFocus = [...adultQuestions].some((id) => this.answeredYes(id));
+    const weighted = available.map((item) => {
+      let weight = Math.exp((this.scores.get(this.key(item)) ?? 0) - ceiling);
+      // A confirmed, rare branch should not be drowned out by thousands of
+      // unrelated profiles whose corresponding detail happens to be unknown.
+      if (personalFocus && item.attributes.personallyKnown !== 1) weight *= .0001;
+      if (adultFocus && item.attributes.adultCreator !== 1 && ![...adultQuestions].some((id) => item.attributes[id] === 1)) weight *= .0005;
+      return { item, weight };
+    });
     const total = weighted.reduce((sum, entry) => sum + entry.weight, 0) || 1;
     this.probabilityCache = weighted
       .map((entry) => ({ ...entry, probability: entry.weight / total }))
@@ -146,16 +156,20 @@ export class GuessEngine {
     if (id === "personallyKnown" && fictionalCharacter) return false;
     if (id === "retired" && !this.answeredYes("alive")) return false;
     if (this.answeredNo("personallyKnown") && relationshipQuestions.has(id)) return false;
-    if (this.answeredYes("personallyKnown") && !relationshipQuestions.has(id)) return false;
+    if (this.answeredYes("personallyKnown") && !relationshipQuestions.has(id) && !["female","alive"].includes(id)) return false;
     if (realPerson && fictionalOnlyQuestions.has(id)) return false;
     if (fictionalCharacter && realOnlyQuestions.has(id)) return false;
     if (relationshipQuestions.has(id) && this.answeredNo("real")) return false;
-    if (["parent", "sibling", "grandparent", "yourChild"].includes(id) && this.answeredNo("family")) return false;
-    if (this.answeredYes("family") && ["romantic", "partner", "friend", "schoolWork"].includes(id)) return false;
+    if (["parent", "sibling", "grandparent", "yourChild", "auntUncle", "cousin", "nieceNephew", "stepParent"].includes(id) && this.answeredNo("family")) return false;
+    if (this.answeredYes("family") && ["romantic", "partner", "spouse", "exPartner", "friend", "bestFriend", "schoolWork", "neighbor", "roommate"].includes(id)) return false;
     if (this.answeredYes("romantic") && ["friend", "schoolWork"].includes(id)) return false;
     if (this.answeredYes("friend") && ["romantic", "partner", "schoolWork"].includes(id)) return false;
     if (this.answeredYes("schoolWork") && ["romantic", "partner", "friend"].includes(id)) return false;
-    const familyRoles = ["parent", "sibling", "grandparent", "yourChild"];
+    if (id === "stepParent" && this.answeredNo("parent")) return false;
+    if (id === "spouse" && this.answeredNo("partner")) return false;
+    if (id === "bestFriend" && this.answeredNo("friend")) return false;
+    if (["teacher", "coworker", "boss", "classmate"].includes(id) && this.answeredNo("schoolWork")) return false;
+    const familyRoles = ["parent", "sibling", "grandparent", "yourChild", "auntUncle", "cousin", "nieceNephew"];
     if (familyRoles.includes(id) && familyRoles.some((role) => role !== id && this.answeredYes(role))) return false;
     const parentTopics = [...topicBranches].filter(([, children]) => children.has(id) || [...children].some((child) => topicDescendants(child).has(id)));
     // A detail can belong to several careers. It is impossible only when every
@@ -189,6 +203,7 @@ export class GuessEngine {
 
   focusedTopics() {
     const confirmed = [...topicBranches].filter(([root]) => this.answeredYes(root));
+    if (["adultFilmPerformer", "onlyFansCreator", "adultDirector"].some((id) => this.answeredYes(id)) && !confirmed.some(([root]) => root === "adultCreator")) confirmed.push(["adultCreator", topicBranches.get("adultCreator")]);
     return confirmed.filter(([root]) => !confirmed.some(([other]) => other !== root && topicDescendants(root).has(other)));
   }
 
@@ -196,6 +211,11 @@ export class GuessEngine {
     if (!focused.length) return 1;
     const universal = new Set(["real", "personallyKnown", "alive", "female", ...exactCountries, ...regionQuestions, ...subregionQuestions]);
     if (universal.has(id)) return .82;
+    if (focused.some(([root]) => root === "adultCreator")) {
+      if (adultQuestions.has(id)) return 1.4;
+      if (["actor","creator","model","streamer","director","internet","retired","movie","tv"].includes(id)) return .36;
+      return .025;
+    }
     if (focused.some(([root]) => root === id || topicDescendants(root).has(id))) return 1.2;
     // Other profession roots remain available to discover overlapping careers,
     // but their low priority prevents a tour through every unrelated industry.
