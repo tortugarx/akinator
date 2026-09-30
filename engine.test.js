@@ -25,6 +25,16 @@ test("catalogue contains no duplicate ids or question texts", () => {
   }
 });
 
+test("does not repeat equivalent movie and television questions", () => {
+  const engine = new GuessEngine(characters, questions, questionModel);
+  engine.answer("real", 1);
+  engine.answer("actor", 1);
+  engine.answer("filmActor", 1);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "movie")), false);
+  engine.answer("seriesActor", -1);
+  assert.equal(engine.isRelevant(questions.find(({ id }) => id === "tv")), false);
+});
+
 test("identifies a character from truthful answers", () => {
   const engine = new GuessEngine(characters, questions);
   const target = characters.find((character) => character.name === "Spider-Man");
@@ -179,8 +189,14 @@ test("chooses the question with the highest expected information gain", () => {
 });
 
 test("ships a substantially larger useful question catalogue", () => {
-  assert.ok(questions.length >= 270);
+  assert.ok(questions.length >= 280);
   for (const id of ["entertainment", "journalist", "popMusician", "martialArts", "youtuber", "chancellor", "computerScientist", "novelist", "techEntrepreneur", "army", "gameOfThrones", "retired", "songwriter", "rnbSoulSinger", "twitchStreamer", "minecraftStreamer", "politicalStreamer"]) {
+    assert.ok(questions.some((question) => question.id === id), `missing ${id}`);
+  }
+});
+
+test("ships actor-specific franchise discriminators", () => {
+  for (const id of ["marvelActor", "dcActor", "starWarsActor", "harryPotterActor", "sitcomActor", "superheroActor"]) {
     assert.ok(questions.some((question) => question.id === id), `missing ${id}`);
   }
 });
@@ -226,6 +242,12 @@ test("recognizes plain streamer descriptions and removes actor-only singer noise
   const actor = new GuessEngine([{ id:"a", name:"Actor", description:"US-amerikanische Schauspielerin", attributes:{ real:1, actor:1, singer:1, musician:1 } }], questions);
   assert.equal(actor.characters[0].attributes.singer, 0);
   assert.equal(actor.characters[0].attributes.musician, 0);
+});
+
+test("removes secondary occupations from unrelated primary categories", () => {
+  const racer = new GuessEngine([{ id:"r", name:"Racer", description:"deutscher Automobilrennfahrer", attributes:{ real:1, athlete:1, motorsport:1, creator:1, actor:1 } }], questions);
+  assert.equal(racer.characters[0].attributes.creator, 0);
+  assert.equal(racer.characters[0].attributes.actor, 0);
 });
 
 test("gates countries behind their region and subregion", () => {

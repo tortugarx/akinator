@@ -184,6 +184,12 @@ export const questions = [
   { id: "adultFilmPerformer", en: "Is this person known as an adult-film performer?", de: "Ist diese Person als Darsteller oder Darstellerin in Erwachsenenfilmen bekannt?" },
   { id: "onlyFansCreator", en: "Is this person especially known through OnlyFans?", de: "Ist diese Person besonders durch OnlyFans bekannt?" },
   { id: "adultDirector", en: "Is this person known for directing adult films?", de: "Ist diese Person für die Regie von Erwachsenenfilmen bekannt?" },
+  { id: "marvelActor", en: "Has this person played a major role in a Marvel production?", de: "Hat diese Person eine wichtige Rolle in einer Marvel-Produktion gespielt?" },
+  { id: "dcActor", en: "Has this person played a major role in a DC production?", de: "Hat diese Person eine wichtige Rolle in einer DC-Produktion gespielt?" },
+  { id: "starWarsActor", en: "Has this person played a major role in Star Wars?", de: "Hat diese Person eine wichtige Rolle in Star Wars gespielt?" },
+  { id: "harryPotterActor", en: "Has this person played a major role in Harry Potter?", de: "Hat diese Person eine wichtige Rolle in Harry Potter gespielt?" },
+  { id: "sitcomActor", en: "Is this person especially known from a sitcom?", de: "Ist diese Person besonders aus einer Sitcom bekannt?" },
+  { id: "superheroActor", en: "Is this person especially known for playing a superhero or comic-book role?", de: "Ist diese Person besonders für eine Superhelden- oder Comicrolle bekannt?" },
   { id: "guitarist", en: "Is this musician especially known for playing guitar?", de: "Ist diese Person besonders für das Spielen der Gitarre bekannt?" },
   { id: "pianist", en: "Is this musician especially known for playing piano?", de: "Ist diese Person besonders für das Spielen des Klaviers bekannt?" },
   { id: "drummer", en: "Is this musician especially known for playing drums?", de: "Ist diese Person besonders als Schlagzeuger oder Schlagzeugerin bekannt?" },
@@ -568,4 +574,42 @@ characters.push(
   f("King Kong","🦍","Gigantischer Film-Gorilla",{movie:1,animal:1,nonhuman:1,powers:1}),
   f("Po","🐼","Kung-Fu-Panda und Drachenkrieger",{animated:1,movie:1,animal:1,nonhuman:1,protagonist:1}),
   f("Megamind","🧠","Blauer Superschurke mit Heldenpotenzial",{animated:1,movie:1,villain:1,nonhuman:1,protagonist:1})
+);
+
+// Important online personalities that are poorly represented by Wikipedia's
+// general pageview lists. These local records keep the public build complete
+// without requiring a runtime API or backend.
+characters.push(
+  p("MontanaBlack","🎮","Deutscher Twitch-Streamer und YouTuber",{creator:1,internet:1,streamer:1,twitchStreamer:1,youtuber:1,gamingStreamer:1,varietyStreamer:1,german:1,european:1}),
+  p("Trymacs","🎮","Deutscher Streamer und Webvideoproduzent",{creator:1,internet:1,streamer:1,twitchStreamer:1,youtuber:1,gamingStreamer:1,varietyStreamer:1,german:1,european:1}),
+  p("Gronkh","🎮","Deutscher Gaming-YouTuber und Livestreamer",{creator:1,internet:1,streamer:1,twitchStreamer:1,youtuber:1,gamingStreamer:1,german:1,european:1}),
+  p("Rezo","🎙️","Deutscher Webvideoproduzent und Musiker",{creator:1,internet:1,youtuber:1,commentaryCreator:1,politicalStreamer:1,musicCreator:1,musician:1,german:1,european:1}),
+  p("Knossi","👑","Deutscher Entertainer und Livestreamer",{creator:1,internet:1,streamer:1,twitchStreamer:1,irlStreamer:1,varietyStreamer:1,german:1,european:1}),
+  p("EliasN97","⚽","Deutscher Streamer mit Gaming- und Fußballinhalten",{creator:1,internet:1,streamer:1,twitchStreamer:1,gamingStreamer:1,sportsGameStreamer:1,sportsCreator:1,german:1,european:1}),
+  p("BastiGHG","⛏️","Deutscher Minecraft-Streamer und YouTuber",{creator:1,internet:1,streamer:1,twitchStreamer:1,youtuber:1,gamingStreamer:1,minecraftStreamer:1,german:1,european:1}),
+  p("LetsHugo","🎮","Deutscher Twitch-Streamer",{creator:1,internet:1,streamer:1,twitchStreamer:1,gamingStreamer:1,varietyStreamer:1,german:1,european:1}),
+  p("Unge","🎥","Deutscher Webvideoproduzent und Streamer",{creator:1,internet:1,streamer:1,twitchStreamer:1,youtuber:1,gamingStreamer:1,german:1,european:1}),
+  p("Paluten","⛏️","Deutscher Gaming-YouTuber",{creator:1,internet:1,youtuber:1,gamer:1,minecraftStreamer:1,gamingStreamer:1,german:1,european:1}),
+  p("Dagi Bee","💄","Deutsche Beauty-YouTuberin",{female:1,creator:1,internet:1,youtuber:1,beautyCreator:1,german:1,european:1}),
+  p("Julien Bam","🎬","Deutscher Webvideoproduzent, Musiker und Tänzer",{creator:1,internet:1,youtuber:1,comedyCreator:1,musicCreator:1,musician:1,dancer:1,german:1,european:1}),
+  p("LaserLuca","🎥","Deutscher YouTuber und Entertainer",{creator:1,internet:1,youtuber:1,comedyCreator:1,varietyStreamer:1,german:1,european:1}),
+  p("HandOfBlood","🎮","Deutscher Gaming-YouTuber und Streamer",{creator:1,internet:1,youtuber:1,streamer:1,twitchStreamer:1,gamingStreamer:1,german:1,european:1}),
+  p("xQc","🎮","Kanadischer Twitch-Streamer",{creator:1,internet:1,streamer:1,twitchStreamer:1,gamingStreamer:1,varietyStreamer:1,canadian:1}),
+  p("Pokimane","🎮","Kanadisch-marokkanische Twitch-Streamerin",{female:1,creator:1,internet:1,streamer:1,twitchStreamer:1,gamingStreamer:1,varietyStreamer:1,canadian:1}),
+  p("Ninja","🎮","US-amerikanischer Gaming-Streamer",{creator:1,internet:1,streamer:1,twitchStreamer:1,gamingStreamer:1,battleRoyaleStreamer:1,competitiveGameStreamer:1,american:1}),
+  p("Shroud","🎯","Kanadischer Shooter-Streamer",{creator:1,internet:1,streamer:1,twitchStreamer:1,gamingStreamer:1,shooterStreamer:1,competitiveGameStreamer:1,canadian:1}),
+  p("Valkyrae","🎮","US-amerikanische YouTube-Streamerin",{female:1,creator:1,internet:1,streamer:1,youtubeStreamer:1,youtuber:1,gamingStreamer:1,varietyStreamer:1,american:1}),
+  p("Ludwig Ahgren","🎙️","US-amerikanischer Streamer und Podcaster",{creator:1,internet:1,streamer:1,youtubeStreamer:1,varietyStreamer:1,podcaster:1,american:1}),
+  p("Sykkuno","🎮","US-amerikanischer Gaming-Streamer",{creator:1,internet:1,streamer:1,twitchStreamer:1,gamingStreamer:1,varietyStreamer:1,american:1}),
+  p("Mizkif","🎥","US-amerikanischer Twitch-Streamer",{creator:1,internet:1,streamer:1,twitchStreamer:1,irlStreamer:1,varietyStreamer:1,american:1}),
+  p("Asmongold","⚔️","US-amerikanischer Gaming-Streamer",{creator:1,internet:1,streamer:1,twitchStreamer:1,gamingStreamer:1,varietyStreamer:1,american:1}),
+  p("MoistCr1TiKaL","🎙️","US-amerikanischer YouTuber und Streamer",{creator:1,internet:1,streamer:1,youtuber:1,twitchStreamer:1,commentaryCreator:1,gamingStreamer:1,american:1}),
+  p("Markiplier","🎮","US-amerikanischer Gaming-YouTuber",{creator:1,internet:1,youtuber:1,gamer:1,gamingStreamer:1,american:1}),
+  p("Jacksepticeye","🎮","Irischer Gaming-YouTuber",{creator:1,internet:1,youtuber:1,gamer:1,gamingStreamer:1,irish:1,european:1}),
+  p("Abella Danger","🎬","US-amerikanische Darstellerin in Erwachsenenfilmen",{female:1,actor:1,adultCreator:1,adultFilmPerformer:1,american:1}),
+  p("Angela White","🎬","Australische Darstellerin und Regisseurin in Erwachsenenfilmen",{female:1,actor:1,director:1,adultCreator:1,adultFilmPerformer:1,adultDirector:1,australian:1}),
+  p("Eva Elfie","🎬","Russische Darstellerin in Erwachsenenfilmen",{female:1,actor:1,adultCreator:1,adultFilmPerformer:1,russian:1,european:1}),
+  p("Sasha Grey","🎬","US-amerikanische Schauspielerin und ehemalige Adult-Darstellerin",{female:1,actor:1,adultCreator:1,adultFilmPerformer:1,retired:1,american:1}),
+  p("Belle Delphine","📱","Britische Internetpersönlichkeit und Adult-Creatorin",{female:1,creator:1,internet:1,adultCreator:1,onlyFansCreator:1,british:1,european:1}),
+  p("Corinna Kopf","📱","US-amerikanische Internetpersönlichkeit und Streamerin",{female:1,creator:1,internet:1,streamer:1,onlyFansCreator:1,adultCreator:1,irlStreamer:1,american:1})
 );

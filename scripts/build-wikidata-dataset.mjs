@@ -89,7 +89,7 @@ const occupationMap = new Map([
   ["Q82955","politician"], ["Q49757","writer"], ["Q901","scientist"], ["Q483501","artist"],
   ["Q43845","entrepreneur"], ["Q17125263","creator"], ["Q245068","comedian"], ["Q4610556","model"],
   ["Q2526255","director"], ["Q937857","football"], ["Q3665646","basketball"], ["Q10833314","tennis"],
-  ["Q2066131","athlete"], ["Q10841764","creator"]
+  ["Q2066131","athlete"], ["Q10841764","motorsport"]
 ]);
 const europeanCountries = new Set(["Q38","Q40","Q31","Q55","Q183","Q142","Q145","Q29","Q45","Q20","Q33","Q34","Q35","Q36","Q213","Q214","Q215","Q218","Q219","Q220","Q221","Q224","Q228","Q229","Q232","Q233","Q211","Q191","Q37","Q28","Q41","Q27","Q32","Q39","Q347"]);
 const asianCountries = new Set(["Q17","Q148","Q668","Q884","Q851","Q252","Q794","Q810","Q159","Q43","Q869","Q881","Q928","Q836","Q837","Q843","Q842","Q854","Q858"]);

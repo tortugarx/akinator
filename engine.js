@@ -6,6 +6,7 @@ const binaryEntropy = (probability) => {
   return -probability * Math.log(probability) - (1 - probability) * Math.log(1 - probability);
 };
 const relationshipQuestions = new Set(["family", "parent", "sibling", "grandparent", "yourChild", "romantic", "partner", "friend", "schoolWork"]);
+const equivalentQuestionFamilies = [new Set(["movie", "filmActor"]), new Set(["tv", "seriesActor"])];
 const exactCountries = new Set(["american", "british", "german", "french", "spanish", "italian", "canadian", "brazilian", "australian", "indian", "japanese", "southKorean", "chinese", "austrian", "swiss", "dutch", "swedish", "polish", "russian", "ukrainian", "turkish", "mexican", "argentine", "nigerian", "southAfrican", "portuguese", "belgian", "irish", "norwegian", "danish"]);
 const regionQuestions = new Set(["european", "latinAmerican", "asian", "african"]);
 const subregionQuestions = new Set(["germanSpeaking", "nordic", "easternEuropean", "southernEuropean", "westernEuropean"]);
@@ -27,7 +28,7 @@ export const topicBranches = new Map([
   ["athlete", new Set(["football", "basketball", "tennis", "motorsport", "boxer", "wrestler", "racingDriver", "coach", "golfer", "cyclist", "swimmer", "runner", "baseball", "iceHockey", "gymnast", "esports", "martialArts", "cricket", "volleyball", "handball", "americanFootball", "winterSports", "retired"])],
   ["politician", new Set(["nationalLeader", "usPresident", "president", "primeMinister", "partyLeader", "cabinetMinister", "diplomat", "activist", "military", "militaryLeader", "royalty", "ministerDiplomat", "mayor", "legislator", "chancellor", "governor", "retired"])],
   ["military", new Set(["militaryLeader", "army", "navy", "airForce", "generalOfficer", "admiral", "militaryPilot", "retired"])],
-  ["actor", new Set(["movie", "tv", "filmActor", "seriesActor", "childActor", "actionActor", "horrorActor", "bollywoodActor", "soapActor", "comedian", "model", "adultCreator", "adultFilmPerformer", "onlyFansCreator", "adultDirector", "voiceActor", "theaterActor", "realityTV", "awardWinningActor", "retired"])],
+  ["actor", new Set(["movie", "tv", "filmActor", "seriesActor", "childActor", "actionActor", "horrorActor", "bollywoodActor", "soapActor", "marvelActor", "dcActor", "starWarsActor", "harryPotterActor", "sitcomActor", "superheroActor", "comedian", "model", "adultCreator", "adultFilmPerformer", "onlyFansCreator", "adultDirector", "voiceActor", "theaterActor", "realityTV", "awardWinningActor", "retired"])],
   ["creator", new Set(["internet", "adultCreator", "adultFilmPerformer", "onlyFansCreator", "gamer", "esports", "youtuber", "streamer", "tiktoker", "podcaster", "challengeCreator", "commentaryCreator", "vlogger", "beautyCreator", "techCreator", "educationCreator", "foodCreator", "travelCreator", "fitnessCreator", "comedyCreator", "kidsCreator", "musicCreator", "sportsCreator", "prankCreator", "retired"])],
   ["streamer", new Set(["twitchStreamer", "youtubeStreamer", "gamingStreamer", "minecraftStreamer", "competitiveGameStreamer", "irlStreamer", "politicalStreamer", "vtuber", "varietyStreamer", "roleplayStreamer", "sportsGameStreamer", "battleRoyaleStreamer", "mobaStreamer", "shooterStreamer", "speedrunner", "youtuber", "podcaster", "retired"])],
   ["scientist", new Set(["space", "electric", "physicist", "mathematician", "chemist", "biologist", "astronaut", "engineer", "inventor", "academic", "computerScientist", "economist", "psychologist", "astronomer", "environmentalScientist", "retired"])],
@@ -134,6 +135,7 @@ export class GuessEngine {
     const id = question.id;
     const realPerson = this.answeredYes("real") || this.answeredNo("fictional");
     const fictionalCharacter = this.answeredNo("real") || this.answeredYes("fictional");
+    if (equivalentQuestionFamilies.some((family) => family.has(id) && [...family].some((other) => other !== id && this.responses.has(other)))) return false;
     for (const [answeredId, answer] of this.responses) {
       if (answer >= .5 && this.model.exclusions?.[answeredId]?.includes(id)) return false;
       if (answer >= .5 && this.model.implications?.[answeredId]?.includes(id)) return false;
@@ -218,7 +220,7 @@ export class GuessEngine {
     // The most probable candidates carry the useful decision boundary. Limiting
     // scoring to this normalized beam keeps 17k-person games responsive without
     // changing the final probability table or removing any candidate.
-    const beam = candidates.length > 4000 ? candidates.slice(0, 4000) : candidates;
+    const beam = candidates.length > 2000 ? candidates.slice(0, 2000) : candidates;
     const beamMass = beam.reduce((sum, { probability }) => sum + probability, 0) || 1;
     const selectionCandidates = beam.map((entry) => ({ ...entry, probability:entry.probability / beamMass }));
     let best = null;
@@ -239,6 +241,7 @@ export class GuessEngine {
       }
       const noMass = 1 - yesMass;
       if (yesMass <= 1e-9 || noMass <= 1e-9) continue;
+      if (knownMass < .16 && candidates.length > 12) continue;
       const gain = binaryEntropy(yesMass) - conditionalEntropy;
       const splitQuality = 1 - Math.abs(yesMass - noMass);
       const trainedBranchWeights = focusedTopics.map(([root]) => this.model.branchWeights?.[root]?.[question.id]).filter(Number.isFinite);

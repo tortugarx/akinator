@@ -70,7 +70,9 @@ for (const { id:from } of questions) {
   for (const { id:to } of questions) {
     if (from === to) continue;
     const overlap = intersections.get(`${from}\0${to}`) || 0;
-    if (overlap >= 8 && overlap / positiveCounts[from] >= .98) (implications[from] ||= []).push(to);
+    // Keep implications only when they are exceptionally consistent. At .98,
+    // broad noisy Wikidata occupations were suppressing real cross-career paths.
+    if (overlap >= 12 && overlap / positiveCounts[from] >= .995) (implications[from] ||= []).push(to);
   }
 }
 

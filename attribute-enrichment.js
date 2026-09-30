@@ -185,14 +185,33 @@ const singerDetails = ["songwriter","soloSinger","rnbSoulSinger","jazzSinger","o
 const streamerDetails = ["twitchStreamer","youtubeStreamer","gamingStreamer","minecraftStreamer","competitiveGameStreamer","irlStreamer","politicalStreamer","vtuber","varietyStreamer","roleplayStreamer","sportsGameStreamer","battleRoyaleStreamer","mobaStreamer","shooterStreamer","speedrunner"];
 const creatorDetails = ["challengeCreator","commentaryCreator","vlogger","beautyCreator","techCreator","educationCreator","foodCreator","travelCreator","fitnessCreator","comedyCreator","kidsCreator","musicCreator","sportsCreator","prankCreator"];
 const branchDetailDefaults = {
-  actor:["filmActor","seriesActor","childActor","actionActor","horrorActor","bollywoodActor","soapActor","adultFilmPerformer","onlyFansCreator","adultDirector"],
-  musician:["guitarist","pianist","drummer","violinist","conductor","metalMusician","reggaeMusician","gospelSinger"],
-  creator:creatorDetails,
-  politician:["primeMinister","president","partyLeader","cabinetMinister","diplomat"],
+  actor:["filmActor","seriesActor","childActor","actionActor","horrorActor","bollywoodActor","soapActor","adultFilmPerformer","onlyFansCreator","adultDirector","marvelActor","dcActor","starWarsActor","harryPotterActor","sitcomActor","superheroActor"],
+  musician:["guitarist","pianist","drummer","violinist","conductor","metalMusician","reggaeMusician","gospelSinger","popMusician","rockMusician","classicalMusician","electronicMusician","countryMusician","musicProducer","songwriter","soloSinger","rnbSoulSinger","jazzSinger","operaSinger","kpopSinger","latinSinger","schlagerSinger","folkSinger"],
+  creator:[...creatorDetails,"youtuber","streamer","tiktoker","podcaster","gamer","esports","adultCreator","onlyFansCreator","adultFilmPerformer"],
+  politician:["primeMinister","president","partyLeader","cabinetMinister","diplomat","nationalLeader","usPresident","mayor","legislator","chancellor","governor","activist","militaryLeader"],
   writer:["fantasyAuthor","scifiAuthor","crimeAuthor","nonfictionAuthor"],
   military:["generalOfficer","admiral","militaryPilot"],
   entrepreneur:["chiefExecutive","billionaire"]
 };
+
+const primaryCareerSignals = {
+  actor:/\bactor\b|\bactress\b|schauspiel|darsteller|filmschauspiel|fernsehschauspiel/i,
+  singer:/\bsinger\b|vocalist|sänger|sängerin/i,
+  musician:/\bmusician\b|musiker|musikerin|composer|komponist|songwriter|rapper|rockmusiker|jazzmusiker/i,
+  athlete:/\bathlete\b|sportler|sportlerin|footballer|soccer player|basketball player|tennis player|racing driver|rennfahrer|boxer|wrestler/i,
+  politician:/\bpolitician\b|political activist|politiker|politikerin|president|prime minister|chancellor|bundeskanzler|ministerpräsident/i,
+  creator:/youtuber|streamer|influencer|content creator|social media personality|internet personality|webvideoproduzent|livestreamer|tiktoker|vlogger/i,
+  scientist:/\bscientist\b|physicist|chemist|biologist|mathematician|wissenschaftler|physiker|chemiker|biologe|mathematiker/i,
+  writer:/\bwriter\b|\bauthor\b|novelist|poet|schriftsteller|autor|dichter/i,
+  entrepreneur:/entrepreneur|businessman|businesswoman|unternehmer|business magnate/i,
+  comedian:/comedian|komiker|stand-up comedian/i,
+  model:/fashion model|fotomodell/i,
+  director:/film director|filmmaker|regisseur|regisseurin/i,
+  artist:/visual artist|painter|sculptor|maler|bildhauer/i,
+  military:/military officer|army officer|soldier|admiral|general|militär|soldat|offizier/i,
+  journalist:/journalist|reporter|publizist/i
+};
+const primaryCareerRoots = Object.keys(primaryCareerSignals);
 
 // Short Wikidata descriptions cannot express every useful distinction. These
 // local profiles cover especially popular singers and streamers deterministically;
@@ -246,7 +265,138 @@ const knownProfiles = new Map(Object.entries({
   "Sketch": ["streamer","twitchStreamer","gamingStreamer","sportsGameStreamer"],
   "Inoxtag": ["streamer","youtubeStreamer","gamingStreamer","vlogger"],
   "PewDiePie": ["youtuber","gamingStreamer","commentaryCreator"],
-  "MrBeast": ["youtuber","challengeCreator"]
+  "MrBeast": ["creator","youtuber","challengeCreator"],
+  "Matthew Perry": ["seriesActor","sitcomActor"],
+  "Jenna Ortega": ["seriesActor","horrorActor","childActor"],
+  "Johnny Depp": ["filmActor"],
+  "Val Kilmer": ["filmActor","actionActor","dcActor","superheroActor"],
+  "Betty White": ["seriesActor","sitcomActor"],
+  "Robert Redford": ["filmActor","awardWinningActor"],
+  "Gene Hackman": ["filmActor","awardWinningActor"],
+  "Maggie Smith": ["filmActor","seriesActor","harryPotterActor","awardWinningActor"],
+  "Brendan Fraser": ["filmActor","actionActor","awardWinningActor"],
+  "Cillian Murphy": ["filmActor","seriesActor","awardWinningActor"],
+  "Margot Robbie": ["filmActor","dcActor","superheroActor"],
+  "Pedro Pascal": ["seriesActor","starWarsActor"],
+  "Michelle Yeoh": ["filmActor","actionActor","awardWinningActor"],
+  "Arnold Schwarzenegger": ["filmActor","actionActor"],
+  "Will Smith": ["filmActor","actionActor","awardWinningActor"],
+  "Macaulay Culkin": ["filmActor","childActor"],
+  "Emma Stone": ["filmActor","awardWinningActor"],
+  "Adrien Brody": ["filmActor","awardWinningActor"],
+  "Tom Cruise": ["filmActor","actionActor"],
+  "Sydney Sweeney": ["seriesActor","filmActor"],
+  "Jamie Lee Curtis": ["filmActor","horrorActor","awardWinningActor"],
+  "Charlie Sheen": ["seriesActor","sitcomActor","filmActor"],
+  "Bella Ramsey": ["seriesActor"],
+  "Millie Bobby Brown": ["seriesActor","childActor"],
+  "Zendaya": ["seriesActor","filmActor","marvelActor","superheroActor"],
+  "Blake Lively": ["seriesActor","filmActor"],
+  "Jeremy Renner": ["filmActor","actionActor","marvelActor","superheroActor"],
+  "Ryan Gosling": ["filmActor"],
+  "Keanu Reeves": ["filmActor","actionActor","dcActor"],
+  "Alan Rickman": ["filmActor","theaterActor","harryPotterActor"],
+  "Scarlett Johansson": ["filmActor","actionActor","marvelActor","superheroActor"],
+  "Robert Downey Jr.": ["filmActor","marvelActor","superheroActor"],
+  "Chris Evans": ["filmActor","actionActor","marvelActor","superheroActor"],
+  "Chris Hemsworth": ["filmActor","actionActor","marvelActor","superheroActor"],
+  "Tom Holland": ["filmActor","marvelActor","superheroActor"],
+  "Benedict Cumberbatch": ["filmActor","seriesActor","marvelActor","superheroActor"],
+  "Mark Ruffalo": ["filmActor","marvelActor","superheroActor"],
+  "Elizabeth Olsen": ["filmActor","seriesActor","marvelActor","superheroActor"],
+  "Ryan Reynolds": ["filmActor","actionActor","marvelActor","superheroActor"],
+  "Hugh Jackman": ["filmActor","actionActor","marvelActor","superheroActor"],
+  "Gal Gadot": ["filmActor","actionActor","dcActor","superheroActor"],
+  "Henry Cavill": ["filmActor","seriesActor","actionActor","dcActor","superheroActor"],
+  "Christian Bale": ["filmActor","actionActor","dcActor","superheroActor","awardWinningActor"],
+  "Ben Affleck": ["filmActor","dcActor","superheroActor","awardWinningActor"],
+  "Robert Pattinson": ["filmActor","dcActor","superheroActor"],
+  "Jason Momoa": ["filmActor","seriesActor","actionActor","dcActor","superheroActor"],
+  "Mark Hamill": ["filmActor","voiceActor","starWarsActor"],
+  "Harrison Ford": ["filmActor","actionActor","starWarsActor"],
+  "Carrie Fisher": ["filmActor","starWarsActor"],
+  "Natalie Portman": ["filmActor","starWarsActor","marvelActor","awardWinningActor"],
+  "Ewan McGregor": ["filmActor","seriesActor","starWarsActor"],
+  "Daniel Radcliffe": ["filmActor","harryPotterActor","childActor"],
+  "Emma Watson": ["filmActor","harryPotterActor","childActor"],
+  "Rupert Grint": ["filmActor","harryPotterActor","childActor"],
+  "Ralph Fiennes": ["filmActor","harryPotterActor"],
+  "Tom Felton": ["filmActor","harryPotterActor","childActor"],
+  "Jennifer Aniston": ["seriesActor","sitcomActor","filmActor"],
+  "Courteney Cox": ["seriesActor","sitcomActor","horrorActor"],
+  "Lisa Kudrow": ["seriesActor","sitcomActor"],
+  "Jim Parsons": ["seriesActor","sitcomActor"],
+  "Kaley Cuoco": ["seriesActor","sitcomActor","voiceActor"],
+  "Jackie Chan": ["filmActor","actionActor","martialArts"],
+  "Jason Statham": ["filmActor","actionActor"],
+  "Vin Diesel": ["filmActor","actionActor","marvelActor","voiceActor"],
+  "Dwayne Johnson": ["filmActor","actionActor","dcActor","superheroActor"],
+  "Bruce Lee": ["filmActor","actionActor","martialArts"],
+  "Olaf Scholz": ["politician","chancellor","nationalLeader","legislator"],
+  "Angela Merkel": ["politician","chancellor","nationalLeader","scientist"],
+  "Donald Trump": ["politician","president","nationalLeader","entrepreneur","realityTV"],
+  "Barack Obama": ["politician","usPresident","president","nationalLeader","writer"],
+  "Joe Biden": ["politician","usPresident","president","nationalLeader"],
+  "Emmanuel Macron": ["politician","president","nationalLeader"],
+  "Volodymyr Zelenskyy": ["politician","president","nationalLeader","actor","comedian"],
+  "Vladimir Putin": ["politician","president","nationalLeader","militaryLeader"],
+  "Ursula von der Leyen": ["politician","president","nationalLeader","medical"],
+  "Friedrich Merz": ["politician","chancellor","nationalLeader","entrepreneur"],
+  "Axl Rose": ["singer","songwriter","rockMusician","musicGroup"],
+  "Ozzy Osbourne": ["singer","rockMusician","metalMusician","musicGroup"],
+  "Eminem": ["rapper","singer","songwriter","soloSinger"],
+  "Kendrick Lamar": ["rapper","singer","songwriter","soloSinger"],
+  "Cardi B": ["rapper","singer","soloSinger"],
+  "Lana Del Rey": ["singer","songwriter","soloSinger","popMusician"],
+  "Sabrina Carpenter": ["singer","songwriter","soloSinger","popMusician","actor"],
+  "Chappell Roan": ["singer","songwriter","soloSinger","popMusician"],
+  "Sia": ["singer","songwriter","soloSinger","popMusician"],
+  "Katy Perry": ["singer","songwriter","soloSinger","popMusician"],
+  "Demi Lovato": ["singer","songwriter","soloSinger","popMusician","actor"],
+  "J. Cole": ["rapper","singer","songwriter","soloSinger"],
+  "Travis Scott": ["rapper","singer","songwriter","soloSinger"],
+  "Megan Thee Stallion": ["rapper","singer","soloSinger"],
+  "Rammstein": ["musicGroup","rockMusician","metalMusician"],
+  "Metallica": ["musicGroup","rockMusician","metalMusician"],
+  "Björk": ["singer","songwriter","soloSinger","electronicMusician"],
+  "Hans Zimmer": ["musician","composer","classicalMusician","musicProducer"],
+  "Ludwig van Beethoven": ["musician","composer","classicalMusician","pianist"],
+  "Lewis Hamilton": ["athlete","racingDriver","motorsport"],
+  "Max Verstappen": ["athlete","racingDriver","motorsport"],
+  "Sebastian Vettel": ["athlete","racingDriver","motorsport","retired"],
+  "Michael Schumacher": ["athlete","racingDriver","motorsport","retired"],
+  "Cristiano Ronaldo": ["athlete","football"],
+  "Lionel Messi": ["athlete","football"],
+  "Serena Williams": ["athlete","tennis","retired"],
+  "Novak Djokovic": ["athlete","tennis"],
+  "Roger Federer": ["athlete","tennis","retired"],
+  "LeBron James": ["athlete","basketball"],
+  "Stephen Curry": ["athlete","basketball"],
+  "Mike Tyson": ["athlete","boxer"],
+  "Conor McGregor": ["athlete","martialArts","boxer"],
+  "Markiplier": ["creator","youtuber","gamingStreamer","horrorActor"],
+  "Jacksepticeye": ["creator","youtuber","gamingStreamer"],
+  "Ludwig Ahgren": ["creator","streamer","twitchStreamer","varietyStreamer","podcaster"],
+  "xQc": ["creator","streamer","twitchStreamer","gamingStreamer","varietyStreamer"],
+  "Ninja": ["creator","streamer","twitchStreamer","gamingStreamer","battleRoyaleStreamer"],
+  "Pokimane": ["creator","streamer","twitchStreamer","gamingStreamer","varietyStreamer"],
+  "TheGrefg": ["creator","streamer","twitchStreamer","gamingStreamer","battleRoyaleStreamer"],
+  "MontanaBlack": ["creator","streamer","twitchStreamer","gamingStreamer","varietyStreamer"],
+  "Trymacs": ["creator","streamer","twitchStreamer","gamingStreamer","varietyStreamer"],
+  "Rezo": ["creator","youtuber","commentaryCreator","musicCreator"],
+  "Gronkh": ["creator","youtuber","gamingStreamer","minecraftStreamer"],
+  "HandOfBlood": ["creator","youtuber","gamingStreamer","commentaryCreator"],
+  "Shroud": ["creator","streamer","twitchStreamer","gamingStreamer","shooterStreamer"],
+  "Valkyrae": ["creator","streamer","youtubeStreamer","gamingStreamer","varietyStreamer"],
+  "LilyPichu": ["creator","streamer","twitchStreamer","musicCreator","varietyStreamer"],
+  "Riley Reid": ["creator","adultCreator","adultFilmPerformer"],
+  "Abella Danger": ["creator","adultCreator","adultFilmPerformer"],
+  "Mia Malkova": ["creator","adultCreator","adultFilmPerformer"],
+  "Lana Rhoades": ["creator","adultCreator","adultFilmPerformer","onlyFansCreator"],
+  "Jenna Jameson": ["creator","adultCreator","adultFilmPerformer"],
+  "Johnny Sins": ["creator","adultCreator","adultFilmPerformer"],
+  "Mia Khalifa": ["creator","adultCreator","adultFilmPerformer"],
+  "Rocco Siffredi": ["creator","adultCreator","adultFilmPerformer","adultDirector"]
 }));
 
 const sports = ["boxer","wrestler","racingDriver","golfer","cyclist","swimmer","runner","baseball","iceHockey","gymnast","esports","martialArts","cricket","volleyball","handball","americanFootball","winterSports"];
@@ -258,6 +408,16 @@ export function enrichCharacterAttributes(character) {
   for (const [id, pattern] of Object.entries(rules)) if (pattern.test(text)) character.attributes[id] = 1;
   for (const id of knownProfiles.get(character.name) || []) character.attributes[id] = 1;
 
+  // Wikidata occupations are unordered and often include secondary careers.
+  // Resolve the broad category from the short primary description first.
+  const primaryCareerMatches = primaryCareerRoots.filter((id) => primaryCareerSignals[id].test(character.description || ""));
+  if (primaryCareerMatches.length) {
+    for (const id of primaryCareerMatches) character.attributes[id] = 1;
+    for (const id of primaryCareerRoots) {
+      if (!primaryCareerMatches.includes(id) && !knownProfiles.get(character.name)?.includes(id)) character.attributes[id] = -1;
+    }
+  }
+
   // Wikidata occupations often include singing as a minor side activity. The
   // question explicitly asks whether singing is the person's main identity, so
   // actor/director-only descriptions remain unknown instead of polluting the
@@ -265,16 +425,21 @@ export function enrichCharacterAttributes(character) {
   const mainSinger = rules.singer.test(text) || singerDetails.some((id) => character.attributes[id] === 1) || knownProfiles.get(character.name)?.includes("singer");
   const clearlyDifferentMainRole = /actor|actress|schauspiel|film director|regisseur|politician|politiker|athlete|sportler|model|comedian|komiker/i.test(character.description || "");
   if (character.attributes.singer === 1 && !mainSinger && clearlyDifferentMainRole) character.attributes.singer = 0;
-  const explicitlyActor = /actor|actress|schauspiel/i.test(character.description || "");
-  if (character.attributes.actor === 1 && mainSinger && !explicitlyActor) character.attributes.actor = 0;
+  const explicitlyActor = /actor|actress|schauspiel|darsteller/i.test(character.description || "");
+  // Occupation lists contain many side jobs. Root questions ask what someone is
+  // known for, therefore the primary description wins over a secondary credit.
+  if (character.attributes.actor === 1 && !explicitlyActor && primaryCareerMatches.length) character.attributes.actor = -1;
+  const explicitlyCreator = /youtuber|streamer|influencer|content creator|social media personality|internet personality|webvideoproduzent|livestreamer|tiktoker|vlogger/i.test(character.description || "")
+    || knownProfiles.get(character.name)?.some((id) => ["creator","streamer","youtuber","tiktoker"].includes(id));
+  if (character.attributes.creator === 1 && !explicitlyCreator && primaryCareerMatches.length) character.attributes.creator = -1;
   const primaryStreamer = character.attributes.streamer === 1;
-  if (primaryStreamer && !explicitlyActor) character.attributes.actor = 0;
+  if (primaryStreamer && !explicitlyActor) character.attributes.actor = -1;
   if (primaryStreamer && !/musician|music|singer|songwriter|rapper|musiker|sänger/i.test(character.description || "")) {
-    character.attributes.musician = 0;
-    character.attributes.rapper = 0;
+    character.attributes.musician = -1;
+    character.attributes.rapper = -1;
   }
   if (character.attributes.musician === 1 && character.attributes.singer === 0
-      && !/musician|composer|songwriter|rapper|music|musiker|komponist|sänger|rapper/i.test(text)) character.attributes.musician = 0;
+      && !/musician|composer|songwriter|rapper|music|musiker|komponist|sänger|rapper/i.test(text)) character.attributes.musician = -1;
   if (character.attributes.singer === 1) {
     character.attributes.musician = 1;
     for (const id of singerDetails) character.attributes[id] ??= -1;

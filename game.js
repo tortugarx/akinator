@@ -1,10 +1,10 @@
-import { characters, questions } from "./data.js?v=18";
-import { GuessEngine } from "./engine.js?v=18";
+import { characters, questions } from "./data.js?v=19";
+import { GuessEngine } from "./engine.js?v=19";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=18";
-import { questionModel } from "./question-model.js?v=18";
-import { playCount, recordConfirmedPlay } from "./play-stats.js?v=18";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=18";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=19";
+import { questionModel } from "./question-model.js?v=19";
+import { playCount, recordConfirmedPlay } from "./play-stats.js?v=19";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=19";
 
 const translations = {
   en: {
