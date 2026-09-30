@@ -1,5 +1,6 @@
 import { enrichCharacterAttributes } from "./attribute-enrichment.js";
 import { predictAnswer, isImplicitNegative } from "./answer-model.js";
+import { descriptionQuestions, generateGroupedQuestions } from "./generated-questions.js";
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const binaryEntropy = (probability) => {
@@ -59,6 +60,8 @@ export class GuessEngine {
   constructor(characters, questions, model = {}) {
     this.characters = characters.map((item) => enrichCharacterAttributes(item));
     this.questions = questions;
+    this.generatedQuestions = [];
+    this.generatedSize = -1;
     this.model = model;
     this.answerCache = new WeakMap();
     this.charactersById = new Map(this.characters.map((item) => [this.key(item), item]));
@@ -116,6 +119,12 @@ export class GuessEngine {
     const ceiling = Math.max(...available.map((item) => this.scores.get(this.key(item)) ?? 0));
     const personalFocus = this.answeredYes("personallyKnown");
     const adultFocus = [...adultQuestions].some((id) => this.answeredYes(id));
+    const anchors = [...this.responses].filter(([id, value]) => {
+      if (value < .9 || id.startsWith('evidence:')) return false;
+      const count = available.filter((person) => person.attributes[id] === 1).length;
+      return count >= 1 && count / available.length < .12;
+    }).map(([id]) => id);
+    this.activeAnchors = anchors;
     const weighted = available.map((item) => {
       let weight = Math.exp((this.scores.get(this.key(item)) ?? 0) - ceiling);
       const reality = this.response("real") ?? -(this.response("fictional") ?? 0);
@@ -124,6 +133,7 @@ export class GuessEngine {
       // unrelated profiles whose corresponding detail happens to be unknown.
       if (personalFocus && item.attributes.personallyKnown !== 1) weight *= .0001;
       if (adultFocus && item.attributes.adultCreator !== 1 && ![...adultQuestions].some((id) => item.attributes[id] === 1)) weight *= .0005;
+      for (const id of anchors) if (item.attributes[id] !== 1) weight *= .00001;
       return { item, weight };
     });
     const total = weighted.reduce((sum, entry) => sum + entry.weight, 0) || 1;
@@ -134,6 +144,11 @@ export class GuessEngine {
   }
 
   yesProbability(person, id) {
+    if (id.startsWith('group:')) {
+      const facts = id.slice(6).split('|').map((key) => isImplicitNegative(person,key) ? 0 : person.attributes[key] || 0);
+      if (facts.some((fact) => fact === 1)) return .94;
+      return facts.every((fact) => fact === -1) ? .06 : .5;
+    }
     const known = person.attributes[id] || 0;
     const implicitNo = isImplicitNegative(person, id);
     if (known && !implicitNo) return .5 + .44 * clamp(known, -1, 1);
@@ -164,6 +179,12 @@ export class GuessEngine {
 
   isRelevant(question) {
     const id = question.id;
+    if (this.answeredYes('chancellor') && ['politician','nationalLeader','usPresident'].includes(id)) return false;
+    if (id.startsWith('evidence:')) {
+      const equivalents = {YouTube:'youtuber',Twitch:'twitchStreamer',TikTok:'tiktoker',OnlyFans:'onlyFansCreator',Minecraft:'minecraftStreamer','League of Legends':'mobaStreamer',Marvel:'marvel',Disney:'disney','Harry Potter':'harryPotter','Star Wars':'starWars'};
+      const equivalent = equivalents[id.slice(9)];
+      if (equivalent && this.responses.has(equivalent)) return false;
+    }
     const realPerson = this.isRealPerson();
     const fictionalCharacter = this.answeredNo("real") || this.answeredYes("fictional");
     if (equivalentQuestionFamilies.some((family) => family.has(id) && [...family].some((other) => other !== id && this.responses.has(other)))) return false;
@@ -224,6 +245,11 @@ export class GuessEngine {
 
   focusedTopics() {
     const confirmed = [...topicBranches].filter(([root]) => this.answeredYes(root));
+    for (const [root, children] of topicBranches) {
+      if (confirmed.some(([id]) => id === root)) continue;
+      const specificYes = [...children].some((child) => this.answeredYes(child) && [...topicBranches.values()].filter((set) => set.has(child)).length === 1);
+      if (specificYes) confirmed.push([root, children]);
+    }
     if (["adultFilmPerformer", "onlyFansCreator", "adultDirector"].some((id) => this.answeredYes(id)) && !confirmed.some(([root]) => root === "adultCreator")) confirmed.push(["adultCreator", topicBranches.get("adultCreator")]);
     return confirmed.filter(([root]) => !confirmed.some(([other]) => other !== root && topicDescendants(root).has(other)));
   }
@@ -245,16 +271,43 @@ export class GuessEngine {
   }
 
   nextQuestion() {
+    const iterator = this.selectQuestion();
+    let result;
+    do { result = iterator.next(); } while (!result.done);
+    return result.value;
+  }
+
+  async nextQuestionAsync() {
+    const iterator = this.selectQuestion();
+    let result;
+    do {
+      result = iterator.next();
+      if (!result.done) await new Promise((resolve) => setTimeout(resolve, 0));
+    } while (!result.done);
+    return result.value;
+  }
+
+  *selectQuestion() {
+    if (this.generatedSize !== this.characters.length) {
+      this.generatedQuestions = descriptionQuestions(this.characters);
+      this.generatedSize = this.characters.length;
+    }
     const candidates = this.probabilities();
-    const unasked = this.questions.filter((question) => !this.asked.has(question.id) && this.isRelevant(question));
+    const grouped = generateGroupedQuestions(candidates.slice(0,2000), (question) => this.isRelevant(question), this.asked);
+    const unasked = [...this.questions, ...this.generatedQuestions, ...grouped].filter((question) => !this.asked.has(question.id) && this.isRelevant(question));
     if (!unasked.length || !candidates.length) return null;
     // The most probable candidates carry the useful decision boundary. Limiting
     // scoring to this normalized beam keeps 17k-person games responsive without
     // changing the final probability table or removing any candidate.
     let selectionCandidates = candidates;
-    if (candidates.length > 2000) {
-      const head = candidates.slice(0, 1000);
-      const tail = candidates.slice(1000);
+    if (this.activeAnchors?.length) {
+      const focused = candidates.filter(({item}) => this.activeAnchors.every((id) => item.attributes[id] === 1));
+      const mass = focused.reduce((sum,{probability}) => sum + probability,0);
+      if (mass >= .95) selectionCandidates = focused.map((entry) => ({...entry,probability:entry.probability / mass}));
+    }
+    if (selectionCandidates.length > 2000) {
+      const head = selectionCandidates.slice(0, 1000);
+      const tail = selectionCandidates.slice(1000);
       const mass = tail.reduce((sum, entry) => sum + entry.probability, 0);
       const sampled = [];
       let cursor = 0, cumulative = tail[0].probability;
@@ -267,7 +320,9 @@ export class GuessEngine {
     }
     let best = null;
     let bestValue = 0.0001;
+    let evaluated = 0;
     for (const question of unasked) {
+      if (++evaluated % 12 === 0) yield;
       let yesMass = 0;
       let conditionalEntropy = 0;
       for (const { item, probability } of selectionCandidates) {
@@ -278,7 +333,10 @@ export class GuessEngine {
       const noMass = 1 - yesMass;
       if (yesMass <= 1e-9 || noMass <= 1e-9) continue;
       const gain = binaryEntropy(yesMass) - conditionalEntropy;
-      const value = gain;
+      // Once a concrete occupation is known, use questions that discriminate
+      // inside that posterior, not a fixed tour through unrelated professions.
+      const focus = question.featureIds ? Math.max(...question.featureIds.map((id) => this.questionFocusWeight(id))) : this.questionFocusWeight(question.id);
+      const value = gain * focus;
       if (value > bestValue) { best = question; bestValue = value; }
     }
     if (!best) return null;
@@ -291,6 +349,11 @@ export class GuessEngine {
     this.answerCount += 1;
     this.history.push({ questionId, answer: response });
     this.responses.set(questionId, response);
+    // A denied disjunction denies each member; a positive disjunction does not
+    // imply any individual member. Never store group answers as individual facts.
+    if (questionId.startsWith('group:') && response <= -.5) {
+      for (const id of questionId.slice(6).split('|')) { this.responses.set(id, response); this.asked.add(id); }
+    }
     this.probabilityCache = null;
     if (response === 0) return;
     for (const character of this.characters) {
@@ -299,7 +362,7 @@ export class GuessEngine {
       const yesProbability = this.yesProbability(character, questionId);
       const likelihood = response > 0 ? yesProbability : 1 - yesProbability;
       const fact = character.attributes[questionId] || 0;
-      const known = fact && !isImplicitNegative(character, questionId);
+      const known = questionId.startsWith('group:') ? yesProbability !== .5 : fact && !isImplicitNegative(character, questionId);
       this.scores.set(key, (this.scores.get(key) ?? 0) + Math.abs(response) * (known ? 1 : .4) * Math.log(Math.max(.01, likelihood)));
     }
   }

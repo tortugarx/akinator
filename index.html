@@ -9,7 +9,7 @@
     <meta http-equiv="Expires" content="0" />
     <meta name="description" content="Nazar ist ein selbstlernendes Figuren-Ratespiel." />
     <title>Nazar — Ich lese deine Gedanken</title>
-    <link rel="stylesheet" href="styles.css?v=21" />
+    <link rel="stylesheet" href="styles.css?v=22" />
   </head>
   <body>
     <div class="sky" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
@@ -27,7 +27,7 @@
         <div class="lamp-loader">✦</div><p class="eyebrow">DIE MAGIE ERWACHT</p>
       </section>
 
-      <section id="start-screen" class="screen start-layout">
+      <section id="start-screen" class="screen start-layout home-layout">
         <div class="mascot-stage">
           <span class="sun-disc"></span>
           <img class="mascot" src="assets/nazar-genie.png" alt="Nazar, der Gedankenleser" />
@@ -39,7 +39,24 @@
           <p class="lead" data-i18n="welcomeText">Ein Star, eine fiktive Figur oder jemand aus deinem eigenen Leben. Antworte ehrlich – den Rest erledigt meine Magie.</p>
           <button id="start-button" class="primary-button" type="button"><span data-i18n="start">Los geht’s!</span><b>→</b></button>
           <p class="hint"><span>✦</span> <span data-i18n="welcomeHint">Je öfter du spielst, desto schlauer werde ich.</span></p>
+          <nav class="home-actions" aria-label="Spieloptionen">
+            <button id="add-person-button" class="secondary-button" type="button">Person hinzufügen</button>
+            <button id="share-button" class="secondary-button" type="button">Teilen</button>
+            <button id="settings-button" class="secondary-button" type="button">Einstellungen</button>
+          </nav>
+          <p id="home-status" role="status"></p>
         </div>
+        <div class="home-library">
+          <section><h2 id="recent-title">Zuletzt gespielt</h2><div id="recent-people" class="people-strip"></div></section>
+          <section><h2 id="popular-title">Meistgespielt</h2><p id="stats-scope" class="hint">Auf diesem Gerät · bestätigte Treffer</p><div id="popular-people" class="people-strip"></div></section>
+        </div>
+      </section>
+
+      <section id="settings-screen" class="screen centered">
+        <p class="eyebrow">NAZAR</p><h2 id="settings-title">Einstellungen</h2>
+        <button id="settings-sound" class="secondary-button" type="button">Sound: An</button>
+        <div class="info-card"><h3 id="info-title">Über das Spiel</h3><p id="info-text">Ein lokales Ratespiel für echte Personen, fiktive Figuren und Menschen aus deinem Alltag. Antworten und Statistiken bleiben auf diesem Gerät. Keine globale Synchronisierung.</p><p>Publisher: <strong>tortugarx</strong></p></div>
+        <button id="settings-back" class="primary-button" type="button">Zur Startseite</button>
       </section>
 
       <section id="question-screen" class="screen question-layout">
@@ -99,6 +116,6 @@
         <button id="again-button" class="primary-button" type="button"><span data-i18n="playAgain">Noch einmal</span><b>↻</b></button>
       </section>
     </main>
-    <script type="module" src="game.js?v=21"></script>
+    <script type="module" src="game.js?v=22"></script>
   </body>
 </html>

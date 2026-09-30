@@ -8,7 +8,7 @@ import { questionModel } from "./question-model.js";
 test("asks each question at most once", () => {
   const engine = new GuessEngine(characters, questions);
   const seen = new Set();
-  for (let index = 0; index < questions.length; index += 1) {
+  for (let index = 0; index < 1000; index += 1) {
     const question = engine.nextQuestion();
     if (!question) break;
     assert.equal(seen.has(question.id), false);
@@ -55,11 +55,13 @@ test("confirmed adult films keep follow-up questions on relevant traits", () => 
   engine.answer("adultFilmPerformer", 1);
   assert.ok(engine.probabilities().filter(({ item }) => item.attributes.adultCreator === 1).reduce((sum, { probability }) => sum + probability, 0) > .9);
   for (let index = 0; index < 4; index += 1) {
+    if (engine.shouldGuess()) break;
     const question = engine.nextQuestion();
     assert.ok(question);
     assert.equal(["politician", "journalist", "writer"].includes(question.id), false);
     engine.answer(question.id, adults[0].attributes[question.id] ?? 0);
   }
+  assert.equal(engine.bestGuess().character.name, 'Bonnie Blue');
 });
 
 test("identifies a character from truthful answers", () => {

@@ -1,10 +1,10 @@
-import { characters, questions } from "./data.js?v=21";
-import { GuessEngine } from "./engine.js?v=21";
+import { characters, questions } from "./data.js?v=22";
+import { GuessEngine } from "./engine.js?v=22";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=21";
-import { questionModel } from "./question-model.js?v=21";
-import { playCount, recordConfirmedPlay } from "./play-stats.js?v=21";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=21";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=22";
+import { questionModel } from "./question-model.js?v=22";
+import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=22";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=22";
 
 const translations = {
   en: {
@@ -18,7 +18,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 21;
+const buildVersion = 22;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -30,8 +30,12 @@ let currentQuestion = null;
 let currentGuess = null;
 let soundEnabled = true;
 let acceptingAnswer = true;
+let addingFromHome = false;
+let thinkingTimer = null;
+try { soundEnabled = localStorage.getItem('nazar-sound') !== 'off'; } catch { /* Optional preferences. */ }
 
 function showScreen(id) {
+  if (id === 'start-screen') renderHome();
   screens.forEach((screen) => screen.classList.toggle("active", screen.id === id));
 }
 
@@ -61,11 +65,53 @@ function resetAnswerButtons() {
 
 function setThinking(active, selectedButton = null) {
   const lock = $("#thinking-lock");
-  if (lock) lock.hidden = !active;
+  clearTimeout(thinkingTimer);
+  if (lock) lock.hidden = true;
+  if (active) thinkingTimer = setTimeout(() => { if (lock) lock.hidden = false; }, 350);
   document.querySelectorAll("#answer-grid button[data-answer]").forEach((button) => {
     button.disabled = active;
     button.classList.toggle("is-selected", active && button === selectedButton);
   });
+}
+
+function renderHome() {
+  const stats = readPlayStats();
+  const render = (selector, ids) => {
+    const node = $(selector);
+    if (!node) return;
+    node.replaceChildren();
+    for (const id of ids.slice(0, 8)) {
+      const person = engine.charactersById.get(id);
+      if (!person) continue;
+      const tile = document.createElement('div'); tile.className = 'person-tile';
+      const portrait = document.createElement(person.image ? 'img' : 'span');
+      if (person.image) { portrait.src = person.image; portrait.alt = person.name; portrait.loading = 'lazy'; portrait.referrerPolicy = 'no-referrer'; portrait.addEventListener('error', () => { portrait.hidden = true; }, { once:true }); }
+      else { portrait.className = 'person-icon'; portrait.textContent = person.icon || '👤'; }
+      const name = document.createElement('strong'); name.textContent = person.name;
+      const count = document.createElement('small'); count.textContent = `${Number(stats[id] || 0)} ×`;
+      tile.append(portrait, name, count); node.append(tile);
+      if (person.imageAttribution) {
+        const allowed = person.imageAttribution.sourceUrl && platform.externalLinksAllowed();
+        const credit = document.createElement(allowed ? 'a' : 'small');
+        if (allowed) { credit.href = person.imageAttribution.sourceUrl; credit.target = '_blank'; credit.rel = 'noopener noreferrer'; }
+        credit.className = 'tile-credit';
+        credit.textContent = `${person.imageAttribution.creator} · ${person.imageAttribution.license}`;
+        tile.append(credit);
+      }
+    }
+    if (!node.childNodes?.length) node.textContent = language === 'de' ? 'Noch keine bestätigten Spiele. Dein erster Treffer erscheint hier.' : 'No confirmed games yet. Your first match will appear here.';
+  };
+  render('#recent-people', recentPlays());
+  render('#popular-people', Object.keys(stats).sort((a,b) => Number(stats[b]) - Number(stats[a])));
+  const labels = { 'add-person-button':['Person hinzufügen','Add person'], 'share-button':['Teilen','Share'], 'settings-button':['Einstellungen','Settings'], 'recent-title':['Zuletzt gespielt','Recently played'], 'popular-title':['Meistgespielt','Most played'], 'stats-scope':['Auf diesem Gerät · bestätigte Treffer','On this device · confirmed matches'], 'settings-title':['Einstellungen','Settings'], 'settings-back':['Zur Startseite','Home'], 'info-title':['Über das Spiel','About the game'], 'info-text':['Ein lokales Ratespiel. Antworten und Statistiken bleiben auf diesem Gerät. Keine globale Synchronisierung.','A local guessing game. Answers and statistics stay on this device. No global synchronization.'] };
+  for (const [id, values] of Object.entries(labels)) if ($(`#${id}`)) $(`#${id}`).textContent = values[language === 'de' ? 0 : 1];
+  if ($('#settings-sound')) $('#settings-sound').textContent = `Sound: ${soundEnabled ? (language === 'de' ? 'An' : 'On') : (language === 'de' ? 'Aus' : 'Off')}`;
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  try { localStorage.setItem('nazar-sound', soundEnabled ? 'on' : 'off'); } catch { /* Optional. */ }
+  $('#sound-button').textContent = soundEnabled ? '♪' : '×'; renderHome(); tone();
 }
 
 const characterKey = (character) => character.id ?? character.name;
@@ -77,6 +123,7 @@ function setLanguage(next) {
   language = next;
   document.documentElement.lang = language;
   $("#language-button").textContent = language.toUpperCase();
+  $("#sound-button").textContent = soundEnabled ? '♪' : '×';
   document.querySelectorAll("[data-i18n]").forEach((node) => {
     const value = translations[language][node.dataset.i18n];
     if (typeof value === "string") node.innerHTML = value;
@@ -84,6 +131,7 @@ function setLanguage(next) {
   $("#character-input").placeholder = language === "de" ? "z. B. Pippi Langstrumpf" : "e.g. Pippi Longstocking";
   if (currentQuestion) renderQuestion(currentQuestion);
   updateQuestionMeta();
+  renderHome();
 }
 
 function updateQuestionMeta() {
@@ -106,14 +154,20 @@ function tone(frequency = 520) {
   } catch { /* Sound is optional. */ }
 }
 
-function startGame() {
+async function startGame() {
+  if (!acceptingAnswer) return;
+  addingFromHome = false;
   engine.reset(); currentGuess = null; currentQuestion = null; acceptingAnswer = true;
   $("#learn-status").textContent = ""; $("#character-input").value = "";
-  platform.gameplayStart(); showScreen("question-screen"); askNext(); tone(480);
+  platform.gameplayStart(); showScreen("question-screen"); setThinking(true);
+  try { await askNext(); tone(480); }
+  catch (error) { console.error('Could not choose the first question.',error); showLearn(); }
+  finally { acceptingAnswer = true; setThinking(false); }
 }
 
-function askNext() {
-  currentQuestion = engine.nextQuestion();
+async function askNext() {
+  acceptingAnswer = false;
+  currentQuestion = await engine.nextQuestionAsync();
   acceptingAnswer = true;
   if (!currentQuestion) return engine.shouldGuess() ? revealGuess() : showLearn();
   resetAnswerButtons();
@@ -133,11 +187,12 @@ async function answer(value, selectedButton = null) {
   try {
     engine.answer(answeredQuestion.id, value);
     tone(value > 0 ? 610 : value < 0 ? 340 : 460);
-    if (engine.shouldGuess()) revealGuess(); else askNext();
+    if (engine.shouldGuess()) revealGuess(); else await askNext();
   } catch (error) {
     console.error("The question flow recovered from an error.", error);
     showLearn();
   } finally {
+    acceptingAnswer = true;
     setThinking(false);
   }
 }
@@ -184,7 +239,7 @@ async function continueAfterWrong() {
   if (engine.rejected.size >= 8 || !engine.probabilities().length) return showLearn();
   platform.gameplayStart(); showScreen("question-screen"); setThinking(true);
   await nextPaint();
-  try { askNext(); } finally { setThinking(false); }
+  try { await askNext(); } finally { acceptingAnswer = true; setThinking(false); }
 }
 
 function showLearn() { platform.gameplayStop(); currentQuestion = null; showScreen("learn-screen"); setTimeout(() => $("#character-input").focus(), 250); }
@@ -221,7 +276,7 @@ async function learnCharacter(event) {
     return;
   }
   const attributes = { ...Object.fromEntries(questions.map(({ id }) => [id, 0])), ...knowledge.attributes };
-  for (const { questionId, answer } of engine.history) if (answer !== 0) attributes[questionId] = answer;
+  if (!addingFromHome) for (const { questionId, answer } of engine.history) if (answer !== 0 && !questionId.startsWith('group:')) attributes[questionId] = answer;
   const character = {
     id: `learned-${(knowledge.sourceId || knowledge.name).toLowerCase().replace(/[^a-z0-9]+/g,"-")}`,
     name: knowledge.name, icon:"🧠", description: knowledge.description, image:knowledge.image, imageAttribution:knowledge.imageAttribution, source:knowledge.source, attributes, learned:true
@@ -242,7 +297,19 @@ $("#skip-learn-button").addEventListener("click", startGame);
 $("#learn-form").addEventListener("submit", learnCharacter);
 $("#answer-grid").addEventListener("click", (event) => { const button = event.target.closest("button[data-answer]"); if (button) return answer(Number(button.dataset.answer), button); });
 $("#language-button").addEventListener("click", () => setLanguage(language === "en" ? "de" : "en"));
-$("#sound-button").addEventListener("click", () => { soundEnabled = !soundEnabled; $("#sound-button").textContent = soundEnabled ? "♪" : "×"; tone(); });
+$("#sound-button").addEventListener("click", toggleSound);
+$('#settings-sound')?.addEventListener('click', toggleSound);
+$('#settings-button')?.addEventListener('click', () => { renderHome(); showScreen('settings-screen'); });
+$('#settings-back')?.addEventListener('click', () => showScreen('start-screen'));
+$('.brand')?.addEventListener('click', (event) => { event.preventDefault(); platform.gameplayStop(); showScreen('start-screen'); });
+$('#add-person-button')?.addEventListener('click', () => { engine.reset(); addingFromHome = true; $('#learn-status').textContent = ''; $('#character-input').value = ''; showLearn(); });
+$('#share-button')?.addEventListener('click', async () => {
+  const status = $('#home-status');
+  if (!platform.externalLinksAllowed()) { status.textContent = language === 'de' ? 'Teilen ist auf dieser Plattform nicht verfügbar.' : 'Sharing is unavailable on this platform.'; return; }
+  const url = 'https://tortugarx.github.io/akinator/';
+  try { if (navigator.share) await navigator.share({ title:'Nazar', text:'Kann Nazar deine Gedanken lesen?', url }); else { await navigator.clipboard.writeText(url); status.textContent = language === 'de' ? 'Link kopiert!' : 'Link copied!'; } }
+  catch (error) { if (error.name !== 'AbortError') status.textContent = url; }
+});
 window.addEventListener("keydown", (event) => { if (!$("#question-screen").classList.contains("active")) return; const keys={"1":1,"2":.55,"3":0,"4":-.55,"5":-1}; if (event.key in keys) answer(keys[event.key], document.querySelector(`#answer-grid button[data-answer="${keys[event.key]}"]`)); });
 window.addEventListener("platformmute", () => { $("#sound-button").disabled = platform.muted; });
 document.addEventListener("gesturestart", (event) => event.preventDefault(), { passive:false });
