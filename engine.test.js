@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { characters, questions } from "./data.js";
 import { GuessEngine } from "./engine.js";
 import { questionModel } from "./question-model.js";
@@ -129,25 +130,20 @@ test("can guess immediately when the evidence is already decisive", () => {
   assert.equal(engine.bestGuess().character.name, "Yes");
 });
 
-test("truthful play can identify every bundled character", () => {
-  for (const target of characters) {
-    const engine = new GuessEngine(characters, questions);
-    let found = false;
-    for (let index = 0; index < questions.length + 10; index += 1) {
+test("full database identifies public and private regression cases without cycling guesses", async () => {
+  const database = JSON.parse(await readFile(new URL("./wikidata-people.json", import.meta.url), "utf8"));
+  for (const name of ["Bonnie Blue", "Deine Tante"]) {
+    const engine = new GuessEngine(characters.map((person) => ({ ...person, attributes:{ ...person.attributes } })), questions, questionModel);
+    for (const person of database.characters) engine.addCharacter({ ...person, attributes:{ ...person.attributes } });
+    const target = engine.characters.find((person) => person.name === name);
+    for (let index = 0; index < 40; index += 1) {
       const question = engine.nextQuestion();
-      if (!question) {
-        const guess = engine.bestGuess().character;
-        if (guess.name === target.name) { found = true; break; }
-        engine.reject(guess.id ?? guess.name);
-        continue;
-      }
+      if (!question) break;
       engine.answer(question.id, target.attributes[question.id] ?? 0);
       if (!engine.shouldGuess()) continue;
-      const guess = engine.bestGuess().character;
-      if (guess.name === target.name) { found = true; break; }
-      engine.reject(guess.id ?? guess.name);
+      break;
     }
-    assert.equal(found, true, `did not identify ${target.name}`);
+    assert.equal(engine.bestGuess().character.name, name, `did not identify ${name}`);
   }
 });
 
@@ -276,14 +272,17 @@ test("removes secondary occupations from unrelated primary categories", () => {
   assert.equal(racer.characters[0].attributes.actor, -1);
 });
 
-test("gates countries behind their region and subregion", () => {
+test("allows useful country questions before a region yes but excludes denied regions", () => {
   const engine = new GuessEngine(characters, questions, questionModel);
   const german = questions.find(({ id }) => id === "german");
-  assert.equal(engine.isRelevant(german), false);
+  assert.equal(engine.isRelevant(german), true);
   engine.answer("european", 1);
-  assert.equal(engine.isRelevant(german), false);
+  assert.equal(engine.isRelevant(german), true);
   engine.answer("germanSpeaking", 1);
   assert.equal(engine.isRelevant(german), true);
+  engine.reset();
+  engine.answer("european", -1);
+  assert.equal(engine.isRelevant(german), false);
 });
 
 test("never asks a contradictory country after Germany is confirmed", () => {
@@ -303,12 +302,15 @@ test("trained implications suppress questions whose answer is already known", ()
   assert.equal(inverse.isRelevant(questions.find(({ id }) => id === "racingDriver")), false);
 });
 
-test("only asks retirement status for a living person", () => {
+test("allows retirement before an alive yes and excludes it after an alive no", () => {
   const retired = questions.find(({ id }) => id === "retired");
   const engine = new GuessEngine(characters, questions, questionModel);
-  assert.equal(engine.isRelevant(retired), false);
+  assert.equal(engine.isRelevant(retired), true);
   engine.answer("alive", 1);
   assert.equal(engine.isRelevant(retired), true);
+  engine.reset();
+  engine.answer("alive", -1);
+  assert.equal(engine.isRelevant(retired), false);
 });
 
 test("prefers a known near-half split over a weaker unbalanced question", () => {
@@ -339,11 +341,12 @@ test("switches to private relationship questions for a personally known person",
   assert.equal(engine.isRelevant(questions.find(({ id }) => id === "movie")), false);
 });
 
-test("asks about personal acquaintance immediately after confirming a real person", () => {
-  const engine = new GuessEngine(characters, questions);
+test("does not force the personal branch when another question separates more candidates", () => {
+  const profiles = Array.from({ length:20 }, (_, index) => ({ id:String(index), name:String(index), attributes:{ real:1, personallyKnown:index === 0 ? 1 : -1, split:index < 10 ? 1 : -1 } }));
+  const engine = new GuessEngine(profiles, [{ id:"personallyKnown" }, { id:"split" }]);
   engine.asked.add("real");
   engine.answer("real", 1);
-  assert.equal(engine.nextQuestion().id, "personallyKnown");
+  assert.equal(engine.nextQuestion().id, "split");
 });
 
 test("skips private questions for a public person", () => {

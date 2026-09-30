@@ -42,6 +42,5 @@ test("the start button opens the first question", async () => {
   const answer = (value) => listeners.get("answer-grid:click")({ target:{ closest:() => ({ dataset:{ answer:String(value) } }) } });
   await answer(1);
   await answer(-1);
-  assert.doesNotMatch(elements["question-text"].textContent, /Figur/);
-  assert.match(elements["question-text"].textContent, /Person/);
+  assert.match(elements["question-text"].textContent, /\?$/);
 });

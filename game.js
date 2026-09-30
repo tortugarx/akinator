@@ -1,10 +1,10 @@
-import { characters, questions } from "./data.js?v=20";
-import { GuessEngine } from "./engine.js?v=20";
+import { characters, questions } from "./data.js?v=21";
+import { GuessEngine } from "./engine.js?v=21";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=20";
-import { questionModel } from "./question-model.js?v=20";
-import { playCount, recordConfirmedPlay } from "./play-stats.js?v=20";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=20";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=21";
+import { questionModel } from "./question-model.js?v=21";
+import { playCount, recordConfirmedPlay } from "./play-stats.js?v=21";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=21";
 
 const translations = {
   en: {
@@ -18,7 +18,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 20;
+const buildVersion = 21;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -36,7 +36,7 @@ function showScreen(id) {
 }
 
 function questionText(question) {
-  return contextualQuestionText(question, language, engine.answeredYes("real") || engine.answeredNo("fictional"));
+  return contextualQuestionText(question, language, engine.isRealPerson());
 }
 
 function renderQuestion(question) {

@@ -297,6 +297,7 @@ export const questions = [
 
 const c = (name, icon, description, attributes) => ({
   id: name.toLowerCase().replace(/[^a-z0-9]+/g, "-"), name, icon, description,
+  knownAttributes:attributes.personallyKnown === 1 || attributes.real === -1 ? questions.map(({ id }) => id) : [...new Set([...Object.keys(attributes), "personallyKnown", "fictional"])],
   attributes: { ...Object.fromEntries(questions.map(({ id }) => [id, -1])), ...attributes }
 });
 export const characters = [

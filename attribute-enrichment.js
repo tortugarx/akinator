@@ -1,6 +1,19 @@
 // Deterministic, offline enrichment for traits that can be read safely from the
 // short Wikidata description already bundled with the game.
 const rules = {
+  american:/US-amerikanisch|\bAmerican\b/i,
+  british:/britisch|\bBritish\b/i,
+  german:/deutsch|\bGerman\b/i,
+  french:/französisch|\bFrench\b/i,
+  spanish:/spanisch|\bSpanish\b/i,
+  italian:/italienisch|\bItalian\b/i,
+  canadian:/kanadisch|\bCanadian\b/i,
+  brazilian:/brasilianisch|\bBrazilian\b/i,
+  australian:/australisch|\bAustralian\b/i,
+  indian:/indisch|\bIndian\b/i,
+  japanese:/japanisch|\bJapanese\b/i,
+  southKorean:/südkoreanisch|South Korean/i,
+  chinese:/chinesisch|\bChinese\b/i,
   journalist:/journalist|reporter|publizist|reporterin/i,
   presenter:/presenter|television host|radio host|show host|fernsehmoderator|radiomoderator/i,
   producer:/film producer|music producer|record producer|filmproduzent|musikproduzent/i,
@@ -200,7 +213,7 @@ const primaryCareerSignals = {
   musician:/\bmusician\b|musiker|musikerin|composer|komponist|songwriter|rapper|rockmusiker|jazzmusiker/i,
   athlete:/\bathlete\b|sportler|sportlerin|footballer|soccer player|basketball player|tennis player|racing driver|rennfahrer|boxer|wrestler/i,
   politician:/\bpolitician\b|political activist|politiker|politikerin|president|prime minister|chancellor|bundeskanzler|ministerpräsident/i,
-  creator:/youtuber|streamer|influencer|content creator|social media personality|internet personality|webvideoproduzent|livestreamer|tiktoker|vlogger/i,
+  creator:/youtuber|streamer|influencer|content creator|online.creator|creatorin|social media personality|internet personality|webvideoproduzent|livestreamer|tiktoker|vlogger/i,
   scientist:/\bscientist\b|physicist|chemist|biologist|mathematician|wissenschaftler|physiker|chemiker|biologe|mathematiker/i,
   writer:/\bwriter\b|\bauthor\b|novelist|poet|schriftsteller|autor|dichter/i,
   entrepreneur:/entrepreneur|businessman|businesswoman|unternehmer|business magnate/i,
@@ -412,6 +425,7 @@ export function enrichCharacterAttributes(character) {
   // Resolve the broad category from the short primary description first.
   const primaryCareerMatches = primaryCareerRoots.filter((id) => primaryCareerSignals[id].test(character.description || ""));
   if (primaryCareerMatches.length) {
+    if (character.knownAttributes) character.knownAttributes = [...new Set([...character.knownAttributes, ...primaryCareerRoots])];
     for (const id of primaryCareerMatches) character.attributes[id] = 1;
     for (const id of primaryCareerRoots) {
       if (!primaryCareerMatches.includes(id) && !knownProfiles.get(character.name)?.includes(id)) character.attributes[id] = -1;
@@ -506,7 +520,7 @@ export function enrichCharacterAttributes(character) {
   for (const [root, details] of Object.entries(branchDetailDefaults)) {
     if (character.attributes[root] === 1) for (const id of details) character.attributes[id] ??= -1;
   }
-  if (["comic","scienceFiction","fantasy","alien","monster","harryPotter","lordOfTheRings","mario","sonic","wizard","warrior","policeCharacter","studentCharacter","sitcom","crimeFiction","gameOfThrones"].some((id) => character.attributes[id] === 1)) {
+  if (character.attributes.real !== 1 && ["comic","scienceFiction","fantasy","alien","monster","harryPotter","lordOfTheRings","mario","sonic","wizard","warrior","policeCharacter","studentCharacter","sitcom","crimeFiction","gameOfThrones"].some((id) => character.attributes[id] === 1)) {
     character.attributes.real = -1;
     character.attributes.fictional = 1;
   }

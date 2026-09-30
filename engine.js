@@ -1,4 +1,5 @@
 import { enrichCharacterAttributes } from "./attribute-enrichment.js";
+import { predictAnswer, isImplicitNegative } from "./answer-model.js";
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const binaryEntropy = (probability) => {
@@ -59,6 +60,7 @@ export class GuessEngine {
     this.characters = characters.map((item) => enrichCharacterAttributes(item));
     this.questions = questions;
     this.model = model;
+    this.answerCache = new WeakMap();
     this.charactersById = new Map(this.characters.map((item) => [this.key(item), item]));
     this.charactersByName = new Map(this.characters.map((item) => [this.nameKey(item), item]));
     this.reset();
@@ -97,6 +99,7 @@ export class GuessEngine {
         if (value === 1 || (character.learned && value !== 0)) existing.attributes[id] = value;
       }
       this.probabilityCache = null;
+      this.answerCache.delete(existing);
       return;
     }
     this.characters.push(character);
@@ -115,6 +118,8 @@ export class GuessEngine {
     const adultFocus = [...adultQuestions].some((id) => this.answeredYes(id));
     const weighted = available.map((item) => {
       let weight = Math.exp((this.scores.get(this.key(item)) ?? 0) - ceiling);
+      const reality = this.response("real") ?? -(this.response("fictional") ?? 0);
+      if (Math.abs(reality) >= .5 && item.attributes.real && Math.sign(item.attributes.real) !== Math.sign(reality)) weight *= .001;
       // A confirmed, rare branch should not be drowned out by thousands of
       // unrelated profiles whose corresponding detail happens to be unknown.
       if (personalFocus && item.attributes.personallyKnown !== 1) weight *= .0001;
@@ -126,6 +131,16 @@ export class GuessEngine {
       .map((entry) => ({ ...entry, probability: entry.weight / total }))
       .sort((a, b) => b.probability - a.probability);
     return this.probabilityCache;
+  }
+
+  yesProbability(person, id) {
+    const known = person.attributes[id] || 0;
+    const implicitNo = isImplicitNegative(person, id);
+    if (known && !implicitNo) return .5 + .44 * clamp(known, -1, 1);
+    let cached = this.answerCache.get(person);
+    if (!cached) { cached = new Map(); this.answerCache.set(person, cached); }
+    if (!cached.has(id)) cached.set(id, predictAnswer(this.model.answerModel, person, id));
+    return cached.get(id);
   }
 
   certainty() {
@@ -141,9 +156,15 @@ export class GuessEngine {
 
   answeredNo(id) { return (this.response(id) ?? 0) <= -.5; }
 
+  isRealPerson() {
+    if (this.answeredNo("real") || this.answeredYes("fictional")) return false;
+    if (this.answeredYes("real") || this.answeredNo("fictional") || this.answeredYes("personallyKnown")) return true;
+    return this.probabilities().reduce((sum, entry) => sum + (entry.item.attributes.real === 1 ? entry.probability : 0), 0) >= .985;
+  }
+
   isRelevant(question) {
     const id = question.id;
-    const realPerson = this.answeredYes("real") || this.answeredNo("fictional");
+    const realPerson = this.isRealPerson();
     const fictionalCharacter = this.answeredNo("real") || this.answeredYes("fictional");
     if (equivalentQuestionFamilies.some((family) => family.has(id) && [...family].some((other) => other !== id && this.responses.has(other)))) return false;
     for (const [answeredId, answer] of this.responses) {
@@ -154,7 +175,7 @@ export class GuessEngine {
     if (id === "fictional" && (this.answeredYes("real") || this.answeredNo("real"))) return false;
     if (id === "real" && (this.answeredYes("fictional") || this.answeredNo("fictional"))) return false;
     if (id === "personallyKnown" && fictionalCharacter) return false;
-    if (id === "retired" && !this.answeredYes("alive")) return false;
+    if (id === "retired" && this.answeredNo("alive")) return false;
     if (this.answeredNo("personallyKnown") && relationshipQuestions.has(id)) return false;
     if (this.answeredYes("personallyKnown") && !relationshipQuestions.has(id) && !["female","alive"].includes(id)) return false;
     if (realPerson && fictionalOnlyQuestions.has(id)) return false;
@@ -186,10 +207,10 @@ export class GuessEngine {
     if (id === "robot" && this.answeredYes("animal")) return false;
 
     const confirmedCountry = [...exactCountries].find((country) => this.answeredYes(country));
-    if (countryParents.has(id) && countryParents.get(id).some((parent) => !this.answeredYes(parent))) return false;
+    if (countryParents.has(id) && countryParents.get(id).some((parent) => this.answeredNo(parent))) return false;
     const confirmedSubregion = [...subregionQuestions].find((region) => this.answeredYes(region));
     if (confirmedSubregion && subregionQuestions.has(id) && id !== confirmedSubregion) return false;
-    if (subregionQuestions.has(id) && !this.answeredYes("european")) return false;
+    if (subregionQuestions.has(id) && this.answeredNo("european")) return false;
     if (confirmedCountry && ((exactCountries.has(id) && id !== confirmedCountry) || regionQuestions.has(id) || subregionQuestions.has(id))) return false;
     if (this.answeredYes("european") && (nonEuropeanCountries.has(id) || [...regionQuestions].some((region) => region !== "european" && region === id))) return false;
     if (this.answeredYes("latinAmerican") && (["european", "asian", "african"].includes(id) || (exactCountries.has(id) && id !== "brazilian"))) return false;
@@ -227,55 +248,39 @@ export class GuessEngine {
     const candidates = this.probabilities();
     const unasked = this.questions.filter((question) => !this.asked.has(question.id) && this.isRelevant(question));
     if (!unasked.length || !candidates.length) return null;
-    const realityQuestion = unasked.find(({ id }) => id === "real");
-    if (realityQuestion && this.answerCount === 0) {
-      this.asked.add(realityQuestion.id);
-      return realityQuestion;
-    }
-    const personalBranch = unasked.find(({ id }) => id === "personallyKnown");
-    if (personalBranch && (this.answeredYes("real") || this.answeredNo("fictional"))) {
-      this.asked.add(personalBranch.id);
-      return personalBranch;
-    }
     // The most probable candidates carry the useful decision boundary. Limiting
     // scoring to this normalized beam keeps 17k-person games responsive without
     // changing the final probability table or removing any candidate.
-    const beam = candidates.length > 2000 ? candidates.slice(0, 2000) : candidates;
-    const beamMass = beam.reduce((sum, { probability }) => sum + probability, 0) || 1;
-    const selectionCandidates = beam.map((entry) => ({ ...entry, probability:entry.probability / beamMass }));
+    let selectionCandidates = candidates;
+    if (candidates.length > 2000) {
+      const head = candidates.slice(0, 1000);
+      const tail = candidates.slice(1000);
+      const mass = tail.reduce((sum, entry) => sum + entry.probability, 0);
+      const sampled = [];
+      let cursor = 0, cumulative = tail[0].probability;
+      for (let index = 0; index < 1000; index++) {
+        const quantile = (index + .5) * mass / 1000;
+        while (cumulative < quantile && cursor < tail.length - 1) cumulative += tail[++cursor].probability;
+        sampled.push({ item:tail[cursor].item, probability:mass / 1000 });
+      }
+      selectionCandidates = [...head, ...sampled];
+    }
     let best = null;
     let bestValue = 0.0001;
-    let bestBalanced = null;
-    let bestBalancedValue = 0.0001;
-    const focusedTopics = this.focusedTopics();
     for (const question of unasked) {
       let yesMass = 0;
-      let knownMass = 0;
       let conditionalEntropy = 0;
       for (const { item, probability } of selectionCandidates) {
-        const expected = item.attributes[question.id] ?? 0;
-        if (Math.abs(expected) >= .5) knownMass += probability;
-        const yesLikelihood = expected >= .5 ? .88 : expected <= -.5 ? .12 : .5;
+        const yesLikelihood = this.yesProbability(item, question.id);
         yesMass += probability * yesLikelihood;
         conditionalEntropy += probability * binaryEntropy(yesLikelihood);
       }
       const noMass = 1 - yesMass;
       if (yesMass <= 1e-9 || noMass <= 1e-9) continue;
-      if (knownMass < .16 && candidates.length > 12) continue;
       const gain = binaryEntropy(yesMass) - conditionalEntropy;
-      const splitQuality = 1 - Math.abs(yesMass - noMass);
-      const trainedBranchWeights = focusedTopics.map(([root]) => this.model.branchWeights?.[root]?.[question.id]).filter(Number.isFinite);
-      const branchWeight = trainedBranchWeights.length ? Math.max(...trainedBranchWeights) : 1;
-      const value = gain * (this.model.weights?.[question.id] || 1) * branchWeight * this.questionFocusWeight(question.id, focusedTopics) * (.72 + .28 * splitQuality);
+      const value = gain;
       if (value > bestValue) { best = question; bestValue = value; }
-      // Prefer a genuine near-half split when enough of the remaining probability
-      // mass has a known trait. Fall back to maximum information gain otherwise.
-      if (knownMass >= .55 && Math.max(yesMass, noMass) <= .62 && value > bestBalancedValue) {
-        bestBalanced = question;
-        bestBalancedValue = value;
-      }
     }
-    best = bestBalanced || best;
     if (!best) return null;
     this.asked.add(best.id);
     return best;
@@ -291,10 +296,11 @@ export class GuessEngine {
     for (const character of this.characters) {
       const key = this.key(character);
       if (this.rejected.has(key)) continue;
-      const expected = character.attributes[questionId] ?? 0;
-      const agreement = 1 - Math.abs(response - expected) / 2;
-      const likelihood = expected === 0 ? .48 : .12 + .88 * agreement ** 2;
-      this.scores.set(key, (this.scores.get(key) ?? 0) + Math.log(Math.max(.08, likelihood)));
+      const yesProbability = this.yesProbability(character, questionId);
+      const likelihood = response > 0 ? yesProbability : 1 - yesProbability;
+      const fact = character.attributes[questionId] || 0;
+      const known = fact && !isImplicitNegative(character, questionId);
+      this.scores.set(key, (this.scores.get(key) ?? 0) + Math.abs(response) * (known ? 1 : .4) * Math.log(Math.max(.01, likelihood)));
     }
   }
 
@@ -302,8 +308,7 @@ export class GuessEngine {
     const [best, second] = this.probabilities();
     if (!best) return null;
     const ratio = second ? best.probability / Math.max(.0001, second.probability) : 99;
-    const evidence = clamp((this.answerCount - 4) / 10, 0, 1);
-    const confidence = clamp(.38 + best.probability * 1.25 + Math.min(.22, Math.log2(ratio) * .055) + evidence * .1, .38, .98);
+    const confidence = clamp(best.probability, 0, .99);
     return { character: best.item, confidence, probability: best.probability, ratio };
   }
 
@@ -311,11 +316,7 @@ export class GuessEngine {
     const best = this.bestGuess();
     if (!best) return false;
     if (this.lastRejectionAnswerCount !== null && this.answerCount - this.lastRejectionAnswerCount < 3) return false;
-    const hasRelevantQuestion = this.questions.some((question) => !this.asked.has(question.id) && this.isRelevant(question));
-    if (this.answerCount > 0 && !hasRelevantQuestion) return true;
-    return (best.probability >= .82 && best.ratio >= 7)
-      || (best.probability >= .62 && best.ratio >= 4)
-      || best.probability >= .42;
+    return best.probability >= .7 && best.ratio >= 4;
   }
 
   reject(idOrName) {
