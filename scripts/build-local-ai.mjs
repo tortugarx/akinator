@@ -12,7 +12,7 @@ try { previous = JSON.parse(await readFile(join(folder,'manifest.json'),'utf8'))
 await mkdir(folder, {recursive:true});
 await mkdir('assets/ai/runtime', {recursive:true});
 // Ship only the Qwen2 language-generation API, not unrelated model registries.
-await build({stdin:{contents:'export {env,Qwen2Tokenizer,Qwen2ForCausalLM,TextGenerationPipeline} from "./node_modules/@huggingface/transformers/dist/transformers.web.js";',resolveDir:process.cwd(),sourcefile:'nazar-runtime.js'}, bundle:true, format:'esm', platform:'browser', minify:true, outfile:'assets/ai/runtime/transformers.js',plugins:[{
+await build({stdin:{contents:'export {env,Qwen2Tokenizer,Qwen2ForCausalLM,TextGenerationPipeline,RuntimeBackend} from "./node_modules/@huggingface/transformers/dist/transformers.web.js";',resolveDir:process.cwd(),sourcefile:'nazar-runtime.js'}, bundle:true, format:'esm', platform:'browser', minify:true, outfile:'assets/ai/runtime/transformers.js',plugins:[{
   name:'qwen-only-registry',setup(build) {
     build.onLoad({filter:/transformers\.web\.js$/},async({path})=>{
       const source = await readFile(path,'utf8');
@@ -23,11 +23,12 @@ await build({stdin:{contents:'export {env,Qwen2Tokenizer,Qwen2ForCausalLM,TextGe
         const qwen = [...entries.matchAll(/\["([^"]+)", "([^"]+)"\]/g)].filter((match)=>match[2] === 'Qwen2ForCausalLM').map((match)=>match[0]);
         return `var ${name} = new Map([${qwen.join(',')}]);`;
       });
-      return {contents,loader:'js'};
+      if (!source.includes('var ONNX;')) throw Error('Pinned ONNX runtime export changed; review packaging.');
+      return {contents:contents+'\nexport { ONNX as RuntimeBackend };',loader:'js'};
     });
   }
 }]});
-for (const file of ['ort-wasm-simd-threaded.jsep.mjs','ort-wasm-simd-threaded.jsep.wasm']) await cp(join('node_modules/onnxruntime-web/dist',file),join('assets/ai/runtime',file));
+for (const file of ['ort-wasm-simd-threaded.asyncify.mjs','ort-wasm-simd-threaded.asyncify.wasm']) await cp(join('node_modules/onnxruntime-web/dist',file),join('assets/ai/runtime',file));
 await cp('node_modules/@huggingface/transformers/LICENSE','assets/ai/transformers-LICENSE.txt');
 await cp('node_modules/@huggingface/tokenizers/LICENSE','assets/ai/tokenizers-LICENSE.txt');
 await cp('node_modules/@huggingface/jinja/LICENSE','assets/ai/jinja-LICENSE.txt');

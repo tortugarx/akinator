@@ -1,5 +1,6 @@
-import { env, Qwen2Tokenizer, Qwen2ForCausalLM, TextGenerationPipeline } from './assets/ai/runtime/transformers.js';
+import { env, Qwen2Tokenizer, Qwen2ForCausalLM, TextGenerationPipeline, RuntimeBackend } from './assets/ai/runtime/transformers.js?v=26';
 import {ModelDownloader,withDeadline} from './model-download.js';
+import {checkRuntime} from './runtime-probe.js';
 
 const modelRoot = new URL('./assets/ai/models/',import.meta.url).href;
 const runtimeRoot = new URL('./assets/ai/runtime/',import.meta.url).href;
@@ -8,7 +9,8 @@ env.allowLocalModels = true;
 env.localModelPath = modelRoot;
 env.useBrowserCache = false; // Cache verified shards, not a second full model copy.
 env.useWasmCache = false;
-env.backends.onnx.wasm.wasmPaths = {mjs:runtimeRoot+'ort-wasm-simd-threaded.jsep.mjs',wasm:runtimeRoot+'ort-wasm-simd-threaded.jsep.wasm'};
+// ORT 1.31's native WebGPU backend requires Asyncify, not the legacy JSEP build.
+env.backends.onnx.wasm.wasmPaths = {mjs:runtimeRoot+'ort-wasm-simd-threaded.asyncify.mjs',wasm:runtimeRoot+'ort-wasm-simd-threaded.asyncify.wasm'};
 env.backends.onnx.wasm.numThreads = 1; // Also works without COOP/COEP in game iframes.
 env.backends.onnx.wasm.proxy = false;
 let generator = null;
@@ -83,6 +85,9 @@ async function load() {
       throw Error('Dieses Gerät bietet keine ausreichend leistungsfähige WebGPU-Grafikbeschleunigung für das lokale Sprachmodell. Es wurde noch kein großer Modelldownload gestartet. Bitte nutze den ausdrücklich auswählbaren klassischen Modus.');
     }
     const device = 'webgpu';
+    // Verify the actual packaged backend before spending time downloading weights.
+    try { await withDeadline(checkRuntime(RuntimeBackend,device),60000); }
+    catch (error) { throw Error('Die lokale WebGPU-Laufzeit konnte nicht starten. Es wurde noch kein großer Modelldownload gestartet. '+error.message); }
     const options = {dtype:'q4f16',device,progress_callback:(event) => {
       if (event.status === 'done' && event.file?.includes('.onnx')) postMessage({type:'progress',phase:'compile'});
     }};
