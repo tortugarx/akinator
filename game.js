@@ -1,11 +1,11 @@
-import { characters, questions } from "./data.js?v=28";
-import { GuessEngine } from "./engine.js?v=28";
+import { characters, questions } from "./data.js?v=29";
+import { GuessEngine } from "./engine.js?v=29";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=28";
-import { questionModel } from "./question-model.js?v=28";
-import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=28";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=28";
-import { LocalQuestionAI } from './llm-questions.js?v=28';
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=29";
+import { questionModel } from "./question-model.js?v=29";
+import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=29";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=29";
+import { LocalQuestionAI } from './llm-questions.js?v=29';
 
 const translations = {
   en: {
@@ -19,7 +19,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 28;
+const buildVersion = 29;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }

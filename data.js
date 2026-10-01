@@ -1,5 +1,5 @@
-import { featureSchema } from './feature-schema.js';
-import { generateAttributeQuestions } from './generated-questions.js';
+import { featureSchema } from './feature-schema.js?v=29';
+import { generateAttributeQuestions } from './generated-questions.js?v=29';
 
 // Compatibility export for training and attribute keys. Runtime additionally
 // creates evidence discriminators from the loaded database.

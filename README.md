@@ -2,7 +2,7 @@
 
 Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine kuratierte Wissensbasis mit einer vorab erzeugten Wikidata-Datenbank, einer lokalen Active-Learning-Engine und einem Lernmodus, der bestätigte Figuren im Browser speichert.
 
-## Fragen- und Profilrevision (Version 28)
+## Fragen- und Profilrevision (Version 29)
 
 Das Ja/Nein-Spiel bleibt erhalten. Die Engine bevorzugt am Anfang leicht
 beantwortbare, breit trennende Merkmale und bewertet anschließend den

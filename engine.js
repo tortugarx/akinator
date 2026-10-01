@@ -1,7 +1,7 @@
-import { enrichCharacterAttributes } from "./attribute-enrichment.js";
-import { predictAnswer, isImplicitNegative } from "./answer-model.js";
-import {contextualQuestionText} from './question-format.js';
-import { descriptionQuestions, generateGroupedQuestions } from "./generated-questions.js";
+import { enrichCharacterAttributes } from "./attribute-enrichment.js?v=29";
+import { predictAnswer, isImplicitNegative } from "./answer-model.js?v=29";
+import {contextualQuestionText} from './question-format.js?v=29';
+import { descriptionQuestions, generateGroupedQuestions } from "./generated-questions.js?v=29";
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const binaryEntropy = (probability) => {
