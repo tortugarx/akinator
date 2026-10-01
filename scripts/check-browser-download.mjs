@@ -6,7 +6,8 @@ import {readFile} from 'node:fs/promises';
 const type = process.argv.includes('--webkit') ? webkit : chromium;
 const browser = await type.launch({headless:true,...(type === chromium ? {args:['--no-sandbox']} : {})});
 try {
-  const page = await browser.newPage();
+  // The fixture is intercepted by Playwright, not the game's service worker.
+  const page = await browser.newPage({serviceWorkers:'block'});
   await page.goto('http://127.0.0.1:4173');
   const bytes = Buffer.from([1,2,3,4,5,6,7,8,9]);
   let calls = 0, status = 200;
@@ -33,6 +34,20 @@ try {
     assert.equal(calls,status === 200 ? 1 : 3);
     console.log(`PASS ${type.name()}: HTTP ${status}, ${calls} requests, correct bytes`);
   }
+  const stalled = await page.evaluate(async()=>{
+    const {ModelDownloader} = await import('./model-download.js');
+    let cancelled = false;
+    const progress = [];
+    const downloader = new ModelDownloader('https://fixture.invalid',async()=>new Response(new ReadableStream({
+      start(controller){controller.enqueue(new Uint8Array([1,2]));},cancel(){cancelled=true;}
+    })),{idleTimeoutMs:30,onProgress:value=>progress.push(value)});
+    try { await downloader.chunk({offset:0,size:3}); return {unexpectedSuccess:true}; }
+    catch(error) { return {cancelled,progress,message:error.message}; }
+  });
+  assert.equal(stalled.cancelled,true);
+  assert.deepEqual(stalled.progress,[2]);
+  assert.match(stalled.message,/gespeicherte Teile/);
+  console.log(`PASS ${type.name()}: partial progress and stalled-stream timeout`);
   if (process.argv.includes('--remote')) {
     const {sourceUrl} = JSON.parse(await readFile('assets/ai/models/qwen/manifest.json','utf8'));
     const result = await page.evaluate(async(url)=>{

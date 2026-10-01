@@ -1,5 +1,5 @@
 import { env, Qwen2Tokenizer, Qwen2ForCausalLM, TextGenerationPipeline } from './assets/ai/runtime/transformers.js';
-import {ModelDownloader} from './model-download.js';
+import {ModelDownloader,withDeadline} from './model-download.js';
 
 const modelRoot = new URL('./assets/ai/models/',import.meta.url).href;
 const runtimeRoot = new URL('./assets/ai/runtime/',import.meta.url).href;
@@ -18,11 +18,12 @@ const assetCacheName = 'nazar-llm-6287331f475a3e20e8c879be8fd4bf3551ad9d34-q4f16
 
 async function smallAsset(url) {
   let cache;
-  try { cache = await caches.open(assetCacheName); } catch { /* Optional persistence. */ }
-  const cached = await cache?.match(String(url));
+  try { cache = await withDeadline(caches.open(assetCacheName),3000); } catch { /* Optional persistence. */ }
+  let cached;
+  try { cached = await withDeadline(cache?.match(String(url)),3000); } catch { cache = null; }
   if (cached) return cached;
-  const response = await nativeFetch(url);
-  if (response.ok) try { await cache?.put(String(url),response.clone()); } catch { /* Optional persistence. */ }
+  const response = await withDeadline(nativeFetch(url),45000);
+  if (response.ok) try { await withDeadline(cache?.put(String(url),response.clone()),3000); } catch { /* Optional persistence. */ }
   return response;
 }
 
@@ -31,24 +32,32 @@ async function modelResponse() {
   const response = await smallAsset(folder+'manifest.json');
   if (!response.ok) throw Error('Lokales Modellpaket fehlt.');
   const manifest = await response.json();
-  const downloader = new ModelDownloader(manifest.sourceUrl,nativeFetch);
+  let lastProgress = 0;
+  const downloader = new ModelDownloader(manifest.sourceUrl,nativeFetch,{onProgress(loaded){
+    const now = performance.now();
+    if (now-lastProgress >= 200) {
+      lastProgress = now;
+      postMessage({type:'progress',phase:'download',loaded,total:manifest.size,cached:false});
+    }
+  }});
   let cache;
-  try { cache = await caches.open(`nazar-llm-${manifest.revision}-${manifest.dtype}`); } catch { /* Still playable without persistent cache. */ }
+  try { cache = await withDeadline(caches.open(`nazar-llm-${manifest.revision}-${manifest.dtype}`),3000); } catch { /* Still playable without persistent cache. */ }
   let index = 0, loaded = 0;
   return new Response(new ReadableStream({
     async pull(controller) {
       try {
         if (index >= manifest.chunks.length) { await downloader.close(); controller.close(); return; }
         const chunk = manifest.chunks[index++], url = folder+chunk.path;
-        let response = await cache?.match(url);
+        let response;
+        try { response = await withDeadline(cache?.match(url),3000); } catch { cache = null; }
         const cached = !!response;
         if (response && !response.ok) throw Error(`Modellteil nicht verfügbar: ${chunk.path}`);
-        const bytes = response ? await response.arrayBuffer() : await downloader.chunk(chunk);
+        const bytes = response ? await withDeadline(response.arrayBuffer(),15000) : await downloader.chunk(chunk);
         const digest = [...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map((value) => value.toString(16).padStart(2,'0')).join('');
         if (bytes.byteLength !== chunk.size || digest !== chunk.sha256) {
           await cache?.delete(url); throw Error('Ein Modellteil ist beschädigt. Bitte erneut laden.');
         }
-        if (!cached) try { await cache?.put(url,new Response(bytes)); } catch { /* Cache quota is optional. */ }
+        if (!cached) try { await withDeadline(cache?.put(url,new Response(bytes)),3000); } catch { cache = null; /* Slow/full persistence must not block inference. */ }
         loaded += bytes.byteLength;
         postMessage({type:'progress',phase:'download',loaded,total:manifest.size,cached});
         controller.enqueue(new Uint8Array(bytes));
