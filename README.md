@@ -4,6 +4,10 @@ Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine ku
 
 ## Echtes lokales Sprachmodell (Version 23)
 
+Version 24 behebt den statischen Modelldownload: HTTP 206 wird weiter als Byte-Range verarbeitet; bei HTTP 200 wird ein einzelner vollständiger Download gestreamt, in überprüfte Cache-Teile zerlegt und nicht für jeden Teil erneut gestartet. Vorhandene Cache-Teile bleiben erhalten. Abbruch schließt den Stream; HTTP-Fehler zeigen nun den Statuscode. Das ändert nicht die GPU-/Speicheranforderungen des Modells.
+
+Für CrazyGames ist das große Sprachmodell noch **nicht veröffentlichungsgeeignet**: Laut [technischen Anforderungen](https://docs.crazygames.com/requirements/technical/) gelten 250 MB Paketgröße, 50 MB initialer Download (20 MB für die mobile Startseite) und für externe Dateien höchstens 20 Sekunden bis zum Gameplay. Ein verpflichtender Download von 1,22 GB ist damit keine tragfähige Startarchitektur. Die Wahl eines kompakten lokalen Auswahlmodells oder eines deutlich kleineren Sprachmodells muss vor der Veröffentlichung geklärt werden; das Vorhandensein des Buildskripts ist keine Plattformfreigabe.
+
 Der standardmäßig angebotene, noch experimentelle KI-Modus führt **Qwen2.5-1.5B-Instruct (q4f16)** mit Transformers.js 4.3.0 in einem Web Worker auf dem Gerät aus. Die Engine bewertet die verfügbaren Fakten nach Informationsgewinn und gibt den besten Diskriminator an das Sprachmodell weiter. Das Modell formuliert diesen um; die Engine leitet aus belegten Merkmalswörtern seine auswertbare Bedingung ab. Der Parser unterstützt auch bis zu drei belegte Merkmale mit UND oder ODER. Nur Vorschläge mit mindestens 80 Prozent des besten verfügbaren Einzelmerkmal-Scores werden akzeptiert. Das kleine Sprachmodell übernimmt ausdrücklich nicht die numerische Optimierung: Eine freie Auswahl aus mehreren Eigenschaften war in echten Tests unzuverlässig. Der KI-Modus verwendet tatsächliche Modell-Inferenz zur Formulierung, nicht nur eine Auswahl fertiger Sätze. Die Merkmalsgrammatik bleibt als Bedeutung der vorhandenen Fakten erhalten; er erfindet keine neuen überprüften Personenmerkmale.
 
 Die Modellgewichte sind unter Apache 2.0 frei nutzbar. Revision, Lizenzen und Teil-Prüfsummen liegen in `assets/ai`. Tokenizer und Laufzeit sind lokale Spielassets. Die **rund 1,22 GB Gewichte werden einmalig als statische Dateien vom öffentlichen Hugging-Face-Modellhost heruntergeladen**, da sie die GitHub-Pages-Paketgrenze überschreiten. Es gibt keine serverseitige Inferenz: Fragen und Antworten verlassen das Gerät nicht. Verifizierte Modellteile werden über die Cache API gespeichert, soweit Speicher verfügbar ist, und nicht bei jedem Spielupdate gelöscht. Alle Modelle brauchen beim ersten Start einen Download; Modell-Cache und HTTP-/Spielasset-Cache sind unterschiedliche Dinge. Lokale `.bin`-Dateien für Diagnosen sind deshalb ausdrücklich nicht Teil des Git-Repositories.
@@ -14,7 +18,7 @@ Das Modell darf nur verfügbare, relevante Merkmale verwenden. Mehrere Fragen, e
 
 Reproduzierbare zusätzliche Prüfungen:
 
-Teststand: 69 automatisierte Tests bestanden. Die echten nativen Inferenztests mit dem vollständigen Datenbestand akzeptieren Fragen für Spielstart, bestätigte Bundeskanzler, Erwachsenenfilm-Darsteller und Sänger. Chromium bestätigt die Geräteprüfung ohne Gewichtsdownload und den ausdrücklich gewählten klassischen Modus. Der separate verzögerte Worker-Test bestätigt Ladefortschritt, Eingabesperre, Mehrfachklick-Schutz, Zurücksetzen der Auswahl und Abbruch; er ist kein Modellqualitätstest. Die vollständige WebGPU-Inferenz konnte im verfügbaren Browser mangels FP16 nicht bestätigt werden. Safari/iPad sind ebenfalls nicht bestätigt.
+Teststand: 75 automatisierte Tests bestanden. Die echten nativen Inferenztests mit dem vollständigen Datenbestand akzeptieren Fragen für Spielstart, bestätigte Bundeskanzler, Erwachsenenfilm-Darsteller und Sänger. Chromium bestätigt die Geräteprüfung ohne Gewichtsdownload und den ausdrücklich gewählten klassischen Modus. Der separate verzögerte Worker-Test bestätigt Ladefortschritt, Eingabesperre, Mehrfachklick-Schutz, Zurücksetzen der Auswahl und Abbruch; er ist kein Modellqualitätstest. Die vollständige WebGPU-Inferenz konnte im verfügbaren Browser mangels FP16 nicht bestätigt werden. Die Download-Transporttests (HTTP 200/206 und tatsächlicher Modellhost mit kleinem Byte-Probeabruf) bestehen in Chromium und WebKit. Das ist kein vollständiger Safari/iPad-Inferenztest; dieser bleibt unbestätigt.
 
 ```bash
 npm run build:local-ai
@@ -23,6 +27,9 @@ node scripts/check-local-ai.mjs
 node scripts/check-browser-ai.mjs
 node scripts/check-browser-ai.mjs --unsupported
 node scripts/check-browser-loading.mjs
+node scripts/check-browser-download.mjs --remote
+# Nach npx playwright install --with-deps webkit:
+node scripts/check-browser-download.mjs --webkit --remote
 ```
 
 Das CrazyGames-Buildskript nimmt Tokenizer, Laufzeit, Manifest und Lizenzen mit auf, nicht die großen lokalen Diagnose-Binärdateien. Es wird nicht automatisch ausgeführt. Externer Modelldownload, Cache-Quoten und Hardwareanforderungen müssen vor einer Einreichung separat mit den Plattformvorgaben abgeglichen werden; die Integration ist keine Zusage einer CrazyGames-Zulassung.

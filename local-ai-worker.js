@@ -1,4 +1,5 @@
 import { env, Qwen2Tokenizer, Qwen2ForCausalLM, TextGenerationPipeline } from './assets/ai/runtime/transformers.js';
+import {ModelDownloader} from './model-download.js';
 
 const modelRoot = new URL('./assets/ai/models/',import.meta.url).href;
 const runtimeRoot = new URL('./assets/ai/runtime/',import.meta.url).href;
@@ -30,22 +31,19 @@ async function modelResponse() {
   const response = await smallAsset(folder+'manifest.json');
   if (!response.ok) throw Error('Lokales Modellpaket fehlt.');
   const manifest = await response.json();
+  const downloader = new ModelDownloader(manifest.sourceUrl,nativeFetch);
   let cache;
   try { cache = await caches.open(`nazar-llm-${manifest.revision}-${manifest.dtype}`); } catch { /* Still playable without persistent cache. */ }
   let index = 0, loaded = 0;
   return new Response(new ReadableStream({
     async pull(controller) {
       try {
-        if (index >= manifest.chunks.length) { controller.close(); return; }
+        if (index >= manifest.chunks.length) { await downloader.close(); controller.close(); return; }
         const chunk = manifest.chunks[index++], url = folder+chunk.path;
         let response = await cache?.match(url);
         const cached = !!response;
-        if (!response) {
-          response = await nativeFetch(manifest.sourceUrl,{headers:{Range:`bytes=${chunk.offset}-${chunk.offset+chunk.size-1}`}});
-          if (response.status !== 206) throw Error('Der Modellhost unterstützt diesen Teil-Download nicht.');
-        }
-        if (!response.ok) throw Error(`Modellteil nicht verfügbar: ${chunk.path}`);
-        const bytes = await response.arrayBuffer();
+        if (response && !response.ok) throw Error(`Modellteil nicht verfügbar: ${chunk.path}`);
+        const bytes = response ? await response.arrayBuffer() : await downloader.chunk(chunk);
         const digest = [...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map((value) => value.toString(16).padStart(2,'0')).join('');
         if (bytes.byteLength !== chunk.size || digest !== chunk.sha256) {
           await cache?.delete(url); throw Error('Ein Modellteil ist beschädigt. Bitte erneut laden.');
@@ -54,8 +52,9 @@ async function modelResponse() {
         loaded += bytes.byteLength;
         postMessage({type:'progress',phase:'download',loaded,total:manifest.size,cached});
         controller.enqueue(new Uint8Array(bytes));
-      } catch (error) { controller.error(error); }
-    }
+      } catch (error) { await downloader.close(); controller.error(error); }
+    },
+    cancel() { return downloader.close(); }
   }),{headers:{'content-length':String(manifest.size),'content-type':'application/octet-stream'}});
 }
 
