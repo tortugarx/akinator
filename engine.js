@@ -1,5 +1,6 @@
 import { enrichCharacterAttributes } from "./attribute-enrichment.js";
 import { predictAnswer, isImplicitNegative } from "./answer-model.js";
+import {contextualQuestionText} from './question-format.js';
 import { descriptionQuestions, generateGroupedQuestions } from "./generated-questions.js";
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -64,8 +65,14 @@ export class GuessEngine {
     this.generatedSize = -1;
     this.model = model;
     this.answerCache = new WeakMap();
+    this.profileSignatures = new WeakMap();
+    this.questionAliases = new Map();
+    this.redundantAfterYes = new Map();
+    this.generatedImplications = new Map();
     this.charactersById = new Map(this.characters.map((item) => [this.key(item), item]));
     this.charactersByName = new Map(this.characters.map((item) => [this.nameKey(item), item]));
+    this.charactersByAlias = new Map();
+    for(const item of this.characters) this.registerAliases(item);
     this.reset();
   }
 
@@ -85,6 +92,16 @@ export class GuessEngine {
 
   nameKey(item) { return item.name.trim().toLocaleLowerCase(); }
 
+  aliasKey(name) { return name.normalize('NFKD').replace(/\p{M}/gu,'').toLocaleLowerCase().replace(/^(?:queen|princess|lord|the)\s+/,'').replace(/[^\p{L}\p{N}]/gu,''); }
+
+  registerAliases(item) {
+    for(const name of [item.name,...(item.aliases||[])]) {
+      const key=this.aliasKey(name);
+      if(!this.charactersByAlias.has(key)) this.charactersByAlias.set(key,new Set());
+      this.charactersByAlias.get(key).add(item);
+    }
+  }
+
   prior(item) {
     if (item.learned) return .35;
     if (!item.source) return .25;
@@ -93,24 +110,43 @@ export class GuessEngine {
 
   addCharacter(character) {
     enrichCharacterAttributes(character);
-    const existing = this.charactersById.get(this.key(character)) || this.charactersByName.get(this.nameKey(character));
+    const candidates=new Set([character.name,...(character.aliases||[])].flatMap(name=>[...(this.charactersByAlias.get(this.aliasKey(name))||[])]));
+    const entityId=item=>item.source?.match(/wikidata\.org\/wiki\/(Q\d+)/i)?.[1]?.toUpperCase();
+    const compatible=[...candidates].filter(item=>!(item.attributes.real && character.attributes.real && item.attributes.real!==character.attributes.real) && !(entityId(item)&&entityId(character)&&entityId(item)!==entityId(character)));
+    const existing = this.charactersById.get(this.key(character)) || (compatible.length===1 ? compatible[0] : null);
     if (existing) {
       existing.image ||= character.image;
       existing.imageAttribution ||= character.imageAttribution;
       existing.source ||= character.source;
+      existing.aliases=[...new Set([...(existing.aliases||[]),character.name,...(character.aliases||[])])].filter(name=>name!==existing.name);
+      this.registerAliases(existing);
+      this.charactersById.set(this.key(character),existing);
+      if (character.facts?.length) {
+        existing.facts = [...new Map([...(existing.facts || []), ...character.facts].map(fact=>[fact.id,fact])).values()];
+        this.generatedSize = -1;
+      }
       existing.popularity = Math.max(existing.popularity || 0, character.popularity || 0);
       for (const [id, value] of Object.entries(character.attributes || {})) {
         if (value === 1 || (character.learned && value !== 0)) existing.attributes[id] = value;
       }
       this.probabilityCache = null;
       this.answerCache.delete(existing);
+      this.profileSignatures.delete(existing);
       return;
     }
     this.characters.push(character);
     this.charactersById.set(this.key(character), character);
     this.charactersByName.set(this.nameKey(character), character);
+    this.registerAliases(character);
     this.scores.set(this.key(character), this.prior(character));
     this.probabilityCache = null;
+  }
+
+  addDatabase(database) {
+    for(const item of database.characters || []) {
+      const facts=item.facts || item.factIds?.map(id=>database.factDefinitions?.[id]).filter(Boolean);
+      this.addCharacter({...item,attributes:{...item.attributes},...(facts ? {facts} : {})});
+    }
   }
 
   probabilities() {
@@ -121,7 +157,11 @@ export class GuessEngine {
     const personalFocus = this.answeredYes("personallyKnown");
     const adultFocus = [...adultQuestions].some((id) => this.answeredYes(id));
     const anchors = [...this.responses].filter(([id, value]) => {
-      if (value < .9 || id.startsWith('evidence:')) return false;
+      // Sparse living-status/gender facts are NOT rare topic memberships.
+      // Treating "alive" as an anchor used to suppress living people merely
+      // because their wiki profile had no explicit current-status statement.
+      const branch = topicBranches.has(id) || [...topicBranches.values()].some(children=>children.has(id)) || fictionalOnlyQuestions.has(id) || relationshipQuestions.has(id) || id==='personallyKnown';
+      if (value < .9 || !branch) return false;
       const count = available.filter((person) => person.attributes[id] === 1).length;
       return count >= 1 && count / available.length < .12;
     }).map(([id]) => id);
@@ -134,7 +174,7 @@ export class GuessEngine {
       // unrelated profiles whose corresponding detail happens to be unknown.
       if (personalFocus && item.attributes.personallyKnown !== 1) weight *= .0001;
       if (adultFocus && item.attributes.adultCreator !== 1 && ![...adultQuestions].some((id) => item.attributes[id] === 1)) weight *= .0005;
-      for (const id of anchors) if (item.attributes[id] !== 1) weight *= .00001;
+      for (const id of anchors) if (item.attributes[id] !== 1) weight *= item.attributes[id] < 0 && !isImplicitNegative(item,id) ? .00001 : .0001;
       return { item, weight };
     });
     const total = weighted.reduce((sum, entry) => sum + entry.weight, 0) || 1;
@@ -180,16 +220,31 @@ export class GuessEngine {
   isRealPerson() {
     if (this.answeredNo("real") || this.answeredYes("fictional")) return false;
     if (this.answeredYes("real") || this.answeredNo("fictional") || this.answeredYes("personallyKnown")) return true;
-    return this.probabilities().reduce((sum, entry) => sum + (entry.item.attributes.real === 1 ? entry.probability : 0), 0) >= .985;
+    return false; // Database proportions are not evidence that the user's target is real.
+  }
+
+  subjectKind() {
+    if (this.answeredNo('real') || this.answeredYes('fictional')) return 'fictional';
+    return this.isRealPerson() ? 'person' : 'unknown';
   }
 
   isRelevant(question) {
     const id = question.id;
+    if ((this.questionAliases.get(id)||[]).some(alias=>this.responses.has(alias)||this.asked.has(alias))) return false;
+    if ((this.redundantAfterYes.get(id)||[]).some(parent=>this.answeredYes(parent))) return false;
     if (this.answeredYes('chancellor') && ['politician','nationalLeader','usPresident'].includes(id)) return false;
     if (id.startsWith('evidence:')) {
       const equivalents = {YouTube:'youtuber',Twitch:'twitchStreamer',TikTok:'tiktoker',OnlyFans:'onlyFansCreator',Minecraft:'minecraftStreamer','League of Legends':'mobaStreamer',Marvel:'marvel',Disney:'disney','Harry Potter':'harryPotter','Star Wars':'starWars'};
       const equivalent = equivalents[id.slice(9)];
       if (equivalent && this.responses.has(equivalent)) return false;
+    }
+    if (id.startsWith('fact:')) {
+      const property=id.split(':')[1];
+      if(property==='P102' && [...this.responses].some(([other,value])=>value>=.5 && other!==id && (other.startsWith('fact:P102:') || /^evidence:(?:SPD|CDU|CSU|FDP|AfD|Bündnis|Republican Party|Democratic Party)/.test(other)))) return false;
+      if (['P1080','P1441'].includes(property) && this.isRealPerson()) return false;
+      // Fictional people can also play instruments, hold offices or belong to
+      // teams. Their sourced facts remain usable with "Figur" wording.
+      return !this.answeredYes('personallyKnown');
     }
     const realPerson = this.isRealPerson();
     const fictionalCharacter = this.answeredNo("real") || this.answeredYes("fictional");
@@ -261,6 +316,10 @@ export class GuessEngine {
   }
 
   questionFocusWeight(id, focused = this.focusedTopics()) {
+    // Opening questions should be easy to answer across all careers/universes.
+    // Weight is an answerability cost, not a hardcoded gender question.
+    if (this.responses.size < 2) return ['real','fictional','female','personallyKnown'].includes(id) ? 1 : .45;
+    if (id.startsWith('fact:')) return /^fact:(?:P166|P19|P69):/.test(id) ? .55 : 1.2;
     if (!focused.length) return 1;
     const universal = new Set(["real", "personallyKnown", "alive", "female", ...exactCountries, ...regionQuestions, ...subregionQuestions]);
     if (universal.has(id)) return .82;
@@ -314,7 +373,17 @@ export class GuessEngine {
     return [...head,...sampled];
   }
 
-  questionGain(id, distribution = this.selectionDistribution()) {
+  factMasses(distribution) {
+    const masses=new Map();
+    for(const {item,probability} of distribution) for(const fact of item.facts || []) masses.set(fact.id,(masses.get(fact.id)||0)+probability);
+    return masses;
+  }
+
+  questionGain(id, distribution = this.selectionDistribution(), factMasses) {
+    if(id.startsWith('fact:') && factMasses) {
+      const mass=factMasses.get(id)||0;
+      return Math.max(0,binaryEntropy(.5+.44*mass)-(1-mass)*binaryEntropy(.5)-mass*binaryEntropy(.94));
+    }
     let mass = 0, conditionalEntropy = 0;
     for (const {item,probability} of distribution) {
       const yes = this.yesProbability(item,id);
@@ -324,17 +393,17 @@ export class GuessEngine {
   }
 
   async aiQuestionContext(language = 'de') {
-    if (this.generatedSize !== this.characters.length) {
-      this.generatedQuestions = descriptionQuestions(this.characters); this.generatedSize = this.characters.length;
-    }
+    this.refreshGeneratedQuestions();
     const distribution = this.selectionDistribution();
+    const factMasses = this.factMasses(distribution);
+    const focused=this.focusedTopics();
     const features = [];
     let count = 0;
     for (const question of [...this.questions,...this.generatedQuestions]) {
       if (this.asked.has(question.id) || this.responses.has(question.id) || !this.isRelevant(question)) continue;
-      const gain = this.questionGain(question.id,distribution)*this.questionFocusWeight(question.id);
-      if (gain > .001) features.push({id:question.id,meaning:question[language],gain:Number(gain.toFixed(4))});
-      if (++count % 12 === 0) await new Promise((resolve)=>setTimeout(resolve,0));
+      const gain = this.questionGain(question.id,distribution,factMasses)*this.questionFocusWeight(question.id,focused);
+      if (gain > .001) features.push({id:question.id,meaning:contextualQuestionText(question,language,this.subjectKind()),gain:Number(gain.toFixed(4))});
+      if (++count % (question.id.startsWith('fact:') ? 128 : 12) === 0) await new Promise((resolve)=>setTimeout(resolve,0));
     }
     features.sort((a,b)=>b.gain-a.gain);
     this.aiBestGain = features[0]?.gain || 0;
@@ -366,11 +435,24 @@ export class GuessEngine {
     return {...best,de:best.text,en:best.text,generatedLanguage:language};
   }
 
-  *selectQuestion() {
+  refreshGeneratedQuestions() {
     if (this.generatedSize !== this.characters.length) {
       this.generatedQuestions = descriptionQuestions(this.characters);
       this.generatedSize = this.characters.length;
+      this.answerCache = new WeakMap();
+      this.profileSignatures = new WeakMap();
+      this.questionAliases = new Map();
+      this.redundantAfterYes = new Map(this.generatedQuestions.map(question=>[question.id,question.redundantAfterYes||[]]));
+      this.generatedImplications = new Map(this.generatedQuestions.map(question=>[question.id,question.implies||[]]));
+      for(const question of this.generatedQuestions) for(const alias of question.aliases || []) {
+        this.questionAliases.set(question.id,[...(this.questionAliases.get(question.id)||[]),alias]);
+        this.questionAliases.set(alias,[...(this.questionAliases.get(alias)||[]),question.id]);
+      }
     }
+  }
+
+  *selectQuestion() {
+    this.refreshGeneratedQuestions();
     const candidates = this.probabilities();
     const grouped = generateGroupedQuestions(candidates.slice(0,2000), (question) => this.isRelevant(question), this.asked);
     const unasked = [...this.questions, ...this.generatedQuestions, ...grouped].filter((question) => !this.asked.has(question.id) && this.isRelevant(question));
@@ -398,23 +480,16 @@ export class GuessEngine {
       selectionCandidates = [...head, ...sampled];
     }
     let best = null;
+    const factMasses=this.factMasses(selectionCandidates);
+    const focused=this.focusedTopics();
     let bestValue = 0.0001;
     let evaluated = 0;
     for (const question of unasked) {
-      if (++evaluated % 12 === 0) yield;
-      let yesMass = 0;
-      let conditionalEntropy = 0;
-      for (const { item, probability } of selectionCandidates) {
-        const yesLikelihood = this.yesProbability(item, question.id);
-        yesMass += probability * yesLikelihood;
-        conditionalEntropy += probability * binaryEntropy(yesLikelihood);
-      }
-      const noMass = 1 - yesMass;
-      if (yesMass <= 1e-9 || noMass <= 1e-9) continue;
-      const gain = binaryEntropy(yesMass) - conditionalEntropy;
+      if (++evaluated % (question.id.startsWith('fact:') ? 128 : 12) === 0) yield;
+      const gain = this.questionGain(question.id,selectionCandidates,factMasses);
       // Once a concrete occupation is known, use questions that discriminate
       // inside that posterior, not a fixed tour through unrelated professions.
-      const focus = question.featureIds ? Math.max(...question.featureIds.map((id) => this.questionFocusWeight(id))) : this.questionFocusWeight(question.id);
+      const focus = question.featureIds ? Math.max(...question.featureIds.map((id) => this.questionFocusWeight(id,focused))) : this.questionFocusWeight(question.id,focused);
       const value = gain * focus;
       if (value > bestValue) { best = question; bestValue = value; }
     }
@@ -428,6 +503,10 @@ export class GuessEngine {
     this.answerCount += 1;
     this.history.push({ questionId, answer: response });
     this.responses.set(questionId, response);
+    if(response>=.5) for(const implied of this.generatedImplications.get(questionId)||[]) {
+      if(!this.answeredNo(implied)) this.responses.set(implied,response);
+      this.asked.add(implied);
+    }
     // A denied disjunction denies each member; a positive disjunction does not
     // imply any individual member. Never store group answers as individual facts.
     if (questionId.startsWith('group:') && response <= -.5) {
@@ -443,9 +522,10 @@ export class GuessEngine {
       if (this.rejected.has(key)) continue;
       const yesProbability = this.yesProbability(character, questionId);
       const likelihood = response > 0 ? yesProbability : 1 - yesProbability;
-      const fact = character.attributes[questionId] || 0;
-      const known = questionId.startsWith('group:') || questionId.startsWith('all:') ? yesProbability !== .5 : fact && !isImplicitNegative(character, questionId);
-      this.scores.set(key, (this.scores.get(key) ?? 0) + Math.abs(response) * (known ? 1 : .4) * Math.log(Math.max(.01, likelihood)));
+      // Uncertainty is already represented by the answer likelihood. Applying
+      // another .4 exponent to unknown facts made the scorer inconsistent with
+      // information-gain selection and barely rewarded specific true facts.
+      this.scores.set(key, (this.scores.get(key) ?? 0) + Math.abs(response) * Math.log(Math.max(.01, likelihood)));
     }
   }
 
@@ -461,7 +541,23 @@ export class GuessEngine {
     const best = this.bestGuess();
     if (!best) return false;
     if (this.lastRejectionAnswerCount !== null && this.answerCount - this.lastRejectionAnswerCount < 3) return false;
-    return best.probability >= .7 && best.ratio >= 4;
+    // A concentrated posterior is not enough if the winner contradicts known answers.
+    const contradicts = [...this.responses].some(([id,answer])=>{
+      const fact = best.character.attributes[id];
+      return Math.abs(answer) >= .9 && fact && !isImplicitNegative(best.character,id) && Math.sign(answer) !== Math.sign(fact);
+    });
+    if (contradicts || best.probability < .9 || best.ratio < 9) return false;
+    // Popularity must not decide between identical factual profiles. Compare
+    // the full observable signature, not names, images, IDs or ranking priors.
+    const askable=new Set([...this.questions,...this.generatedQuestions].map(question=>question.id));
+    const signature = (item) => {
+      if(!this.profileSignatures.has(item)) {
+        const facts=Object.entries(item.attributes).filter(([id,value])=>askable.has(id) && value && !isImplicitNegative(item,id));
+        this.profileSignatures.set(item,JSON.stringify(facts.sort(([a],[b])=>a.localeCompare(b))));
+      }
+      return this.profileSignatures.get(item);
+    };
+    return !this.probabilities().slice(1).some(({item})=>signature(item)===signature(best.character));
   }
 
   reject(idOrName) {

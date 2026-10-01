@@ -1,6 +1,6 @@
 // Pure, auditable boundary between generated language and the factual engine.
 import {featureSchema} from './feature-schema.js';
-const blocked = /geburt|birthday|birth date|vorname|nachname|first name|last name|buchstab|letter of|\b(?:18|19|20)\d{2}\b/i;
+const blocked = /geburt|birthday|birth date|vorname|nachname|first name|last name|buchstab|letter of/i;
 const stop = new Set('ist sind war wurde hat haben diese dieser dieses person figur deine deiner deinem einen eine einer einem einem oder und mit von aus für hauptsächlich bekannt als the is was your this person character does has have from with for known mainly through part of'.split(' '));
 for (const word of 'gesuchte gesuchten gesuchter gesucht kommt kommen kennst kennen kannst kann wird werden noch heute you thinking think about famous someone jemanden jemand that which whom ihrer ihrem ihrer seine seiner seinem ihre kommt gibt exist exists'.split(' ')) stop.add(word);
 const synonyms = {female:['weiblich','frau','woman','female'],german:['deutsch','german'],actor:['schauspiel','actor','actress','acting'],athlete:['profisport','sportler','athlet','athlete','sports'],alive:['lebt','leben','lebendig','alive','living'],musician:['musik','music','musician'],singer:['sänger','sängerin','singer','singing']};
@@ -117,7 +117,7 @@ export class LocalQuestionAI {
     // Otherwise "Streamt ...?" can become the meaningless "Ist ... Spiele?".
     const starts = verb ? [verb] : language === 'de' ? ['Ist','Hat','Lebt'] : ['Is','Has','Does'];
     // Constrain syntax, not a catalogue of questions or model-selected words.
-    const grammar = `root ::= (${starts.map(JSON.stringify).join(' | ')}) " " [^?\\n]{10,180} "?"`;
+    const grammar = `root ::= (${starts.map(JSON.stringify).join(' | ')}) " " [^?\\n]{10,210} "?"`;
     const output = await this.request('generate',{messages:questionPrompt(context,language),grammar});
     return parseQuestionProposals(output,context);
   }

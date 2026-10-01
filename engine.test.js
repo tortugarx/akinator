@@ -96,7 +96,8 @@ test("requires new evidence instead of rattling through guesses after a rejectio
   engine.answer("three", -1);
   assert.equal(engine.shouldGuess(), false);
   engine.answer("four", -1);
-  assert.equal(engine.shouldGuess(), true);
+  // The only remaining candidate still contradicts the earlier confident yes.
+  assert.equal(engine.shouldGuess(), false);
 });
 
 test("Wikidata enriches an existing curated character instead of duplicating it", () => {
@@ -119,6 +120,40 @@ test("does not guess early while candidates are still tied", () => {
   assert.ok(engine.nextQuestion());
 });
 
+test('popularity cannot manufacture certainty between identical observable profiles', () => {
+  const engine=new GuessEngine([{id:'a',name:'A',attributes:{real:1,female:-1}},{id:'b',name:'B',attributes:{real:1,female:-1}}],[{id:'real'},{id:'female'}]);
+  engine.scores.set('a',20);
+  engine.scores.set('b',0);
+  assert.ok(engine.bestGuess().probability>.9);
+  assert.equal(engine.shouldGuess(),false);
+});
+
+test('sparse living-status evidence cannot become a rare branch anchor',()=>{
+  const people=Array.from({length:100},(_,i)=>({id:String(i),name:String(i),attributes:{real:1,alive:i===0?1:0,female:i===0?1:-1}}));
+  const engine=new GuessEngine(people,[{id:'alive'},{id:'female'}]);
+  engine.answer('female',-1);engine.answer('alive',1);engine.probabilities();
+  assert.ok(!engine.activeAnchors.includes('alive'));
+  assert.notEqual(engine.bestGuess().character.id,'0');
+});
+
+test('packed wiki facts share their dictionary while profile attributes remain isolated',()=>{
+  const database={factDefinitions:{'fact:P54:Q1':{id:'fact:P54:Q1',kind:'team',de:'Verein',en:'Club'}},characters:[{id:'a',name:'A',attributes:{real:1},factIds:['fact:P54:Q1']}]};
+  const engine=new GuessEngine([],questions);
+  engine.addDatabase(database);engine.refreshGeneratedQuestions();
+  assert.equal(engine.characters[0].facts[0],database.factDefinitions['fact:P54:Q1']);
+  assert.equal(engine.characters[0].attributes['fact:P54:Q1'],1);
+  assert.equal(database.characters[0].attributes['fact:P54:Q1'],undefined);
+});
+
+test('wiki language aliases merge the same person but not distinct Wikidata identities',()=>{
+  const engine=new GuessEngine([{id:'mrbeast',name:'MrBeast',attributes:{real:1}}],questions);
+  engine.addCharacter({id:'wiki-q57618112',name:'Jimmy Donaldson',aliases:['MrBeast'],source:'https://www.wikidata.org/wiki/Q57618112',attributes:{real:1},image:'portrait.jpg'});
+  assert.equal(engine.characters.length,1);
+  assert.equal(engine.characters[0].image,'portrait.jpg');
+  engine.addCharacter({id:'wiki-q2',name:'Jimmy Donaldson',source:'https://www.wikidata.org/wiki/Q2',attributes:{real:1}});
+  assert.equal(engine.characters.length,2);
+});
+
 test("can guess immediately when the evidence is already decisive", () => {
   const tinyQuestions = [{ id:"only", en:"", de:"" }];
   const tinyCharacters = [
@@ -132,11 +167,27 @@ test("can guess immediately when the evidence is already decisive", () => {
   assert.equal(engine.bestGuess().character.name, "Yes");
 });
 
+test('does not infer real-person language from a mostly human database',()=>{
+  const engine = new GuessEngine([{id:'human',name:'Human',attributes:{real:1,female:1}}],questions);
+  assert.equal(engine.subjectKind(),'unknown');
+  engine.answer('real',-1);
+  assert.equal(engine.subjectKind(),'fictional');
+});
+
+test('opening prefers easy cross-domain discriminators over an industry tour',()=>{
+  const local = [
+    {id:'a',name:'A',attributes:{female:1,actor:1}},
+    {id:'b',name:'B',attributes:{female:-1,actor:-1}}
+  ];
+  const engine = new GuessEngine(local,[{id:'actor',de:'Schauspiel?',en:'Acting?'},{id:'female',de:'Weiblich?',en:'Female?'}]);
+  assert.equal(engine.nextQuestion().id,'female');
+});
+
 test("full database identifies public and private regression cases without cycling guesses", async () => {
   const database = JSON.parse(await readFile(new URL("./wikidata-people.json", import.meta.url), "utf8"));
   for (const name of ["Bonnie Blue", "Deine Tante"]) {
     const engine = new GuessEngine(characters.map((person) => ({ ...person, attributes:{ ...person.attributes } })), questions, questionModel);
-    for (const person of database.characters) engine.addCharacter({ ...person, attributes:{ ...person.attributes } });
+    engine.addDatabase(database);
     const target = engine.characters.find((person) => person.name === name);
     for (let index = 0; index < 40; index += 1) {
       const question = engine.nextQuestion();
@@ -264,14 +315,14 @@ test("recognizes plain streamer descriptions and removes actor-only singer noise
   const streamer = new GuessEngine([{ id:"s", name:"Streamer", description:"spanischer Streamer und Moderator", attributes:{ real:1, creator:1 } }], questions);
   assert.equal(streamer.characters[0].attributes.streamer, 1);
   const actor = new GuessEngine([{ id:"a", name:"Actor", description:"US-amerikanische Schauspielerin", attributes:{ real:1, actor:1, singer:1, musician:1 } }], questions);
-  assert.equal(actor.characters[0].attributes.singer, -1);
-  assert.equal(actor.characters[0].attributes.musician, -1);
+  assert.equal(actor.characters[0].attributes.singer, 0);
+  assert.equal(actor.characters[0].attributes.musician, 0);
 });
 
-test("removes secondary occupations from unrelated primary categories", () => {
+test("does not treat secondary occupation credits as known primary identities or factual no answers", () => {
   const racer = new GuessEngine([{ id:"r", name:"Racer", description:"deutscher Automobilrennfahrer", attributes:{ real:1, athlete:1, motorsport:1, creator:1, actor:1 } }], questions);
-  assert.equal(racer.characters[0].attributes.creator, -1);
-  assert.equal(racer.characters[0].attributes.actor, -1);
+  assert.equal(racer.characters[0].attributes.creator, 0);
+  assert.equal(racer.characters[0].attributes.actor, 0);
 });
 
 test("allows useful country questions before a region yes but excludes denied regions", () => {

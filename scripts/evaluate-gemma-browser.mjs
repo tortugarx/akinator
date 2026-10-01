@@ -32,7 +32,7 @@ const scenarios = [[],[['real',1],['chancellor',1]],[['real',1],['adultFilmPerfo
 const contexts = [];
 for (const answers of scenarios) {
   const engine = new GuessEngine(structuredClone(characters),questions,questionModel);
-  for (const person of database.characters) engine.addCharacter(structuredClone(person));
+  engine.addDatabase(database);
   for (const [id,value] of answers) engine.answer(id,value);
   contexts.push({answers,engine,context:await engine.aiQuestionContext('de')});
 }

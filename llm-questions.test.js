@@ -91,3 +91,9 @@ test('rejects open questions and preserves a literal feature without adding over
   assert.deepEqual(parseQuestionProposals('Wie ist diese Person aus Musik bekannt?',music),[]);
   assert.deepEqual(parseQuestionProposals('Ist diese Person aus Musik oder Film bekannt?',music)[0]?.featureIds,['entertainment']);
 });
+
+test('a sourced work title may contain a year, but unsupported dates remain rejected',()=>{
+  const work={features:[{id:'fact:P800:Q1',meaning:'Ist diese Person für das Werk „1989“ bekannt?',gain:.4}]};
+  assert.equal(parseQuestionProposals('Ist diese Person für das Werk „1989“ bekannt?',work)[0]?.id,'fact:P800:Q1');
+  assert.deepEqual(parseQuestionProposals('Ist diese Person seit 1990 weiblich?',context),[]);
+});

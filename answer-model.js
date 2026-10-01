@@ -11,7 +11,7 @@ export function isImplicitNegative(person, id) {
 }
 
 export function trainAnswerModel(people, ids, domains = {}) {
-  const labels = people.map((person) => ids.map((id) => person.attributes[id] || 0));
+  const labels = people.map((person) => ids.map((id) => isImplicitNegative(person,id) ? 0 : person.attributes[id] || 0));
   const classifiers = {};
   for (let target = 0; target < ids.length; target += 1) {
     const domain = domains[ids[target]];

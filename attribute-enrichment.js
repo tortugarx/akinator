@@ -132,7 +132,7 @@ const rules = {
   podcaster:/podcaster|podcast host/i,
   mayor:/\bmayor\b|bürgermeister/i,
   legislator:/member of parliament|member of congress|legislator|abgeordnete|abgeordneter/i,
-  chancellor:/\bchancellor\b|bundeskanzler|bundeskanzlerin/i,
+  chancellor:/chancellor of(?: the)? (?:germany|austria)|german chancellor|austrian chancellor|bundeskanzler|bundeskanzlerin/i,
   governor:/\bgovernor\b|ministerpräsident|ministerpräsidentin/i,
   computerScientist:/computer scientist|informatiker|informatikerin/i,
   economist:/economist|wirtschaftswissenschaftler|ökonom/i,
@@ -425,10 +425,10 @@ export function enrichCharacterAttributes(character) {
   // Resolve the broad category from the short primary description first.
   const primaryCareerMatches = primaryCareerRoots.filter((id) => primaryCareerSignals[id].test(character.description || ""));
   if (primaryCareerMatches.length) {
-    if (character.knownAttributes) character.knownAttributes = [...new Set([...character.knownAttributes, ...primaryCareerRoots])];
+    if (character.knownAttributes) character.knownAttributes = [...new Set([...character.knownAttributes, ...primaryCareerMatches])];
     for (const id of primaryCareerMatches) character.attributes[id] = 1;
     for (const id of primaryCareerRoots) {
-      if (!primaryCareerMatches.includes(id) && !knownProfiles.get(character.name)?.includes(id)) character.attributes[id] = -1;
+      if (!primaryCareerMatches.includes(id) && !knownProfiles.get(character.name)?.includes(id)) character.attributes[id] = 0;
     }
   }
 
@@ -442,18 +442,18 @@ export function enrichCharacterAttributes(character) {
   const explicitlyActor = /actor|actress|schauspiel|darsteller/i.test(character.description || "");
   // Occupation lists contain many side jobs. Root questions ask what someone is
   // known for, therefore the primary description wins over a secondary credit.
-  if (character.attributes.actor === 1 && !explicitlyActor && primaryCareerMatches.length) character.attributes.actor = -1;
+  if (character.attributes.actor === 1 && !explicitlyActor && primaryCareerMatches.length) character.attributes.actor = 0;
   const explicitlyCreator = /youtuber|streamer|influencer|content creator|social media personality|internet personality|webvideoproduzent|livestreamer|tiktoker|vlogger/i.test(character.description || "")
     || knownProfiles.get(character.name)?.some((id) => ["creator","streamer","youtuber","tiktoker"].includes(id));
-  if (character.attributes.creator === 1 && !explicitlyCreator && primaryCareerMatches.length) character.attributes.creator = -1;
+  if (character.attributes.creator === 1 && !explicitlyCreator && primaryCareerMatches.length) character.attributes.creator = 0;
   const primaryStreamer = character.attributes.streamer === 1;
-  if (primaryStreamer && !explicitlyActor) character.attributes.actor = -1;
+  if (primaryStreamer && !explicitlyActor) character.attributes.actor = 0;
   if (primaryStreamer && !/musician|music|singer|songwriter|rapper|musiker|sänger/i.test(character.description || "")) {
-    character.attributes.musician = -1;
-    character.attributes.rapper = -1;
+    character.attributes.musician = 0;
+    character.attributes.rapper = 0;
   }
   if (character.attributes.musician === 1 && character.attributes.singer === 0
-      && !/musician|composer|songwriter|rapper|music|musiker|komponist|sänger|rapper/i.test(text)) character.attributes.musician = -1;
+      && !/musician|composer|songwriter|rapper|music|musiker|komponist|sänger|rapper/i.test(text)) character.attributes.musician = 0;
   if (character.attributes.singer === 1) {
     character.attributes.musician = 1;
     for (const id of singerDetails) character.attributes[id] ??= -1;

@@ -101,11 +101,12 @@ async function attachExistingCommonsMetadata(records) {
     for (const { record, file } of batch) {
       const candidate = commonsCandidate(pages.get(normalize(file)));
       if (candidate) Object.assign(record, candidate);
+      else if (args['verified-only'] === 'true') { record.image='';delete record.imageAttribution; }
     }
       if (batchCursor % 50 === 0) process.stdout.write(`\rCommons credits: ${Math.min(batchCursor, batches.length)}/${batches.length}`);
     }
   }
-  await Promise.all(Array.from({ length:12 }, metadataWorker));
+  await Promise.all(Array.from({ length:Number(args['metadata-concurrency'] || 4) }, metadataWorker));
   process.stdout.write("\n");
 }
 
@@ -170,10 +171,20 @@ async function openverseSearch(record) {
 const database = JSON.parse(await readFile(databaseUrl, "utf8"));
 const cache = await readCache();
 cache.commonsDepicts ||= {}; cache.commonsSearch ||= {}; cache.openverse ||= {};
-const records = database.characters.slice(0, recordLimit);
+let selected=database.characters;
+if(args['only-new']==='true') {
+  const {execFileSync}=await import('node:child_process');
+  const baseline=new Set(JSON.parse(execFileSync('git',['show','HEAD:wikidata-people.json'],{maxBuffer:50*1024*1024}).toString()).characters.map(person=>person.id));
+  selected=selected.filter(person=>!baseline.has(person.id));
+}
+const records = selected.slice(0, recordLimit);
 removeUnsafeFallbacks(records, cache);
 await attachExistingCommonsMetadata(records);
 await writeFile(databaseUrl, `${JSON.stringify(database)}\n`);
+if(args['metadata-only']==='true') {
+  console.log('Checked portrait licenses:',records.length,'profiles;',records.filter(person=>person.imageAttribution).length,'attributed portraits.');
+  process.exit(0);
+}
 
 let addedCommons = 0;
 const missing = records.filter((record) => !record.image).sort((a,b) => (b.popularity || 0) - (a.popularity || 0));

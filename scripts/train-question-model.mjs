@@ -1,22 +1,16 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { questions, characters as curated } from "../data.js";
-import { enrichCharacterAttributes } from "../attribute-enrichment.js";
-import { topicBranches } from "../engine.js";
-import { trainAnswerModel, predictAnswer, inDomain } from "../answer-model.js";
+import { topicBranches, GuessEngine } from "../engine.js";
+import { trainAnswerModel, predictAnswer, inDomain, isImplicitNegative } from "../answer-model.js";
 
 const database = JSON.parse(await readFile(new URL("../wikidata-people.json", import.meta.url), "utf8"));
-const byName = new Map(curated.map((item) => [item.name.toLocaleLowerCase(), { ...item, attributes:{ ...item.attributes } }]));
-for (const item of database.characters) {
-  const key = item.name.toLocaleLowerCase();
-  const existing = byName.get(key);
-  if (!existing) byName.set(key, item);
-  else for (const [id, value] of Object.entries(item.attributes || {})) if (value === 1) existing.attributes[id] = 1;
-}
-const characters = [...byName.values()].map(enrichCharacterAttributes);
+const knowledge=new GuessEngine(structuredClone(curated),questions);
+knowledge.addDatabase(database);knowledge.refreshGeneratedQuestions();
+const characters = knowledge.characters;
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const weights = {};
 for (const { id } of questions) {
-  const values = characters.map((item) => item.attributes[id] ?? 0).filter((value) => Math.abs(value) >= .5);
+  const values = characters.map((item) => isImplicitNegative(item,id) ? 0 : item.attributes[id] ?? 0).filter((value) => Math.abs(value) >= .5);
   const yes = values.filter((value) => value > 0).length;
   const no = values.length - yes;
   const coverage = values.length / characters.length;
@@ -33,7 +27,7 @@ for (const [root, children] of topicBranches) {
   if (branchCharacters.length < 2) continue;
   branchWeights[root] = {};
   for (const { id } of questions) {
-    const values = branchCharacters.map((item) => item.attributes[id] ?? 0).filter((value) => Math.abs(value) >= .5);
+    const values = branchCharacters.map((item) => isImplicitNegative(item,id) ? 0 : item.attributes[id] ?? 0).filter((value) => Math.abs(value) >= .5);
     const yes = values.filter((value) => value > 0).length;
     const no = values.length - yes;
     const coverage = values.length / branchCharacters.length;
@@ -83,7 +77,7 @@ for (const id of geography) domains[id] = "public";
 for (const id of ["movie","tv","book","space","electric","royalty"]) delete domains[id];
 // Legacy profiles contain default -1 entries. These are not supervised labels.
 const safeNegativeIds = new Set(["real", "fictional", "alive", "female", ...geography]);
-const supervised = characters.map((person) => ({ ...person, attributes:Object.fromEntries(Object.entries(person.attributes).map(([id, value]) => [id, value < 0 && !safeNegativeIds.has(id) && !person.knownAttributes?.includes(id) ? 0 : value])) }));
+const supervised = characters.map((person) => ({ ...person, attributes:Object.fromEntries(Object.entries(person.attributes).map(([id, value]) => [id, isImplicitNegative(person,id) || value < 0 && !safeNegativeIds.has(id) && !person.knownAttributes?.includes(id) ? 0 : value])) }));
 const validationPeople = supervised.filter((_, index) => index % 5 === 0);
 const trainingPeople = supervised.filter((_, index) => index % 5 !== 0);
 const validationModel = trainAnswerModel(trainingPeople, ids, domains);

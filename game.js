@@ -1,11 +1,11 @@
-import { characters, questions } from "./data.js?v=27";
-import { GuessEngine } from "./engine.js?v=27";
+import { characters, questions } from "./data.js?v=28";
+import { GuessEngine } from "./engine.js?v=28";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=27";
-import { questionModel } from "./question-model.js?v=27";
-import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=27";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=27";
-import { LocalQuestionAI } from './llm-questions.js?v=27';
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=28";
+import { questionModel } from "./question-model.js?v=28";
+import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=28";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=28";
+import { LocalQuestionAI } from './llm-questions.js?v=28';
 
 const translations = {
   en: {
@@ -19,7 +19,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 27;
+const buildVersion = 28;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -81,7 +81,7 @@ function aiError(error,questionStage = false) {
 }
 
 function questionText(question) {
-  return contextualQuestionText(question, language, engine.isRealPerson());
+  return contextualQuestionText(question, language, engine.subjectKind());
 }
 
 function renderQuestion(question) {
@@ -410,7 +410,7 @@ async function loadKnowledgeBase() {
     const response = await fetch(`wikidata-people.json?v=${buildVersion}`, { signal:controller.signal });
     if (!response.ok) throw new Error("Knowledge base unavailable");
     const database = await response.json();
-    for (const character of database.characters || []) engine.addCharacter(character);
+    engine.addDatabase(database);
   } catch (error) {
     console.info("Using the compact offline knowledge base.", error);
   } finally {

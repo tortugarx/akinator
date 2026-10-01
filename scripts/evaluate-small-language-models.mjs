@@ -25,7 +25,7 @@ for (const candidate of candidates) {
   let accepted = 0;
   for (const answers of scenarios) {
     const engine = new GuessEngine(structuredClone(characters),questions,questionModel);
-    for (const person of database.characters) engine.addCharacter(structuredClone(person));
+    engine.addDatabase(database);
     for (const [id,value] of answers) engine.answer(id,value);
     const context = await engine.aiQuestionContext('de');
     const meaning = context.features[0].meaning;

@@ -3190,12 +3190,12 @@ export const featureSchema = [
     "de": [
       "Ist",
       "diese Person",
-      "hauptsächlich als Abgeordneter bekannt"
+      "Mitglied eines Parlaments oder war sie das früher"
     ],
     "en": [
       "Is",
       "this person",
-      "mainly known as a member of parliament or congress"
+      "a member of parliament or congress, or was this person one previously"
     ]
   },
   {

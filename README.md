@@ -2,7 +2,45 @@
 
 Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine kuratierte Wissensbasis mit einer vorab erzeugten Wikidata-Datenbank, einer lokalen Active-Learning-Engine und einem Lernmodus, der bestätigte Figuren im Browser speichert.
 
-## Aktuelles lokales Sprachmodell (Version 27)
+## Fragen- und Profilrevision (Version 28)
+
+Das Ja/Nein-Spiel bleibt erhalten. Die Engine bevorzugt am Anfang leicht
+beantwortbare, breit trennende Merkmale und bewertet anschließend den
+Informationsgewinn innerhalb der verbleibenden Kandidaten. Nachgewiesene
+Wiki-Aussagen erzeugen konkrete Fragen zu Parteien, Ämtern, Sportvereinen,
+Spielpositionen, Bands, Genres, Instrumenten, Musiklabels, Werken, Universen,
+Fachgebieten, Arbeitgebern und Ausbildungsstätten. Geburtsorte sind eine
+niedrig priorisierte Detailhilfe, keine Geburtsdatums- oder Buchstabenfragen.
+
+Fehlende Angaben sind unbekannt, nicht Nein. Das gilt auch im Training.
+Unbekannter Lebensstatus kann kein seltenes Themen-Ankermerkmal mehr werden.
+Für Treffer sind mindestens 90 % modellinterne Kandidatenwahrscheinlichkeit,
+ein Verhältnis von 9:1 zum nächsten Kandidaten und widerspruchsfreie bekannte
+Antworten nötig. Identische beobachtbare Profile werden nicht durch Popularität
+scheinbar gelöst. Diese Werte sind **keine garantierte reale Trefferquote**.
+
+Alle Wiki-Profile werden mit einem wiederaufnehmbaren Build-Schritt geprüft.
+Gemeinsam genutzte Merkmalsbezeichnungen liegen einmal im Datenwörterbuch;
+Quellen für einzelne Zuordnungen sind die Wikidata-Profil-URL plus die
+Eigenschafts-ID. Neue Figuren werden zusätzlich aus Wikipedia-Kategorien
+verschiedener Franchises importiert. Bilder stammen aus Wikidata/Commons;
+vor Veröffentlichung neuer Bilder werden Lizenz und Urheber geprüft. Keine
+pauschale Übernahme urheberrechtlich geschützter Fandom-Bilder.
+
+```bash
+npm run enrich:profiles
+npm run train:model
+npm run audit:profiles
+```
+
+Der vollständige Audit einschließlich noch nicht unterscheidbarer Gruppen
+steht in [reports/profile-audit.json](reports/profile-audit.json).
+Nicht jede Datenlücke ist gelöst; der Audit ist keine Behauptung, dass alle
+Profile individuell manuell recherchiert oder alle Spielverläufe getestet wurden.
+Belegte Erkenntnisse zu Limule und die Grenzen des Nachbaus:
+[reports/limule-research.md](reports/limule-research.md).
+
+## Aktuelles lokales Sprachmodell
 
 Die aktive KI ist **Gemma 3 270M IT QAT Q4_0**, nicht mehr Qwen/ONNX. Die gepinnten GGUF-Gewichte umfassen 241.410.624 Bytes und werden als statische Datei von Hugging Face geladen. Ein Worker prüft und speichert 24-MiB-Teile mit SHA256 und übergibt einen Blob an wllama 3.6.1. Es gibt keine serverseitige Inferenz. CPU-Ausführung mit einem Thread, ohne WebGPU-, FP16-, SharedArrayBuffer- oder Cross-Origin-Isolation-Pflicht; Safari erhält die kompatible WASM-Laufzeit. Der alte 1,22-GB-Download wird nicht mehr gestartet. Vorhandene alte Modell-Caches werden nicht automatisch gelöscht, enthalten aber nicht die neuen Gewichte.
 

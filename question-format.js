@@ -3,22 +3,22 @@ const highlightTerms = {
   en:["adult-film", "adult content", "social commentary", "computer science", "singer-songwriter", "science fiction", "League of Legends", "technology company", "American football", "German-speaking", "Just Chatting", "battle-royale", "entertainment", "social media", "livestreaming", "journalism", "engineering", "manufacturing", "acting", "science", "basketball", "motorsport", "Minecraft", "OnlyFans", "Bollywood", "industry", "football", "esports", "YouTube", "Twitch", "TikTok", "internet", "politics", "military", "medicine", "courts", "religious", "pop music", "Latin music", "K-pop", "R&B", "soul", "jazz", "opera", "reggae", "metal", "rock", "gaming", "music", "tennis", "movies", "law", "magic"]
 };
 
-export function contextualQuestionText(question, language, isPerson) {
+export function contextualQuestionText(question, language, kind) {
+  const person = kind === true || kind === 'person';
+  const fictional = kind === false || kind === 'fictional';
   const text = question[language];
-  if (!isPerson) return text;
-  if (language === "de") return text
-    .replaceAll("deine Figur oder Person", "diese Person")
-    .replaceAll("deine Figur", "diese Person")
-    .replaceAll("deiner Figur", "dieser Person")
-    .replaceAll("Figur", "Person");
-  return text
-    .replaceAll("your character or person", "this person")
-    .replaceAll("your character", "this person")
-    .replaceAll("character", "person");
+  if (language === 'de') {
+    const noun = person ? 'Person' : fictional ? 'Figur' : 'Person oder Figur';
+    return text
+      .replace(/\b(deine|deiner|diese|dieser) (?:Figur(?: oder Person)?|Person(?: oder Figur)?)/g,(_,pronoun)=>(pronoun.endsWith('r') ? 'dieser ' : 'diese ')+noun);
+  }
+  const noun = person ? 'person' : fictional ? 'character' : 'person or character';
+  return text.replace(/\b(?:your|this) (?:character(?: or person)?|person(?: or character)?)/g,'this '+noun);
 }
 
 export function highlightedQuestionHtml(text, language) {
-  const terms = highlightTerms[language].map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).sort((a,b) => b.length - a.length);
+  const specific=language==='de' ? ['Auszeichnung','Partei','Sportverein','Position','Fachgebiet','Label','Konflikt','Universum','Instrument','Band'] : ['award','party','sports team','position','field','label','conflict','universe','instrument','band'];
+  const terms = [...highlightTerms[language],...specific].map((term) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).sort((a,b) => b.length - a.length);
   return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-    .replace(new RegExp(`(${terms.join("|")})`, "giu"), "<mark>$1</mark>");
+    .replace(new RegExp(`(„[^“]+“|“[^”]+”|${terms.join("|")})`, "giu"), "<mark>$1</mark>");
 }

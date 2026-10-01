@@ -4,9 +4,10 @@ export function normalizeCharacterName(value) {
 
 export function findLocalKnowledge(name, characters) {
   const normalized = normalizeCharacterName(name);
-  const exact = characters.find((item) => normalizeCharacterName(item.name) === normalized);
-  const partial = normalized.length >= 4 ? characters.filter((item) => normalizeCharacterName(item.name).includes(normalized)) : [];
-  const match = exact || (partial.length === 1 ? partial[0] : null);
+  const names=item=>[item.name,...(item.aliases||[])].map(normalizeCharacterName);
+  const exact = characters.filter((item) => names(item).includes(normalized));
+  const partial = normalized.length >= 4 ? characters.filter((item) => names(item).some(value=>value.includes(normalized))) : [];
+  const match = exact.length===1 ? exact[0] : exact.length ? null : partial.length===1 ? partial[0] : null;
   if (!match) return { matched:false, verified:false, name, description:"", attributes:{} };
   return {
     matched:true,

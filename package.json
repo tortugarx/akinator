@@ -11,6 +11,8 @@
     "test": "node --test",
     "build:wikidata": "node scripts/build-wikidata-dataset.mjs && node scripts/train-question-model.mjs",
     "enrich:images": "node scripts/enrich-person-images.mjs",
+    "enrich:profiles": "node scripts/enrich-profile-facts.mjs",
+    "audit:profiles": "node scripts/audit-profiles.mjs",
     "train:model": "node scripts/train-question-model.mjs",
     "build:crazygames": "node scripts/build-crazygames.mjs"
   },

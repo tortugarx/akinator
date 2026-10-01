@@ -1,0 +1,7458 @@
+{
+  "summary": {
+    "profiles": 19495,
+    "withImages": 15251,
+    "questions": 48687,
+    "structuredQuestions": 48369,
+    "duplicateIds": 0,
+    "indistinguishableGroups": 279,
+    "indistinguishableProfiles": 1146,
+    "distinctProfiles": 18349,
+    "enrichment": {
+      "checked": 19319,
+      "total": 19319,
+      "withFacts": 18857,
+      "facts": 144227,
+      "updated": "2026-10-01T20:19:05.793Z",
+      "unresolved": 0,
+      "unresolvedLabels": 8
+    }
+  },
+  "duplicates": [],
+  "unresolved": [
+    [
+      {
+        "id": "wiki-q17159535",
+        "name": "Hiroya Shimizu",
+        "source": "https://www.wikidata.org/wiki/Q17159535",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11560929",
+        "name": "Naoya Shimizu",
+        "source": "https://www.wikidata.org/wiki/Q11560929",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q60986837",
+        "name": "Kenshin Endo",
+        "source": "https://www.wikidata.org/wiki/Q60986837",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q74146604",
+        "name": "Ryōta Bandō",
+        "source": "https://www.wikidata.org/wiki/Q74146604",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q50286752",
+        "name": "Kanichiro Sato",
+        "source": "https://www.wikidata.org/wiki/Q50286752",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q56350130",
+        "name": "Kanata Hosoda",
+        "source": "https://www.wikidata.org/wiki/Q56350130",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11428947",
+        "name": "Akihisa Shiono",
+        "source": "https://www.wikidata.org/wiki/Q11428947",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6389331",
+        "name": "Kenji Haga",
+        "source": "https://www.wikidata.org/wiki/Q6389331",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q61058153",
+        "name": "Himi Satō",
+        "source": "https://www.wikidata.org/wiki/Q61058153",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q60168025",
+        "name": "Koshi Mizukami",
+        "source": "https://www.wikidata.org/wiki/Q60168025",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q122364672",
+        "name": "Doramu Tomisakae",
+        "source": "https://www.wikidata.org/wiki/Q122364672",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16263572",
+        "name": "Yuzu Aoki",
+        "source": "https://www.wikidata.org/wiki/Q16263572",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q16264929",
+        "name": "Amane Okayama",
+        "source": "https://www.wikidata.org/wiki/Q16264929",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11572764",
+        "name": "Reo Tamaoki",
+        "source": "https://www.wikidata.org/wiki/Q11572764",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q56808740",
+        "name": "Rihito Itagaki",
+        "source": "https://www.wikidata.org/wiki/Q56808740",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q97621454",
+        "name": "Kohei Shoji",
+        "source": "https://www.wikidata.org/wiki/Q97621454",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q101199996",
+        "name": "Daiken Okudaira",
+        "source": "https://www.wikidata.org/wiki/Q101199996",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q113565725",
+        "name": "Kota Nomura",
+        "source": "https://www.wikidata.org/wiki/Q113565725",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11632755",
+        "name": "Masashi Taniguchi",
+        "source": "https://www.wikidata.org/wiki/Q11632755",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q124097290",
+        "name": "Manato Sakamoto",
+        "source": "https://www.wikidata.org/wiki/Q124097290",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q21018833",
+        "name": "Ryō Iwata",
+        "source": "https://www.wikidata.org/wiki/Q21018833",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2096624",
+        "name": "Ryo Ryusei",
+        "source": "https://www.wikidata.org/wiki/Q2096624",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q105261866",
+        "name": "Noritaka Hamao",
+        "source": "https://www.wikidata.org/wiki/Q105261866",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q110403741",
+        "name": "Airu Kubozuka",
+        "source": "https://www.wikidata.org/wiki/Q110403741",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q1153178",
+        "name": "Shōsuke Tanihara",
+        "source": "https://www.wikidata.org/wiki/Q1153178",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q60989811",
+        "name": "鈴鹿央士",
+        "source": "https://www.wikidata.org/wiki/Q60989811",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q64783627",
+        "name": "Yūki Inoue",
+        "source": "https://www.wikidata.org/wiki/Q64783627",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q126006246",
+        "name": "Naohiro Yamamoto",
+        "source": "https://www.wikidata.org/wiki/Q126006246",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q79018757",
+        "name": "Yūki Kura",
+        "source": "https://www.wikidata.org/wiki/Q79018757",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q123405494",
+        "name": "Yamato Kouchi",
+        "source": "https://www.wikidata.org/wiki/Q123405494",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q68185014",
+        "name": "Nakamura Hashinosuke IV",
+        "source": "https://www.wikidata.org/wiki/Q68185014",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q111113543",
+        "name": "Hayato Takenaka",
+        "source": "https://www.wikidata.org/wiki/Q111113543",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q22044079",
+        "name": "Kentaro Ito",
+        "source": "https://www.wikidata.org/wiki/Q22044079",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q102246948",
+        "name": "Sōma Santoki",
+        "source": "https://www.wikidata.org/wiki/Q102246948",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11454567",
+        "name": "Shūto Miyazaki",
+        "source": "https://www.wikidata.org/wiki/Q11454567",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11482314",
+        "name": "Kinari Hirano",
+        "source": "https://www.wikidata.org/wiki/Q11482314",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q116734954",
+        "name": "Iori Wada",
+        "source": "https://www.wikidata.org/wiki/Q116734954",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11579999",
+        "name": "Jin Shirasu",
+        "source": "https://www.wikidata.org/wiki/Q11579999",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q56348918",
+        "name": "Keisuke Watanabe",
+        "source": "https://www.wikidata.org/wiki/Q56348918",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q98757926",
+        "name": "Ryōta Miura",
+        "source": "https://www.wikidata.org/wiki/Q98757926",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16264273",
+        "name": "Hajime Inoue",
+        "source": "https://www.wikidata.org/wiki/Q16264273",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q113566627",
+        "name": "Kyōhei Shimokawa",
+        "source": "https://www.wikidata.org/wiki/Q113566627",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11366072",
+        "name": "Hayato Nakamura",
+        "source": "https://www.wikidata.org/wiki/Q11366072",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11352676",
+        "name": "Ikkei",
+        "source": "https://www.wikidata.org/wiki/Q11352676",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17226206",
+        "name": "Ren Nagase",
+        "source": "https://www.wikidata.org/wiki/Q17226206",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11365336",
+        "name": "Nakamura Kotaro VI",
+        "source": "https://www.wikidata.org/wiki/Q11365336",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11364312",
+        "name": "Masei Nakayama",
+        "source": "https://www.wikidata.org/wiki/Q11364312",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11467403",
+        "name": "Yoshiyuki Yamaguchi",
+        "source": "https://www.wikidata.org/wiki/Q11467403",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q872110",
+        "name": "Kento Nagayama",
+        "source": "https://www.wikidata.org/wiki/Q872110",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q24867744",
+        "name": "Kaito Yoshimura",
+        "source": "https://www.wikidata.org/wiki/Q24867744",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11362824",
+        "name": "Masami Nakagami",
+        "source": "https://www.wikidata.org/wiki/Q11362824",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q124097033",
+        "name": "Toranosuke Kobayashi",
+        "source": "https://www.wikidata.org/wiki/Q124097033",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q30928219",
+        "name": "Sōya Igari",
+        "source": "https://www.wikidata.org/wiki/Q30928219",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11470598",
+        "name": "Jundai Yamada",
+        "source": "https://www.wikidata.org/wiki/Q11470598",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17212797",
+        "name": "Shun Mitamura",
+        "source": "https://www.wikidata.org/wiki/Q17212797",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q22129482",
+        "name": "Ayumu Mochizuki",
+        "source": "https://www.wikidata.org/wiki/Q22129482",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3147664",
+        "name": "Itikawa",
+        "source": "https://www.wikidata.org/wiki/Q3147664",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11462356",
+        "name": "Hitoshi Ozawa",
+        "source": "https://www.wikidata.org/wiki/Q11462356",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q113632659",
+        "name": "Yūsuke Takemoto",
+        "source": "https://www.wikidata.org/wiki/Q113632659",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q123405170",
+        "name": "Yoji Iwase",
+        "source": "https://www.wikidata.org/wiki/Q123405170",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q6960239",
+        "name": "Nakamura Umemaru",
+        "source": "https://www.wikidata.org/wiki/Q6960239",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q74146589",
+        "name": "Ryūya Shimekake",
+        "source": "https://www.wikidata.org/wiki/Q74146589",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q17598074",
+        "name": "Riku Ohnishi",
+        "source": "https://www.wikidata.org/wiki/Q17598074",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q43425338",
+        "name": "Fūju Kamio",
+        "source": "https://www.wikidata.org/wiki/Q43425338",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11462728",
+        "name": "Mikio Ozawa",
+        "source": "https://www.wikidata.org/wiki/Q11462728",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2274942",
+        "name": "Prowler",
+        "source": "https://www.wikidata.org/wiki/Q2274942",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q4783369",
+        "name": "Arabian Knight",
+        "source": "https://www.wikidata.org/wiki/Q4783369",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7334071",
+        "name": "Rikki Barnes",
+        "source": "https://www.wikidata.org/wiki/Q7334071",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4929083",
+        "name": "Blue Eagle",
+        "source": "https://www.wikidata.org/wiki/Q4929083",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4921594",
+        "name": "Black Rider",
+        "source": "https://www.wikidata.org/wiki/Q4921594",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4915814",
+        "name": "Bird-Brain",
+        "source": "https://www.wikidata.org/wiki/Q4915814",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4921080",
+        "name": "Black Jack Tarr",
+        "source": "https://www.wikidata.org/wiki/Q4921080",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4986067",
+        "name": "Bug",
+        "source": "https://www.wikidata.org/wiki/Q4986067",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16828778",
+        "name": "Cammi",
+        "source": "https://www.wikidata.org/wiki/Q16828778",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16987999",
+        "name": "Breeze Barton",
+        "source": "https://www.wikidata.org/wiki/Q16987999",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2973579",
+        "name": "Captain Universe",
+        "source": "https://www.wikidata.org/wiki/Q2973579",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4135919",
+        "name": "Coldblood",
+        "source": "https://www.wikidata.org/wiki/Q4135919",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5185846",
+        "name": "Crippler",
+        "source": "https://www.wikidata.org/wiki/Q5185846",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5036732",
+        "name": "Captain Midlands",
+        "source": "https://www.wikidata.org/wiki/Q5036732",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1869290",
+        "name": "Dusk",
+        "source": "https://www.wikidata.org/wiki/Q1869290",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3707609",
+        "name": "Digitek",
+        "source": "https://www.wikidata.org/wiki/Q3707609",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5305233",
+        "name": "Dragon Lord",
+        "source": "https://www.wikidata.org/wiki/Q5305233",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5266016",
+        "name": "Detroit Steel",
+        "source": "https://www.wikidata.org/wiki/Q5266016",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16993964",
+        "name": "Delroy Garrett",
+        "source": "https://www.wikidata.org/wiki/Q16993964",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5467422",
+        "name": "Force",
+        "source": "https://www.wikidata.org/wiki/Q5467422",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q12964384",
+        "name": "Guardsman",
+        "source": "https://www.wikidata.org/wiki/Q12964384",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3546467",
+        "name": "Golem",
+        "source": "https://www.wikidata.org/wiki/Q3546467",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3099457",
+        "name": "Gauntlet",
+        "source": "https://www.wikidata.org/wiki/Q3099457",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5267302",
+        "name": "Devil Hulk",
+        "source": "https://www.wikidata.org/wiki/Q5267302",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2053102",
+        "name": "Hornet",
+        "source": "https://www.wikidata.org/wiki/Q2053102",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3549256",
+        "name": "Hulk 2099",
+        "source": "https://www.wikidata.org/wiki/Q3549256",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5706247",
+        "name": "Helix",
+        "source": "https://www.wikidata.org/wiki/Q5706247",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1858350",
+        "name": "Inhumans",
+        "source": "https://www.wikidata.org/wiki/Q1858350",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3546595",
+        "name": "Kid Colt",
+        "source": "https://www.wikidata.org/wiki/Q3546595",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q13512249",
+        "name": "Killpower",
+        "source": "https://www.wikidata.org/wiki/Q13512249",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16253735",
+        "name": "Magician",
+        "source": "https://www.wikidata.org/wiki/Q16253735",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3280860",
+        "name": "Makkari",
+        "source": "https://www.wikidata.org/wiki/Q3280860",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3877909",
+        "name": "Nomad",
+        "source": "https://www.wikidata.org/wiki/Q3877909",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3876793",
+        "name": "Nightmask",
+        "source": "https://www.wikidata.org/wiki/Q3876793",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6918346",
+        "name": "Motormouth",
+        "source": "https://www.wikidata.org/wiki/Q6918346",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3930550",
+        "name": "Ravage 2099",
+        "source": "https://www.wikidata.org/wiki/Q3930550",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q253251",
+        "name": "Ronin",
+        "source": "https://www.wikidata.org/wiki/Q253251",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3422805",
+        "name": "Red Wolf",
+        "source": "https://www.wikidata.org/wiki/Q3422805",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3929460",
+        "name": "Scarlet Spider",
+        "source": "https://www.wikidata.org/wiki/Q3929460",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7435377",
+        "name": "Scorpio",
+        "source": "https://www.wikidata.org/wiki/Q7435377",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7536965",
+        "name": "Skull the Slayer",
+        "source": "https://www.wikidata.org/wiki/Q7536965",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3964376",
+        "name": "Solo",
+        "source": "https://www.wikidata.org/wiki/Q3964376",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7430450",
+        "name": "Scarlet Scarab",
+        "source": "https://www.wikidata.org/wiki/Q7430450",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1172691",
+        "name": "Freedom Force",
+        "source": "https://www.wikidata.org/wiki/Q1172691",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3497149",
+        "name": "Starhawk",
+        "source": "https://www.wikidata.org/wiki/Q3497149",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7622370",
+        "name": "Straw Man",
+        "source": "https://www.wikidata.org/wiki/Q7622370",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7602237",
+        "name": "Starr the Slayer",
+        "source": "https://www.wikidata.org/wiki/Q7602237",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7853799",
+        "name": "Turbo",
+        "source": "https://www.wikidata.org/wiki/Q7853799",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7784269",
+        "name": "Thin Man",
+        "source": "https://www.wikidata.org/wiki/Q7784269",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7860927",
+        "name": "Typeface",
+        "source": "https://www.wikidata.org/wiki/Q7860927",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7799130",
+        "name": "Thunderclap",
+        "source": "https://www.wikidata.org/wiki/Q7799130",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7799111",
+        "name": "Thunderbolt",
+        "source": "https://www.wikidata.org/wiki/Q7799111",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2245206",
+        "name": "Power Pack",
+        "source": "https://www.wikidata.org/wiki/Q2245206",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q8028382",
+        "name": "Witness",
+        "source": "https://www.wikidata.org/wiki/Q8028382",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4024681",
+        "name": "Zombie",
+        "source": "https://www.wikidata.org/wiki/Q4024681",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1132395",
+        "name": "Spider-Slayer",
+        "source": "https://www.wikidata.org/wiki/Q1132395",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q77810839",
+        "name": "Akari Takaishi",
+        "source": "https://www.wikidata.org/wiki/Q77810839",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q97674203",
+        "name": "Yu Miyazaki",
+        "source": "https://www.wikidata.org/wiki/Q97674203",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q67498337",
+        "name": "Misato Morita",
+        "source": "https://www.wikidata.org/wiki/Q67498337",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q84467057",
+        "name": "Ai Mikami",
+        "source": "https://www.wikidata.org/wiki/Q84467057",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11388967",
+        "name": "Miki Irie",
+        "source": "https://www.wikidata.org/wiki/Q11388967",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11673081",
+        "name": "Shiho Takano",
+        "source": "https://www.wikidata.org/wiki/Q11673081",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11410046",
+        "name": "Nanoka Hara",
+        "source": "https://www.wikidata.org/wiki/Q11410046",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11636727",
+        "name": "Shuri",
+        "source": "https://www.wikidata.org/wiki/Q11636727",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q9014239",
+        "name": "Aimi Nakamura",
+        "source": "https://www.wikidata.org/wiki/Q9014239",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q30933359",
+        "name": "Kana Kita",
+        "source": "https://www.wikidata.org/wiki/Q30933359",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q124097436",
+        "name": "Myū Moriyama",
+        "source": "https://www.wikidata.org/wiki/Q124097436",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q66828443",
+        "name": "Yui Narumi",
+        "source": "https://www.wikidata.org/wiki/Q66828443",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q1074012",
+        "name": "Marika Matsumoto",
+        "source": "https://www.wikidata.org/wiki/Q1074012",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q76288611",
+        "name": "Tamaki Shiratori",
+        "source": "https://www.wikidata.org/wiki/Q76288611",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q14915318",
+        "name": "Miwako Kakei",
+        "source": "https://www.wikidata.org/wiki/Q14915318",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11529965",
+        "name": "Izumi Matsuoka",
+        "source": "https://www.wikidata.org/wiki/Q11529965",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q30930990",
+        "name": "加藤小夏",
+        "source": "https://www.wikidata.org/wiki/Q30930990",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q24866076",
+        "name": "Honoka Matsumoto",
+        "source": "https://www.wikidata.org/wiki/Q24866076",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11464250",
+        "name": "Karin Ono",
+        "source": "https://www.wikidata.org/wiki/Q11464250",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11496977",
+        "name": "Satomi Tezuka",
+        "source": "https://www.wikidata.org/wiki/Q11496977",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3545441",
+        "name": "Ryoko Kobayashi",
+        "source": "https://www.wikidata.org/wiki/Q3545441",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11492219",
+        "name": "Yuri Tsunematsu",
+        "source": "https://www.wikidata.org/wiki/Q11492219",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11453159",
+        "name": "Kyōko Miyashita",
+        "source": "https://www.wikidata.org/wiki/Q11453159",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q115529788",
+        "name": "Rin Kataoka",
+        "source": "https://www.wikidata.org/wiki/Q115529788",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11586704",
+        "name": "Natsumi Ishibashi",
+        "source": "https://www.wikidata.org/wiki/Q11586704",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11636013",
+        "name": "Mariko Akama",
+        "source": "https://www.wikidata.org/wiki/Q11636013",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q60230264",
+        "name": "Yūka Kouri",
+        "source": "https://www.wikidata.org/wiki/Q60230264",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11535833",
+        "name": "Koharu Sakai",
+        "source": "https://www.wikidata.org/wiki/Q11535833",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4207320",
+        "name": "Rino Katase",
+        "source": "https://www.wikidata.org/wiki/Q4207320",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q38276052",
+        "name": "Mayu Kanakubo",
+        "source": "https://www.wikidata.org/wiki/Q38276052",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11627128",
+        "name": "Yūko Nishimaru",
+        "source": "https://www.wikidata.org/wiki/Q11627128",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4390350",
+        "name": "Tomoka Kurotani",
+        "source": "https://www.wikidata.org/wiki/Q4390350",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q24873434",
+        "name": "Midori Suiren",
+        "source": "https://www.wikidata.org/wiki/Q24873434",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3543465",
+        "name": "Yuriko Hishimi",
+        "source": "https://www.wikidata.org/wiki/Q3543465",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11597034",
+        "name": "Honoka Ishibashi",
+        "source": "https://www.wikidata.org/wiki/Q11597034",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q20041326",
+        "name": "Sora Tamaki",
+        "source": "https://www.wikidata.org/wiki/Q20041326",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3549585",
+        "name": "Anna Umemiya",
+        "source": "https://www.wikidata.org/wiki/Q3549585",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11547696",
+        "name": "Ikuko Mōri",
+        "source": "https://www.wikidata.org/wiki/Q11547696",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11634738",
+        "name": "Ryōko Takakura",
+        "source": "https://www.wikidata.org/wiki/Q11634738",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11548832",
+        "name": "Aki Mizusawa",
+        "source": "https://www.wikidata.org/wiki/Q11548832",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5368648",
+        "name": "Karen Miyama",
+        "source": "https://www.wikidata.org/wiki/Q5368648",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q28690264",
+        "name": "Kokoro Aoshima",
+        "source": "https://www.wikidata.org/wiki/Q28690264",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q38279017",
+        "name": "Momoko Fukuchi",
+        "source": "https://www.wikidata.org/wiki/Q38279017",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q76283337",
+        "name": "Riko Nagase",
+        "source": "https://www.wikidata.org/wiki/Q76283337",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11383270",
+        "name": "Aimi Satsukawa",
+        "source": "https://www.wikidata.org/wiki/Q11383270",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3616077",
+        "name": "Fūka Haruna",
+        "source": "https://www.wikidata.org/wiki/Q3616077",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1114127",
+        "name": "Minami Hinase",
+        "source": "https://www.wikidata.org/wiki/Q1114127",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q60988370",
+        "name": "Nagi Hasegawa",
+        "source": "https://www.wikidata.org/wiki/Q60988370",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11463891",
+        "name": "Yuriko Ono",
+        "source": "https://www.wikidata.org/wiki/Q11463891",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1394575",
+        "name": "Skaar",
+        "source": "https://www.wikidata.org/wiki/Q1394575",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1054789",
+        "name": "Agent X",
+        "source": "https://www.wikidata.org/wiki/Q1054789",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1168463",
+        "name": "Battlestar",
+        "source": "https://www.wikidata.org/wiki/Q1168463",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2906321",
+        "name": "Blazing Skull",
+        "source": "https://www.wikidata.org/wiki/Q2906321",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4955758",
+        "name": "Brain Drain",
+        "source": "https://www.wikidata.org/wiki/Q4955758",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3888882",
+        "name": "Khn'nr",
+        "source": "https://www.wikidata.org/wiki/Q3888882",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5036840",
+        "name": "Captain Ultra",
+        "source": "https://www.wikidata.org/wiki/Q5036840",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2539485",
+        "name": "Darkhawk",
+        "source": "https://www.wikidata.org/wiki/Q2539485",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3033512",
+        "name": "Doctor Druid",
+        "source": "https://www.wikidata.org/wiki/Q3033512",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q5402926",
+        "name": "Ethan Edwards",
+        "source": "https://www.wikidata.org/wiki/Q5402926",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5505166",
+        "name": "Frog-Man",
+        "source": "https://www.wikidata.org/wiki/Q5505166",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3359399",
+        "name": "Gorgon",
+        "source": "https://www.wikidata.org/wiki/Q3359399",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q775371",
+        "name": "Genis-Vell",
+        "source": "https://www.wikidata.org/wiki/Q775371",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2526766",
+        "name": "Hulkling",
+        "source": "https://www.wikidata.org/wiki/Q2526766",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5923690",
+        "name": "Hrimhari",
+        "source": "https://www.wikidata.org/wiki/Q5923690",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3193522",
+        "name": "Karnak",
+        "source": "https://www.wikidata.org/wiki/Q3193522",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6072691",
+        "name": "Iron Man 2020",
+        "source": "https://www.wikidata.org/wiki/Q6072691",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3805581",
+        "name": "Jack Frost",
+        "source": "https://www.wikidata.org/wiki/Q3805581",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16210414",
+        "name": "Solomon Kane",
+        "source": "https://www.wikidata.org/wiki/Q16210414",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2323492",
+        "name": "Killraven",
+        "source": "https://www.wikidata.org/wiki/Q2323492",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6767974",
+        "name": "Mark Hazzard: Merc",
+        "source": "https://www.wikidata.org/wiki/Q6767974",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3296041",
+        "name": "Robert Grayson",
+        "source": "https://www.wikidata.org/wiki/Q3296041",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q8327297",
+        "name": "Nightwatch",
+        "source": "https://www.wikidata.org/wiki/Q8327297",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17014311",
+        "name": "Power Man",
+        "source": "https://www.wikidata.org/wiki/Q17014311",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3088458",
+        "name": "Rom",
+        "source": "https://www.wikidata.org/wiki/Q3088458",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7557064",
+        "name": "Solarman",
+        "source": "https://www.wikidata.org/wiki/Q7557064",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7441548",
+        "name": "Sean and Chris",
+        "source": "https://www.wikidata.org/wiki/Q7441548",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q734247",
+        "name": "Chase Stein",
+        "source": "https://www.wikidata.org/wiki/Q734247",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q961242",
+        "name": "Two-Gun Kid",
+        "source": "https://www.wikidata.org/wiki/Q961242",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3545586",
+        "name": "Kristoff Vernard",
+        "source": "https://www.wikidata.org/wiki/Q3545586",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1402209",
+        "name": "Whizzer",
+        "source": "https://www.wikidata.org/wiki/Q1402209",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q4862153",
+        "name": "Baron Bedlam",
+        "source": "https://www.wikidata.org/wiki/Q4862153",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4783789",
+        "name": "Arak",
+        "source": "https://www.wikidata.org/wiki/Q4783789",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3643317",
+        "name": "Bozo the Iron Man",
+        "source": "https://www.wikidata.org/wiki/Q3643317",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4879762",
+        "name": "Beefeater",
+        "source": "https://www.wikidata.org/wiki/Q4879762",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5096653",
+        "name": "Chief",
+        "source": "https://www.wikidata.org/wiki/Q5096653",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16949763",
+        "name": "Simon Dark",
+        "source": "https://www.wikidata.org/wiki/Q16949763",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3759042",
+        "name": "Gay Ghost",
+        "source": "https://www.wikidata.org/wiki/Q3759042",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5234329",
+        "name": "David Graves",
+        "source": "https://www.wikidata.org/wiki/Q5234329",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1650097",
+        "name": "Invisible Hood",
+        "source": "https://www.wikidata.org/wiki/Q1650097",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5225992",
+        "name": "Darwin Jones",
+        "source": "https://www.wikidata.org/wiki/Q5225992",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4540489",
+        "name": "Mazing Man",
+        "source": "https://www.wikidata.org/wiki/Q4540489",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7103977",
+        "name": "Orpheus",
+        "source": "https://www.wikidata.org/wiki/Q7103977",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3934006",
+        "name": "Rex Leech",
+        "source": "https://www.wikidata.org/wiki/Q3934006",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q1606240",
+        "name": "Starman",
+        "source": "https://www.wikidata.org/wiki/Q1606240",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3496436",
+        "name": "Stalker",
+        "source": "https://www.wikidata.org/wiki/Q3496436",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q7703707",
+        "name": "Terrific Whatzit",
+        "source": "https://www.wikidata.org/wiki/Q7703707",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7804402",
+        "name": "Tim Trench",
+        "source": "https://www.wikidata.org/wiki/Q7804402",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q4808441",
+        "name": "Vartox",
+        "source": "https://www.wikidata.org/wiki/Q4808441",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q7978499",
+        "name": "The Web",
+        "source": "https://www.wikidata.org/wiki/Q7978499",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7980312",
+        "name": "Weird",
+        "source": "https://www.wikidata.org/wiki/Q7980312",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2946942",
+        "name": "Brain",
+        "source": "https://www.wikidata.org/wiki/Q2946942",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11379167",
+        "name": "Rin Ihara",
+        "source": "https://www.wikidata.org/wiki/Q11379167",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q101200178",
+        "name": "Yuzuna Nagase",
+        "source": "https://www.wikidata.org/wiki/Q101200178",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q17159745",
+        "name": "Ayana Shiramoto",
+        "source": "https://www.wikidata.org/wiki/Q17159745",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11354980",
+        "name": "Emi Miyake",
+        "source": "https://www.wikidata.org/wiki/Q11354980",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q62085493",
+        "name": "Rina Matsuki",
+        "source": "https://www.wikidata.org/wiki/Q62085493",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11532948",
+        "name": "Pâko Hayashiya",
+        "source": "https://www.wikidata.org/wiki/Q11532948",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11584852",
+        "name": "Hisako Ishii",
+        "source": "https://www.wikidata.org/wiki/Q11584852",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11672816",
+        "name": "Kyōko Takami",
+        "source": "https://www.wikidata.org/wiki/Q11672816",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11598926",
+        "name": "Kanae Takeuchi",
+        "source": "https://www.wikidata.org/wiki/Q11598926",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q62601558",
+        "name": "Chihiro Nakamori",
+        "source": "https://www.wikidata.org/wiki/Q62601558",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q100958712",
+        "name": "Nachi Mikami",
+        "source": "https://www.wikidata.org/wiki/Q100958712",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q108885065",
+        "name": "Tomoko Yoshino",
+        "source": "https://www.wikidata.org/wiki/Q108885065",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q121355215",
+        "name": "Natsuki Abe",
+        "source": "https://www.wikidata.org/wiki/Q121355215",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q108807469",
+        "name": "Tsugumi Sakurai",
+        "source": "https://www.wikidata.org/wiki/Q108807469",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q55525228",
+        "name": "Mijika Nagai",
+        "source": "https://www.wikidata.org/wiki/Q55525228",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q134508376",
+        "name": "Mikiko Masuda",
+        "source": "https://www.wikidata.org/wiki/Q134508376",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q111843810",
+        "name": "Oshioshio",
+        "source": "https://www.wikidata.org/wiki/Q111843810",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2855440",
+        "name": "Boston Strangler",
+        "source": "https://www.wikidata.org/wiki/Q2855440",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q17212390",
+        "name": "Fujiwara no Korenori",
+        "source": "https://www.wikidata.org/wiki/Q17212390",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q8193925",
+        "name": "Atsuyasu-shinnō",
+        "source": "https://www.wikidata.org/wiki/Q8193925",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11623594",
+        "name": "Fujiwara no Michitsuna",
+        "source": "https://www.wikidata.org/wiki/Q11623594",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q6535226",
+        "name": "Kim Ŭn-bu",
+        "source": "https://www.wikidata.org/wiki/Q6535226",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q313293",
+        "name": "Martín von Porres",
+        "source": "https://www.wikidata.org/wiki/Q313293",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q12521974",
+        "name": "Tommaso Onofri",
+        "source": "https://www.wikidata.org/wiki/Q12521974",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q134309068",
+        "name": "Şeyh Muslihiddin",
+        "source": "https://www.wikidata.org/wiki/Q134309068",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q1251392",
+        "name": "Şehzade Mustafa",
+        "source": "https://www.wikidata.org/wiki/Q1251392",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3541506",
+        "name": "Green Boots",
+        "source": "https://www.wikidata.org/wiki/Q3541506",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q2895943",
+        "name": "Benito Albino Dalser",
+        "source": "https://www.wikidata.org/wiki/Q2895943",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4201195",
+        "name": "Sunan Gunungjati",
+        "source": "https://www.wikidata.org/wiki/Q4201195",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q10334282",
+        "name": "Márcio Amaro de Oliveira",
+        "source": "https://www.wikidata.org/wiki/Q10334282",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q56283788",
+        "name": "Syed Muhammad Tayyab Shah",
+        "source": "https://www.wikidata.org/wiki/Q56283788",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3347426",
+        "name": "Lokenath Brahmachari",
+        "source": "https://www.wikidata.org/wiki/Q3347426",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q114560086",
+        "name": "Theerasak Longji",
+        "source": "https://www.wikidata.org/wiki/Q114560086",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q4924188",
+        "name": "Daiki Nakamura",
+        "source": "https://www.wikidata.org/wiki/Q4924188",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q108109890",
+        "name": "Kenta Yamamoto",
+        "source": "https://www.wikidata.org/wiki/Q108109890",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q17160764",
+        "name": "Masahiro Tashiro",
+        "source": "https://www.wikidata.org/wiki/Q17160764",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11624687",
+        "name": "Shinji Fujita",
+        "source": "https://www.wikidata.org/wiki/Q11624687",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q20040030",
+        "name": "Godaiin Muneshige",
+        "source": "https://www.wikidata.org/wiki/Q20040030",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q119280000",
+        "name": "Gaou",
+        "source": "https://www.wikidata.org/wiki/Q119280000",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11257131",
+        "name": "Motoyuki Asai",
+        "source": "https://www.wikidata.org/wiki/Q11257131",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q113875720",
+        "name": "Rio Nakata",
+        "source": "https://www.wikidata.org/wiki/Q113875720",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11401955",
+        "name": "Yuichi Kitamura",
+        "source": "https://www.wikidata.org/wiki/Q11401955",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q105258675",
+        "name": "Shuntarō Tsuneta",
+        "source": "https://www.wikidata.org/wiki/Q105258675",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q116665052",
+        "name": "Onodera Ginwoo",
+        "source": "https://www.wikidata.org/wiki/Q116665052",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11623862",
+        "name": "Yūsuke Fujioka",
+        "source": "https://www.wikidata.org/wiki/Q11623862",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q108110252",
+        "name": "Takahiro Nōgawa",
+        "source": "https://www.wikidata.org/wiki/Q108110252",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11356510",
+        "name": "Kōsei Miura",
+        "source": "https://www.wikidata.org/wiki/Q11356510",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q27921170",
+        "name": "Urokogataya Magobei",
+        "source": "https://www.wikidata.org/wiki/Q27921170",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q98117549",
+        "name": "Daichi Tanabe",
+        "source": "https://www.wikidata.org/wiki/Q98117549",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3545011",
+        "name": "Atomic Knight",
+        "source": "https://www.wikidata.org/wiki/Q3545011",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3646864",
+        "name": "Bulletman and Bulletgirl",
+        "source": "https://www.wikidata.org/wiki/Q3646864",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5580334",
+        "name": "Goldstar",
+        "source": "https://www.wikidata.org/wiki/Q5580334",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5036833",
+        "name": "Captain Triumph",
+        "source": "https://www.wikidata.org/wiki/Q5036833",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6315837",
+        "name": "Manhunter",
+        "source": "https://www.wikidata.org/wiki/Q6315837",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16227832",
+        "name": "Knight",
+        "source": "https://www.wikidata.org/wiki/Q16227832",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q737216",
+        "name": "Maxi-Man",
+        "source": "https://www.wikidata.org/wiki/Q737216",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3547695",
+        "name": "Mirage",
+        "source": "https://www.wikidata.org/wiki/Q3547695",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2747941",
+        "name": "Ravager",
+        "source": "https://www.wikidata.org/wiki/Q2747941",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7560675",
+        "name": "Son of Vulcan",
+        "source": "https://www.wikidata.org/wiki/Q7560675",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1648966",
+        "name": "Star-Spangled Kid",
+        "source": "https://www.wikidata.org/wiki/Q1648966",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7582282",
+        "name": "Squire",
+        "source": "https://www.wikidata.org/wiki/Q7582282",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q5686471",
+        "name": "Super-Chief",
+        "source": "https://www.wikidata.org/wiki/Q5686471",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7799039",
+        "name": "Thunder and Lightning",
+        "source": "https://www.wikidata.org/wiki/Q7799039",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6167402",
+        "name": "Wildebeest",
+        "source": "https://www.wikidata.org/wiki/Q6167402",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7430228",
+        "name": "Scarab",
+        "source": "https://www.wikidata.org/wiki/Q7430228",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3984297",
+        "name": "Teresa Mannino",
+        "source": "https://www.wikidata.org/wiki/Q3984297",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q59732871",
+        "name": "Benedetta Porcaroli",
+        "source": "https://www.wikidata.org/wiki/Q59732871",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2247774",
+        "name": "Alessia Marcuzzi",
+        "source": "https://www.wikidata.org/wiki/Q2247774",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q521022",
+        "name": "Lucrezia Lante Della Rovere",
+        "source": "https://www.wikidata.org/wiki/Q521022",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q13478882",
+        "name": "Miriam Dalmazio",
+        "source": "https://www.wikidata.org/wiki/Q13478882",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3610433",
+        "name": "Alessia Amendola",
+        "source": "https://www.wikidata.org/wiki/Q3610433",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1053837",
+        "name": "Barbara D'Urso",
+        "source": "https://www.wikidata.org/wiki/Q1053837",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q117601067",
+        "name": "Flora Canto",
+        "source": "https://www.wikidata.org/wiki/Q117601067",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q529646",
+        "name": "Nicoletta Romanoff",
+        "source": "https://www.wikidata.org/wiki/Q529646",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6074910",
+        "name": "Denise Capezza",
+        "source": "https://www.wikidata.org/wiki/Q6074910",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1172660",
+        "name": "Eva Riccobono",
+        "source": "https://www.wikidata.org/wiki/Q1172660",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q43396928",
+        "name": "Barbara Chichiarelli",
+        "source": "https://www.wikidata.org/wiki/Q43396928",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4007709",
+        "name": "Valentina Persia",
+        "source": "https://www.wikidata.org/wiki/Q4007709",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q10389770",
+        "name": "Vera Gemma",
+        "source": "https://www.wikidata.org/wiki/Q10389770",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16601688",
+        "name": "Serena Iansiti",
+        "source": "https://www.wikidata.org/wiki/Q16601688",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3817916",
+        "name": "The Addams Family",
+        "source": "https://www.wikidata.org/wiki/Q3817916",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q1783949",
+        "name": "Brownie",
+        "source": "https://www.wikidata.org/wiki/Q1783949",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q4819356",
+        "name": "Drop Bear",
+        "source": "https://www.wikidata.org/wiki/Q4819356",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q124048230",
+        "name": "Victoria Heyes",
+        "source": "https://www.wikidata.org/wiki/Q124048230",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q1324928",
+        "name": "Schwarze Organisation",
+        "source": "https://www.wikidata.org/wiki/Q1324928",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q683379",
+        "name": "Chūshingura",
+        "source": "https://www.wikidata.org/wiki/Q683379",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q7304777",
+        "name": "Red Raven",
+        "source": "https://www.wikidata.org/wiki/Q7304777",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q1755780",
+        "name": "Hitman",
+        "source": "https://www.wikidata.org/wiki/Q1755780",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q17176817",
+        "name": "Meisterhand",
+        "source": "https://www.wikidata.org/wiki/Q17176817",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q139748011",
+        "name": "Pyra and Mythra",
+        "source": "https://www.wikidata.org/wiki/Q139748011",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q4938352",
+        "name": "Boilerplate",
+        "source": "https://www.wikidata.org/wiki/Q4938352",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q7758838",
+        "name": "The Puttermans",
+        "source": "https://www.wikidata.org/wiki/Q7758838",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q135440817",
+        "name": "Nestene Consciousness and Autons",
+        "source": "https://www.wikidata.org/wiki/Q135440817",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q7544224",
+        "name": "Smash Martians",
+        "source": "https://www.wikidata.org/wiki/Q7544224",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5965196",
+        "name": "Hōjō Tokiyuki",
+        "source": "https://www.wikidata.org/wiki/Q5965196",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11623886",
+        "name": "Kōta Fujioka",
+        "source": "https://www.wikidata.org/wiki/Q11623886",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q5507530",
+        "name": "Fujiwara no Korechika",
+        "source": "https://www.wikidata.org/wiki/Q5507530",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q13365032",
+        "name": "Tetsuya Sakamaki",
+        "source": "https://www.wikidata.org/wiki/Q13365032",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q583698",
+        "name": "Fujiwara no Michitaka",
+        "source": "https://www.wikidata.org/wiki/Q583698",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11490290",
+        "name": "Tokugawa Harusada",
+        "source": "https://www.wikidata.org/wiki/Q11490290",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3090665",
+        "name": "Fujiwara Takaie",
+        "source": "https://www.wikidata.org/wiki/Q3090665",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11385029",
+        "name": "Sano Masakoto",
+        "source": "https://www.wikidata.org/wiki/Q11385029",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11418662",
+        "name": "Kentarō Karōji",
+        "source": "https://www.wikidata.org/wiki/Q11418662",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q131226227",
+        "name": "Katsuaki Takahashi",
+        "source": "https://www.wikidata.org/wiki/Q131226227",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q7004151",
+        "name": "Tokugawa Iemoto",
+        "source": "https://www.wikidata.org/wiki/Q7004151",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11264792",
+        "name": "Kishimen",
+        "source": "https://www.wikidata.org/wiki/Q11264792",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11653796",
+        "name": "Nobutame Hasegawa",
+        "source": "https://www.wikidata.org/wiki/Q11653796",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q6636871",
+        "name": "Tokugawa Muneharu",
+        "source": "https://www.wikidata.org/wiki/Q6636871",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q124250685",
+        "name": "Prinzessin Anisha Rosnah, Prinzessin Mateen von Brunei",
+        "source": "https://www.wikidata.org/wiki/Q124250685",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q8053001",
+        "name": "Yesubai Bhonsale",
+        "source": "https://www.wikidata.org/wiki/Q8053001",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3595744",
+        "name": "Anarkali",
+        "source": "https://www.wikidata.org/wiki/Q3595744",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q105711718",
+        "name": "Mariko Mabuchi",
+        "source": "https://www.wikidata.org/wiki/Q105711718",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q118726792",
+        "name": "Daughter of Fujiwara no Tamenobu",
+        "source": "https://www.wikidata.org/wiki/Q118726792",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q6853875",
+        "name": "Wonjeong",
+        "source": "https://www.wikidata.org/wiki/Q6853875",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q122387487",
+        "name": "Magdalena Narożna",
+        "source": "https://www.wikidata.org/wiki/Q122387487",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q124480012",
+        "name": "Rachel King",
+        "source": "https://www.wikidata.org/wiki/Q124480012",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q117025962",
+        "name": "Al-Anud bint Mana al-Hadschri",
+        "source": "https://www.wikidata.org/wiki/Q117025962",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q117304779",
+        "name": "Noora bint Hathal Al Dosari",
+        "source": "https://www.wikidata.org/wiki/Q117304779",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q132076447",
+        "name": "Kanis Yu",
+        "source": "https://www.wikidata.org/wiki/Q132076447",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q140800580",
+        "name": "Emoura Phạm",
+        "source": "https://www.wikidata.org/wiki/Q140800580",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q65281026",
+        "name": "Kwanthip Devakula",
+        "source": "https://www.wikidata.org/wiki/Q65281026",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q135922103",
+        "name": "Lewis Cope",
+        "source": "https://www.wikidata.org/wiki/Q135922103",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q113679774",
+        "name": "Bobby Brazier",
+        "source": "https://www.wikidata.org/wiki/Q113679774",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q34453978",
+        "name": "Adrián Di Monte",
+        "source": "https://www.wikidata.org/wiki/Q34453978",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11288361",
+        "name": "Willie Dorsey",
+        "source": "https://www.wikidata.org/wiki/Q11288361",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q26944975",
+        "name": "Tomasz Wygoda",
+        "source": "https://www.wikidata.org/wiki/Q26944975",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q68167622",
+        "name": "Anas Tayara",
+        "source": "https://www.wikidata.org/wiki/Q68167622",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q65050175",
+        "name": "Berant Zhu",
+        "source": "https://www.wikidata.org/wiki/Q65050175",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q710887",
+        "name": "Joseph Chang",
+        "source": "https://www.wikidata.org/wiki/Q710887",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q106634263",
+        "name": "Zhou Keyu",
+        "source": "https://www.wikidata.org/wiki/Q106634263",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q8968548",
+        "name": "Huang Kun-Hsuen",
+        "source": "https://www.wikidata.org/wiki/Q8968548",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q112889291",
+        "name": "Alan Wu",
+        "source": "https://www.wikidata.org/wiki/Q112889291",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q86010713",
+        "name": "Nhan Phúc Vinh",
+        "source": "https://www.wikidata.org/wiki/Q86010713",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q75722028",
+        "name": "Anne Lee Guinness",
+        "source": "https://www.wikidata.org/wiki/Q75722028",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11288296",
+        "name": "Kazuko Fukuda",
+        "source": "https://www.wikidata.org/wiki/Q11288296",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11621644",
+        "name": "Renkōin",
+        "source": "https://www.wikidata.org/wiki/Q11621644",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q244383",
+        "name": "Rosa von Lima",
+        "source": "https://www.wikidata.org/wiki/Q244383",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11666898",
+        "name": "Yōren'in",
+        "source": "https://www.wikidata.org/wiki/Q11666898",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11564114",
+        "name": "Minamoto no Meishi",
+        "source": "https://www.wikidata.org/wiki/Q11564114",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q40252",
+        "name": "Kleopatra I.",
+        "source": "https://www.wikidata.org/wiki/Q40252",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11563997",
+        "name": "Minamoto no Rinshi",
+        "source": "https://www.wikidata.org/wiki/Q11563997",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3954952",
+        "name": "Selvaggia von Staufen",
+        "source": "https://www.wikidata.org/wiki/Q3954952",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q28415986",
+        "name": "Isabelle Wen",
+        "source": "https://www.wikidata.org/wiki/Q28415986",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q23928890",
+        "name": "Yvonne Woelke",
+        "source": "https://www.wikidata.org/wiki/Q23928890",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q107129",
+        "name": "Jasmin Tawil",
+        "source": "https://www.wikidata.org/wiki/Q107129",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2168892",
+        "name": "Rotraud Schindler",
+        "source": "https://www.wikidata.org/wiki/Q2168892",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q92071",
+        "name": "Luna Schweiger",
+        "source": "https://www.wikidata.org/wiki/Q92071",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1539548",
+        "name": "Julia Hartmann",
+        "source": "https://www.wikidata.org/wiki/Q1539548",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q123015",
+        "name": "Mercedes Müller",
+        "source": "https://www.wikidata.org/wiki/Q123015",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q125376",
+        "name": "Anne-Sophie Briest",
+        "source": "https://www.wikidata.org/wiki/Q125376",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q100175",
+        "name": "Lilli Schweiger",
+        "source": "https://www.wikidata.org/wiki/Q100175",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q29446242",
+        "name": "Bella Dayne",
+        "source": "https://www.wikidata.org/wiki/Q29446242",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q85673",
+        "name": "Christina Plate",
+        "source": "https://www.wikidata.org/wiki/Q85673",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q113657677",
+        "name": "Antonio Espaillat",
+        "source": "https://www.wikidata.org/wiki/Q113657677",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q10360943",
+        "name": "Yang Duanhe",
+        "source": "https://www.wikidata.org/wiki/Q10360943",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q134454792",
+        "name": "Mirwan M.S.",
+        "source": "https://www.wikidata.org/wiki/Q134454792",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q132240432",
+        "name": "Bernardo Bello",
+        "source": "https://www.wikidata.org/wiki/Q132240432",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q4812989",
+        "name": "Atef Najib",
+        "source": "https://www.wikidata.org/wiki/Q4812989",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q130500313",
+        "name": "Nasimul Gani",
+        "source": "https://www.wikidata.org/wiki/Q130500313",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q131304915",
+        "name": "Chinmoy Krishna Das",
+        "source": "https://www.wikidata.org/wiki/Q131304915",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q124883782",
+        "name": "Gyanesh Kumar",
+        "source": "https://www.wikidata.org/wiki/Q124883782",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q13014203",
+        "name": "Jitat Sornsongkram",
+        "source": "https://www.wikidata.org/wiki/Q13014203",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q97486492",
+        "name": "Abd al-Adhim al-Hasani",
+        "source": "https://www.wikidata.org/wiki/Q97486492",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q4884951",
+        "name": "Belyllioth",
+        "source": "https://www.wikidata.org/wiki/Q4884951",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q3855221",
+        "name": "Merry Pemberton",
+        "source": "https://www.wikidata.org/wiki/Q3855221",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5591036",
+        "name": "Grace Choi",
+        "source": "https://www.wikidata.org/wiki/Q5591036",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17072957",
+        "name": "Tefé Holland",
+        "source": "https://www.wikidata.org/wiki/Q17072957",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q2904629",
+        "name": "Nubia",
+        "source": "https://www.wikidata.org/wiki/Q2904629",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q7130729",
+        "name": "Pandora Pann",
+        "source": "https://www.wikidata.org/wiki/Q7130729",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7185497",
+        "name": "Philippus",
+        "source": "https://www.wikidata.org/wiki/Q7185497",
+        "facts": 5
+      },
+      {
+        "id": "wiki-q16952400",
+        "name": "Bluebird",
+        "source": "https://www.wikidata.org/wiki/Q16952400",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q8051788",
+        "name": "Yellow Peri",
+        "source": "https://www.wikidata.org/wiki/Q8051788",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q64755476",
+        "name": "Victoria October",
+        "source": "https://www.wikidata.org/wiki/Q64755476",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q632771",
+        "name": "Illuminati",
+        "source": "https://www.wikidata.org/wiki/Q632771",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2527918",
+        "name": "Thunderbolts",
+        "source": "https://www.wikidata.org/wiki/Q2527918",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16248427",
+        "name": "Crusaders",
+        "source": "https://www.wikidata.org/wiki/Q16248427",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3360766",
+        "name": "Paladin",
+        "source": "https://www.wikidata.org/wiki/Q3360766",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7236721",
+        "name": "Powerhouse",
+        "source": "https://www.wikidata.org/wiki/Q7236721",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2922722",
+        "name": "Spider-Woman",
+        "source": "https://www.wikidata.org/wiki/Q2922722",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2604737",
+        "name": "Fin Fang Foom",
+        "source": "https://www.wikidata.org/wiki/Q2604737",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5378913",
+        "name": "Enigma",
+        "source": "https://www.wikidata.org/wiki/Q5378913",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3545426",
+        "name": "Justice",
+        "source": "https://www.wikidata.org/wiki/Q3545426",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q116937203",
+        "name": "Arisu Shinomiya",
+        "source": "https://www.wikidata.org/wiki/Q116937203",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q63131313",
+        "name": "Misato Maeda",
+        "source": "https://www.wikidata.org/wiki/Q63131313",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q97478932",
+        "name": "Ai Hongō",
+        "source": "https://www.wikidata.org/wiki/Q97478932",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q18817666",
+        "name": "Runa Shimotsuki",
+        "source": "https://www.wikidata.org/wiki/Q18817666",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q115529979",
+        "name": "Rio Rukawa",
+        "source": "https://www.wikidata.org/wiki/Q115529979",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q107466016",
+        "name": "Mariko Sata",
+        "source": "https://www.wikidata.org/wiki/Q107466016",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q96712775",
+        "name": "Mino Suzume",
+        "source": "https://www.wikidata.org/wiki/Q96712775",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q108776680",
+        "name": "Sarina Toyama",
+        "source": "https://www.wikidata.org/wiki/Q108776680",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q105258739",
+        "name": "Hikaru Nagi",
+        "source": "https://www.wikidata.org/wiki/Q105258739",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2844973",
+        "name": "Ana Girardot",
+        "source": "https://www.wikidata.org/wiki/Q2844973",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q130619136",
+        "name": "Claire Romain",
+        "source": "https://www.wikidata.org/wiki/Q130619136",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q110907526",
+        "name": "Anaïde Rozam",
+        "source": "https://www.wikidata.org/wiki/Q110907526",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3336327",
+        "name": "Natacha Lindinger",
+        "source": "https://www.wikidata.org/wiki/Q3336327",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q88009745",
+        "name": "Sara Mortensen",
+        "source": "https://www.wikidata.org/wiki/Q88009745",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2840673",
+        "name": "Alyson Le Borges",
+        "source": "https://www.wikidata.org/wiki/Q2840673",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2837284",
+        "name": "Alix Poisson",
+        "source": "https://www.wikidata.org/wiki/Q2837284",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q461039",
+        "name": "Carole André",
+        "source": "https://www.wikidata.org/wiki/Q461039",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q56696354",
+        "name": "Isabelle Funaro",
+        "source": "https://www.wikidata.org/wiki/Q56696354",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q76324987",
+        "name": "Brian Peck",
+        "source": "https://www.wikidata.org/wiki/Q76324987",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q137157746",
+        "name": "Connor Storrie",
+        "source": "https://www.wikidata.org/wiki/Q137157746",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q108118281",
+        "name": "Aaron Moten",
+        "source": "https://www.wikidata.org/wiki/Q108118281",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q55183440",
+        "name": "Brandon Sklenar",
+        "source": "https://www.wikidata.org/wiki/Q55183440",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q115171090",
+        "name": "David Howard Thornton",
+        "source": "https://www.wikidata.org/wiki/Q115171090",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q134697082",
+        "name": "Alex Fine",
+        "source": "https://www.wikidata.org/wiki/Q134697082",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q20732067",
+        "name": "Daniel Zovatto",
+        "source": "https://www.wikidata.org/wiki/Q20732067",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q112144155",
+        "name": "Hunter Doohan",
+        "source": "https://www.wikidata.org/wiki/Q112144155",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2519959",
+        "name": "Echo",
+        "source": "https://www.wikidata.org/wiki/Q2519959",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2016099",
+        "name": "Blue Diamond",
+        "source": "https://www.wikidata.org/wiki/Q2016099",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3072826",
+        "name": "Firebird",
+        "source": "https://www.wikidata.org/wiki/Q3072826",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q6416807",
+        "name": "Kismet",
+        "source": "https://www.wikidata.org/wiki/Q6416807",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q14475812",
+        "name": "Anne Weying",
+        "source": "https://www.wikidata.org/wiki/Q14475812",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7514881",
+        "name": "Silhouette",
+        "source": "https://www.wikidata.org/wiki/Q7514881",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3493623",
+        "name": "Spitfire",
+        "source": "https://www.wikidata.org/wiki/Q3493623",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3990774",
+        "name": "Thor Girl",
+        "source": "https://www.wikidata.org/wiki/Q3990774",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q110221212",
+        "name": "Jeff the Land Shark",
+        "source": "https://www.wikidata.org/wiki/Q110221212",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3545872",
+        "name": "Vance Astrovik",
+        "source": "https://www.wikidata.org/wiki/Q3545872",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3155104",
+        "name": "Isaiah Bradley",
+        "source": "https://www.wikidata.org/wiki/Q3155104",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2633611",
+        "name": "Bill Foster",
+        "source": "https://www.wikidata.org/wiki/Q2633611",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5457942",
+        "name": "Flatman",
+        "source": "https://www.wikidata.org/wiki/Q5457942",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3552470",
+        "name": "Ursa Major",
+        "source": "https://www.wikidata.org/wiki/Q3552470",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1772036",
+        "name": "Will o' the Wisp",
+        "source": "https://www.wikidata.org/wiki/Q1772036",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q1992429",
+        "name": "Quasar",
+        "source": "https://www.wikidata.org/wiki/Q1992429",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11490868",
+        "name": "Jun Shison",
+        "source": "https://www.wikidata.org/wiki/Q11490868",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q17158653",
+        "name": "Kentaro Sakaguchi",
+        "source": "https://www.wikidata.org/wiki/Q17158653",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q1052640",
+        "name": "Nao Ōmori",
+        "source": "https://www.wikidata.org/wiki/Q1052640",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11365305",
+        "name": "Tomoya Nakamura",
+        "source": "https://www.wikidata.org/wiki/Q11365305",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11373175",
+        "name": "Jun'ichi Inoue",
+        "source": "https://www.wikidata.org/wiki/Q11373175",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q5367327",
+        "name": "Kenji Sakaguchi",
+        "source": "https://www.wikidata.org/wiki/Q5367327",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q6120300",
+        "name": "Sota Fukushi",
+        "source": "https://www.wikidata.org/wiki/Q6120300",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q1202557",
+        "name": "Hiroki Narimiya",
+        "source": "https://www.wikidata.org/wiki/Q1202557",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q47455352",
+        "name": "Jennifer Coppen",
+        "source": "https://www.wikidata.org/wiki/Q47455352",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q12518906",
+        "name": "Tamara Tyasmara",
+        "source": "https://www.wikidata.org/wiki/Q12518906",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q61118336",
+        "name": "Shenina Cinnamon",
+        "source": "https://www.wikidata.org/wiki/Q61118336",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16188616",
+        "name": "Amanda Manopo",
+        "source": "https://www.wikidata.org/wiki/Q16188616",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q97632005",
+        "name": "Davina Karamoy",
+        "source": "https://www.wikidata.org/wiki/Q97632005",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17410734",
+        "name": "Nikita Mirzani",
+        "source": "https://www.wikidata.org/wiki/Q17410734",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q47535831",
+        "name": "Nicole Adelaide Parham",
+        "source": "https://www.wikidata.org/wiki/Q47535831",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q109432198",
+        "name": "Nicole Rossi",
+        "source": "https://www.wikidata.org/wiki/Q109432198",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q24898165",
+        "name": "Sally McNeil",
+        "source": "https://www.wikidata.org/wiki/Q24898165",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q57584522",
+        "name": "Pam Hupp",
+        "source": "https://www.wikidata.org/wiki/Q57584522",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q111530464",
+        "name": "Candy Montgomery",
+        "source": "https://www.wikidata.org/wiki/Q111530464",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q125179438",
+        "name": "Jodi Hildebrandt",
+        "source": "https://www.wikidata.org/wiki/Q125179438",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q2449527",
+        "name": "Susan Smith",
+        "source": "https://www.wikidata.org/wiki/Q2449527",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q100598212",
+        "name": "Hallie Olivere Biden",
+        "source": "https://www.wikidata.org/wiki/Q100598212",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q115491977",
+        "name": "Amy Loughren",
+        "source": "https://www.wikidata.org/wiki/Q115491977",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1385693",
+        "name": "Jerome Brudos",
+        "source": "https://www.wikidata.org/wiki/Q1385693",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q348970",
+        "name": "D. B. Cooper",
+        "source": "https://www.wikidata.org/wiki/Q348970",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q4867957",
+        "name": "Bass Reeves",
+        "source": "https://www.wikidata.org/wiki/Q4867957",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q218148",
+        "name": "Zodiac-Killer",
+        "source": "https://www.wikidata.org/wiki/Q218148",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q1342909",
+        "name": "Albert Henry DeSalvo",
+        "source": "https://www.wikidata.org/wiki/Q1342909",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q123189870",
+        "name": "Ernest Burkhart",
+        "source": "https://www.wikidata.org/wiki/Q123189870",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q56952569",
+        "name": "Robert Eugene Brashers",
+        "source": "https://www.wikidata.org/wiki/Q56952569",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q126681074",
+        "name": "Zaheer Iqbal",
+        "source": "https://www.wikidata.org/wiki/Q126681074",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q113645757",
+        "name": "Pradeep Ranganathan",
+        "source": "https://www.wikidata.org/wiki/Q113645757",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q121889439",
+        "name": "Zahan Kapoor",
+        "source": "https://www.wikidata.org/wiki/Q121889439",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q46499596",
+        "name": "Vijay Varma",
+        "source": "https://www.wikidata.org/wiki/Q46499596",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q48688214",
+        "name": "Karan Veer Mehra",
+        "source": "https://www.wikidata.org/wiki/Q48688214",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q15104767",
+        "name": "Nikitin Dheer",
+        "source": "https://www.wikidata.org/wiki/Q15104767",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q43396416",
+        "name": "Krishan Kumar",
+        "source": "https://www.wikidata.org/wiki/Q43396416",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q119508142",
+        "name": "Blue Bullet",
+        "source": "https://www.wikidata.org/wiki/Q119508142",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q113624919",
+        "name": "Illuminator",
+        "source": "https://www.wikidata.org/wiki/Q113624919",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q20008295",
+        "name": "Red Hulk",
+        "source": "https://www.wikidata.org/wiki/Q20008295",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q48739459",
+        "name": "Synapse",
+        "source": "https://www.wikidata.org/wiki/Q48739459",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q5176694",
+        "name": "Count Otto Vermis",
+        "source": "https://www.wikidata.org/wiki/Q5176694",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q96405549",
+        "name": "Shining Knight",
+        "source": "https://www.wikidata.org/wiki/Q96405549",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q130118845",
+        "name": "Xero",
+        "source": "https://www.wikidata.org/wiki/Q130118845",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q7309814",
+        "name": "Rehman Dakait",
+        "source": "https://www.wikidata.org/wiki/Q7309814",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q25468312",
+        "name": "Yazid bin Abdul Qadir Jawas",
+        "source": "https://www.wikidata.org/wiki/Q25468312",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q134728801",
+        "name": "Muhammad Yahya Waloni",
+        "source": "https://www.wikidata.org/wiki/Q134728801",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q19745867",
+        "name": "Hamzah Sulaeman",
+        "source": "https://www.wikidata.org/wiki/Q19745867",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q748484",
+        "name": "Amangkurat IV",
+        "source": "https://www.wikidata.org/wiki/Q748484",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q7833317",
+        "name": "Tran Quoc Toan",
+        "source": "https://www.wikidata.org/wiki/Q7833317",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q115990371",
+        "name": "Arsema Thomas",
+        "source": "https://www.wikidata.org/wiki/Q115990371",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q110647417",
+        "name": "Donna Preston",
+        "source": "https://www.wikidata.org/wiki/Q110647417",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q12237436",
+        "name": "Lamya Tareq",
+        "source": "https://www.wikidata.org/wiki/Q12237436",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q109259580",
+        "name": "Taraf Al Taqi",
+        "source": "https://www.wikidata.org/wiki/Q109259580",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q104723720",
+        "name": "Regina Lei",
+        "source": "https://www.wikidata.org/wiki/Q104723720",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16734688",
+        "name": "Rokeya Prachy",
+        "source": "https://www.wikidata.org/wiki/Q16734688",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q219131",
+        "name": "Alvaro Vitali",
+        "source": "https://www.wikidata.org/wiki/Q219131",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3852811",
+        "name": "Mauro Di Francesco",
+        "source": "https://www.wikidata.org/wiki/Q3852811",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3903915",
+        "name": "Pietro Genuardi",
+        "source": "https://www.wikidata.org/wiki/Q3903915",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q23829681",
+        "name": "Adamo Dionisi",
+        "source": "https://www.wikidata.org/wiki/Q23829681",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3838803",
+        "name": "Lucio Ardenzi",
+        "source": "https://www.wikidata.org/wiki/Q3838803",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3763043",
+        "name": "Gianfranco Butinar",
+        "source": "https://www.wikidata.org/wiki/Q3763043",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5361372",
+        "name": "Elisa Mouliaá",
+        "source": "https://www.wikidata.org/wiki/Q5361372",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q64762766",
+        "name": "Begoña Vargas",
+        "source": "https://www.wikidata.org/wiki/Q64762766",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q26221427",
+        "name": "Lucía Caraballo",
+        "source": "https://www.wikidata.org/wiki/Q26221427",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6003952",
+        "name": "María Isasi",
+        "source": "https://www.wikidata.org/wiki/Q6003952",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q108404499",
+        "name": "Catalina Sopelana",
+        "source": "https://www.wikidata.org/wiki/Q108404499",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q8193236",
+        "name": "Alba Flores",
+        "source": "https://www.wikidata.org/wiki/Q8193236",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5170681",
+        "name": "Corinthian",
+        "source": "https://www.wikidata.org/wiki/Q5170681",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3352056",
+        "name": "Omni-Man",
+        "source": "https://www.wikidata.org/wiki/Q3352056",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q28017196",
+        "name": "Zamasu",
+        "source": "https://www.wikidata.org/wiki/Q28017196",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4720534",
+        "name": "Alexander von Reisden",
+        "source": "https://www.wikidata.org/wiki/Q4720534",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q5528636",
+        "name": "Gay Robot",
+        "source": "https://www.wikidata.org/wiki/Q5528636",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q7357634",
+        "name": "Rog-2000",
+        "source": "https://www.wikidata.org/wiki/Q7357634",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q113489999",
+        "name": "Kim Mu-Jun",
+        "source": "https://www.wikidata.org/wiki/Q113489999",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q117133808",
+        "name": "Baek Seo-hoo",
+        "source": "https://www.wikidata.org/wiki/Q117133808",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q27952146",
+        "name": "Gu Seong-hwan",
+        "source": "https://www.wikidata.org/wiki/Q27952146",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q105706291",
+        "name": "Lee Joo-ahn",
+        "source": "https://www.wikidata.org/wiki/Q105706291",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q55737092",
+        "name": "Park Ji-hwan",
+        "source": "https://www.wikidata.org/wiki/Q55737092",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q107109848",
+        "name": "Heo Nam-jun",
+        "source": "https://www.wikidata.org/wiki/Q107109848",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3296425",
+        "name": "María Antonieta de las Nieves",
+        "source": "https://www.wikidata.org/wiki/Q3296425",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3545257",
+        "name": "Sylvia Pasquel",
+        "source": "https://www.wikidata.org/wiki/Q3545257",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q503390",
+        "name": "Adela Noriega",
+        "source": "https://www.wikidata.org/wiki/Q503390",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16298750",
+        "name": "Bárbara de Regil",
+        "source": "https://www.wikidata.org/wiki/Q16298750",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q72928297",
+        "name": "Diana Bovio",
+        "source": "https://www.wikidata.org/wiki/Q72928297",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q9052143",
+        "name": "Olivia Collins",
+        "source": "https://www.wikidata.org/wiki/Q9052143",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1137007",
+        "name": "Rina Aizawa",
+        "source": "https://www.wikidata.org/wiki/Q1137007",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q29585797",
+        "name": "Riko Fukumoto",
+        "source": "https://www.wikidata.org/wiki/Q29585797",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q30937368",
+        "name": "Nana Mori",
+        "source": "https://www.wikidata.org/wiki/Q30937368",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q48780619",
+        "name": "Wan Marui",
+        "source": "https://www.wikidata.org/wiki/Q48780619",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11519814",
+        "name": "Manami Honjō",
+        "source": "https://www.wikidata.org/wiki/Q11519814",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11622873",
+        "name": "Shūka Fujii",
+        "source": "https://www.wikidata.org/wiki/Q11622873",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q24867538",
+        "name": "Shizuka Ishibashi",
+        "source": "https://www.wikidata.org/wiki/Q24867538",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q1051891",
+        "name": "Nanami Sakuraba",
+        "source": "https://www.wikidata.org/wiki/Q1051891",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q43427086",
+        "name": "Nagisa Sekimizu",
+        "source": "https://www.wikidata.org/wiki/Q43427086",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11584986",
+        "name": "Anna Ishii",
+        "source": "https://www.wikidata.org/wiki/Q11584986",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11642039",
+        "name": "Kyōko Tōyama",
+        "source": "https://www.wikidata.org/wiki/Q11642039",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11649113",
+        "name": "鈴木砂羽",
+        "source": "https://www.wikidata.org/wiki/Q11649113",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3851191",
+        "name": "Massimo Ciavarro",
+        "source": "https://www.wikidata.org/wiki/Q3851191",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3616977",
+        "name": "Angelo Duro",
+        "source": "https://www.wikidata.org/wiki/Q3616977",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q26034010",
+        "name": "Filippo Bisciglia",
+        "source": "https://www.wikidata.org/wiki/Q26034010",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q120589163",
+        "name": "Giacomo Giorgio",
+        "source": "https://www.wikidata.org/wiki/Q120589163",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q106086517",
+        "name": "Eduardo Scarpetta",
+        "source": "https://www.wikidata.org/wiki/Q106086517",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2939659",
+        "name": "Carmine Recano",
+        "source": "https://www.wikidata.org/wiki/Q2939659",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q134508711",
+        "name": "Toriyama Tamaichi",
+        "source": "https://www.wikidata.org/wiki/Q134508711",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q126684383",
+        "name": "Oh Dong-woon",
+        "source": "https://www.wikidata.org/wiki/Q126684383",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q113490321",
+        "name": "Danny Koo",
+        "source": "https://www.wikidata.org/wiki/Q113490321",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q118250027",
+        "name": "Đinh Văn Nơi",
+        "source": "https://www.wikidata.org/wiki/Q118250027",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q118250014",
+        "name": "Đặng Hồng Đức",
+        "source": "https://www.wikidata.org/wiki/Q118250014",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q121072373",
+        "name": "1993 Chương Dương Bridge case",
+        "source": "https://www.wikidata.org/wiki/Q121072373",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1504526",
+        "name": "Jeff Albertson",
+        "source": "https://www.wikidata.org/wiki/Q1504526",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q1504586",
+        "name": "Dr. Julius Hibbert",
+        "source": "https://www.wikidata.org/wiki/Q1504586",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q969535",
+        "name": "Kent Brockman",
+        "source": "https://www.wikidata.org/wiki/Q969535",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q727156",
+        "name": "Krusty der Clown",
+        "source": "https://www.wikidata.org/wiki/Q727156",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q646166",
+        "name": "Moe Szyslak",
+        "source": "https://www.wikidata.org/wiki/Q646166",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q745472",
+        "name": "Joseph Quimby",
+        "source": "https://www.wikidata.org/wiki/Q745472",
+        "facts": 5
+      }
+    ],
+    [
+      {
+        "id": "wiki-q123693068",
+        "name": "Jaafar Jackson",
+        "source": "https://www.wikidata.org/wiki/Q123693068",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q19800980",
+        "name": "Aidan Gallagher",
+        "source": "https://www.wikidata.org/wiki/Q19800980",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q18062224",
+        "name": "Christian Madsen",
+        "source": "https://www.wikidata.org/wiki/Q18062224",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q108079955",
+        "name": "Dallas Liu",
+        "source": "https://www.wikidata.org/wiki/Q108079955",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q953560",
+        "name": "Omri Katz",
+        "source": "https://www.wikidata.org/wiki/Q953560",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q48758750",
+        "name": "Sei Shiraishi",
+        "source": "https://www.wikidata.org/wiki/Q48758750",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q40039708",
+        "name": "Sara Shida",
+        "source": "https://www.wikidata.org/wiki/Q40039708",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11577355",
+        "name": "Momoko Tanabe",
+        "source": "https://www.wikidata.org/wiki/Q11577355",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11590955",
+        "name": "Misuzu Kanno",
+        "source": "https://www.wikidata.org/wiki/Q11590955",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q21693917",
+        "name": "Yui Sakuma",
+        "source": "https://www.wikidata.org/wiki/Q21693917",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11387064",
+        "name": "Tomoko joō",
+        "source": "https://www.wikidata.org/wiki/Q11387064",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q15304299",
+        "name": "Sui Kasai",
+        "source": "https://www.wikidata.org/wiki/Q15304299",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3814178",
+        "name": "Kazuko Hosoki",
+        "source": "https://www.wikidata.org/wiki/Q3814178",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17362653",
+        "name": "Fujiwara no Shishi",
+        "source": "https://www.wikidata.org/wiki/Q17362653",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q100453611",
+        "name": "Shikako",
+        "source": "https://www.wikidata.org/wiki/Q100453611",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q137459078",
+        "name": "Ava Yaman",
+        "source": "https://www.wikidata.org/wiki/Q137459078",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q63168067",
+        "name": "Ebru Şahin",
+        "source": "https://www.wikidata.org/wiki/Q63168067",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q115609938",
+        "name": "Su Burcu Yazgı Coşkun",
+        "source": "https://www.wikidata.org/wiki/Q115609938",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17045597",
+        "name": "Ecem Özkaya Üstündağ",
+        "source": "https://www.wikidata.org/wiki/Q17045597",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q72850504",
+        "name": "Hafsanur Sancaktutan",
+        "source": "https://www.wikidata.org/wiki/Q72850504",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q97464650",
+        "name": "Valérie Keruzoré",
+        "source": "https://www.wikidata.org/wiki/Q97464650",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q23767057",
+        "name": "Margot Bancilhon",
+        "source": "https://www.wikidata.org/wiki/Q23767057",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3354159",
+        "name": "Ophélia Kolb",
+        "source": "https://www.wikidata.org/wiki/Q3354159",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q436888",
+        "name": "Sabrina Ouazani",
+        "source": "https://www.wikidata.org/wiki/Q436888",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16185718",
+        "name": "Lila Salet",
+        "source": "https://www.wikidata.org/wiki/Q16185718",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q16740530",
+        "name": "Hiyori Sakurada",
+        "source": "https://www.wikidata.org/wiki/Q16740530",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11556587",
+        "name": "Megumi Hatachiya",
+        "source": "https://www.wikidata.org/wiki/Q11556587",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17223237",
+        "name": "Hirona Yamazaki",
+        "source": "https://www.wikidata.org/wiki/Q17223237",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q22128784",
+        "name": "Risa Oda",
+        "source": "https://www.wikidata.org/wiki/Q22128784",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11584074",
+        "name": "Yuki Yajima",
+        "source": "https://www.wikidata.org/wiki/Q11584074",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q12471138",
+        "name": "Airis Emiliana",
+        "source": "https://www.wikidata.org/wiki/Q12471138",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q12524906",
+        "name": "Wulan Guritno",
+        "source": "https://www.wikidata.org/wiki/Q12524906",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q12247828",
+        "name": "Nahed Halabi",
+        "source": "https://www.wikidata.org/wiki/Q12247828",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q65172069",
+        "name": "Kiều Thanh",
+        "source": "https://www.wikidata.org/wiki/Q65172069",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q16140233",
+        "name": "Arisara Thongborisut",
+        "source": "https://www.wikidata.org/wiki/Q16140233",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q75019739",
+        "name": "Shahiduddin Chowdhury Annie",
+        "source": "https://www.wikidata.org/wiki/Q75019739",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q85967739",
+        "name": "M. Rashiduzzaman Millat",
+        "source": "https://www.wikidata.org/wiki/Q85967739",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q73144365",
+        "name": "Zahir Uddin Swapan",
+        "source": "https://www.wikidata.org/wiki/Q73144365",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q72831053",
+        "name": "Monirul Haq Chowdhury",
+        "source": "https://www.wikidata.org/wiki/Q72831053",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q138346586",
+        "name": "Mir Shahe Alam",
+        "source": "https://www.wikidata.org/wiki/Q138346586",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q7421553",
+        "name": "Sara Arjun",
+        "source": "https://www.wikidata.org/wiki/Q7421553",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q84216754",
+        "name": "Sharmin Segal",
+        "source": "https://www.wikidata.org/wiki/Q84216754",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7496767",
+        "name": "Shilpa Shirodkar",
+        "source": "https://www.wikidata.org/wiki/Q7496767",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2721694",
+        "name": "Tina Ambani",
+        "source": "https://www.wikidata.org/wiki/Q2721694",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q18684239",
+        "name": "Adria Arjona",
+        "source": "https://www.wikidata.org/wiki/Q18684239",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q457433",
+        "name": "Sara Dylan",
+        "source": "https://www.wikidata.org/wiki/Q457433",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q118558462",
+        "name": "Brooks Nader",
+        "source": "https://www.wikidata.org/wiki/Q118558462",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q112147625",
+        "name": "Vivien Lyra Blair",
+        "source": "https://www.wikidata.org/wiki/Q112147625",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q4764669",
+        "name": "Anil Sharma",
+        "source": "https://www.wikidata.org/wiki/Q4764669",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16252723",
+        "name": "Vamsi Paidipally",
+        "source": "https://www.wikidata.org/wiki/Q16252723",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q61989043",
+        "name": "Laxman Utekar",
+        "source": "https://www.wikidata.org/wiki/Q61989043",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q24905373",
+        "name": "Adhik Ravichandran",
+        "source": "https://www.wikidata.org/wiki/Q24905373",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q124630720",
+        "name": "Nikki Rodriguez",
+        "source": "https://www.wikidata.org/wiki/Q124630720",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q60489296",
+        "name": "Molly Gordon",
+        "source": "https://www.wikidata.org/wiki/Q60489296",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5389146",
+        "name": "Erin Foster",
+        "source": "https://www.wikidata.org/wiki/Q5389146",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q110811038",
+        "name": "West Duchovny",
+        "source": "https://www.wikidata.org/wiki/Q110811038",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q107109595",
+        "name": "Lee Chae-min",
+        "source": "https://www.wikidata.org/wiki/Q107109595",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q55730330",
+        "name": "Byeon Woo-seok",
+        "source": "https://www.wikidata.org/wiki/Q55730330",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q60059587",
+        "name": "Jung Jun-won",
+        "source": "https://www.wikidata.org/wiki/Q60059587",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q108415461",
+        "name": "Choo Young-woo",
+        "source": "https://www.wikidata.org/wiki/Q108415461",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2481268",
+        "name": "alternative versions of Spider-Man",
+        "source": "https://www.wikidata.org/wiki/Q2481268",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2937657",
+        "name": "Captain Marvel",
+        "source": "https://www.wikidata.org/wiki/Q2937657",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5267281",
+        "name": "Devil Dinosaur",
+        "source": "https://www.wikidata.org/wiki/Q5267281",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3995012",
+        "name": "Toro",
+        "source": "https://www.wikidata.org/wiki/Q3995012",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q24868730",
+        "name": "山田杏奈",
+        "source": "https://www.wikidata.org/wiki/Q24868730",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11662775",
+        "name": "Yui Aoya",
+        "source": "https://www.wikidata.org/wiki/Q11662775",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q985888",
+        "name": "Hiroko Hatano",
+        "source": "https://www.wikidata.org/wiki/Q985888",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3155992",
+        "name": "Itsuki Sagara",
+        "source": "https://www.wikidata.org/wiki/Q3155992",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q9437110",
+        "name": "Nobuyuki Suzuki",
+        "source": "https://www.wikidata.org/wiki/Q9437110",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11655405",
+        "name": "Shōtarō Mamiya",
+        "source": "https://www.wikidata.org/wiki/Q11655405",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11395097",
+        "name": "Norimasa Fuke",
+        "source": "https://www.wikidata.org/wiki/Q11395097",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11576619",
+        "name": "Ryō Tajima",
+        "source": "https://www.wikidata.org/wiki/Q11576619",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q873484",
+        "name": "Aya Okamoto",
+        "source": "https://www.wikidata.org/wiki/Q873484",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11584776",
+        "name": "Shizuka Ishigami",
+        "source": "https://www.wikidata.org/wiki/Q11584776",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1066065",
+        "name": "Saki Fujita",
+        "source": "https://www.wikidata.org/wiki/Q1066065",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q48762060",
+        "name": "Hikaru Tono",
+        "source": "https://www.wikidata.org/wiki/Q48762060",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q22123158",
+        "name": "Nao",
+        "source": "https://www.wikidata.org/wiki/Q22123158",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17158593",
+        "name": "Saori Seto",
+        "source": "https://www.wikidata.org/wiki/Q17158593",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3547917",
+        "name": "Anna Ishibashi",
+        "source": "https://www.wikidata.org/wiki/Q3547917",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4390688",
+        "name": "Yuka Itaya",
+        "source": "https://www.wikidata.org/wiki/Q4390688",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q110136",
+        "name": "Christiane Krüger",
+        "source": "https://www.wikidata.org/wiki/Q110136",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1966108",
+        "name": "Natalia Rudziewicz",
+        "source": "https://www.wikidata.org/wiki/Q1966108",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q108590",
+        "name": "Theresa Underberg",
+        "source": "https://www.wikidata.org/wiki/Q108590",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q66548",
+        "name": "Collien Fernandes",
+        "source": "https://www.wikidata.org/wiki/Q66548",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q60991047",
+        "name": "Yuki Ishihara",
+        "source": "https://www.wikidata.org/wiki/Q60991047",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11482378",
+        "name": "Risa Hirako",
+        "source": "https://www.wikidata.org/wiki/Q11482378",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17161711",
+        "name": "Asami Aihara",
+        "source": "https://www.wikidata.org/wiki/Q17161711",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q22131609",
+        "name": "Rinu Machida",
+        "source": "https://www.wikidata.org/wiki/Q22131609",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1052326",
+        "name": "Junya Ikeda",
+        "source": "https://www.wikidata.org/wiki/Q1052326",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1049366",
+        "name": "Kazuki Kitamura",
+        "source": "https://www.wikidata.org/wiki/Q1049366",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1134063",
+        "name": "Shunsuke Daitō",
+        "source": "https://www.wikidata.org/wiki/Q1134063",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q56349228",
+        "name": "So Okuno",
+        "source": "https://www.wikidata.org/wiki/Q56349228",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q130603733",
+        "name": "Widiyanti Putri Wardhana",
+        "source": "https://www.wikidata.org/wiki/Q130603733",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q109432872",
+        "name": "Aaliyah Massaid",
+        "source": "https://www.wikidata.org/wiki/Q109432872",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q114673877",
+        "name": "Le Nguyen Bao Ngoc",
+        "source": "https://www.wikidata.org/wiki/Q114673877",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q124741786",
+        "name": "Kulthum Akbari",
+        "source": "https://www.wikidata.org/wiki/Q124741786",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q28724375",
+        "name": "Jefri Nichol",
+        "source": "https://www.wikidata.org/wiki/Q28724375",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q131416675",
+        "name": "Arya Mohan",
+        "source": "https://www.wikidata.org/wiki/Q131416675",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q12475661",
+        "name": "Bemby Putuanda",
+        "source": "https://www.wikidata.org/wiki/Q12475661",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q31174081",
+        "name": "Chicco Kurniawan",
+        "source": "https://www.wikidata.org/wiki/Q31174081",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q124728878",
+        "name": "Rıza Akpolat",
+        "source": "https://www.wikidata.org/wiki/Q124728878",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q123137301",
+        "name": "Barış Boyun",
+        "source": "https://www.wikidata.org/wiki/Q123137301",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q107311635",
+        "name": "Sezgin Baran Korkmaz",
+        "source": "https://www.wikidata.org/wiki/Q107311635",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q31193328",
+        "name": "Nurettin Yıldız",
+        "source": "https://www.wikidata.org/wiki/Q31193328",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q136033462",
+        "name": "Mochamad Irfan Yusuf",
+        "source": "https://www.wikidata.org/wiki/Q136033462",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q138328674",
+        "name": "Kayser Kamal",
+        "source": "https://www.wikidata.org/wiki/Q138328674",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q138357341",
+        "name": "Humaiun Kobir",
+        "source": "https://www.wikidata.org/wiki/Q138357341",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q138296707",
+        "name": "Sultan Salauddin Tuku",
+        "source": "https://www.wikidata.org/wiki/Q138296707",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1190670",
+        "name": "Franky",
+        "source": "https://www.wikidata.org/wiki/Q1190670",
+        "facts": 7
+      },
+      {
+        "id": "wiki-q858432",
+        "name": "Lorenor Zorro",
+        "source": "https://www.wikidata.org/wiki/Q858432",
+        "facts": 7
+      },
+      {
+        "id": "wiki-q1152213",
+        "name": "Chopper",
+        "source": "https://www.wikidata.org/wiki/Q1152213",
+        "facts": 7
+      },
+      {
+        "id": "wiki-q1078696",
+        "name": "Lysop",
+        "source": "https://www.wikidata.org/wiki/Q1078696",
+        "facts": 7
+      }
+    ],
+    [
+      {
+        "id": "wiki-q44409228",
+        "name": "Mitsuki",
+        "source": "https://www.wikidata.org/wiki/Q44409228",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q700543",
+        "name": "Madara Uchiha",
+        "source": "https://www.wikidata.org/wiki/Q700543",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q102315019",
+        "name": "Kawaki",
+        "source": "https://www.wikidata.org/wiki/Q102315019",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q25468954",
+        "name": "Momoshiki Ōtsutsuki",
+        "source": "https://www.wikidata.org/wiki/Q25468954",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "donkey-kong",
+        "name": "Donkey Kong",
+        "source": "",
+        "facts": 0
+      },
+      {
+        "id": "yoshi",
+        "name": "Yoshi",
+        "source": "",
+        "facts": 0
+      },
+      {
+        "id": "crash-bandicoot",
+        "name": "Crash Bandicoot",
+        "source": "",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1612623",
+        "name": "Satish Shah",
+        "source": "https://www.wikidata.org/wiki/Q1612623",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q12429127",
+        "name": "Mehmood Junior",
+        "source": "https://www.wikidata.org/wiki/Q12429127",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5278100",
+        "name": "Dinesh Phadnis",
+        "source": "https://www.wikidata.org/wiki/Q5278100",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q112082208",
+        "name": "Jeffrey Manchester",
+        "source": "https://www.wikidata.org/wiki/Q112082208",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q6220409",
+        "name": "John Balcerzak",
+        "source": "https://www.wikidata.org/wiki/Q6220409",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q4151476",
+        "name": "Larry Hoover",
+        "source": "https://www.wikidata.org/wiki/Q4151476",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q109526631",
+        "name": "Iñaki Godoy",
+        "source": "https://www.wikidata.org/wiki/Q109526631",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q9069884",
+        "name": "Roberto Gómez Fernández",
+        "source": "https://www.wikidata.org/wiki/Q9069884",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6055911",
+        "name": "Pablo Cruz Guerrero",
+        "source": "https://www.wikidata.org/wiki/Q6055911",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q6809186",
+        "name": "Megumi Sato",
+        "source": "https://www.wikidata.org/wiki/Q6809186",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11534848",
+        "name": "Kyōka",
+        "source": "https://www.wikidata.org/wiki/Q11534848",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11461244",
+        "name": "Nana Komatsu",
+        "source": "https://www.wikidata.org/wiki/Q11461244",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2293137",
+        "name": "Jay North",
+        "source": "https://www.wikidata.org/wiki/Q2293137",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q558721",
+        "name": "Kamar de los Reyes",
+        "source": "https://www.wikidata.org/wiki/Q558721",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q152767",
+        "name": "Brad Renfro",
+        "source": "https://www.wikidata.org/wiki/Q152767",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2707815",
+        "name": "Die Ewigen",
+        "source": "https://www.wikidata.org/wiki/Q2707815",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q7738214",
+        "name": "The Green Team: Boy Millionaires",
+        "source": "https://www.wikidata.org/wiki/Q7738214",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q686623",
+        "name": "Nightwing",
+        "source": "https://www.wikidata.org/wiki/Q686623",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q126393091",
+        "name": "Nell Fisher",
+        "source": "https://www.wikidata.org/wiki/Q126393091",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16730400",
+        "name": "Emilia Jones",
+        "source": "https://www.wikidata.org/wiki/Q16730400",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q453740",
+        "name": "Amanda Abbington",
+        "source": "https://www.wikidata.org/wiki/Q453740",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q127159774",
+        "name": "Nimisha Priya",
+        "source": "https://www.wikidata.org/wiki/Q127159774",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q134404125",
+        "name": "Vyomika Singh",
+        "source": "https://www.wikidata.org/wiki/Q134404125",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q112398478",
+        "name": "Chitra Tripathi",
+        "source": "https://www.wikidata.org/wiki/Q112398478",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q262218",
+        "name": "Rachel Miner",
+        "source": "https://www.wikidata.org/wiki/Q262218",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q124755939",
+        "name": "Lilli Kay",
+        "source": "https://www.wikidata.org/wiki/Q124755939",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2350967",
+        "name": "Jurnee Smollett",
+        "source": "https://www.wikidata.org/wiki/Q2350967",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q83784638",
+        "name": "Nitish Kumar Reddy",
+        "source": "https://www.wikidata.org/wiki/Q83784638",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q104766914",
+        "name": "Dhruv Jurel",
+        "source": "https://www.wikidata.org/wiki/Q104766914",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q131324669",
+        "name": "Priyansh Arya",
+        "source": "https://www.wikidata.org/wiki/Q131324669",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q115716005",
+        "name": "Hayal Kaya",
+        "source": "https://www.wikidata.org/wiki/Q115716005",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6742573",
+        "name": "Evrim Akın",
+        "source": "https://www.wikidata.org/wiki/Q6742573",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6849761",
+        "name": "Belçim Bilgin",
+        "source": "https://www.wikidata.org/wiki/Q6849761",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q97954759",
+        "name": "Luca Salvadori",
+        "source": "https://www.wikidata.org/wiki/Q97954759",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q212496",
+        "name": "Tommaso Buscetta",
+        "source": "https://www.wikidata.org/wiki/Q212496",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3882203",
+        "name": "Federico Aldrovandi",
+        "source": "https://www.wikidata.org/wiki/Q3882203",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q7395773",
+        "name": "Saba Azad",
+        "source": "https://www.wikidata.org/wiki/Q7395773",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q131178145",
+        "name": "Ritika Nayak",
+        "source": "https://www.wikidata.org/wiki/Q131178145",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q43396404",
+        "name": "Nikita Dutta",
+        "source": "https://www.wikidata.org/wiki/Q43396404",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q21503533",
+        "name": "Salah Abdeslam",
+        "source": "https://www.wikidata.org/wiki/Q21503533",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q19832212",
+        "name": "Serge Atlaoui",
+        "source": "https://www.wikidata.org/wiki/Q19832212",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q98716230",
+        "name": "Mathieu Blanchard",
+        "source": "https://www.wikidata.org/wiki/Q98716230",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q123405229",
+        "name": "Hirofumi Aosasa",
+        "source": "https://www.wikidata.org/wiki/Q123405229",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11474080",
+        "name": "Yoshiaki Iwai",
+        "source": "https://www.wikidata.org/wiki/Q11474080",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11561782",
+        "name": "Yōichi Shibuya",
+        "source": "https://www.wikidata.org/wiki/Q11561782",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1203621",
+        "name": "Peter Wright",
+        "source": "https://www.wikidata.org/wiki/Q1203621",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17386578",
+        "name": "Gerwyn Price",
+        "source": "https://www.wikidata.org/wiki/Q17386578",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q136540549",
+        "name": "Charlie Manby",
+        "source": "https://www.wikidata.org/wiki/Q136540549",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11569664",
+        "name": "Kataoka Kamezō IV",
+        "source": "https://www.wikidata.org/wiki/Q11569664",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17158338",
+        "name": "Shōichi Komatsu",
+        "source": "https://www.wikidata.org/wiki/Q17158338",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4332439",
+        "name": "Ōkawa Hashizō II",
+        "source": "https://www.wikidata.org/wiki/Q4332439",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q18615969",
+        "name": "Darshan Kumar",
+        "source": "https://www.wikidata.org/wiki/Q18615969",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q20740596",
+        "name": "Abhishek Bajaj",
+        "source": "https://www.wikidata.org/wiki/Q20740596",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q123991004",
+        "name": "Vedang Raina",
+        "source": "https://www.wikidata.org/wiki/Q123991004",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q113553703",
+        "name": "Félix Lebrun",
+        "source": "https://www.wikidata.org/wiki/Q113553703",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q113091289",
+        "name": "Alexis Lebrun",
+        "source": "https://www.wikidata.org/wiki/Q113091289",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q85626140",
+        "name": "Arthur Cazaux",
+        "source": "https://www.wikidata.org/wiki/Q85626140",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q27917549",
+        "name": "Hayato Sano",
+        "source": "https://www.wikidata.org/wiki/Q27917549",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q106994579",
+        "name": "Jūtarō Yamanaka",
+        "source": "https://www.wikidata.org/wiki/Q106994579",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q28688349",
+        "name": "Jinto Yoshida",
+        "source": "https://www.wikidata.org/wiki/Q28688349",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q17216598",
+        "name": "Haruka Miwa",
+        "source": "https://www.wikidata.org/wiki/Q17216598",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q22129145",
+        "name": "Mayu Hotta",
+        "source": "https://www.wikidata.org/wiki/Q22129145",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6781210",
+        "name": "Maryjun Takahashi",
+        "source": "https://www.wikidata.org/wiki/Q6781210",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q60194618",
+        "name": "Ren Hiramoto",
+        "source": "https://www.wikidata.org/wiki/Q60194618",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q73112038",
+        "name": "Chihiro Suzuki",
+        "source": "https://www.wikidata.org/wiki/Q73112038",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q60990260",
+        "name": "Yoshiya Uzatsuyo",
+        "source": "https://www.wikidata.org/wiki/Q60990260",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1083125",
+        "name": "Christina Drechsler",
+        "source": "https://www.wikidata.org/wiki/Q1083125",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q76374",
+        "name": "Eva Renzi",
+        "source": "https://www.wikidata.org/wiki/Q76374",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q126864",
+        "name": "Monika Lundi",
+        "source": "https://www.wikidata.org/wiki/Q126864",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q17230357",
+        "name": "Genta Matsuda",
+        "source": "https://www.wikidata.org/wiki/Q17230357",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q118592664",
+        "name": "Soya Kurokawa",
+        "source": "https://www.wikidata.org/wiki/Q118592664",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11620317",
+        "name": "Riku Hagiwara",
+        "source": "https://www.wikidata.org/wiki/Q11620317",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11493903",
+        "name": "Reika Manaki",
+        "source": "https://www.wikidata.org/wiki/Q11493903",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11516009",
+        "name": "Kanato Tsukishiro",
+        "source": "https://www.wikidata.org/wiki/Q11516009",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11583637",
+        "name": "Suzuho Makaze",
+        "source": "https://www.wikidata.org/wiki/Q11583637",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11329967",
+        "name": "Rino Higa",
+        "source": "https://www.wikidata.org/wiki/Q11329967",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11378478",
+        "name": "Nakadai Nao",
+        "source": "https://www.wikidata.org/wiki/Q11378478",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q459861",
+        "name": "Rina Takeda",
+        "source": "https://www.wikidata.org/wiki/Q459861",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5664669",
+        "name": "Alejandra Darín",
+        "source": "https://www.wikidata.org/wiki/Q5664669",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q6124394",
+        "name": "Selva Alemán",
+        "source": "https://www.wikidata.org/wiki/Q6124394",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q2876166",
+        "name": "María Socas",
+        "source": "https://www.wikidata.org/wiki/Q2876166",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2249024",
+        "name": "Renato Vallanzasca",
+        "source": "https://www.wikidata.org/wiki/Q2249024",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q60643954",
+        "name": "Angelo Izzo",
+        "source": "https://www.wikidata.org/wiki/Q60643954",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q139607401",
+        "name": "Andrea Maldera",
+        "source": "https://www.wikidata.org/wiki/Q139607401",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11633584",
+        "name": "Hana Toyoshima",
+        "source": "https://www.wikidata.org/wiki/Q11633584",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q28068723",
+        "name": "Kurumi Inagaki",
+        "source": "https://www.wikidata.org/wiki/Q28068723",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q125451531",
+        "name": "Yuno Nagao",
+        "source": "https://www.wikidata.org/wiki/Q125451531",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q63345076",
+        "name": "André Lamoglia",
+        "source": "https://www.wikidata.org/wiki/Q63345076",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q10342557",
+        "name": "Otávio Müller",
+        "source": "https://www.wikidata.org/wiki/Q10342557",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q10320480",
+        "name": "Lug de Paula",
+        "source": "https://www.wikidata.org/wiki/Q10320480",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q17686476",
+        "name": "Rinka Kumada",
+        "source": "https://www.wikidata.org/wiki/Q17686476",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q26044122",
+        "name": "Mayū Yokota",
+        "source": "https://www.wikidata.org/wiki/Q26044122",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q110403112",
+        "name": "Juri Kōsaka",
+        "source": "https://www.wikidata.org/wiki/Q110403112",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5954889",
+        "name": "Julieta Prandi",
+        "source": "https://www.wikidata.org/wiki/Q5954889",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6010910",
+        "name": "Mercedes Oviedo",
+        "source": "https://www.wikidata.org/wiki/Q6010910",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q135742560",
+        "name": "Ana Garibaldi",
+        "source": "https://www.wikidata.org/wiki/Q135742560",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3118556",
+        "name": "Grégory Fitoussi",
+        "source": "https://www.wikidata.org/wiki/Q3118556",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3105262",
+        "name": "Gianni Giardinelli",
+        "source": "https://www.wikidata.org/wiki/Q3105262",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q15069912",
+        "name": "Max Baissette de Malglaive",
+        "source": "https://www.wikidata.org/wiki/Q15069912",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q132587251",
+        "name": "Luthfianisa Putri Karlina",
+        "source": "https://www.wikidata.org/wiki/Q132587251",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q97306835",
+        "name": "Jihan Nurlela",
+        "source": "https://www.wikidata.org/wiki/Q97306835",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q30512408",
+        "name": "Fahda bint Falah Al Hithlain",
+        "source": "https://www.wikidata.org/wiki/Q30512408",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q103842932",
+        "name": "Ignacio Russo",
+        "source": "https://www.wikidata.org/wiki/Q103842932",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q60841644",
+        "name": "Fernando Batista",
+        "source": "https://www.wikidata.org/wiki/Q60841644",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q104903216",
+        "name": "José Manuel López",
+        "source": "https://www.wikidata.org/wiki/Q104903216",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q124039286",
+        "name": "Yoon Gai",
+        "source": "https://www.wikidata.org/wiki/Q124039286",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q97097652",
+        "name": "Lee Se-hee",
+        "source": "https://www.wikidata.org/wiki/Q97097652",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q107395839",
+        "name": "Shin Sia",
+        "source": "https://www.wikidata.org/wiki/Q107395839",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q138297202",
+        "name": "Shama Obaed",
+        "source": "https://www.wikidata.org/wiki/Q138297202",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q138298536",
+        "name": "Afroza Khanam Rita",
+        "source": "https://www.wikidata.org/wiki/Q138298536",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q133854988",
+        "name": "Meghna Alam",
+        "source": "https://www.wikidata.org/wiki/Q133854988",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q25431852",
+        "name": "Volodymyr Horbatiuk",
+        "source": "https://www.wikidata.org/wiki/Q25431852",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q118131849",
+        "name": "Pavlo Palisa",
+        "source": "https://www.wikidata.org/wiki/Q118131849",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q28702734",
+        "name": "Svyatoslav Zaits",
+        "source": "https://www.wikidata.org/wiki/Q28702734",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q55605555",
+        "name": "Black Fox (Robert Paine)",
+        "source": "https://www.wikidata.org/wiki/Q55605555",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q2298436",
+        "name": "Red Guardian",
+        "source": "https://www.wikidata.org/wiki/Q2298436",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q1094358",
+        "name": "Tarantula",
+        "source": "https://www.wikidata.org/wiki/Q1094358",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q25214275",
+        "name": "Hellfire",
+        "source": "https://www.wikidata.org/wiki/Q25214275",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7332306",
+        "name": "Ricochet",
+        "source": "https://www.wikidata.org/wiki/Q7332306",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7806604",
+        "name": "Timeslip",
+        "source": "https://www.wikidata.org/wiki/Q7806604",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5062765",
+        "name": "Centrix",
+        "source": "https://www.wikidata.org/wiki/Q5062765",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q5500485",
+        "name": "Freedom Beast",
+        "source": "https://www.wikidata.org/wiki/Q5500485",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q7452711",
+        "name": "Seraph",
+        "source": "https://www.wikidata.org/wiki/Q7452711",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3703798",
+        "name": "Dawnstar",
+        "source": "https://www.wikidata.org/wiki/Q3703798",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q3815093",
+        "name": "Kid Quantum",
+        "source": "https://www.wikidata.org/wiki/Q3815093",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q3958948",
+        "name": "Shadow Lass",
+        "source": "https://www.wikidata.org/wiki/Q3958948",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5656379",
+        "name": "Hardware",
+        "source": "https://www.wikidata.org/wiki/Q5656379",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q6424261",
+        "name": "Kobalt",
+        "source": "https://www.wikidata.org/wiki/Q6424261",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q8044908",
+        "name": "Xombi",
+        "source": "https://www.wikidata.org/wiki/Q8044908",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q933042",
+        "name": "Isamot Kol",
+        "source": "https://www.wikidata.org/wiki/Q933042",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q785215",
+        "name": "Salaak",
+        "source": "https://www.wikidata.org/wiki/Q785215",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q3972835",
+        "name": "Stel",
+        "source": "https://www.wikidata.org/wiki/Q3972835",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q859351",
+        "name": "Cell",
+        "source": "https://www.wikidata.org/wiki/Q859351",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q3321112",
+        "name": "Mr. Popo",
+        "source": "https://www.wikidata.org/wiki/Q3321112",
+        "facts": 5
+      },
+      {
+        "id": "wiki-q910881",
+        "name": "Buu",
+        "source": "https://www.wikidata.org/wiki/Q910881",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1752065",
+        "name": "Master Roshi",
+        "source": "https://www.wikidata.org/wiki/Q1752065",
+        "facts": 7
+      },
+      {
+        "id": "wiki-q757141",
+        "name": "Krillin",
+        "source": "https://www.wikidata.org/wiki/Q757141",
+        "facts": 8
+      },
+      {
+        "id": "wiki-q843345",
+        "name": "Yamcha",
+        "source": "https://www.wikidata.org/wiki/Q843345",
+        "facts": 7
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1511163",
+        "name": "Nelson Muntz",
+        "source": "https://www.wikidata.org/wiki/Q1511163",
+        "facts": 4
+      },
+      {
+        "id": "wiki-q1514450",
+        "name": "Milhouse van Houten",
+        "source": "https://www.wikidata.org/wiki/Q1514450",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q1458168",
+        "name": "Ralph Wiggum",
+        "source": "https://www.wikidata.org/wiki/Q1458168",
+        "facts": 4
+      }
+    ],
+    [
+      {
+        "id": "cinderella",
+        "name": "Cinderella",
+        "source": "",
+        "facts": 0
+      },
+      {
+        "id": "rapunzel",
+        "name": "Rapunzel",
+        "source": "",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "jason-voorhees",
+        "name": "Jason Voorhees",
+        "source": "",
+        "facts": 0
+      },
+      {
+        "id": "ghostface",
+        "name": "Ghostface",
+        "source": "",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "peppa-pig",
+        "name": "Peppa Pig",
+        "source": "",
+        "facts": 0
+      },
+      {
+        "id": "bluey",
+        "name": "Bluey",
+        "source": "",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "optimus-prime",
+        "name": "Optimus Prime",
+        "source": "",
+        "facts": 0
+      },
+      {
+        "id": "bumblebee",
+        "name": "Bumblebee",
+        "source": "",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "sykkuno",
+        "name": "Sykkuno",
+        "source": "",
+        "facts": 0
+      },
+      {
+        "id": "asmongold",
+        "name": "Asmongold",
+        "source": "",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q15721444",
+        "name": "Yash",
+        "source": "https://www.wikidata.org/wiki/Q15721444",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q5225528",
+        "name": "Challenging star",
+        "source": "https://www.wikidata.org/wiki/Q5225528",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q724791",
+        "name": "Jack Osbourne",
+        "source": "https://www.wikidata.org/wiki/Q724791",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q75732852",
+        "name": "Ewan Mitchell",
+        "source": "https://www.wikidata.org/wiki/Q75732852",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2204761",
+        "name": "Madame Web",
+        "source": "https://www.wikidata.org/wiki/Q2204761",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q18754954",
+        "name": "Silk",
+        "source": "https://www.wikidata.org/wiki/Q18754954",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11502721",
+        "name": "Takeshi Niinami",
+        "source": "https://www.wikidata.org/wiki/Q11502721",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11561196",
+        "name": "Kenji Shimizu",
+        "source": "https://www.wikidata.org/wiki/Q11561196",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q135114696",
+        "name": "Aneet Padda",
+        "source": "https://www.wikidata.org/wiki/Q135114696",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q107304740",
+        "name": "Mamitha Baiju",
+        "source": "https://www.wikidata.org/wiki/Q107304740",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2510830",
+        "name": "Mike Von Erich",
+        "source": "https://www.wikidata.org/wiki/Q2510830",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q2124153",
+        "name": "Chris Von Erich",
+        "source": "https://www.wikidata.org/wiki/Q2124153",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q267542",
+        "name": "Judith Godrèche",
+        "source": "https://www.wikidata.org/wiki/Q267542",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3186653",
+        "name": "Joséphine Japy",
+        "source": "https://www.wikidata.org/wiki/Q3186653",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3319134",
+        "name": "Mohit Suri",
+        "source": "https://www.wikidata.org/wiki/Q3319134",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3469329",
+        "name": "Sajid Khan",
+        "source": "https://www.wikidata.org/wiki/Q3469329",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q170017",
+        "name": "Æthelstan",
+        "source": "https://www.wikidata.org/wiki/Q170017",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q190166",
+        "name": "Edmund I.",
+        "source": "https://www.wikidata.org/wiki/Q190166",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q12033548",
+        "name": "Linda Bollea",
+        "source": "https://www.wikidata.org/wiki/Q12033548",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q106581867",
+        "name": "Abby Champion",
+        "source": "https://www.wikidata.org/wiki/Q106581867",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q100454034",
+        "name": "Takuto Teranishi",
+        "source": "https://www.wikidata.org/wiki/Q100454034",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q101199912",
+        "name": "Yoshitaka Hara",
+        "source": "https://www.wikidata.org/wiki/Q101199912",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q361000",
+        "name": "Kazan",
+        "source": "https://www.wikidata.org/wiki/Q361000",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q449540",
+        "name": "Ichijō",
+        "source": "https://www.wikidata.org/wiki/Q449540",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q122642385",
+        "name": "Shilo Sanders",
+        "source": "https://www.wikidata.org/wiki/Q122642385",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q111787322",
+        "name": "Chris Oladokun",
+        "source": "https://www.wikidata.org/wiki/Q111787322",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q65023",
+        "name": "Tatjana Patitz",
+        "source": "https://www.wikidata.org/wiki/Q65023",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q34674459",
+        "name": "Heidrun Perdelwitz",
+        "source": "https://www.wikidata.org/wiki/Q34674459",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q27063133",
+        "name": "G. Marimuthu",
+        "source": "https://www.wikidata.org/wiki/Q27063133",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q17011882",
+        "name": "Robo Shankar",
+        "source": "https://www.wikidata.org/wiki/Q17011882",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q872994",
+        "name": "Wakana Matsumoto",
+        "source": "https://www.wikidata.org/wiki/Q872994",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11469322",
+        "name": "Maika Yamamoto",
+        "source": "https://www.wikidata.org/wiki/Q11469322",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q19803999",
+        "name": "Abhishek Sharma (Cricketspieler, 2000)",
+        "source": "https://www.wikidata.org/wiki/Q19803999",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4143327",
+        "name": "Gopal Bhar",
+        "source": "https://www.wikidata.org/wiki/Q4143327",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q136522838",
+        "name": "Chase DeMoor",
+        "source": "https://www.wikidata.org/wiki/Q136522838",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q132852059",
+        "name": "Ramon Cardenas",
+        "source": "https://www.wikidata.org/wiki/Q132852059",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q729264",
+        "name": "Ramon Estevez",
+        "source": "https://www.wikidata.org/wiki/Q729264",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q19832503",
+        "name": "Will Peltz",
+        "source": "https://www.wikidata.org/wiki/Q19832503",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q7929196",
+        "name": "Vijay Raghavendra",
+        "source": "https://www.wikidata.org/wiki/Q7929196",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q38846799",
+        "name": "Prithiveeraj",
+        "source": "https://www.wikidata.org/wiki/Q38846799",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q77035",
+        "name": "Udo Kier",
+        "source": "https://www.wikidata.org/wiki/Q77035",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q108394",
+        "name": "Willi Herren",
+        "source": "https://www.wikidata.org/wiki/Q108394",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q56315142",
+        "name": "Umar Nurmagomedov",
+        "source": "https://www.wikidata.org/wiki/Q56315142",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q65157751",
+        "name": "Usman Nurmagomedov",
+        "source": "https://www.wikidata.org/wiki/Q65157751",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1190972",
+        "name": "Fujiwara no Teishi",
+        "source": "https://www.wikidata.org/wiki/Q1190972",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5507521",
+        "name": "Fujiwara no Kenshi",
+        "source": "https://www.wikidata.org/wiki/Q5507521",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q123739037",
+        "name": "Sam Konstas",
+        "source": "https://www.wikidata.org/wiki/Q123739037",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q16206320",
+        "name": "Mr. Cruel",
+        "source": "https://www.wikidata.org/wiki/Q16206320",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q68645967",
+        "name": "Hōshōryū Tomokatsu",
+        "source": "https://www.wikidata.org/wiki/Q68645967",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3875110",
+        "name": "Tamawashi Ichirō",
+        "source": "https://www.wikidata.org/wiki/Q3875110",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2568013",
+        "name": "High Evolutionary",
+        "source": "https://www.wikidata.org/wiki/Q2568013",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q1987662",
+        "name": "Beta Ray Bill",
+        "source": "https://www.wikidata.org/wiki/Q1987662",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q118495694",
+        "name": "Sang Heon Lee",
+        "source": "https://www.wikidata.org/wiki/Q118495694",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17504174",
+        "name": "Jung Hae-in",
+        "source": "https://www.wikidata.org/wiki/Q17504174",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q16832067",
+        "name": "Rachita Ram",
+        "source": "https://www.wikidata.org/wiki/Q16832067",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q25004445",
+        "name": "Pavithra Lokesh",
+        "source": "https://www.wikidata.org/wiki/Q25004445",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11259381",
+        "name": "Tokio Emoto",
+        "source": "https://www.wikidata.org/wiki/Q11259381",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q7385557",
+        "name": "Ryutarou Akimoto",
+        "source": "https://www.wikidata.org/wiki/Q7385557",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q7283589",
+        "name": "Rahul Dev",
+        "source": "https://www.wikidata.org/wiki/Q7283589",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q21932068",
+        "name": "Laksh Lalwani",
+        "source": "https://www.wikidata.org/wiki/Q21932068",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q66828598",
+        "name": "Raul",
+        "source": "https://www.wikidata.org/wiki/Q66828598",
+        "facts": 5
+      },
+      {
+        "id": "wiki-q65275571",
+        "name": "Ren Meguro",
+        "source": "https://www.wikidata.org/wiki/Q65275571",
+        "facts": 5
+      }
+    ],
+    [
+      {
+        "id": "wiki-q470084",
+        "name": "Yeonsangun",
+        "source": "https://www.wikidata.org/wiki/Q470084",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q482874",
+        "name": "Gwanghaegun",
+        "source": "https://www.wikidata.org/wiki/Q482874",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1142180",
+        "name": "Junji Majima",
+        "source": "https://www.wikidata.org/wiki/Q1142180",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q20039376",
+        "name": "Shō Kasamatsu",
+        "source": "https://www.wikidata.org/wiki/Q20039376",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q109608",
+        "name": "Sophia Thomalla",
+        "source": "https://www.wikidata.org/wiki/Q109608",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q76665",
+        "name": "Nadja Auermann",
+        "source": "https://www.wikidata.org/wiki/Q76665",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q7290570",
+        "name": "Ramón Valdés",
+        "source": "https://www.wikidata.org/wiki/Q7290570",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5340680",
+        "name": "Eduardo Manzano",
+        "source": "https://www.wikidata.org/wiki/Q5340680",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q15808337",
+        "name": "Eric Stehfest",
+        "source": "https://www.wikidata.org/wiki/Q15808337",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q2335998",
+        "name": "Stefan Behrens",
+        "source": "https://www.wikidata.org/wiki/Q2335998",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q29918446",
+        "name": "Matteo Berrettini",
+        "source": "https://www.wikidata.org/wiki/Q29918446",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q375938",
+        "name": "Adriano Panatta",
+        "source": "https://www.wikidata.org/wiki/Q375938",
+        "facts": 4
+      }
+    ],
+    [
+      {
+        "id": "wiki-q55281902",
+        "name": "Alice D'Amato",
+        "source": "https://www.wikidata.org/wiki/Q55281902",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q47548693",
+        "name": "Asia D'Amato",
+        "source": "https://www.wikidata.org/wiki/Q47548693",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q6635833",
+        "name": "Tanuma Okitomo",
+        "source": "https://www.wikidata.org/wiki/Q6635833",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q3356428",
+        "name": "Orkhan",
+        "source": "https://www.wikidata.org/wiki/Q3356428",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q28067915",
+        "name": "Eiji Akaso",
+        "source": "https://www.wikidata.org/wiki/Q28067915",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17229848",
+        "name": "Shōno Hayama",
+        "source": "https://www.wikidata.org/wiki/Q17229848",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q108187195",
+        "name": "Mark Epstein",
+        "source": "https://www.wikidata.org/wiki/Q108187195",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q111796796",
+        "name": "Behdad Eghbali",
+        "source": "https://www.wikidata.org/wiki/Q111796796",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q4211263",
+        "name": "Pakubuwono XIII",
+        "source": "https://www.wikidata.org/wiki/Q4211263",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3335337",
+        "name": "Mangkunegara IX",
+        "source": "https://www.wikidata.org/wiki/Q3335337",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q56275288",
+        "name": "Alex Guerrero",
+        "source": "https://www.wikidata.org/wiki/Q56275288",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q15912667",
+        "name": "Andrew Chiang",
+        "source": "https://www.wikidata.org/wiki/Q15912667",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3591236",
+        "name": "Éric Legrand",
+        "source": "https://www.wikidata.org/wiki/Q3591236",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q3035072",
+        "name": "Dominique Collignon-Maurin",
+        "source": "https://www.wikidata.org/wiki/Q3035072",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q759338",
+        "name": "Fujiwara no Tametoki",
+        "source": "https://www.wikidata.org/wiki/Q759338",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q2439046",
+        "name": "Tokugawa Munetake",
+        "source": "https://www.wikidata.org/wiki/Q2439046",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1321703",
+        "name": "Fujiwara no Kaneie",
+        "source": "https://www.wikidata.org/wiki/Q1321703",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1370620",
+        "name": "Fujiwara no Yorimichi",
+        "source": "https://www.wikidata.org/wiki/Q1370620",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1578055",
+        "name": "Hans Peter Korff",
+        "source": "https://www.wikidata.org/wiki/Q1578055",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11973726",
+        "name": "Sven Walser",
+        "source": "https://www.wikidata.org/wiki/Q11973726",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q76978",
+        "name": "Christiane Felscherinow",
+        "source": "https://www.wikidata.org/wiki/Q76978",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q55261140",
+        "name": "Mona Kasten",
+        "source": "https://www.wikidata.org/wiki/Q55261140",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q115530249",
+        "name": "Jun Suehiro",
+        "source": "https://www.wikidata.org/wiki/Q115530249",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q124068147",
+        "name": "Yuri Hirose",
+        "source": "https://www.wikidata.org/wiki/Q124068147",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11454655",
+        "name": "Ichirōta Miyakawa",
+        "source": "https://www.wikidata.org/wiki/Q11454655",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5368124",
+        "name": "Atsurō Watabe",
+        "source": "https://www.wikidata.org/wiki/Q5368124",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q47465078",
+        "name": "Chiaki Hara",
+        "source": "https://www.wikidata.org/wiki/Q47465078",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q64783622",
+        "name": "Asuka Kawatoko",
+        "source": "https://www.wikidata.org/wiki/Q64783622",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q126364957",
+        "name": "Rouven Laur",
+        "source": "https://www.wikidata.org/wiki/Q126364957",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q97414",
+        "name": "Christian Rätsch",
+        "source": "https://www.wikidata.org/wiki/Q97414",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q16264122",
+        "name": "Tomohiro Ichikawa",
+        "source": "https://www.wikidata.org/wiki/Q16264122",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11651653",
+        "name": "長塚圭史",
+        "source": "https://www.wikidata.org/wiki/Q11651653",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q6381760",
+        "name": "Kazuya Hiraide",
+        "source": "https://www.wikidata.org/wiki/Q6381760",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q718589",
+        "name": "Kenjirō Shinozuka",
+        "source": "https://www.wikidata.org/wiki/Q718589",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q61041",
+        "name": "Felix Neureuther",
+        "source": "https://www.wikidata.org/wiki/Q61041",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q18715441",
+        "name": "Linus Straßer",
+        "source": "https://www.wikidata.org/wiki/Q18715441",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q10371551",
+        "name": "Silvia Abravanel",
+        "source": "https://www.wikidata.org/wiki/Q10371551",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q10357883",
+        "name": "Rebeca Abravanel",
+        "source": "https://www.wikidata.org/wiki/Q10357883",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q17484156",
+        "name": "Flávia Saraiva",
+        "source": "https://www.wikidata.org/wiki/Q17484156",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q257896",
+        "name": "Jade Barbosa",
+        "source": "https://www.wikidata.org/wiki/Q257896",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q116205520",
+        "name": "Hotma Sitompul",
+        "source": "https://www.wikidata.org/wiki/Q116205520",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q110592214",
+        "name": "Tawfique Nawaz",
+        "source": "https://www.wikidata.org/wiki/Q110592214",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q17046838",
+        "name": "İbrahim Hacıosmanoğlu",
+        "source": "https://www.wikidata.org/wiki/Q17046838",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q116727501",
+        "name": "Mazhar Murtezaoğlu",
+        "source": "https://www.wikidata.org/wiki/Q116727501",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q374087",
+        "name": "Go-Ichijō",
+        "source": "https://www.wikidata.org/wiki/Q374087",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q349296",
+        "name": "Go-Suzaku",
+        "source": "https://www.wikidata.org/wiki/Q349296",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q10332560",
+        "name": "Li Xin",
+        "source": "https://www.wikidata.org/wiki/Q10332560",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q10479625",
+        "name": "Qiang Hui",
+        "source": "https://www.wikidata.org/wiki/Q10479625",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q72520",
+        "name": "Rolf Schimpf",
+        "source": "https://www.wikidata.org/wiki/Q72520",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q122806",
+        "name": "Hartmut Becker",
+        "source": "https://www.wikidata.org/wiki/Q122806",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11616189",
+        "name": "Terunofuji Haruo",
+        "source": "https://www.wikidata.org/wiki/Q11616189",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q448054",
+        "name": "Hakuhō Shō",
+        "source": "https://www.wikidata.org/wiki/Q448054",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11653439",
+        "name": "Nao Osada",
+        "source": "https://www.wikidata.org/wiki/Q11653439",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q4260650",
+        "name": "Yuka Motohashi",
+        "source": "https://www.wikidata.org/wiki/Q4260650",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3723828",
+        "name": "Emanuel Lo",
+        "source": "https://www.wikidata.org/wiki/Q3723828",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3618225",
+        "name": "Anonimo Italiano",
+        "source": "https://www.wikidata.org/wiki/Q3618225",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q125949382",
+        "name": "Kate Lotus",
+        "source": "https://www.wikidata.org/wiki/Q125949382",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q17224200",
+        "name": "Midoriko Higuchi",
+        "source": "https://www.wikidata.org/wiki/Q17224200",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q6128516",
+        "name": "Silvia Alonso",
+        "source": "https://www.wikidata.org/wiki/Q6128516",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q66712166",
+        "name": "Iria del Río",
+        "source": "https://www.wikidata.org/wiki/Q66712166",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3859408",
+        "name": "Mita Medici",
+        "source": "https://www.wikidata.org/wiki/Q3859408",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q3605677",
+        "name": "Adriana Russo",
+        "source": "https://www.wikidata.org/wiki/Q3605677",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q6100051",
+        "name": "Kayhan Yıldızoğlu",
+        "source": "https://www.wikidata.org/wiki/Q6100051",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q47499833",
+        "name": "Emre Torun",
+        "source": "https://www.wikidata.org/wiki/Q47499833",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11469391",
+        "name": "Ryōko Yamamoto",
+        "source": "https://www.wikidata.org/wiki/Q11469391",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q10959942",
+        "name": "Ayako Koshino",
+        "source": "https://www.wikidata.org/wiki/Q10959942",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2874769",
+        "name": "Axelle Laffont",
+        "source": "https://www.wikidata.org/wiki/Q2874769",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q37798753",
+        "name": "Stéphane Caillard",
+        "source": "https://www.wikidata.org/wiki/Q37798753",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q322979",
+        "name": "Yumi Uchiyama",
+        "source": "https://www.wikidata.org/wiki/Q322979",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q264348",
+        "name": "Akemi Okamura",
+        "source": "https://www.wikidata.org/wiki/Q264348",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q133168",
+        "name": "Orhan I.",
+        "source": "https://www.wikidata.org/wiki/Q133168",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q83100",
+        "name": "Osman I.",
+        "source": "https://www.wikidata.org/wiki/Q83100",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q124097190",
+        "name": "Akitsugu Tominaga",
+        "source": "https://www.wikidata.org/wiki/Q124097190",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q112239442",
+        "name": "Nomura Taiki",
+        "source": "https://www.wikidata.org/wiki/Q112239442",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q117755826",
+        "name": "Kanna Fuji",
+        "source": "https://www.wikidata.org/wiki/Q117755826",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q23948909",
+        "name": "Masami Ichikawa",
+        "source": "https://www.wikidata.org/wiki/Q23948909",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q108417122",
+        "name": "Maximilian Schmidt",
+        "source": "https://www.wikidata.org/wiki/Q108417122",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q107043976",
+        "name": "Owen Ansah",
+        "source": "https://www.wikidata.org/wiki/Q107043976",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q22127286",
+        "name": "Sae Okazaki",
+        "source": "https://www.wikidata.org/wiki/Q22127286",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11383802",
+        "name": "Tomomi Satō",
+        "source": "https://www.wikidata.org/wiki/Q11383802",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q102181107",
+        "name": "Sixpm",
+        "source": "https://www.wikidata.org/wiki/Q102181107",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3902945",
+        "name": "Pier Paolo Peroni",
+        "source": "https://www.wikidata.org/wiki/Q3902945",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3543927",
+        "name": "Gō Ayano",
+        "source": "https://www.wikidata.org/wiki/Q3543927",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q1148848",
+        "name": "Hideaki Itō",
+        "source": "https://www.wikidata.org/wiki/Q1148848",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q15391954",
+        "name": "Julius Nitschkoff",
+        "source": "https://www.wikidata.org/wiki/Q15391954",
+        "facts": 4
+      },
+      {
+        "id": "wiki-q18025807",
+        "name": "Merlin Rose",
+        "source": "https://www.wikidata.org/wiki/Q18025807",
+        "facts": 4
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1423",
+        "name": "Domitian",
+        "source": "https://www.wikidata.org/wiki/Q1423",
+        "facts": 4
+      },
+      {
+        "id": "wiki-q1433",
+        "name": "Lucius Verus",
+        "source": "https://www.wikidata.org/wiki/Q1433",
+        "facts": 4
+      }
+    ],
+    [
+      {
+        "id": "wiki-q56808711",
+        "name": "Chiaki Kobayashi",
+        "source": "https://www.wikidata.org/wiki/Q56808711",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q55536620",
+        "name": "Takeo Ōtsuka",
+        "source": "https://www.wikidata.org/wiki/Q55536620",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q65208119",
+        "name": "Connie Rahakundini Bakrie",
+        "source": "https://www.wikidata.org/wiki/Q65208119",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q120966768",
+        "name": "Lai Bâng",
+        "source": "https://www.wikidata.org/wiki/Q120966768",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q9142282",
+        "name": "Agnieszka Kaczorowska",
+        "source": "https://www.wikidata.org/wiki/Q9142282",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q27503625",
+        "name": "Maria Tyszkiewicz",
+        "source": "https://www.wikidata.org/wiki/Q27503625",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11560194",
+        "name": "Tatsuya Fukazawa",
+        "source": "https://www.wikidata.org/wiki/Q11560194",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q11455263",
+        "name": "Ryōta Miyadate",
+        "source": "https://www.wikidata.org/wiki/Q11455263",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q111112766",
+        "name": "Noritsugu Komaki",
+        "source": "https://www.wikidata.org/wiki/Q111112766",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q128839961",
+        "name": "Koji Asano",
+        "source": "https://www.wikidata.org/wiki/Q128839961",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11388303",
+        "name": "Emika Mitsuhara",
+        "source": "https://www.wikidata.org/wiki/Q11388303",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q11613596",
+        "name": "Yukiko Maisaka",
+        "source": "https://www.wikidata.org/wiki/Q11613596",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q56610984",
+        "name": "Ricardo Pietreczko",
+        "source": "https://www.wikidata.org/wiki/Q56610984",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6758401",
+        "name": "Marcus Eberhardt",
+        "source": "https://www.wikidata.org/wiki/Q6758401",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3550085",
+        "name": "Yūta Koseki",
+        "source": "https://www.wikidata.org/wiki/Q3550085",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q55050344",
+        "name": "Kairi Jō",
+        "source": "https://www.wikidata.org/wiki/Q55050344",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q115529290",
+        "name": "Shogo Asano",
+        "source": "https://www.wikidata.org/wiki/Q115529290",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q24870466",
+        "name": "Daiki Masuda",
+        "source": "https://www.wikidata.org/wiki/Q24870466",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q132432431",
+        "name": "Kōichi Okamoto",
+        "source": "https://www.wikidata.org/wiki/Q132432431",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q108109875",
+        "name": "Sōto Yamauchi",
+        "source": "https://www.wikidata.org/wiki/Q108109875",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q100269",
+        "name": "Simone Thomalla",
+        "source": "https://www.wikidata.org/wiki/Q100269",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q1450160",
+        "name": "Franziska Petri",
+        "source": "https://www.wikidata.org/wiki/Q1450160",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3701838",
+        "name": "Daniela Vergara",
+        "source": "https://www.wikidata.org/wiki/Q3701838",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q30076167",
+        "name": "Serena Bortone",
+        "source": "https://www.wikidata.org/wiki/Q30076167",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q29526438",
+        "name": "Katarzyna Zillmann",
+        "source": "https://www.wikidata.org/wiki/Q29526438",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q125022506",
+        "name": "Agnieszka Kwiatkowska-Gurdak",
+        "source": "https://www.wikidata.org/wiki/Q125022506",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q71077",
+        "name": "Paula Riemann",
+        "source": "https://www.wikidata.org/wiki/Q71077",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q108311",
+        "name": "Sophie Wepper",
+        "source": "https://www.wikidata.org/wiki/Q108311",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2057727",
+        "name": "Patrick Kalupa",
+        "source": "https://www.wikidata.org/wiki/Q2057727",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q1248726",
+        "name": "Timmi Trinks",
+        "source": "https://www.wikidata.org/wiki/Q1248726",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11624766",
+        "name": "Kototome Fujita",
+        "source": "https://www.wikidata.org/wiki/Q11624766",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q260984",
+        "name": "Itō Noe",
+        "source": "https://www.wikidata.org/wiki/Q260984",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q489462",
+        "name": "Chae Rim",
+        "source": "https://www.wikidata.org/wiki/Q489462",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q19349417",
+        "name": "Moon Ji-in",
+        "source": "https://www.wikidata.org/wiki/Q19349417",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q115530251",
+        "name": "Miku Kasai",
+        "source": "https://www.wikidata.org/wiki/Q115530251",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q11633974",
+        "name": "Ellie Toyota",
+        "source": "https://www.wikidata.org/wiki/Q11633974",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q61692558",
+        "name": "Biondo",
+        "source": "https://www.wikidata.org/wiki/Q61692558",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q26972358",
+        "name": "Luchè",
+        "source": "https://www.wikidata.org/wiki/Q26972358",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3749617",
+        "name": "Francesco Benigno",
+        "source": "https://www.wikidata.org/wiki/Q3749617",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q3929696",
+        "name": "Raiz",
+        "source": "https://www.wikidata.org/wiki/Q3929696",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q84603148",
+        "name": "Paolo Ciavarro",
+        "source": "https://www.wikidata.org/wiki/Q84603148",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3826324",
+        "name": "Lamberto Giorgi",
+        "source": "https://www.wikidata.org/wiki/Q3826324",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11496946",
+        "name": "Tōru Tezuka",
+        "source": "https://www.wikidata.org/wiki/Q11496946",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q12608108",
+        "name": "Ryohei Otani",
+        "source": "https://www.wikidata.org/wiki/Q12608108",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q23829601",
+        "name": "Matteo Martari",
+        "source": "https://www.wikidata.org/wiki/Q23829601",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q20007839",
+        "name": "Eugenio Franceschini",
+        "source": "https://www.wikidata.org/wiki/Q20007839",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q68185104",
+        "name": "Shōgo Sakata",
+        "source": "https://www.wikidata.org/wiki/Q68185104",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q66365025",
+        "name": "Tatsumaru Tachibana",
+        "source": "https://www.wikidata.org/wiki/Q66365025",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q111969416",
+        "name": "Park Hye-jeong",
+        "source": "https://www.wikidata.org/wiki/Q111969416",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q135309733",
+        "name": "Kim Hyeon-ji",
+        "source": "https://www.wikidata.org/wiki/Q135309733",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q96261",
+        "name": "Murad I.",
+        "source": "https://www.wikidata.org/wiki/Q96261",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q168769",
+        "name": "Mehmed I.",
+        "source": "https://www.wikidata.org/wiki/Q168769",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5860270",
+        "name": "Rodolfo Sancho",
+        "source": "https://www.wikidata.org/wiki/Q5860270",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6101484",
+        "name": "Raúl Tejón",
+        "source": "https://www.wikidata.org/wiki/Q6101484",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q109287495",
+        "name": "Masaya Sano",
+        "source": "https://www.wikidata.org/wiki/Q109287495",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q105258770",
+        "name": "Seiya Suezawa",
+        "source": "https://www.wikidata.org/wiki/Q105258770",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q55727141",
+        "name": "Kang Hyung-uk",
+        "source": "https://www.wikidata.org/wiki/Q55727141",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q131853593",
+        "name": "Jeon Han-gil",
+        "source": "https://www.wikidata.org/wiki/Q131853593",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11436260",
+        "name": "Hitoshi Ōne",
+        "source": "https://www.wikidata.org/wiki/Q11436260",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q11355654",
+        "name": "Kōichirō Miki",
+        "source": "https://www.wikidata.org/wiki/Q11355654",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q65192666",
+        "name": "Aleksandra Kałucka",
+        "source": "https://www.wikidata.org/wiki/Q65192666",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q56875474",
+        "name": "Natalia Kałucka",
+        "source": "https://www.wikidata.org/wiki/Q56875474",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q110703804",
+        "name": "Melanie Reichert",
+        "source": "https://www.wikidata.org/wiki/Q110703804",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q110703650",
+        "name": "Daniela Reichert",
+        "source": "https://www.wikidata.org/wiki/Q110703650",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q22120737",
+        "name": "Shintaro Yamada",
+        "source": "https://www.wikidata.org/wiki/Q22120737",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q24875914",
+        "name": "Yuji Maeda",
+        "source": "https://www.wikidata.org/wiki/Q24875914",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q11473103",
+        "name": "Natsumi Okamoto",
+        "source": "https://www.wikidata.org/wiki/Q11473103",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q124217564",
+        "name": "Rui Tsukishima",
+        "source": "https://www.wikidata.org/wiki/Q124217564",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q85994095",
+        "name": "Sal Priadi",
+        "source": "https://www.wikidata.org/wiki/Q85994095",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q99747558",
+        "name": "Phú Lê",
+        "source": "https://www.wikidata.org/wiki/Q99747558",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q19263820",
+        "name": "Özgecan Aslan",
+        "source": "https://www.wikidata.org/wiki/Q19263820",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3816343",
+        "name": "Konca Kuris",
+        "source": "https://www.wikidata.org/wiki/Q3816343",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q172933",
+        "name": "Johannes XII.",
+        "source": "https://www.wikidata.org/wiki/Q172933",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q178799",
+        "name": "Benedikt IX.",
+        "source": "https://www.wikidata.org/wiki/Q178799",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5638752",
+        "name": "Daniel Santillán",
+        "source": "https://www.wikidata.org/wiki/Q5638752",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6105671",
+        "name": "René Bertrand",
+        "source": "https://www.wikidata.org/wiki/Q6105671",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q6087805",
+        "name": "İlker İnanoğlu",
+        "source": "https://www.wikidata.org/wiki/Q6087805",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q19611346",
+        "name": "Gökhan Alkan",
+        "source": "https://www.wikidata.org/wiki/Q19611346",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2893028",
+        "name": "Beatriz Segall",
+        "source": "https://www.wikidata.org/wiki/Q2893028",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q9784963",
+        "name": "Cláudia Magno",
+        "source": "https://www.wikidata.org/wiki/Q9784963",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q491022",
+        "name": "Baek Sung-hyun",
+        "source": "https://www.wikidata.org/wiki/Q491022",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q16092114",
+        "name": "Choi Dae-hoon",
+        "source": "https://www.wikidata.org/wiki/Q16092114",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q10347428",
+        "name": "Pedro Dom",
+        "source": "https://www.wikidata.org/wiki/Q10347428",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q13025544",
+        "name": "Pieak Poster",
+        "source": "https://www.wikidata.org/wiki/Q13025544",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q17411161",
+        "name": "Ryan Adriandhy",
+        "source": "https://www.wikidata.org/wiki/Q17411161",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q20278467",
+        "name": "Muhadkly Acho",
+        "source": "https://www.wikidata.org/wiki/Q20278467",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q162543",
+        "name": "Mehmed VI.",
+        "source": "https://www.wikidata.org/wiki/Q162543",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q174798",
+        "name": "Mustafa I.",
+        "source": "https://www.wikidata.org/wiki/Q174798",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2504342",
+        "name": "Uwe Jellinek",
+        "source": "https://www.wikidata.org/wiki/Q2504342",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q1715356",
+        "name": "Jörg Hengstler",
+        "source": "https://www.wikidata.org/wiki/Q1715356",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q56173867",
+        "name": "Doğu Demirkol",
+        "source": "https://www.wikidata.org/wiki/Q56173867",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q25478162",
+        "name": "Aras Aydın",
+        "source": "https://www.wikidata.org/wiki/Q25478162",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1739",
+        "name": "Mutaz Essa Barshim",
+        "source": "https://www.wikidata.org/wiki/Q1739",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6875474",
+        "name": "Mishaal bin Hamad bin Khalifa Al Thani",
+        "source": "https://www.wikidata.org/wiki/Q6875474",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q16164536",
+        "name": "Ahmad El Jallaludin Rumi",
+        "source": "https://www.wikidata.org/wiki/Q16164536",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16162417",
+        "name": "Dul Jaelani",
+        "source": "https://www.wikidata.org/wiki/Q16162417",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q114972914",
+        "name": "Gracjan Szadziński",
+        "source": "https://www.wikidata.org/wiki/Q114972914",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q112632909",
+        "name": "Sebastian Urbaniak",
+        "source": "https://www.wikidata.org/wiki/Q112632909",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q10298866",
+        "name": "Humberto Carrão",
+        "source": "https://www.wikidata.org/wiki/Q10298866",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q5054732",
+        "name": "Cauã Reymond",
+        "source": "https://www.wikidata.org/wiki/Q5054732",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q97339756",
+        "name": "Kim Jae-sub",
+        "source": "https://www.wikidata.org/wiki/Q97339756",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q125449658",
+        "name": "Kwak Sang-eon",
+        "source": "https://www.wikidata.org/wiki/Q125449658",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2919200",
+        "name": "Bárbara Goenaga",
+        "source": "https://www.wikidata.org/wiki/Q2919200",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q261072",
+        "name": "Miren Ibarguren",
+        "source": "https://www.wikidata.org/wiki/Q261072",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q16508914",
+        "name": "Simon Desue",
+        "source": "https://www.wikidata.org/wiki/Q16508914",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q62555033",
+        "name": "Uwe Schüder",
+        "source": "https://www.wikidata.org/wiki/Q62555033",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q97523942",
+        "name": "Surya Sahetapy",
+        "source": "https://www.wikidata.org/wiki/Q97523942",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q13025628",
+        "name": "Penpetch Benyakul",
+        "source": "https://www.wikidata.org/wiki/Q13025628",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q12250284",
+        "name": "Haya Maraachli",
+        "source": "https://www.wikidata.org/wiki/Q12250284",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q12219690",
+        "name": "Sabah Jazairi",
+        "source": "https://www.wikidata.org/wiki/Q12219690",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q9183809",
+        "name": "Peter Lai",
+        "source": "https://www.wikidata.org/wiki/Q9183809",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q6852646",
+        "name": "Lau Siu Ming",
+        "source": "https://www.wikidata.org/wiki/Q6852646",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q130752146",
+        "name": "Đinh Quang Kiệt",
+        "source": "https://www.wikidata.org/wiki/Q130752146",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q120400674",
+        "name": "Trương Tiến Anh",
+        "source": "https://www.wikidata.org/wiki/Q120400674",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q16480817",
+        "name": "Lê Văn Luyện",
+        "source": "https://www.wikidata.org/wiki/Q16480817",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q16139040",
+        "name": "Smith Dharmasaroja",
+        "source": "https://www.wikidata.org/wiki/Q16139040",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q13023824",
+        "name": "Akarin Akaranithimetrad",
+        "source": "https://www.wikidata.org/wiki/Q13023824",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q96024059",
+        "name": "Sadanon Durongkaveroj",
+        "source": "https://www.wikidata.org/wiki/Q96024059",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q13024247",
+        "name": "Usamanee Vaithayanon",
+        "source": "https://www.wikidata.org/wiki/Q13024247",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q16306604",
+        "name": "Arissara Kumthorncharoen",
+        "source": "https://www.wikidata.org/wiki/Q16306604",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1087481",
+        "name": "Phiyada Akkraseranee",
+        "source": "https://www.wikidata.org/wiki/Q1087481",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q116741088",
+        "name": "Charlette Wasita Hermenau",
+        "source": "https://www.wikidata.org/wiki/Q116741088",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3056796",
+        "name": "Hayedeh",
+        "source": "https://www.wikidata.org/wiki/Q3056796",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q428021",
+        "name": "Mahasti",
+        "source": "https://www.wikidata.org/wiki/Q428021",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q2735518",
+        "name": "Box",
+        "source": "https://www.wikidata.org/wiki/Q2735518",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q3410524",
+        "name": "Puck",
+        "source": "https://www.wikidata.org/wiki/Q3410524",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5122591",
+        "name": "Citizen V",
+        "source": "https://www.wikidata.org/wiki/Q5122591",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q3325409",
+        "name": "Human Fly",
+        "source": "https://www.wikidata.org/wiki/Q3325409",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5039063",
+        "name": "Caretaker",
+        "source": "https://www.wikidata.org/wiki/Q5039063",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q48739508",
+        "name": "Spider-UK",
+        "source": "https://www.wikidata.org/wiki/Q48739508",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5065882",
+        "name": "Ch'od",
+        "source": "https://www.wikidata.org/wiki/Q5065882",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q3421361",
+        "name": "Raza Longknife",
+        "source": "https://www.wikidata.org/wiki/Q3421361",
+        "facts": 3
+      }
+    ],
+    [
+      {
+        "id": "wiki-q29098110",
+        "name": "Crane Mother",
+        "source": "https://www.wikidata.org/wiki/Q29098110",
+        "facts": 0
+      },
+      {
+        "id": "wiki-q110692815",
+        "name": "Spider-Bitch",
+        "source": "https://www.wikidata.org/wiki/Q110692815",
+        "facts": 0
+      }
+    ],
+    [
+      {
+        "id": "wiki-q17015182",
+        "name": "Redneck",
+        "source": "https://www.wikidata.org/wiki/Q17015182",
+        "facts": 1
+      },
+      {
+        "id": "wiki-q898165",
+        "name": "Union Jack",
+        "source": "https://www.wikidata.org/wiki/Q898165",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q4921469",
+        "name": "Black Pirate",
+        "source": "https://www.wikidata.org/wiki/Q4921469",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q6155630",
+        "name": "Janu the Jungle Boy",
+        "source": "https://www.wikidata.org/wiki/Q6155630",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3667083",
+        "name": "Chemical King",
+        "source": "https://www.wikidata.org/wiki/Q3667083",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q3800983",
+        "name": "Invisible Kid",
+        "source": "https://www.wikidata.org/wiki/Q3800983",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q5107060",
+        "name": "Chris KL-99",
+        "source": "https://www.wikidata.org/wiki/Q5107060",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q7600735",
+        "name": "Star Hawkins",
+        "source": "https://www.wikidata.org/wiki/Q7600735",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3109417",
+        "name": "Gnarrk",
+        "source": "https://www.wikidata.org/wiki/Q3109417",
+        "facts": 3
+      },
+      {
+        "id": "wiki-q17012485",
+        "name": "Nightrider",
+        "source": "https://www.wikidata.org/wiki/Q17012485",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q7352491",
+        "name": "Robin Hood",
+        "source": "https://www.wikidata.org/wiki/Q7352491",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q4782683",
+        "name": "Aqualad",
+        "source": "https://www.wikidata.org/wiki/Q4782683",
+        "facts": 2
+      }
+    ],
+    [
+      {
+        "id": "wiki-q1744341",
+        "name": "Orochimaru",
+        "source": "https://www.wikidata.org/wiki/Q1744341",
+        "facts": 7
+      },
+      {
+        "id": "wiki-q718509",
+        "name": "Nagato Uzumaki",
+        "source": "https://www.wikidata.org/wiki/Q718509",
+        "facts": 4
+      }
+    ],
+    [
+      {
+        "id": "wiki-q3294936",
+        "name": "Flamebird",
+        "source": "https://www.wikidata.org/wiki/Q3294936",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q6901680",
+        "name": "Monolith",
+        "source": "https://www.wikidata.org/wiki/Q6901680",
+        "facts": 1
+      }
+    ],
+    [
+      {
+        "id": "wiki-q9762",
+        "name": "Die Simpsons",
+        "source": "https://www.wikidata.org/wiki/Q9762",
+        "facts": 2
+      },
+      {
+        "id": "wiki-q1425114",
+        "name": "Knecht Ruprecht",
+        "source": "https://www.wikidata.org/wiki/Q1425114",
+        "facts": 2
+      }
+    ]
+  ]
+}

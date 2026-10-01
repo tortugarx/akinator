@@ -24,7 +24,7 @@ console.log(`Loaded real local model in ${Math.round(performance.now()-start)} m
 const database = JSON.parse(await readFile('wikidata-people.json','utf8'));
 for (const answers of [[],[['real',1],['chancellor',1]],[['real',1],['adultFilmPerformer',1]],[['real',1],['singer',1]]]) {
   const engine = new GuessEngine(structuredClone(characters),questions,questionModel);
-  for (const person of database.characters) engine.addCharacter(structuredClone(person));
+  engine.addDatabase(database);
   for (const [id,value] of answers) engine.answer(id,value);
   const context = await engine.aiQuestionContext('de');
   if (!context.features.length) throw Error('No informative context');

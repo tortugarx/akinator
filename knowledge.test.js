@@ -17,7 +17,8 @@ test("includes correctly classified requested public people", () => {
   const scholz = byName("Olaf Scholz");
   const papaplatte = byName("Papaplatte");
   const rain = byName("Sophie Rain");
-  assert.deepEqual([scholz.attributes.real, scholz.attributes.politician, scholz.attributes.german, scholz.attributes.musician, scholz.attributes.athlete], [1, 1, 1, -1, -1]);
+  // Missing wiki career statements are unknown, never fabricated negatives.
+  assert.deepEqual([scholz.attributes.real, scholz.attributes.politician, scholz.attributes.german, scholz.attributes.musician, scholz.attributes.athlete], [1, 1, 1, undefined, undefined]);
   assert.ok(scholz.image);
   assert.deepEqual([papaplatte.attributes.real, papaplatte.attributes.creator, papaplatte.attributes.german], [1, 1, 1]);
   assert.ok(papaplatte.image);

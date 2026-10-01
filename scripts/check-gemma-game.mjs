@@ -26,7 +26,7 @@ try {
   const scenarios = [[],[['real',1],['chancellor',1]],[['real',1],['adultFilmPerformer',1]],[['real',1],['singer',1]],[['real',1],['streamer',1]],[['personallyKnown',1]]];
   for (const answers of scenarios) {
     const engine = new GuessEngine(structuredClone(characters),questions,questionModel);
-    for (const person of database.characters) engine.addCharacter(structuredClone(person));
+    engine.addDatabase(database);
     for (const [id,value] of answers) engine.answer(id,value);
     const context = await engine.aiQuestionContext('de');
     const started = Date.now();
@@ -37,7 +37,7 @@ try {
   }
   if (process.argv.includes('--round')) {
     const engine = new GuessEngine(structuredClone(characters),questions,questionModel);
-    for (const person of database.characters) engine.addCharacter(structuredClone(person));
+    engine.addDatabase(database);
     const target = engine.characters.find(person=>person.name === 'Olaf Scholz');
     assert.ok(target,'Round target must exist');
     engine.answer('real',1); engine.answer('chancellor',1);
