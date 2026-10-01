@@ -1,123 +1,71 @@
-import { env, Qwen2Tokenizer, Qwen2ForCausalLM, TextGenerationPipeline, RuntimeBackend } from './assets/ai/runtime/transformers.js?v=26';
+import {Wllama} from './assets/ai/runtime/gemma/wllama.js';
 import {ModelDownloader,withDeadline} from './model-download.js';
-import {checkRuntime} from './runtime-probe.js';
+const root = new URL('./assets/ai/',import.meta.url).href;
+const runtime = root+'runtime/gemma/';
+let generator, loading;
+const notify = (phase,extra={})=>postMessage({type:'progress',phase,...extra});
 
-const modelRoot = new URL('./assets/ai/models/',import.meta.url).href;
-const runtimeRoot = new URL('./assets/ai/runtime/',import.meta.url).href;
-env.allowRemoteModels = false;
-env.allowLocalModels = true;
-env.localModelPath = modelRoot;
-env.useBrowserCache = false; // Cache verified shards, not a second full model copy.
-env.useWasmCache = false;
-// ORT 1.31's native WebGPU backend requires Asyncify, not the legacy JSEP build.
-env.backends.onnx.wasm.wasmPaths = {mjs:runtimeRoot+'ort-wasm-simd-threaded.asyncify.mjs',wasm:runtimeRoot+'ort-wasm-simd-threaded.asyncify.wasm'};
-env.backends.onnx.wasm.numThreads = 1; // Also works without COOP/COEP in game iframes.
-env.backends.onnx.wasm.proxy = false;
-let generator = null;
-let loading = null;
-const nativeFetch = globalThis.fetch.bind(globalThis);
-const assetCacheName = 'nazar-llm-6287331f475a3e20e8c879be8fd4bf3551ad9d34-q4f16';
-
-async function smallAsset(url) {
-  let cache;
-  try { cache = await withDeadline(caches.open(assetCacheName),3000); } catch { /* Optional persistence. */ }
-  let cached;
-  try { cached = await withDeadline(cache?.match(String(url)),3000); } catch { cache = null; }
-  if (cached) return cached;
-  const response = await withDeadline(nativeFetch(url),45000);
-  if (response.ok) try { await withDeadline(cache?.put(String(url),response.clone()),3000); } catch { /* Optional persistence. */ }
-  return response;
-}
-
-async function modelResponse() {
-  const folder = new URL('qwen/',modelRoot).href;
-  const response = await smallAsset(folder+'manifest.json');
-  if (!response.ok) throw Error('Lokales Modellpaket fehlt.');
+async function downloadModel() {
+  const response = await fetch(root+'models/gemma/manifest.json',{cache:'no-store'});
+  if (!response.ok) throw Error('Das lokale Modellpaket fehlt.');
   const manifest = await response.json();
-  let lastProgress = 0;
-  const downloader = new ModelDownloader(manifest.sourceUrl,nativeFetch,{onProgress(loaded){
-    const now = performance.now();
-    if (now-lastProgress >= 200) {
-      lastProgress = now;
-      postMessage({type:'progress',phase:'download',loaded,total:manifest.size,cached:false});
-    }
-  }});
   let cache;
-  try { cache = await withDeadline(caches.open(`nazar-llm-${manifest.revision}-${manifest.dtype}`),3000); } catch { /* Still playable without persistent cache. */ }
-  let index = 0, loaded = 0;
-  return new Response(new ReadableStream({
-    async pull(controller) {
-      try {
-        if (index >= manifest.chunks.length) { await downloader.close(); controller.close(); return; }
-        const chunk = manifest.chunks[index++], url = folder+chunk.path;
-        let response;
-        try { response = await withDeadline(cache?.match(url),3000); } catch { cache = null; }
-        const cached = !!response;
-        if (response && !response.ok) throw Error(`Modellteil nicht verfügbar: ${chunk.path}`);
-        const bytes = response ? await withDeadline(response.arrayBuffer(),15000) : await downloader.chunk(chunk);
-        const digest = [...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map((value) => value.toString(16).padStart(2,'0')).join('');
-        if (bytes.byteLength !== chunk.size || digest !== chunk.sha256) {
-          await cache?.delete(url); throw Error('Ein Modellteil ist beschädigt. Bitte erneut laden.');
-        }
-        if (!cached) try { await withDeadline(cache?.put(url,new Response(bytes)),3000); } catch { cache = null; /* Slow/full persistence must not block inference. */ }
-        loaded += bytes.byteLength;
-        postMessage({type:'progress',phase:'download',loaded,total:manifest.size,cached});
-        controller.enqueue(new Uint8Array(bytes));
-      } catch (error) { await downloader.close(); controller.error(error); }
-    },
-    cancel() { return downloader.close(); }
-  }),{headers:{'content-length':String(manifest.size),'content-type':'application/octet-stream'}});
+  try { cache = await withDeadline(caches.open('nazar-llm-gemma-'+manifest.revision),3000); } catch {}
+  let lastProgress = 0;
+  const downloader = new ModelDownloader(manifest.sourceUrl,fetch.bind(globalThis),{onProgress(loaded){
+    if (performance.now()-lastProgress < 200) return;
+    lastProgress = performance.now();
+    notify('download',{loaded,total:manifest.size});
+  }});
+  const parts = [];
+  try {
+    for (const chunk of manifest.chunks) {
+      const key = root+'models/gemma/'+chunk.path;
+      let cached;
+      try { cached = await withDeadline(cache?.match(key),3000); } catch { cache = null; }
+      let bytes;
+      try { bytes = cached ? await withDeadline(cached.arrayBuffer(),15000) : null; } catch { cached = null; cache = null; }
+      bytes ||= await downloader.chunk(chunk);
+      const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(n=>n.toString(16).padStart(2,'0')).join('');
+      if (bytes.byteLength !== chunk.size || hash !== chunk.sha256) {
+        try { await withDeadline(cache?.delete(key),3000); } catch {}
+        throw Error('Ein Modellteil ist beschädigt. Bitte erneut versuchen.');
+      }
+      if (!cached) try { await withDeadline(cache?.put(key,new Response(bytes)),3000); } catch { cache = null; }
+      // Blob storage avoids concatenating a second model-size ArrayBuffer.
+      parts.push(new Blob([bytes]));
+      notify('download',{loaded:chunk.offset+chunk.size,total:manifest.size});
+    }
+    return new Blob(parts,{type:'application/octet-stream'});
+  } finally { await downloader.close(); }
 }
-
-env.fetch = (input,options) => {
-  const url = String(input);
-  if (!url.startsWith(modelRoot)) throw Error('Externe Modellabfragen sind gesperrt.');
-  return url.endsWith('/onnx/model_q4f16.onnx') ? modelResponse() : smallAsset(input);
-};
 
 async function load() {
   if (generator) return;
-  loading ||= (async () => {
-    postMessage({type:'progress',phase:'init'});
-    let adapter;
-    try { adapter = await navigator.gpu?.requestAdapter(); } catch { /* Friendly capability error below. */ }
-    if (!adapter?.features.has('shader-f16') || adapter.limits.maxStorageBufferBindingSize < 512*1024*1024) {
-      throw Error('Dieses Gerät bietet keine ausreichend leistungsfähige WebGPU-Grafikbeschleunigung für das lokale Sprachmodell. Es wurde noch kein großer Modelldownload gestartet. Bitte nutze den ausdrücklich auswählbaren klassischen Modus.');
-    }
-    const device = 'webgpu';
-    // Verify the actual packaged backend before spending time downloading weights.
-    try { await withDeadline(checkRuntime(RuntimeBackend,device),60000); }
-    catch (error) { throw Error('Die lokale WebGPU-Laufzeit konnte nicht starten. Es wurde noch kein großer Modelldownload gestartet. '+error.message); }
-    const options = {dtype:'q4f16',device,progress_callback:(event) => {
-      if (event.status === 'done' && event.file?.includes('.onnx')) postMessage({type:'progress',phase:'compile'});
-    }};
-    // Transformers 4's metadata probe does not discover HTTP-local tokenizer
-    // files when remote models are disabled. Load the pinned tokenizer directly.
-    const [tokenizerJSON,tokenizerConfig] = await Promise.all(['tokenizer.json','tokenizer_config.json'].map(async(file)=>{
-      const response = await smallAsset(new URL('qwen/'+file,modelRoot));
-      if (!response.ok) throw Error('Lokale Tokenizer-Datei fehlt: '+file);
-      return response.json();
-    }));
-    const tokenizer = new Qwen2Tokenizer(tokenizerJSON,tokenizerConfig);
-    let model;
-    model = await Qwen2ForCausalLM.from_pretrained('qwen',options);
-    generator = new TextGenerationPipeline({task:'text-generation',model,tokenizer});
-    postMessage({type:'progress',phase:'ready',device});
+  loading ||= (async()=>{
+    notify('init');
+    const model = await downloadModel();
+    notify('compile');
+    const w = new Wllama({default:runtime+'wllama.wasm'},{logger:{debug(){},log(){},warn(){},error:console.error}});
+    w.setCompat({wasm:runtime+'compat.wasm',worker:runtime+'compat.js'});
+    // CPU single-thread: no WebGPU, COOP/COEP or SharedArrayBuffer requirement.
+    try { await w.loadModel([model],{n_gpu_layers:0,n_threads:1,n_ctx:512,n_batch:128}); }
+    catch(error) { await w.exit().catch(()=>{}); throw error; }
+    generator = w;
+    notify('ready',{device:'cpu-wasm'});
   })();
-  try { await loading; } catch (error) { loading = null; throw error; }
+  try { await loading; } catch(error) { loading = null; throw error; }
 }
-
-self.onmessage = async ({data}) => {
+self.onmessage = async({data})=>{
   const {id,type,messages} = data;
   try {
     await load();
     let result = true;
     if (type === 'generate') {
-      postMessage({type:'progress',phase:'thinking'});
-      const output = await generator(messages,{max_new_tokens:64,do_sample:false,return_full_text:false});
-      const generated = output[0]?.generated_text;
-      result = typeof generated === 'string' ? generated : generated?.at(-1)?.content || '';
+      notify('thinking');
+      const output = await generator.createChatCompletion({messages,max_tokens:64,temperature:0,grammar:data.grammar});
+      result = output.choices[0].message.content;
     }
     postMessage({id,result});
-  } catch (error) { postMessage({id,error:String(error.message || error)}); }
+  } catch(error) { postMessage({id,error:String(error.message || error)}); }
 };

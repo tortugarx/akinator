@@ -1,11 +1,11 @@
-import { characters, questions } from "./data.js?v=26";
-import { GuessEngine } from "./engine.js?v=26";
+import { characters, questions } from "./data.js?v=27";
+import { GuessEngine } from "./engine.js?v=27";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=26";
-import { questionModel } from "./question-model.js?v=26";
-import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=26";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=26";
-import { LocalQuestionAI } from './llm-questions.js?v=26';
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=27";
+import { questionModel } from "./question-model.js?v=27";
+import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=27";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=27";
+import { LocalQuestionAI } from './llm-questions.js?v=27';
 
 const translations = {
   en: {
@@ -19,7 +19,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 26;
+const buildVersion = 27;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -146,7 +146,7 @@ function renderHome() {
   render('#recent-people', recentPlays());
   render('#popular-people', Object.keys(stats).sort((a,b) => Number(stats[b]) - Number(stats[a])));
   const labels = { 'add-person-button':['Person hinzufügen','Add person'], 'share-button':['Teilen','Share'], 'settings-button':['Einstellungen','Settings'], 'recent-title':['Zuletzt gespielt','Recently played'], 'popular-title':['Meistgespielt','Most played'], 'stats-scope':['Auf diesem Gerät · bestätigte Treffer','On this device · confirmed matches'], 'settings-title':['Einstellungen','Settings'], 'settings-back':['Zur Startseite','Home'], 'info-title':['Über das Spiel','About the game'], 'info-text':['Ein lokales Ratespiel. Antworten und Statistiken bleiben auf diesem Gerät. Keine globale Synchronisierung.','A local guessing game. Answers and statistics stay on this device. No global synchronization.'] };
-  Object.assign(labels,{'ai-mode-label':['Echtes lokales Sprachmodell verwenden','Use real local language model'],'ai-mode-help':['Ohne Haken: klassischer Merkmalsmodus, kein Sprachmodell. Mit KI: ca. 1,25 GB Download; geeignete WebGPU-Grafik und mehrere GB freier Arbeitsspeicher erforderlich.','Unchecked: classic feature mode, no language model. AI: about 1.25 GB download; suitable WebGPU graphics and several GB of free memory required.'],'ai-download-hint':[engineMode === 'ai' ? 'Lokale KI (experimentell): WebGPU erforderlich, einmalig ca. 1,25 GB Download. Berechnung auf deinem Gerät.' : 'Klassischer Merkmalsmodus · ohne Sprachmodell.',engineMode === 'ai' ? 'Local AI (experimental): WebGPU required, about 1.25 GB download once. Computation on your device.' : 'Classic feature mode · no language model.'],'ai-retry-button':['Erneut versuchen','Retry'],'ai-classic-button':['Klassisch ohne Sprachmodell spielen','Play classic without language model'],'ai-cancel-button':['Abbrechen','Cancel'],'thinking-cancel':['Abbrechen · zur Startseite','Cancel · go home']});
+  Object.assign(labels,{'ai-mode-label':['Echtes lokales Sprachmodell verwenden','Use real local language model'],'ai-mode-help':['Ohne Haken: klassischer Merkmalsmodus, kein Sprachmodell. Mit KI: ca. 241 MB Download; lokale CPU-Ausführung, kein WebGPU erforderlich.','Unchecked: classic feature mode, no language model. AI: about 241 MB download; local CPU inference, no WebGPU required.'],'ai-download-hint':[engineMode === 'ai' ? 'Lokale KI (experimentell): ohne WebGPU, einmalig ca. 241 MB Download. Berechnung auf deinem Gerät.' : 'Klassischer Merkmalsmodus · ohne Sprachmodell.',engineMode === 'ai' ? 'Local AI (experimental): no WebGPU required, about 241 MB download once. Computation on your device.' : 'Classic feature mode · no language model.'],'ai-retry-button':['Erneut versuchen','Retry'],'ai-classic-button':['Klassisch ohne Sprachmodell spielen','Play classic without language model'],'ai-cancel-button':['Abbrechen','Cancel'],'thinking-cancel':['Abbrechen · zur Startseite','Cancel · go home']});
   for (const [id, values] of Object.entries(labels)) if ($(`#${id}`)) $(`#${id}`).textContent = values[language === 'de' ? 0 : 1];
   if ($('#settings-sound')) $('#settings-sound').textContent = `Sound: ${soundEnabled ? (language === 'de' ? 'An' : 'On') : (language === 'de' ? 'Aus' : 'Off')}`;
   if ($('#ai-mode')) $('#ai-mode').checked = engineMode === 'ai';

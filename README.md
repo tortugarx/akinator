@@ -2,11 +2,30 @@
 
 Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine kuratierte Wissensbasis mit einer vorab erzeugten Wikidata-Datenbank, einer lokalen Active-Learning-Engine und einem Lernmodus, der bestätigte Figuren im Browser speichert.
 
-## Echtes lokales Sprachmodell (Version 23)
+## Aktuelles lokales Sprachmodell (Version 27)
+
+Die aktive KI ist **Gemma 3 270M IT QAT Q4_0**, nicht mehr Qwen/ONNX. Die gepinnten GGUF-Gewichte umfassen 241.410.624 Bytes und werden als statische Datei von Hugging Face geladen. Ein Worker prüft und speichert 24-MiB-Teile mit SHA256 und übergibt einen Blob an wllama 3.6.1. Es gibt keine serverseitige Inferenz. CPU-Ausführung mit einem Thread, ohne WebGPU-, FP16-, SharedArrayBuffer- oder Cross-Origin-Isolation-Pflicht; Safari erhält die kompatible WASM-Laufzeit. Der alte 1,22-GB-Download wird nicht mehr gestartet. Vorhandene alte Modell-Caches werden nicht automatisch gelöscht, enthalten aber nicht die neuen Gewichte.
+
+Die Engine ermittelt weiterhin den besten belegten Diskriminator nach Informationsgewinn; das echte Sprachmodell formuliert ihn. Eine dynamische Ausgabegrammatik erhält das Frageverb und verlangt eine einzelne Frage mit Fragezeichen. Sie enthält keinen Fragenkatalog. Der Faktenparser lehnt offene W-Fragen, erfundene Eigenschaften und unpassende Fragen ab. Bei identischer belegter Frageformulierung wird nur das tatsächliche Merkmal zugeordnet, nicht zusätzlich ein überlappendes Thema. Keine heimliche klassische Ersatzfrage bei einem Modellfehler. Dies ist **kein neu feintrainiertes Modell** und kein Nachweis universeller semantischer Korrektheit.
+
+Echte Inferenztests des ausgelieferten Workers, einschließlich Prüfungen der Modellgewichte, testen Spielstart, Bundeskanzler, Erwachsenenfilme, Sänger, Streamer und private Personen in Chromium und WebKit ohne GPU. Der lokale Test ersetzt lediglich den statischen Gewichtsdownload durch dieselben lokalen Bytes; die Inferenz ist nicht simuliert. Ein physisches iPad und ein tatsächlicher CrazyGames-Upload bleiben separat zu prüfen. Das kleinere Modell senkt den Speicherbedarf deutlich, garantiert aber keine Funktion auf jedem Gerät. Erstdownload über ein reales Netz ist nicht mit den lokalen Testzeiten gleichzusetzen.
+
+```bash
+npm run build:local-ai
+npm start
+# Zweites Terminal, installierte Playwright-Browser erforderlich:
+node scripts/check-gemma-game.mjs
+node scripts/check-gemma-game.mjs --webkit
+node scripts/check-gemma-game.mjs --round
+```
+
+Gemma hat eigene Nutzungsbedingungen: `assets/ai/models/gemma/TERMS.html` und `NOTICE.txt`. Die Gewichte des GGUF-Exports sind unverändert. Die Laufzeit ist MIT-lizenziert. Das CrazyGames-Buildskript verpackt nur die aktive Gemma-Laufzeit, nicht die alten Qwen-/ONNX-Assets; es wird nicht automatisch ausgeführt. **Noch keine CrazyGames-Freigabe:** 241 MB verpflichtender Erstdownload überschreiten die 50-MB-Startgrenze; bei externen Dateien muss die Plattform die Zeit bis zum Gameplay bewerten. Weitere Download-/Modelloptimierung ist dafür nötig, trotz fehlender GPU-Pflicht.
+
+## Archiv: bisheriges Qwen-Modell (Versionen 23–26, nicht mehr aktiv)
 
 Version 24 behebt den statischen Modelldownload: HTTP 206 wird weiter als Byte-Range verarbeitet; bei HTTP 200 wird ein einzelner vollständiger Download gestreamt, in überprüfte Cache-Teile zerlegt und nicht für jeden Teil erneut gestartet. Vorhandene Cache-Teile bleiben erhalten. Abbruch schließt den Stream; HTTP-Fehler zeigen nun den Statuscode. Das ändert nicht die GPU-/Speicheranforderungen des Modells.
 
-Für CrazyGames ist das große Sprachmodell noch **nicht veröffentlichungsgeeignet**: Laut [technischen Anforderungen](https://docs.crazygames.com/requirements/technical/) gelten 250 MB Paketgröße, 50 MB initialer Download (20 MB für die mobile Startseite) und für externe Dateien höchstens 20 Sekunden bis zum Gameplay. Ein verpflichtender Download von 1,22 GB ist damit keine tragfähige Startarchitektur. Die Wahl eines kompakten lokalen Auswahlmodells oder eines deutlich kleineren Sprachmodells muss vor der Veröffentlichung geklärt werden; das Vorhandensein des Buildskripts ist keine Plattformfreigabe.
+Für CrazyGames ist das große Sprachmodell noch **nicht veröffentlichungsgeeignet**: Laut [technischen Anforderungen](https://docs.crazygames.com/requirements/technical/) gelten 250 MB Paketgröße, 50 MB initialer Download (20 MB für die mobile Startseite) und für externe Dateien höchstens 20 Sekunden bis zum Gameplay. Ein verpflichtender Download von 1,22 GB ist damit keine tragfähige Startarchitektur. Gewählt wurde ein kleineres echtes Sprachmodell für alle Plattformen, nicht ein reines Auswahlmodell. Die [Kandidaten-Untersuchung](SMALL-MODEL-RESEARCH.md) dokumentiert tatsächliche CPU-/Browser-Inferenz mit FLAN-T5-small, SmolLM2-135M und Gemma 3 270M. Gemma läuft in Chromium und WebKit ohne WebGPU, ist aber bislang qualitativ und hinsichtlich des Erstdownloads kein freigegebener Ersatz. Das Vorhandensein des Buildskripts ist keine Plattformfreigabe.
 
 Der standardmäßig angebotene, noch experimentelle KI-Modus führt **Qwen2.5-1.5B-Instruct (q4f16)** mit Transformers.js 4.3.0 in einem Web Worker auf dem Gerät aus. Die Engine bewertet die verfügbaren Fakten nach Informationsgewinn und gibt den besten Diskriminator an das Sprachmodell weiter. Das Modell formuliert diesen um; die Engine leitet aus belegten Merkmalswörtern seine auswertbare Bedingung ab. Der Parser unterstützt auch bis zu drei belegte Merkmale mit UND oder ODER. Nur Vorschläge mit mindestens 80 Prozent des besten verfügbaren Einzelmerkmal-Scores werden akzeptiert. Das kleine Sprachmodell übernimmt ausdrücklich nicht die numerische Optimierung: Eine freie Auswahl aus mehreren Eigenschaften war in echten Tests unzuverlässig. Der KI-Modus verwendet tatsächliche Modell-Inferenz zur Formulierung, nicht nur eine Auswahl fertiger Sätze. Die Merkmalsgrammatik bleibt als Bedeutung der vorhandenen Fakten erhalten; er erfindet keine neuen überprüften Personenmerkmale.
 

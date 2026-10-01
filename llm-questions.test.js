@@ -85,3 +85,9 @@ test('infers conditions from free model text including acronyms and rejects extr
   const countries = {features:[{id:'american',meaning:'Kommt diese Person aus den USA?',gain:.4}]};
   assert.equal(parseQuestionProposals('Kommt diese Person aus den USA?',countries)[0]?.id,'american');
 });
+
+test('rejects open questions and preserves a literal feature without adding overlapping topics',()=>{
+  const music = {features:[{id:'entertainment',meaning:'Ist diese Person aus Musik oder Film bekannt?',gain:.5},{id:'musician',meaning:'Ist diese Person für Musik bekannt?',gain:.3}]};
+  assert.deepEqual(parseQuestionProposals('Wie ist diese Person aus Musik bekannt?',music),[]);
+  assert.deepEqual(parseQuestionProposals('Ist diese Person aus Musik oder Film bekannt?',music)[0]?.featureIds,['entertainment']);
+});

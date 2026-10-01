@@ -13,8 +13,7 @@ export function questionPrompt(context, language = 'de') {
   return [
     // The small model is a language generator, not a reliable numerical
     // optimizer. Let the engine rank facts; supply its best discriminator.
-    {role:'system',content:'You rewrite questions. Reply with ONE yes/no question ending in a question mark. Never reply with a statement. Preserve the original meaning exactly. Do not add facts or explanations.'},
-    {role:'user',content:german ? `Formuliere diese Frage als deutsche Ja/Nein-Frage um: ${context.features[0].meaning}` : `Rephrase this yes/no question: ${context.features[0].meaning}`}
+    {role:'user',content:german ? `Rewrite this German yes/no question in German. Preserve its meaning. Output only one question ending in a question mark, no explanation: ${context.features[0].meaning}` : `Rewrite this English yes/no question in English. Preserve its meaning. Output only one question ending in a question mark, no explanation: ${context.features[0].meaning}`}
   ];
 }
 
@@ -22,6 +21,8 @@ const discriminatingWords = {entertainment:['unterhaltung','entertainment'],musi
 
 function inferTextProposal(text,context) {
   const tokens = words(text);
+  const exact = context.features.find(feature=>words(feature.meaning).join(' ') === tokens.join(' '));
+  if (exact) return {text,operator:'any',ids:[exact.id]};
   const ranked = context.features.map((feature)=>{
     const terms = discriminatingWords[feature.id] || [...words(feature.meaning),...(synonyms[feature.id] || [])];
     const matched = terms.filter((term)=>tokens.some((word)=>matchesWord(word,[term])));
@@ -55,6 +56,7 @@ export function parseQuestionProposals(output, context) {
   return parsed.questions.slice(0,4).flatMap((proposal) => {
     const {text,operator,ids} = proposal;
     if (typeof text !== 'string' || text.length < 12 || text.length > 220 || !text.trim().endsWith('?') || blocked.test(text)) return [];
+    if (/^(?:wie|wer|was|wo|wann|warum|welch|how|who|what|where|when|why)\b/i.test(text.trim())) return [];
     if (!['any','all'].includes(operator) || !Array.isArray(ids) || ids.length < 1 || ids.length > 3 || new Set(ids).size !== ids.length || ids.some((id) => !available.has(id))) return [];
     // Reject omitted feature meanings, wrong connective, and negated conditions.
     // This conservative lexical check is not a general semantic proof.
@@ -110,7 +112,13 @@ export class LocalQuestionAI {
   }
   async load() { await this.request('load'); this.ready = true; }
   async propose(context,language) {
-    const output = await this.request('generate',{messages:questionPrompt(context,language)});
+    const verb = context.features[0]?.meaning.match(/^([A-Za-zÄÖÜäöüß]+)/)?.[1];
+    // Preserve the interrogative verb as well as requiring a question mark.
+    // Otherwise "Streamt ...?" can become the meaningless "Ist ... Spiele?".
+    const starts = verb ? [verb] : language === 'de' ? ['Ist','Hat','Lebt'] : ['Is','Has','Does'];
+    // Constrain syntax, not a catalogue of questions or model-selected words.
+    const grammar = `root ::= (${starts.map(JSON.stringify).join(' | ')}) " " [^?\\n]{10,180} "?"`;
+    const output = await this.request('generate',{messages:questionPrompt(context,language),grammar});
     return parseQuestionProposals(output,context);
   }
   cancel(message = 'KI-Vorgang abgebrochen.') {

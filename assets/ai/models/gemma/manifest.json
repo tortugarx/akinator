@@ -1,0 +1,68 @@
+{
+  "model": "Gemma 3 270M IT QAT Q4_0",
+  "revision": "7dba9faa7cdb58c7dc44b238c7dbb00e391fbf65",
+  "sourceUrl": "https://huggingface.co/ggml-org/gemma-3-270m-it-qat-GGUF/resolve/7dba9faa7cdb58c7dc44b238c7dbb00e391fbf65/gemma-3-270m-it-qat-Q4_0.gguf",
+  "size": 241410624,
+  "chunks": [
+    {
+      "path": "part-0.bin",
+      "offset": 0,
+      "size": 25165824,
+      "sha256": "a355de1ab47167e82e0822d1eee15ec044a310a09a215852ac31b3a8ef9beda1"
+    },
+    {
+      "path": "part-1.bin",
+      "offset": 25165824,
+      "size": 25165824,
+      "sha256": "44d82203c0aec0c9c25c372bcfcb51e3bed832e629adfe2ec942a44099aa69dc"
+    },
+    {
+      "path": "part-2.bin",
+      "offset": 50331648,
+      "size": 25165824,
+      "sha256": "84b84c244a066a3ebd1c9cc1e3c553faa8e27e893f843cd5397bdcae5841ce62"
+    },
+    {
+      "path": "part-3.bin",
+      "offset": 75497472,
+      "size": 25165824,
+      "sha256": "26f450a53e866ef9971f4dd2768935d4f5304e9071f27cec11492d21eee312dc"
+    },
+    {
+      "path": "part-4.bin",
+      "offset": 100663296,
+      "size": 25165824,
+      "sha256": "a01edd662f3fc37dffee205e13d662b320ed3bc456e709cee26a38eb66f45265"
+    },
+    {
+      "path": "part-5.bin",
+      "offset": 125829120,
+      "size": 25165824,
+      "sha256": "38b8740e4bb2b387d554e81e9825b93b13bbcd14d66f64e5cc23f0b871db37a4"
+    },
+    {
+      "path": "part-6.bin",
+      "offset": 150994944,
+      "size": 25165824,
+      "sha256": "e2b629b0d142c9121d1988b7a82e3ce013c2b2192c14e6809f090f56b3bad0eb"
+    },
+    {
+      "path": "part-7.bin",
+      "offset": 176160768,
+      "size": 25165824,
+      "sha256": "5aa19d8915e82cd8e2c5ef0bfe189b10771c440158cf981219be87133b61cb37"
+    },
+    {
+      "path": "part-8.bin",
+      "offset": 201326592,
+      "size": 25165824,
+      "sha256": "da64703f4de93aa82b2fc41e22d985f38e58ca7fbe0621b6ead70189036970c3"
+    },
+    {
+      "path": "part-9.bin",
+      "offset": 226492416,
+      "size": 14918208,
+      "sha256": "1dd188fb3b2d8e0239c2f256144f763b51220dc19d55ccdd1ca0fb5a37a02e69"
+    }
+  ]
+}
