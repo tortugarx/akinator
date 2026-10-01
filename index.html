@@ -9,7 +9,7 @@
     <meta http-equiv="Expires" content="0" />
     <meta name="description" content="Nazar ist ein selbstlernendes Figuren-Ratespiel." />
     <title>Nazar — Ich lese deine Gedanken</title>
-    <link rel="stylesheet" href="styles.css?v=22" />
+    <link rel="stylesheet" href="styles.css?v=23" />
   </head>
   <body>
     <div class="sky" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
@@ -38,6 +38,7 @@
           <h1 data-i18n="welcomeTitle">Denk an <em>irgendeine</em><br />Figur.</h1>
           <p class="lead" data-i18n="welcomeText">Ein Star, eine fiktive Figur oder jemand aus deinem eigenen Leben. Antworte ehrlich – den Rest erledigt meine Magie.</p>
           <button id="start-button" class="primary-button" type="button"><span data-i18n="start">Los geht’s!</span><b>→</b></button>
+          <p id="ai-download-hint" class="hint">Lokale KI (experimentell): WebGPU erforderlich, einmalig ca. 1,25 GB Download. Berechnung auf deinem Gerät.</p>
           <p class="hint"><span>✦</span> <span data-i18n="welcomeHint">Je öfter du spielst, desto schlauer werde ich.</span></p>
           <nav class="home-actions" aria-label="Spieloptionen">
             <button id="add-person-button" class="secondary-button" type="button">Person hinzufügen</button>
@@ -55,8 +56,18 @@
       <section id="settings-screen" class="screen centered">
         <p class="eyebrow">NAZAR</p><h2 id="settings-title">Einstellungen</h2>
         <button id="settings-sound" class="secondary-button" type="button">Sound: An</button>
+        <label class="ai-mode-option"><input id="ai-mode" type="checkbox" checked /> <span id="ai-mode-label">Echtes lokales Sprachmodell verwenden</span></label>
+        <p id="ai-mode-help" class="hint">Ohne Haken: klassischer Merkmalsmodus, kein Sprachmodell.</p>
         <div class="info-card"><h3 id="info-title">Über das Spiel</h3><p id="info-text">Ein lokales Ratespiel für echte Personen, fiktive Figuren und Menschen aus deinem Alltag. Antworten und Statistiken bleiben auf diesem Gerät. Keine globale Synchronisierung.</p><p>Publisher: <strong>tortugarx</strong></p></div>
         <button id="settings-back" class="primary-button" type="button">Zur Startseite</button>
+      </section>
+
+      <section id="ai-load-screen" class="screen centered">
+        <p class="eyebrow">LOKALE KI · QWEN</p><h2 id="ai-load-title">KI wird vorbereitet</h2>
+        <p id="ai-load-message" class="lead" role="status">Das Modell wird einmalig geladen. Deine Antworten verlassen dieses Gerät nicht.</p>
+        <progress id="ai-load-progress" max="100" value="0" aria-label="Modell laden"></progress>
+        <p id="ai-load-detail" class="hint"></p>
+        <div class="confirm-actions"><button id="ai-retry-button" class="secondary-button" type="button" hidden>Erneut versuchen</button><button id="ai-classic-button" class="secondary-button" type="button">Klassisch ohne Sprachmodell spielen</button><button id="ai-cancel-button" class="text-button" type="button">Abbrechen</button></div>
       </section>
 
       <section id="question-screen" class="screen question-layout">
@@ -81,6 +92,7 @@
           <div class="thinking-orb">✦</div>
           <strong data-i18n="thinkingWait">Nazar grenzt die Personen ein …</strong>
           <div class="thinking-bar"><span></span></div>
+          <button id="thinking-cancel" class="text-button" type="button">Abbrechen · zur Startseite</button>
         </div>
       </section>
 
@@ -116,6 +128,6 @@
         <button id="again-button" class="primary-button" type="button"><span data-i18n="playAgain">Noch einmal</span><b>↻</b></button>
       </section>
     </main>
-    <script type="module" src="game.js?v=22"></script>
+    <script type="module" src="game.js?v=23"></script>
   </body>
 </html>

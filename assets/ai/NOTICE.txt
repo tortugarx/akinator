@@ -1,0 +1,18 @@
+Nazar local language model
+
+Model: Qwen/Qwen2.5-1.5B-Instruct, Alibaba Cloud, Apache License 2.0.
+ONNX conversion: onnx-community/Qwen2.5-1.5B-Instruct.
+Pinned conversion revision: 6287331f475a3e20e8c879be8fd4bf3551ad9d34.
+Variant: model_q4f16.onnx.
+Packaging modification: a manifest of verified byte ranges references the
+unmodified remote ONNX file. Ranges are cached and reassembled on the device.
+Full model license: models/qwen/LICENSE.txt.
+
+Runtime: Hugging Face Transformers.js 4.3.0, Apache License 2.0.
+Runtime packaging modification: export only the Qwen2 generation API and
+register only Qwen2ForCausalLM in the automatic model-class registry.
+Runtime: Microsoft ONNX Runtime Web, MIT License.
+Bundled tokenizer/Jinja dependency notices are retained in the runtime bundle.
+Full dependency licenses: tokenizers-LICENSE.txt and jinja-LICENSE.txt.
+These are pretrained third-party weights, not a model trained from scratch
+by tortugarx. Inference takes place on the player's device.

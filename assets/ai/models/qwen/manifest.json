@@ -1,0 +1,161 @@
+{
+  "model": "Qwen2.5-1.5B-Instruct",
+  "revision": "6287331f475a3e20e8c879be8fd4bf3551ad9d34",
+  "license": "Apache-2.0",
+  "dtype": "q4f16",
+  "file": "onnx/model_q4f16.onnx",
+  "sourceUrl": "https://huggingface.co/onnx-community/Qwen2.5-1.5B-Instruct/resolve/6287331f475a3e20e8c879be8fd4bf3551ad9d34/onnx/model_q4f16.onnx",
+  "size": 1221878940,
+  "chunks": [
+    {
+      "path": "model-000.bin",
+      "size": 50331648,
+      "offset": 0,
+      "sha256": "d564172af2fca33bb13125cf0ea1e90c59c6ce36c6e481414866b2a51e9f0b94"
+    },
+    {
+      "path": "model-001.bin",
+      "size": 50331648,
+      "offset": 50331648,
+      "sha256": "7525122b494cab343a0970ef0252c451b567a572c5140210164c27998bea9b16"
+    },
+    {
+      "path": "model-002.bin",
+      "size": 50331648,
+      "offset": 100663296,
+      "sha256": "943e1fa80ba0408126d31fb7fc2cf824316420f9cba0e66c079dfacfc83d9903"
+    },
+    {
+      "path": "model-003.bin",
+      "size": 50331648,
+      "offset": 150994944,
+      "sha256": "840dbb6ebc3c783c867e7402e4f17198bda04f19a45712624d7e9f98dce6eedd"
+    },
+    {
+      "path": "model-004.bin",
+      "size": 50331648,
+      "offset": 201326592,
+      "sha256": "8a7a77c0057f5f93c59ee10ad25736ac86c5c67fb50dd07ac4123e65b061e21b"
+    },
+    {
+      "path": "model-005.bin",
+      "size": 50331648,
+      "offset": 251658240,
+      "sha256": "6e4c312ccd84bb1757d55716e1cb8537feae3ba5c6922edd353b83ecd2232245"
+    },
+    {
+      "path": "model-006.bin",
+      "size": 50331648,
+      "offset": 301989888,
+      "sha256": "b77163eb0baabc744401c46119682391fd2f5b8d17153bbf7fb78c79c618689d"
+    },
+    {
+      "path": "model-007.bin",
+      "size": 50331648,
+      "offset": 352321536,
+      "sha256": "396a17952fef751d2c2f790d5ffa0047f498215a4a1f54628ceb3292dfe6866f"
+    },
+    {
+      "path": "model-008.bin",
+      "size": 50331648,
+      "offset": 402653184,
+      "sha256": "e88028a99ef2d28ac5c618fa661f927ecfbc4466d40f43b15c983aad2d5674f6"
+    },
+    {
+      "path": "model-009.bin",
+      "size": 50331648,
+      "offset": 452984832,
+      "sha256": "1df6d0e0240e56c8bd89314393f32d7589d7a69235b8a690aa53da7b70ffe525"
+    },
+    {
+      "path": "model-010.bin",
+      "size": 50331648,
+      "offset": 503316480,
+      "sha256": "bd7eba64743db9d7fa15211f0a610a4db70f494a30a321338bb51355dee7f8ed"
+    },
+    {
+      "path": "model-011.bin",
+      "size": 50331648,
+      "offset": 553648128,
+      "sha256": "c8eede41e2e76d686e13a1e15ae801e4d5163a185ed9701f22865745fcbf96ce"
+    },
+    {
+      "path": "model-012.bin",
+      "size": 50331648,
+      "offset": 603979776,
+      "sha256": "33ceeef8ee30cba3fa82a8caa64a434a09468d3673c3773fac75b6ea8856ba86"
+    },
+    {
+      "path": "model-013.bin",
+      "size": 50331648,
+      "offset": 654311424,
+      "sha256": "c70edb68679fa3225e59379c6f20c914001d5bc591b69ae6d3fe38e2dc16a6c4"
+    },
+    {
+      "path": "model-014.bin",
+      "size": 50331648,
+      "offset": 704643072,
+      "sha256": "6ce90e23444817f3941d643e835c8b466473ddf7f02119e65c91e5c941e9312f"
+    },
+    {
+      "path": "model-015.bin",
+      "size": 50331648,
+      "offset": 754974720,
+      "sha256": "7d27794b3d73dc077c931026948cf3bc55b13d96a572540f82a7f1fed9494b8b"
+    },
+    {
+      "path": "model-016.bin",
+      "size": 50331648,
+      "offset": 805306368,
+      "sha256": "6488baf5a6eac887d36db4f0636e6073d1b2ab5cd4232c94b9b1367d855eb2ca"
+    },
+    {
+      "path": "model-017.bin",
+      "size": 50331648,
+      "offset": 855638016,
+      "sha256": "721c1830fdecca5bdd73f59b78483076fe258cca4c87f875f952fd3fbe9c4efa"
+    },
+    {
+      "path": "model-018.bin",
+      "size": 50331648,
+      "offset": 905969664,
+      "sha256": "46e93f589cc9c4e2f88856b34839f905b554afc77a73b0cdb5bb223060cf7471"
+    },
+    {
+      "path": "model-019.bin",
+      "size": 50331648,
+      "offset": 956301312,
+      "sha256": "beacbbf4b02375f1d368bea52871efcda864ad803eaace3c06dda085c62cf190"
+    },
+    {
+      "path": "model-020.bin",
+      "size": 50331648,
+      "offset": 1006632960,
+      "sha256": "0fdc266dcbce8fe6ff72f02c7ad7584a027a3e982ca8a489f70e1485a354ea94"
+    },
+    {
+      "path": "model-021.bin",
+      "size": 50331648,
+      "offset": 1056964608,
+      "sha256": "d8fe928ed54cc5dc46d54fe90322ccbd99bc6439642b994800f642eefad7cc00"
+    },
+    {
+      "path": "model-022.bin",
+      "size": 50331648,
+      "offset": 1107296256,
+      "sha256": "1bad2a895a45f727349b3beaf397c29cac9797a795708d6c0e5fc4be798d6e34"
+    },
+    {
+      "path": "model-023.bin",
+      "size": 50331648,
+      "offset": 1157627904,
+      "sha256": "9d7749b450afd178c00321dbb5c4c1d522bb2101ed8bccb665aae9167336708c"
+    },
+    {
+      "path": "model-024.bin",
+      "size": 13919388,
+      "offset": 1207959552,
+      "sha256": "4be6db3440fa44167f2734cce37fcfcbab28d5e334b890f0fa927034e1e71f23"
+    }
+  ]
+}

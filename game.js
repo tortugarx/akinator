@@ -1,10 +1,11 @@
-import { characters, questions } from "./data.js?v=22";
-import { GuessEngine } from "./engine.js?v=22";
+import { characters, questions } from "./data.js?v=23";
+import { GuessEngine } from "./engine.js?v=23";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=22";
-import { questionModel } from "./question-model.js?v=22";
-import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=22";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=22";
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=23";
+import { questionModel } from "./question-model.js?v=23";
+import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=23";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=23";
+import { LocalQuestionAI } from './llm-questions.js?v=23';
 
 const translations = {
   en: {
@@ -18,7 +19,7 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 22;
+const buildVersion = 23;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
@@ -32,11 +33,51 @@ let soundEnabled = true;
 let acceptingAnswer = true;
 let addingFromHome = false;
 let thinkingTimer = null;
+let engineMode = 'ai';
+let aiEpoch = 0;
+let retryQuestion = false;
+try { engineMode = localStorage.getItem('nazar-engine-mode') === 'classic' ? 'classic' : 'ai'; } catch { /* Optional preferences. */ }
+const localAI = new LocalQuestionAI({onProgress:updateAIProgress});
 try { soundEnabled = localStorage.getItem('nazar-sound') !== 'off'; } catch { /* Optional preferences. */ }
 
 function showScreen(id) {
   if (id === 'start-screen') renderHome();
   screens.forEach((screen) => screen.classList.toggle("active", screen.id === id));
+}
+
+function updateAIProgress(event) {
+  const message = $('#ai-load-message');
+  const progress = $('#ai-load-progress');
+  if (!message || !progress) return;
+  const de = language === 'de';
+  const text = {
+    init:de ? 'Das lokale Modell wird geladen …' : 'Loading the local model …',
+    download:de ? 'Modellteile werden geladen und geprüft …' : 'Loading and verifying model parts …',
+    compile:de ? 'Das Modell wird auf diesem Gerät eingerichtet …' : 'Preparing the model on this device …',
+    ready:de ? 'Lokale KI bereit.' : 'Local AI ready.',
+    thinking:de ? 'Die lokale KI formuliert eine neue Frage …' : 'The local AI is generating a new question …'
+  };
+  message.textContent = text[event.phase] || '';
+  if (event.total) { progress.value = Math.round(event.loaded/event.total*100); $('#ai-load-detail').textContent = `${Math.round(event.loaded/1e6)} / ${Math.round(event.total/1e6)} MB`; }
+  else if (event.phase === 'ready') progress.value = 100;
+  else progress.removeAttribute?.('value');
+}
+
+function setEngineMode(mode) {
+  engineMode = mode;
+  try { localStorage.setItem('nazar-engine-mode',mode); } catch { /* Optional. */ }
+  if ($('#ai-mode')) $('#ai-mode').checked = mode === 'ai';
+  renderHome();
+}
+
+function aiError(error,questionStage = false) {
+  retryQuestion = questionStage;
+  showScreen('ai-load-screen');
+  $('#ai-load-title').textContent = language === 'de' ? 'KI konnte nicht fortfahren' : 'AI could not continue';
+  $('#ai-load-message').textContent = error.message;
+  $('#ai-retry-button').hidden = false;
+  $('#ai-load-progress').hidden = true;
+  $('#ai-load-detail').textContent = language === 'de' ? 'Es wurde nicht heimlich in den klassischen Modus gewechselt.' : 'The game has not silently switched to classic mode.';
 }
 
 function questionText(question) {
@@ -68,6 +109,7 @@ function setThinking(active, selectedButton = null) {
   clearTimeout(thinkingTimer);
   if (lock) lock.hidden = true;
   if (active) thinkingTimer = setTimeout(() => { if (lock) lock.hidden = false; }, 350);
+  if ($('#thinking-cancel')) $('#thinking-cancel').hidden = engineMode !== 'ai';
   document.querySelectorAll("#answer-grid button[data-answer]").forEach((button) => {
     button.disabled = active;
     button.classList.toggle("is-selected", active && button === selectedButton);
@@ -104,8 +146,10 @@ function renderHome() {
   render('#recent-people', recentPlays());
   render('#popular-people', Object.keys(stats).sort((a,b) => Number(stats[b]) - Number(stats[a])));
   const labels = { 'add-person-button':['Person hinzufügen','Add person'], 'share-button':['Teilen','Share'], 'settings-button':['Einstellungen','Settings'], 'recent-title':['Zuletzt gespielt','Recently played'], 'popular-title':['Meistgespielt','Most played'], 'stats-scope':['Auf diesem Gerät · bestätigte Treffer','On this device · confirmed matches'], 'settings-title':['Einstellungen','Settings'], 'settings-back':['Zur Startseite','Home'], 'info-title':['Über das Spiel','About the game'], 'info-text':['Ein lokales Ratespiel. Antworten und Statistiken bleiben auf diesem Gerät. Keine globale Synchronisierung.','A local guessing game. Answers and statistics stay on this device. No global synchronization.'] };
+  Object.assign(labels,{'ai-mode-label':['Echtes lokales Sprachmodell verwenden','Use real local language model'],'ai-mode-help':['Ohne Haken: klassischer Merkmalsmodus, kein Sprachmodell. Mit KI: ca. 1,25 GB Download; geeignete WebGPU-Grafik und mehrere GB freier Arbeitsspeicher erforderlich.','Unchecked: classic feature mode, no language model. AI: about 1.25 GB download; suitable WebGPU graphics and several GB of free memory required.'],'ai-download-hint':[engineMode === 'ai' ? 'Lokale KI (experimentell): WebGPU erforderlich, einmalig ca. 1,25 GB Download. Berechnung auf deinem Gerät.' : 'Klassischer Merkmalsmodus · ohne Sprachmodell.',engineMode === 'ai' ? 'Local AI (experimental): WebGPU required, about 1.25 GB download once. Computation on your device.' : 'Classic feature mode · no language model.'],'ai-retry-button':['Erneut versuchen','Retry'],'ai-classic-button':['Klassisch ohne Sprachmodell spielen','Play classic without language model'],'ai-cancel-button':['Abbrechen','Cancel'],'thinking-cancel':['Abbrechen · zur Startseite','Cancel · go home']});
   for (const [id, values] of Object.entries(labels)) if ($(`#${id}`)) $(`#${id}`).textContent = values[language === 'de' ? 0 : 1];
   if ($('#settings-sound')) $('#settings-sound').textContent = `Sound: ${soundEnabled ? (language === 'de' ? 'An' : 'On') : (language === 'de' ? 'Aus' : 'Off')}`;
+  if ($('#ai-mode')) $('#ai-mode').checked = engineMode === 'ai';
 }
 
 function toggleSound() {
@@ -156,18 +200,45 @@ function tone(frequency = 520) {
 
 async function startGame() {
   if (!acceptingAnswer) return;
+  const epoch = ++aiEpoch;
+  acceptingAnswer = false;
+  retryQuestion = false;
+  if (engineMode === 'ai' && !localAI.ready) {
+    showScreen('ai-load-screen');
+    $('#ai-load-title').textContent = language === 'de' ? 'KI wird vorbereitet' : 'Preparing local AI';
+    $('#ai-retry-button').hidden = true; $('#ai-load-progress').hidden = false;
+    try { await localAI.load(); }
+    catch (error) { if (epoch === aiEpoch) { aiError(error); acceptingAnswer = true; } return; }
+    if (epoch !== aiEpoch) return;
+  }
   addingFromHome = false;
   engine.reset(); currentGuess = null; currentQuestion = null; acceptingAnswer = true;
   $("#learn-status").textContent = ""; $("#character-input").value = "";
   platform.gameplayStart(); showScreen("question-screen"); setThinking(true);
   try { await askNext(); tone(480); }
-  catch (error) { console.error('Could not choose the first question.',error); showLearn(); }
-  finally { acceptingAnswer = true; setThinking(false); }
+  catch (error) { if (epoch === aiEpoch) { console.error('Could not choose the first question.',error); engineMode === 'ai' ? aiError(error,true) : showLearn(); } }
+  finally { if (epoch === aiEpoch) { acceptingAnswer = true; setThinking(false); } }
 }
 
 async function askNext() {
+  const epoch = aiEpoch;
+  const checkEpoch = () => { if (epoch !== aiEpoch) throw Error('KI-Vorgang abgebrochen.'); };
   acceptingAnswer = false;
-  currentQuestion = await engine.nextQuestionAsync();
+  if (engineMode === 'ai') {
+    const context = await engine.aiQuestionContext(language);
+    checkEpoch();
+    if (!context.features.length) currentQuestion = null;
+    else {
+      currentQuestion = null;
+      for (let attempt=0;attempt<2 && !currentQuestion;attempt++) {
+        const requestContext = attempt === 0 ? context : {...context,features:context.features.slice(0,1)};
+        const proposals = await localAI.propose(requestContext,language);
+        checkEpoch();
+        currentQuestion = engine.chooseAIQuestion(proposals,language);
+      }
+      if (!currentQuestion) throw Error(language === 'de' ? 'Das Modell hat keine ausreichend belegte, neue Frage erzeugt. Du kannst erneut versuchen oder den klassischen Modus wählen.' : 'The model did not generate a grounded new question. Retry or explicitly choose classic mode.');
+    }
+  } else { currentQuestion = await engine.nextQuestionAsync(); checkEpoch(); }
   acceptingAnswer = true;
   if (!currentQuestion) return engine.shouldGuess() ? revealGuess() : showLearn();
   resetAnswerButtons();
@@ -180,6 +251,7 @@ async function askNext() {
 async function answer(value, selectedButton = null) {
   if (!currentQuestion || !acceptingAnswer) return;
   acceptingAnswer = false;
+  const epoch = aiEpoch;
   const answeredQuestion = currentQuestion;
   currentQuestion = null;
   setThinking(true, selectedButton);
@@ -189,11 +261,12 @@ async function answer(value, selectedButton = null) {
     tone(value > 0 ? 610 : value < 0 ? 340 : 460);
     if (engine.shouldGuess()) revealGuess(); else await askNext();
   } catch (error) {
-    console.error("The question flow recovered from an error.", error);
-    showLearn();
+    if (epoch === aiEpoch) {
+      console.error("The question flow recovered from an error.", error);
+      engineMode === 'ai' ? aiError(error,true) : showLearn();
+    }
   } finally {
-    acceptingAnswer = true;
-    setThinking(false);
+    if (epoch === aiEpoch) { acceptingAnswer = true; setThinking(false); }
   }
 }
 
@@ -233,13 +306,16 @@ function revealGuess() {
 }
 
 async function continueAfterWrong() {
+  const epoch = aiEpoch;
   if (!currentGuess) return showLearn();
   engine.reject(currentGuess.character.id ?? currentGuess.character.name);
   currentGuess = null;
   if (engine.rejected.size >= 8 || !engine.probabilities().length) return showLearn();
   platform.gameplayStart(); showScreen("question-screen"); setThinking(true);
   await nextPaint();
-  try { await askNext(); } finally { acceptingAnswer = true; setThinking(false); }
+  try { await askNext(); }
+  catch (error) { if (epoch === aiEpoch) engineMode === 'ai' ? aiError(error,true) : showLearn(); }
+  finally { if (epoch === aiEpoch) { acceptingAnswer = true; setThinking(false); } }
 }
 
 function showLearn() { platform.gameplayStop(); currentQuestion = null; showScreen("learn-screen"); setTimeout(() => $("#character-input").focus(), 250); }
@@ -276,7 +352,7 @@ async function learnCharacter(event) {
     return;
   }
   const attributes = { ...Object.fromEntries(questions.map(({ id }) => [id, 0])), ...knowledge.attributes };
-  if (!addingFromHome) for (const { questionId, answer } of engine.history) if (answer !== 0 && !questionId.startsWith('group:')) attributes[questionId] = answer;
+  if (!addingFromHome) for (const { questionId, answer } of engine.history) if (answer !== 0 && !questionId.startsWith('group:') && !questionId.startsWith('all:')) attributes[questionId] = answer;
   const character = {
     id: `learned-${(knowledge.sourceId || knowledge.name).toLowerCase().replace(/[^a-z0-9]+/g,"-")}`,
     name: knowledge.name, icon:"🧠", description: knowledge.description, image:knowledge.image, imageAttribution:knowledge.imageAttribution, source:knowledge.source, attributes, learned:true
@@ -299,9 +375,21 @@ $("#answer-grid").addEventListener("click", (event) => { const button = event.ta
 $("#language-button").addEventListener("click", () => setLanguage(language === "en" ? "de" : "en"));
 $("#sound-button").addEventListener("click", toggleSound);
 $('#settings-sound')?.addEventListener('click', toggleSound);
+$('#ai-mode')?.addEventListener('change',(event)=>setEngineMode(event.target.checked ? 'ai' : 'classic'));
+$('#ai-cancel-button')?.addEventListener('click',()=>{ ++aiEpoch; localAI.cancel(); acceptingAnswer = true; setThinking(false); showScreen('start-screen'); });
+$('#thinking-cancel')?.addEventListener('click',()=>{ ++aiEpoch; localAI.cancel(); acceptingAnswer = true; setThinking(false); platform.gameplayStop(); showScreen('start-screen'); });
+$('#ai-classic-button')?.addEventListener('click',()=>{ ++aiEpoch; localAI.cancel(); acceptingAnswer = true; setEngineMode('classic'); startGame(); });
+$('#ai-retry-button')?.addEventListener('click',async()=>{
+  if (!acceptingAnswer) return;
+  if (!retryQuestion || !localAI.ready) return startGame();
+  const epoch = aiEpoch;
+  showScreen('question-screen'); setThinking(true);
+  try { await askNext(); } catch (error) { if (epoch === aiEpoch) aiError(error,true); }
+  finally { if (epoch === aiEpoch) { acceptingAnswer = true; setThinking(false); } }
+});
 $('#settings-button')?.addEventListener('click', () => { renderHome(); showScreen('settings-screen'); });
 $('#settings-back')?.addEventListener('click', () => showScreen('start-screen'));
-$('.brand')?.addEventListener('click', (event) => { event.preventDefault(); platform.gameplayStop(); showScreen('start-screen'); });
+$('.brand')?.addEventListener('click', (event) => { event.preventDefault(); ++aiEpoch; if (!acceptingAnswer) localAI.cancel(); acceptingAnswer = true; setThinking(false); platform.gameplayStop(); showScreen('start-screen'); });
 $('#add-person-button')?.addEventListener('click', () => { engine.reset(); addingFromHome = true; $('#learn-status').textContent = ''; $('#character-input').value = ''; showLearn(); });
 $('#share-button')?.addEventListener('click', async () => {
   const status = $('#home-status');

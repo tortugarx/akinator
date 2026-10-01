@@ -78,6 +78,7 @@ export class GuessEngine {
     this.answerCount = 0;
     this.lastRejectionAnswerCount = null;
     this.probabilityCache = null;
+    this.aiBestGain = 0;
   }
 
   key(item) { return item.id ?? item.name; }
@@ -144,6 +145,11 @@ export class GuessEngine {
   }
 
   yesProbability(person, id) {
+    if (id.startsWith('all:')) {
+      const facts = id.slice(4).split('|').map((key) => isImplicitNegative(person,key) ? 0 : person.attributes[key] || 0);
+      if (facts.some((fact) => fact === -1)) return .06;
+      return facts.every((fact) => fact === 1) ? .94 : .5;
+    }
     if (id.startsWith('group:')) {
       const facts = id.slice(6).split('|').map((key) => isImplicitNegative(person,key) ? 0 : person.attributes[key] || 0);
       if (facts.some((fact) => fact === 1)) return .94;
@@ -287,6 +293,79 @@ export class GuessEngine {
     return result.value;
   }
 
+  selectionDistribution() {
+    const candidates = this.probabilities();
+    let selection = candidates;
+    if (this.activeAnchors?.length) {
+      const focused = candidates.filter(({item}) => this.activeAnchors.every((id) => item.attributes[id] === 1));
+      const mass = focused.reduce((sum,{probability}) => sum+probability,0);
+      if (mass >= .95) selection = focused.map((entry) => ({...entry,probability:entry.probability/mass}));
+    }
+    if (selection.length <= 2000) return selection;
+    const head = selection.slice(0,1000), tail = selection.slice(1000);
+    const mass = tail.reduce((sum,{probability}) => sum+probability,0);
+    const sampled = [];
+    let cursor = 0, cumulative = tail[0].probability;
+    for (let index=0;index<1000;index++) {
+      const quantile = (index+.5)*mass/1000;
+      while (cumulative < quantile && cursor < tail.length-1) cumulative += tail[++cursor].probability;
+      sampled.push({item:tail[cursor].item,probability:mass/1000});
+    }
+    return [...head,...sampled];
+  }
+
+  questionGain(id, distribution = this.selectionDistribution()) {
+    let mass = 0, conditionalEntropy = 0;
+    for (const {item,probability} of distribution) {
+      const yes = this.yesProbability(item,id);
+      mass += probability*yes; conditionalEntropy += probability*binaryEntropy(yes);
+    }
+    return Math.max(0,binaryEntropy(mass)-conditionalEntropy);
+  }
+
+  async aiQuestionContext(language = 'de') {
+    if (this.generatedSize !== this.characters.length) {
+      this.generatedQuestions = descriptionQuestions(this.characters); this.generatedSize = this.characters.length;
+    }
+    const distribution = this.selectionDistribution();
+    const features = [];
+    let count = 0;
+    for (const question of [...this.questions,...this.generatedQuestions]) {
+      if (this.asked.has(question.id) || this.responses.has(question.id) || !this.isRelevant(question)) continue;
+      const gain = this.questionGain(question.id,distribution)*this.questionFocusWeight(question.id);
+      if (gain > .001) features.push({id:question.id,meaning:question[language],gain:Number(gain.toFixed(4))});
+      if (++count % 12 === 0) await new Promise((resolve)=>setTimeout(resolve,0));
+    }
+    features.sort((a,b)=>b.gain-a.gain);
+    this.aiBestGain = features[0]?.gain || 0;
+    const eligible = features.slice(0,10);
+    return {
+      subject:this.isRealPerson() ? 'real person' : 'person or fictional character',
+      known:[...this.responses].map(([id,answer])=>({id,answer})),
+      features:eligible,
+      candidates:distribution.slice(0,5).map(({item,probability})=>({
+        // No need to reveal candidate names to the generator. It generates a
+        // discriminator, never an answer/name question.
+        probability:Number(probability.toFixed(3)),
+        yes:eligible.filter(({id})=>item.attributes[id] === 1).map(({id})=>id),
+        no:eligible.filter(({id})=>item.attributes[id] === -1 && !isImplicitNegative(item,id)).map(({id})=>id)
+      }))
+    };
+  }
+
+  chooseAIQuestion(proposals,language = 'de') {
+    const distribution = this.selectionDistribution();
+    let best = null, value = Math.max(.001,(this.aiBestGain || 0)*.8);
+    for (const proposal of proposals) {
+      if (this.asked.has(proposal.id) || proposal.featureIds.some((id)=>this.responses.has(id) || !this.isRelevant({id}))) continue;
+      const gain = this.questionGain(proposal.id,distribution)*Math.max(...proposal.featureIds.map((id)=>this.questionFocusWeight(id)));
+      if (gain > value) { best = proposal; value = gain; }
+    }
+    if (!best) return null;
+    this.asked.add(best.id);
+    return {...best,de:best.text,en:best.text,generatedLanguage:language};
+  }
+
   *selectQuestion() {
     if (this.generatedSize !== this.characters.length) {
       this.generatedQuestions = descriptionQuestions(this.characters);
@@ -354,6 +433,9 @@ export class GuessEngine {
     if (questionId.startsWith('group:') && response <= -.5) {
       for (const id of questionId.slice(6).split('|')) { this.responses.set(id, response); this.asked.add(id); }
     }
+    if (questionId.startsWith('all:') && response >= .5) {
+      for (const id of questionId.slice(4).split('|')) { this.responses.set(id,response); this.asked.add(id); }
+    }
     this.probabilityCache = null;
     if (response === 0) return;
     for (const character of this.characters) {
@@ -362,7 +444,7 @@ export class GuessEngine {
       const yesProbability = this.yesProbability(character, questionId);
       const likelihood = response > 0 ? yesProbability : 1 - yesProbability;
       const fact = character.attributes[questionId] || 0;
-      const known = questionId.startsWith('group:') ? yesProbability !== .5 : fact && !isImplicitNegative(character, questionId);
+      const known = questionId.startsWith('group:') || questionId.startsWith('all:') ? yesProbability !== .5 : fact && !isImplicitNegative(character, questionId);
       this.scores.set(key, (this.scores.get(key) ?? 0) + Math.abs(response) * (known ? 1 : .4) * Math.log(Math.max(.01, likelihood)));
     }
   }

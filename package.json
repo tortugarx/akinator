@@ -4,11 +4,19 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:local-ai": "node scripts/build-local-ai.mjs",
     "start": "python3 -m http.server 4173",
     "test": "node --test",
     "build:wikidata": "node scripts/build-wikidata-dataset.mjs && node scripts/train-question-model.mjs",
     "enrich:images": "node scripts/enrich-person-images.mjs",
     "train:model": "node scripts/train-question-model.mjs",
     "build:crazygames": "node scripts/build-crazygames.mjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "esbuild": "0.28.2"
   }
 }

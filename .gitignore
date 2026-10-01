@@ -1,2 +1,5 @@
 dist/
+node_modules/
+artifacts/
+assets/ai/models/qwen/model-*.bin
 nazar-crazygames.zip
