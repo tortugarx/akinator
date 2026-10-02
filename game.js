@@ -1,11 +1,14 @@
-import { characters, questions } from "./data.js?v=29";
-import { GuessEngine } from "./engine.js?v=29";
+import { characters, questions } from "./data.js?v=30";
+import { GuessEngine } from "./engine.js?v=30";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=29";
-import { questionModel } from "./question-model.js?v=29";
-import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=29";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=29";
-import { LocalQuestionAI } from './llm-questions.js?v=29';
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=30";
+import { questionModel } from "./question-model.js?v=30";
+import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=30";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=30";
+import { LocalQuestionAI } from './llm-questions.js?v=30';
+import { rankingModel } from './ranking-model.js?v=30';
+import { suitableForYouth, safeQuestion, licensedPortrait } from './release-policy.js?v=30';
+import { readKnowledge } from './knowledge-loader.js?v=30';
 
 const translations = {
   en: {
@@ -19,13 +22,14 @@ const translations = {
 const $ = (selector) => document.querySelector(selector);
 const screens = [...document.querySelectorAll(".screen")];
 const storageKey = "nazar-learned-characters-v1";
-const buildVersion = 29;
+const buildVersion = 30;
 const readLearned = () => {
   try { return JSON.parse(localStorage.getItem(storageKey) || "[]").filter((item) => item?.id && item?.name && item?.attributes); }
   catch { return []; }
 };
 const learnedCharacters = readLearned();
-const engine = new GuessEngine([...characters, ...learnedCharacters], questions, questionModel);
+const youthRelease = document.documentElement.dataset?.release === 'crazygames' || platform.isCrazyGamesHost();
+const engine = new GuessEngine([...characters, ...learnedCharacters].filter(person=>!youthRelease||suitableForYouth(person)).map(person=>youthRelease?licensedPortrait(person):person), questions.filter(question=>!youthRelease||safeQuestion(question)), {...questionModel,ranker:rankingModel,questionFilter:youthRelease?safeQuestion:null});
 let language = "de";
 let currentQuestion = null;
 let currentGuess = null;
@@ -33,10 +37,10 @@ let soundEnabled = true;
 let acceptingAnswer = true;
 let addingFromHome = false;
 let thinkingTimer = null;
-let engineMode = 'ai';
+let engineMode = 'classic';
 let aiEpoch = 0;
 let retryQuestion = false;
-try { engineMode = localStorage.getItem('nazar-engine-mode') === 'classic' ? 'classic' : 'ai'; } catch { /* Optional preferences. */ }
+try { engineMode = !youthRelease && localStorage.getItem('nazar-engine-mode') === 'ai' ? 'ai' : 'classic'; } catch { /* Optional preferences. */ }
 const localAI = new LocalQuestionAI({onProgress:updateAIProgress});
 try { soundEnabled = localStorage.getItem('nazar-sound') !== 'off'; } catch { /* Optional preferences. */ }
 
@@ -64,9 +68,9 @@ function updateAIProgress(event) {
 }
 
 function setEngineMode(mode) {
-  engineMode = mode;
+  engineMode = youthRelease ? 'classic' : mode;
   try { localStorage.setItem('nazar-engine-mode',mode); } catch { /* Optional. */ }
-  if ($('#ai-mode')) $('#ai-mode').checked = mode === 'ai';
+  if ($('#ai-mode')) $('#ai-mode').checked = engineMode === 'ai';
   renderHome();
 }
 
@@ -147,9 +151,14 @@ function renderHome() {
   render('#popular-people', Object.keys(stats).sort((a,b) => Number(stats[b]) - Number(stats[a])));
   const labels = { 'add-person-button':['Person hinzufügen','Add person'], 'share-button':['Teilen','Share'], 'settings-button':['Einstellungen','Settings'], 'recent-title':['Zuletzt gespielt','Recently played'], 'popular-title':['Meistgespielt','Most played'], 'stats-scope':['Auf diesem Gerät · bestätigte Treffer','On this device · confirmed matches'], 'settings-title':['Einstellungen','Settings'], 'settings-back':['Zur Startseite','Home'], 'info-title':['Über das Spiel','About the game'], 'info-text':['Ein lokales Ratespiel. Antworten und Statistiken bleiben auf diesem Gerät. Keine globale Synchronisierung.','A local guessing game. Answers and statistics stay on this device. No global synchronization.'] };
   Object.assign(labels,{'ai-mode-label':['Echtes lokales Sprachmodell verwenden','Use real local language model'],'ai-mode-help':['Ohne Haken: klassischer Merkmalsmodus, kein Sprachmodell. Mit KI: ca. 241 MB Download; lokale CPU-Ausführung, kein WebGPU erforderlich.','Unchecked: classic feature mode, no language model. AI: about 241 MB download; local CPU inference, no WebGPU required.'],'ai-download-hint':[engineMode === 'ai' ? 'Lokale KI (experimentell): ohne WebGPU, einmalig ca. 241 MB Download. Berechnung auf deinem Gerät.' : 'Klassischer Merkmalsmodus · ohne Sprachmodell.',engineMode === 'ai' ? 'Local AI (experimental): no WebGPU required, about 241 MB download once. Computation on your device.' : 'Classic feature mode · no language model.'],'ai-retry-button':['Erneut versuchen','Retry'],'ai-classic-button':['Klassisch ohne Sprachmodell spielen','Play classic without language model'],'ai-cancel-button':['Abbrechen','Cancel'],'thinking-cancel':['Abbrechen · zur Startseite','Cancel · go home']});
+  labels['ai-mode-help']=youthRelease
+    ? ['Diese Ausgabe verwendet die kompakte lokale Fragen-KI ohne Sprachmodell-Download.','This release uses compact local question ranking without a language-model download.']
+    : ['Standard: lokale Wahrscheinlichkeits-Engine und trainiertes Fragen-Ranking. Optionales Sprachmodell: ca. 241 MB Download, nur zur Formulierung; läuft auf deinem Gerät.','Default: local probability engine and trained question ranking. Optional language model: about 241 MB download, wording only; runs on your device.'];
+  if(engineMode!=='ai') labels['ai-download-hint']=['Lokales Fragen-Ranking · sofort spielen, ohne großen KI-Download.','Local question ranking · play without a large AI download.'];
+  labels['ai-classic-button']=['Mit lokalem Fragen-Ranking spielen','Play with local question ranking'];
   for (const [id, values] of Object.entries(labels)) if ($(`#${id}`)) $(`#${id}`).textContent = values[language === 'de' ? 0 : 1];
   if ($('#settings-sound')) $('#settings-sound').textContent = `Sound: ${soundEnabled ? (language === 'de' ? 'An' : 'On') : (language === 'de' ? 'Aus' : 'Off')}`;
-  if ($('#ai-mode')) $('#ai-mode').checked = engineMode === 'ai';
+  if ($('#ai-mode')) {$('#ai-mode').checked = engineMode === 'ai';$('#ai-mode').disabled=youthRelease;}
 }
 
 function toggleSound() {
@@ -203,6 +212,8 @@ async function startGame() {
   const epoch = ++aiEpoch;
   acceptingAnswer = false;
   retryQuestion = false;
+  await knowledgeReady;
+  if(epoch!==aiEpoch) return;
   if (engineMode === 'ai' && !localAI.ready) {
     showScreen('ai-load-screen');
     $('#ai-load-title').textContent = language === 'de' ? 'KI wird vorbereitet' : 'Preparing local AI';
@@ -214,7 +225,7 @@ async function startGame() {
   addingFromHome = false;
   engine.reset(); currentGuess = null; currentQuestion = null; acceptingAnswer = true;
   $("#learn-status").textContent = ""; $("#character-input").value = "";
-  platform.gameplayStart(); showScreen("question-screen"); setThinking(true);
+  showScreen("question-screen"); setThinking(true);
   try { await askNext(); tone(480); }
   catch (error) { if (epoch === aiEpoch) { console.error('Could not choose the first question.',error); engineMode === 'ai' ? aiError(error,true) : showLearn(); } }
   finally { if (epoch === aiEpoch) { acceptingAnswer = true; setThinking(false); } }
@@ -241,6 +252,7 @@ async function askNext() {
   } else { currentQuestion = await engine.nextQuestionAsync(); checkEpoch(); }
   acceptingAnswer = true;
   if (!currentQuestion) return engine.shouldGuess() ? revealGuess() : showLearn();
+  platform.gameplayStart();
   resetAnswerButtons();
   renderQuestion(currentQuestion);
   updateQuestionMeta();
@@ -293,9 +305,11 @@ function revealGuess() {
   source.href = currentGuess.character.source || "#";
   const credit = $("#image-credit");
   const attribution = currentGuess.character.imageAttribution;
-  const creditLinkAllowed = attribution?.sourceUrl && platform.externalLinksAllowed();
+  // License attribution is not a cross-promotion to another playable game.
+  const creditUrl=platform.externalLinksAllowed()?attribution?.sourceUrl:attribution?.licenseUrl;
+  const creditLinkAllowed = Boolean(creditUrl);
   credit.hidden = !attribution;
-  if (creditLinkAllowed) credit.href = attribution.sourceUrl;
+  if (creditLinkAllowed) credit.href = creditUrl;
   else credit.removeAttribute("href");
   credit.textContent = attribution
     ? `${language === "de" ? "Bild" : "Image"}: ${attribution.creator} · ${attribution.license}${creditLinkAllowed ? " ↗" : ""}`
@@ -345,6 +359,7 @@ async function learnCharacter(event) {
   const submit = $("#learn-form button[type='submit']"); submit.disabled = true;
   $("#learn-status").textContent = translations[language].searching;
   const knowledge = await findKnowledge(requestedName);
+  if(youthRelease && !suitableForYouth(knowledge)) {$('#learn-status').textContent=language==='de'?'Diese Person ist in dieser Ausgabe nicht verfügbar.':'This person is unavailable in this release.';submit.disabled=false;return;}
   const privatePerson = engine.answeredYes("personallyKnown");
   if (!canStoreLearnedCharacter(knowledge, privatePerson, engine.response("real"))) {
     $("#learn-status").textContent = translations[language].notVerified;
@@ -407,10 +422,17 @@ async function loadKnowledgeBase() {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 20000);
   try {
-    const response = await fetch(`wikidata-people.json?v=${buildVersion}`, { signal:controller.signal });
-    if (!response.ok) throw new Error("Knowledge base unavailable");
-    const database = await response.json();
+    let database;
+    try {
+      const file=youthRelease ? 'people-youth' : 'people';
+      const response=await fetch(`assets/data/${file}.json.gz?v=${buildVersion}`,{signal:controller.signal});
+      database=await readKnowledge(response,true);
+    } catch(error) {
+      if(youthRelease) throw error;
+      database=await readKnowledge(await fetch(`wikidata-people.json?v=${buildVersion}`,{signal:controller.signal}));
+    }
     engine.addDatabase(database);
+    if(youthRelease) {engine.characters=engine.characters.filter(suitableForYouth);engine.refreshGeneratedQuestions();engine.generatedQuestions=engine.generatedQuestions.filter(safeQuestion);engine.reset();}
   } catch (error) {
     console.info("Using the compact offline knowledge base.", error);
   } finally {

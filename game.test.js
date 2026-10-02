@@ -32,7 +32,7 @@ test("the start button opens the first question", async () => {
   globalThis.window = { addEventListener() {}, CrazyGames: undefined };
   Object.defineProperty(globalThis, "navigator", { value: { language: "de" }, configurable: true });
   const stored = new Map();
-  stored.set('nazar-engine-mode','classic');
+  // No preference: Start must work without fetching a language model.
   globalThis.localStorage = { getItem(key) { return stored.get(key); }, setItem(key,value) { stored.set(key,value); } };
   globalThis.fetch = async () => ({ ok:true, json:async () => ({ characters:[] }) });
 

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { trainAnswerModel, predictAnswer } from "./answer-model.js";
+import { trainAnswerModel, predictAnswer, invalidateAnswerTraits } from "./answer-model.js";
 import { GuessEngine } from "./engine.js";
 import { questionModel } from "./question-model.js";
 
@@ -51,4 +51,11 @@ test("does not claim certainty when remaining profiles cannot be distinguished",
   assert.equal(engine.nextQuestion(), null);
   assert.equal(engine.shouldGuess(), false);
   assert.ok(engine.bestGuess().confidence <= .34);
+});
+test('compiled sparse predictions preserve feature order and explicitly invalidate changed profiles',()=>{
+  const model={classifiers:{target:{prior:.5,features:[['b',1,-1],['a',2,-2]]}},temperature:.3};
+  const person={attributes:{a:1,b:-1}};
+  assert.equal(predictAnswer(model,person,'target'),1/(1+Math.exp(-.3)));
+  person.attributes.a=-1;invalidateAnswerTraits(person);
+  assert.ok(Math.abs(predictAnswer(model,person,'target')-1/(1+Math.exp(.9)))<1e-12);
 });

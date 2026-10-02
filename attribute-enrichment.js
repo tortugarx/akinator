@@ -74,7 +74,7 @@ const rules = {
   lordOfTheRings:/lord of the rings|herr der ringe/i,
   mario:/mario franchise|mario series|super mario/i,
   sonic:/sonic the hedgehog/i,
-  retired:/\bretired\b|\bformer\b|ehemalig|im ruhestand|career ended/i,
+  retired:/\bretired\b|im ruhestand|career ended|karriere beendet/i,
   singer:/\bsinger\b|\bvocalist\b|sänger|sängerin|gesangssolist/i,
   songwriter:/singer-songwriter|songwriter|liedermacher|songschreiber/i,
   soloSinger:/solo singer|solo artist|solosänger|solosängerin/i,

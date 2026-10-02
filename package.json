@@ -14,6 +14,10 @@
     "enrich:profiles": "node scripts/enrich-profile-facts.mjs",
     "audit:profiles": "node scripts/audit-profiles.mjs",
     "train:model": "node scripts/train-question-model.mjs",
+    "train:ranker": "node scripts/train-ranker.mjs",
+    "benchmark": "node scripts/benchmark-game.mjs",
+    "prepare:data": "node scripts/prepare-release-data.mjs",
+    "check:crazygames": "node scripts/build-crazygames.mjs --check",
     "build:crazygames": "node scripts/build-crazygames.mjs"
   },
   "dependencies": {

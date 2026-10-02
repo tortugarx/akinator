@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import {GuessEngine} from '../engine.js';
 import {characters,questions} from '../data.js';
 import {questionModel} from '../question-model.js';
+import {rankingModel} from '../ranking-model.js';
 const database = JSON.parse(await readFile('wikidata-people.json','utf8'));
 const weights = await readFile('artifacts/model-candidates/gemma-270m.gguf');
 const type = process.argv.includes('--webkit') ? webkit : chromium;
@@ -25,7 +26,7 @@ try {
   });
   const scenarios = [[],[['real',1],['chancellor',1]],[['real',1],['adultFilmPerformer',1]],[['real',1],['singer',1]],[['real',1],['streamer',1]],[['personallyKnown',1]]];
   for (const answers of scenarios) {
-    const engine = new GuessEngine(structuredClone(characters),questions,questionModel);
+    const engine = new GuessEngine(structuredClone(characters),questions,{...questionModel,ranker:rankingModel});
     engine.addDatabase(database);
     for (const [id,value] of answers) engine.answer(id,value);
     const context = await engine.aiQuestionContext('de');
@@ -36,7 +37,7 @@ try {
     assert.ok(question,'Must generate a grounded new question, not silently fall back');
   }
   if (process.argv.includes('--round')) {
-    const engine = new GuessEngine(structuredClone(characters),questions,questionModel);
+    const engine = new GuessEngine(structuredClone(characters),questions,{...questionModel,ranker:rankingModel});
     engine.addDatabase(database);
     const target = engine.characters.find(person=>person.name === 'Olaf Scholz');
     assert.ok(target,'Round target must exist');
@@ -61,6 +62,9 @@ try {
   await page.evaluate(()=>window.__realAI.cancel());
   if (process.argv.includes('--ui')) {
     await page.locator('#start-screen.active').waitFor();
+    await page.locator('#settings-button').click();
+    await page.locator('#ai-mode').check();
+    await page.locator('#settings-back').click();
     await page.locator('#start-button').click();
     await page.waitForFunction(()=>document.querySelector('#question-screen.active #answer-grid button:not(:disabled)'),null,{timeout:120000});
     assert.match(await page.locator('#question-text').textContent(),/\?$/);

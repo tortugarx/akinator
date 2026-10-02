@@ -1,7 +1,9 @@
-import { enrichCharacterAttributes } from "./attribute-enrichment.js?v=29";
-import { predictAnswer, isImplicitNegative } from "./answer-model.js?v=29";
-import {contextualQuestionText} from './question-format.js?v=29';
-import { descriptionQuestions, generateGroupedQuestions } from "./generated-questions.js?v=29";
+import { enrichCharacterAttributes } from "./attribute-enrichment.js?v=30";
+import { predictAnswer, isImplicitNegative, invalidateAnswerTraits } from "./answer-model.js?v=30";
+import {contextualQuestionText} from './question-format.js?v=30';
+import { descriptionQuestions, generateGroupedQuestions } from "./generated-questions.js?v=30";
+import { rankedQuestionValue } from './question-ranking.js?v=30';
+import { addReviewedDetails } from './profile-details.js?v=30';
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const binaryEntropy = (probability) => {
@@ -59,7 +61,7 @@ for (const shared of ["movie", "tv", "book", "space", "electric", "royalty"]) re
 
 export class GuessEngine {
   constructor(characters, questions, model = {}) {
-    this.characters = characters.map((item) => enrichCharacterAttributes(item));
+    this.characters = characters.map((item) => addReviewedDetails(enrichCharacterAttributes(item)));
     this.questions = questions;
     this.generatedQuestions = [];
     this.generatedSize = -1;
@@ -109,7 +111,7 @@ export class GuessEngine {
   }
 
   addCharacter(character) {
-    enrichCharacterAttributes(character);
+    addReviewedDetails(enrichCharacterAttributes(character));
     const candidates=new Set([character.name,...(character.aliases||[])].flatMap(name=>[...(this.charactersByAlias.get(this.aliasKey(name))||[])]));
     const entityId=item=>item.source?.match(/wikidata\.org\/wiki\/(Q\d+)/i)?.[1]?.toUpperCase();
     const compatible=[...candidates].filter(item=>!(item.attributes.real && character.attributes.real && item.attributes.real!==character.attributes.real) && !(entityId(item)&&entityId(character)&&entityId(item)!==entityId(character)));
@@ -131,6 +133,7 @@ export class GuessEngine {
       }
       this.probabilityCache = null;
       this.answerCache.delete(existing);
+      invalidateAnswerTraits(existing);
       this.profileSignatures.delete(existing);
       return;
     }
@@ -229,6 +232,7 @@ export class GuessEngine {
   }
 
   isRelevant(question) {
+    if(this.model.questionFilter && !this.model.questionFilter(question)) return false;
     const id = question.id;
     if ((this.questionAliases.get(id)||[]).some(alias=>this.responses.has(alias)||this.asked.has(alias))) return false;
     if ((this.redundantAfterYes.get(id)||[]).some(parent=>this.answeredYes(parent))) return false;
@@ -401,7 +405,7 @@ export class GuessEngine {
     let count = 0;
     for (const question of [...this.questions,...this.generatedQuestions]) {
       if (this.asked.has(question.id) || this.responses.has(question.id) || !this.isRelevant(question)) continue;
-      const gain = this.questionGain(question.id,distribution,factMasses)*this.questionFocusWeight(question.id,focused);
+      const gain = rankedQuestionValue(question,this.questionGain(question.id,distribution,factMasses),this.questionFocusWeight(question.id,focused),this.answerCount,this.model.ranker);
       if (gain > .001) features.push({id:question.id,meaning:contextualQuestionText(question,language,this.subjectKind()),gain:Number(gain.toFixed(4))});
       if (++count % (question.id.startsWith('fact:') ? 128 : 12) === 0) await new Promise((resolve)=>setTimeout(resolve,0));
     }
@@ -427,7 +431,7 @@ export class GuessEngine {
     let best = null, value = Math.max(.001,(this.aiBestGain || 0)*.8);
     for (const proposal of proposals) {
       if (this.asked.has(proposal.id) || proposal.featureIds.some((id)=>this.responses.has(id) || !this.isRelevant({id}))) continue;
-      const gain = this.questionGain(proposal.id,distribution)*Math.max(...proposal.featureIds.map((id)=>this.questionFocusWeight(id)));
+      const gain = rankedQuestionValue({...proposal,en:proposal.text},this.questionGain(proposal.id,distribution),Math.max(...proposal.featureIds.map((id)=>this.questionFocusWeight(id))),this.answerCount,this.model.ranker);
       if (gain > value) { best = proposal; value = gain; }
     }
     if (!best) return null;
@@ -438,6 +442,7 @@ export class GuessEngine {
   refreshGeneratedQuestions() {
     if (this.generatedSize !== this.characters.length) {
       this.generatedQuestions = descriptionQuestions(this.characters);
+      for(const person of this.characters) invalidateAnswerTraits(person);
       this.generatedSize = this.characters.length;
       this.answerCache = new WeakMap();
       this.profileSignatures = new WeakMap();
@@ -485,12 +490,18 @@ export class GuessEngine {
     let bestValue = 0.0001;
     let evaluated = 0;
     for (const question of unasked) {
-      if (++evaluated % (question.id.startsWith('fact:') ? 128 : 12) === 0) yield;
-      const gain = this.questionGain(question.id,selectionCandidates,factMasses);
       // Once a concrete occupation is known, use questions that discriminate
       // inside that posterior, not a fixed tour through unrelated professions.
       const focus = question.featureIds ? Math.max(...question.featureIds.map((id) => this.questionFocusWeight(id,focused))) : this.questionFocusWeight(question.id,focused);
-      const value = gain * focus;
+      // Information gain cannot exceed binary entropy. Skip work only when a
+      // mathematical upper bound already loses, preserving the exact winner.
+      const fact=question.id.startsWith('fact:');
+      if(fact && !factMasses.get(question.id)) continue;
+      const upperBound=fact ? Math.log(2)-binaryEntropy(.94) : Math.log(2);
+      if(upperBound*focus<=bestValue) continue;
+      if (++evaluated % (fact ? 512 : 12) === 0) yield;
+      const gain = this.questionGain(question.id,selectionCandidates,factMasses);
+      const value = rankedQuestionValue(question,gain,focus,this.answerCount,this.model.ranker);
       if (value > bestValue) { best = question; bestValue = value; }
     }
     if (!best) return null;

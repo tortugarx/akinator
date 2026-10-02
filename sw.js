@@ -1,8 +1,8 @@
-const cacheName = "nazar-v29";
+const cacheName = "nazar-v30";
 const localAssets = [
-  "./", "./index.html", "./styles.css?v=29", "./game.js?v=29",
-  "./data.js?v=29", "./engine.js?v=29", "./attribute-enrichment.js?v=29", "./answer-model.js?v=29", "./learning.js?v=29", "./question-model.js?v=29", "./play-stats.js?v=29", "./question-format.js?v=29", "./platform.js",
-  "./llm-questions.js?v=29", "./local-ai-worker.js", "./model-download.js", "./runtime-probe.js", "./feature-schema.js?v=29", "./generated-questions.js?v=29", "./wikidata-people.json?v=29", "./assets/nazar-genie.png"
+  "./", "./index.html", "./styles.css?v=30", "./game.js?v=30",
+  "./data.js?v=30", "./engine.js?v=30", "./attribute-enrichment.js?v=30", "./answer-model.js?v=30", "./learning.js?v=30", "./question-model.js?v=30", "./play-stats.js?v=30", "./question-format.js?v=30", "./platform.js",
+  "./llm-questions.js?v=30", "./local-ai-worker.js", "./model-download.js", "./runtime-probe.js", "./feature-schema.js?v=30", "./generated-questions.js?v=30", "./assets/data/people.json.gz?v=30", "./question-ranking.js?v=30", "./ranking-model.js?v=30", "./release-policy.js?v=30", "./knowledge-loader.js?v=30", "./profile-details.js?v=30", "./assets/nazar-genie.png"
 ];
 
 self.addEventListener("install", (event) => {

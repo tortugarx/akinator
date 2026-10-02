@@ -2,6 +2,65 @@
 
 Ein selbstlernendes Figuren-Ratespiel für den Browser. Nazar kombiniert eine kuratierte Wissensbasis mit einer vorab erzeugten Wikidata-Datenbank, einer lokalen Active-Learning-Engine und einem Lernmodus, der bestätigte Figuren im Browser speichert.
 
+## Aktueller Veröffentlichungsstand (Version 30)
+
+Standard ist jetzt die lokale Wahrscheinlichkeits-Engine mit einem kleinen
+trainierten Fragen-Ranking. Der große Gemma-Download ist **keine Voraussetzung
+zum Spielen**. Auf GitHub bleibt er ausdrücklich optional in den Einstellungen;
+im CrazyGames-Build wird diese Option deaktiviert und keine WASM-/LLM-Laufzeit
+mitgeliefert. Das Ja/Nein-Spiel und die konservative Trefferprüfung bleiben.
+
+`ranking-model.js` ist ein tatsächlich gefitteter linearer Schätzer für die
+Beantwortbarkeit einer Frage. Training: 9.561 synthetische Beispiele;
+getrennte Feature-ID-Auswertung: 2.439 Beispiele. Die Annahmen über die
+Bekanntheit von Werken, Schulen, Labels usw. stehen offen im Modell. Das sind
+**keine gemessenen Nutzerdaten**, keine reale Wissensgarantie und kein LLM-
+Finetuning. Informationsgewinn und Relevanz bleiben maßgeblich; das Ranking
+bevorzugt bei vergleichbarer Trennung eher beantwortbare Fragen.
+
+Der reproduzierbare Vergleich umfasst 16 Zielprofile in einem festen
+216-Profil-Kandidatenfeld und drei Antwortbedingungen (Fakten, Unsicherheit,
+eine falsche Antwort). Auf vollständig bekannten Fakten: 15/16 gelöst bei
+beiden Verfahren, durchschnittlich 16,07 → 14,33 Fragen **unter den gelösten
+Runden**. Bei synthetischer Unsicherheit: 13/16 → 15/16. Diese Zahlen gelten
+nicht für die gesamte Datenbank oder echte Spieler. Falsche Antworten bleiben
+eine erhebliche Schwäche; nur 4/16 solcher Runden wurden vom Ranker gelöst.
+Details: [reports/game-benchmark.json](reports/game-benchmark.json).
+
+Vier recherchierte Detailmerkmale ergänzen Papaplatte/Reeze (Edeltalk), Gronkh,
+Trymacs und MontanaBlack; jede Zuordnung hat eine Quelle in `profile-details.js`.
+„Former/ehemalig“ allein beweist keinen Ruhestand mehr. Der aktualisierte
+Profil-Audit weist deshalb ehrlich 1.155 noch nicht unterscheidbare Profile
+aus; fehlende Fakten werden nicht durch erfundene Unterschiede ersetzt.
+
+Die vorab erzeugte Wissensbasis wird als gzip-Datei mit ca. 4,6 MB geladen und
+im Browser entpackt. GitHub kann bei fehlender Dekomprimierung auf die JSON-
+Datei zurückgreifen; die CrazyGames-Ausgabe bleibt beim kompakten, gefilterten
+Datensatz oder der kuratierten Basis. Der Release-Check prüft das tatsächliche
+Dateibudget ohne ein Paket zu erzeugen. Das derzeitige Bundle liegt deutlich
+unter unserem 20-MB-Budget. Externe Bilder werden erst bei Bedarf geladen.
+
+Ein konservativer Jugendfilter entfernt Erwachsenenprofile/-fragen und
+verwirft Bilder ohne ausreichende Lizenzmetadaten. **Keine PEGI-Zertifizierung
+oder CrazyGames-Zulassung:** Bildinhalte, echte Geräte, Netzladezeiten und
+Plattform-QA müssen vor Einreichung separat geprüft werden. Nutzerantworten
+und Lernstatistiken bleiben lokal; kein globales Training oder Synchronisieren
+zwischen verschiedenen Nutzern wurde eingeführt.
+
+```bash
+npm run train:model
+npm run train:ranker
+npm run benchmark
+npm run audit:profiles
+npm run prepare:data
+npm test
+npm run check:crazygames # prüft Inputs, erzeugt kein Paket
+# Mit laufendem npm start und installierten Playwright-Browsern:
+node scripts/check-lightweight-game.mjs
+node scripts/check-versioned-browser.mjs
+# Nur bei Bedarf: npm run build:crazygames
+```
+
 ## Fragen- und Profilrevision (Version 29)
 
 Das Ja/Nein-Spiel bleibt erhalten. Die Engine bevorzugt am Anfang leicht
@@ -40,7 +99,7 @@ Profile individuell manuell recherchiert oder alle Spielverläufe getestet wurde
 Belegte Erkenntnisse zu Limule und die Grenzen des Nachbaus:
 [reports/limule-research.md](reports/limule-research.md).
 
-## Aktuelles lokales Sprachmodell
+## Optionales lokales Sprachmodell auf GitHub
 
 Die aktive KI ist **Gemma 3 270M IT QAT Q4_0**, nicht mehr Qwen/ONNX. Die gepinnten GGUF-Gewichte umfassen 241.410.624 Bytes und werden als statische Datei von Hugging Face geladen. Ein Worker prüft und speichert 24-MiB-Teile mit SHA256 und übergibt einen Blob an wllama 3.6.1. Es gibt keine serverseitige Inferenz. CPU-Ausführung mit einem Thread, ohne WebGPU-, FP16-, SharedArrayBuffer- oder Cross-Origin-Isolation-Pflicht; Safari erhält die kompatible WASM-Laufzeit. Der alte 1,22-GB-Download wird nicht mehr gestartet. Vorhandene alte Modell-Caches werden nicht automatisch gelöscht, enthalten aber nicht die neuen Gewichte.
 
@@ -57,7 +116,7 @@ node scripts/check-gemma-game.mjs --webkit
 node scripts/check-gemma-game.mjs --round
 ```
 
-Gemma hat eigene Nutzungsbedingungen: `assets/ai/models/gemma/TERMS.html` und `NOTICE.txt`. Die Gewichte des GGUF-Exports sind unverändert. Die Laufzeit ist MIT-lizenziert. Das CrazyGames-Buildskript verpackt nur die aktive Gemma-Laufzeit, nicht die alten Qwen-/ONNX-Assets; es wird nicht automatisch ausgeführt. **Noch keine CrazyGames-Freigabe:** 241 MB verpflichtender Erstdownload überschreiten die 50-MB-Startgrenze; bei externen Dateien muss die Plattform die Zeit bis zum Gameplay bewerten. Weitere Download-/Modelloptimierung ist dafür nötig, trotz fehlender GPU-Pflicht.
+Gemma hat eigene Nutzungsbedingungen: `assets/ai/models/gemma/TERMS.html` und `NOTICE.txt`. Die Gewichte des GGUF-Exports sind unverändert. Die Laufzeit ist MIT-lizenziert. Ab Version 30 ist dies nur eine optionale GitHub-Funktion; das CrazyGames-Buildskript verpackt keine Sprachmodell-Laufzeit. Es wird nicht automatisch ausgeführt. Keine CrazyGames-Freigabe wird zugesagt.
 
 ## Archiv: bisheriges Qwen-Modell (Versionen 23–26, nicht mehr aktiv)
 

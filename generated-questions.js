@@ -82,7 +82,7 @@ export function descriptionQuestions(people) {
       if(redundantAfterYes.includes('politician')) redundantAfterYes.push('chancellor','usPresident','nationalLeader');
     }
     const implies=fact.kind==='office' && /mitglied.*(?:bundestag|landtag|parlament|nationalversammlung)|member of.*(?:parliament|congress|assembly|legislature)/i.test(`${fact.de} ${fact.en}`) ? ['legislator'] : [];
-    if(text) generated.push({id:fact.id,de:text[0],en:text[1],generated:true,source:fact.source,aliases,redundantAfterYes,implies});
+    if(text) generated.push({id:fact.id,kind:fact.kind,de:text[0],en:text[1],generated:true,source:fact.source,aliases,redundantAfterYes,implies});
   }
   // Different Wikidata items can share a label (e.g. Republican parties in
   // different countries). Such wording is ambiguous, not a valid discriminator.

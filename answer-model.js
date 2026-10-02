@@ -2,6 +2,9 @@
 const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 const logit = (p) => Math.log(p / (1 - p));
 const knownSets = new WeakMap();
+const observedTraits = new WeakMap();
+const compiledClassifiers = new WeakMap();
+export function invalidateAnswerTraits(person) { observedTraits.delete(person); }
 
 export function isImplicitNegative(person, id) {
   if ((person.attributes[id] || 0) >= 0 || !person.knownAttributes) return false;
@@ -43,16 +46,16 @@ export function trainAnswerModel(people, ids, domains = {}) {
 export function predictAnswer(model, person, id) {
   const classifier = model?.classifiers?.[id];
   if (!classifier || !inDomain(person, classifier.domain)) return .5;
-  const evidence = [];
-  for (const [feature, yes, no] of classifier.features) {
-    const value = person.attributes[feature] || 0;
-    if (value < 0 && isImplicitNegative(person, feature)) continue;
-    if (value) evidence.push(value > 0 ? yes : no);
-  }
+  let observed=observedTraits.get(person);
+  if(!observed) {observed=Object.entries(person.attributes).filter(([feature,value])=>value && !isImplicitNegative(person,feature));observedTraits.set(person,observed);}
+  let compiled=compiledClassifiers.get(classifier);
+  if(!compiled) {compiled=new Map(classifier.features.map(([feature,yes,no],index)=>[feature,{yes,no,index}]));compiledClassifiers.set(classifier,compiled);}
+  const evidence=[];
+  for(const [feature,value] of observed) {const weights=compiled.get(feature);if(weights)evidence.push({value:value>0?weights.yes:weights.no,index:weights.index});}
   if (!evidence.length) return .5;
   // Correlated facts must not multiply certainty without bound.
-  evidence.sort((a, b) => Math.abs(b) - Math.abs(a));
-  const score = logit(clamp(classifier.prior, .001, .999)) + (model.temperature ?? .3) * evidence.slice(0, 6).reduce((sum, n) => sum + n, 0);
+  evidence.sort((a,b)=>Math.abs(b.value)-Math.abs(a.value)||a.index-b.index);
+  const score = logit(clamp(classifier.prior, .001, .999)) + (model.temperature ?? .3) * evidence.slice(0, 6).reduce((sum,n)=>sum+n.value,0);
   return clamp(1 / (1 + Math.exp(-score)), .25, .75);
 }
 
