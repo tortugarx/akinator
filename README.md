@@ -61,6 +61,10 @@ node scripts/check-versioned-browser.mjs
 # Nur bei Bedarf: npm run build:crazygames
 ```
 
+Nach Profiländerungen erzeugt `npm run build:knowledge` beide Modelle, den Audit
+und die komprimierten Daten neu. Der Release-Check lehnt einen veralteten
+Jugend-Datensatz ab, statt unbemerkt alte Profile zu verpacken.
+
 ## Fragen- und Profilrevision (Version 29)
 
 Das Ja/Nein-Spiel bleibt erhalten. Die Engine bevorzugt am Anfang leicht

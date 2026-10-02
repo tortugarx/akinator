@@ -1,12 +1,16 @@
 import { cp, mkdir, rm, readFile, writeFile, stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import {gunzipSync} from 'node:zlib';
+import {youthDatabase} from '../release-policy.js';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const output = join(root, "dist");
 const files = ["index.html", "styles.css", "game.js", "llm-questions.js", "data.js", "feature-schema.js", "generated-questions.js", "engine.js", "attribute-enrichment.js", "answer-model.js", "learning.js", "play-stats.js", "question-format.js", "question-model.js", "question-ranking.js", "ranking-model.js", "profile-details.js", "release-policy.js", "knowledge-loader.js", "platform.js", "version.json"];
 // Validate inputs without generating a CrazyGames package on ordinary turns.
 const compressed=join(root,'assets/data/people-youth.json.gz');
+const raw=JSON.parse(await readFile(join(root,'wikidata-people.json'),'utf8'));
+if(!gunzipSync(await readFile(compressed)).equals(Buffer.from(JSON.stringify(youthDatabase(raw))))) throw Error('Release data is stale. Run npm run build:knowledge before packaging.');
 const total=(await Promise.all([...files.map(file=>join(root,file)),compressed,join(root,'assets/nazar-genie.png')].map(async path=>(await stat(path)).size))).reduce((sum,bytes)=>sum+bytes,0);
 if(total>20_000_000) throw Error(`Release exceeds our conservative 20MB budget: ${total}`);
 if(process.argv.includes('--check')) {console.log(`Release inputs: ${total} bytes; no mandatory LLM/runtime; package not generated. Youth filtering is not PEGI certification.`);process.exit(0);}
