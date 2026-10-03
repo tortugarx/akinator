@@ -17,6 +17,9 @@ for(const person of engine.characters) {
 }
 const unresolved=[...signatures.values()].filter(group=>group.length>1).sort((a,b)=>b.length-a.length);
 const summary={profiles:engine.characters.length,withImages:engine.characters.filter(person=>person.image).length,questions:askable.size,structuredQuestions:generated.filter(question=>question.id.startsWith('fact:')).length,duplicateIds:duplicates.length,indistinguishableGroups:unresolved.length,indistinguishableProfiles:unresolved.reduce((sum,group)=>sum+group.length,0),distinctProfiles:engine.characters.length-unresolved.reduce((sum,group)=>sum+group.length,0),enrichment:database.profileEnrichment||null};
+summary.currentFactAssociations=engine.characters.reduce((sum,p)=>sum+(p.facts||[]).length,0);
+summary.profilesWithFacts=engine.characters.filter(p=>p.facts?.length).length;
+summary.quarantinedProfiles=(database.excludedProfiles||[]).length;
 await mkdir('reports',{recursive:true});
 await writeFile('reports/profile-audit.json',JSON.stringify({summary,duplicates,unresolved},null,2)+'\n');
 console.log(JSON.stringify(summary,null,2));

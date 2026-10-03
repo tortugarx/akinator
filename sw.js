@@ -1,8 +1,8 @@
-const cacheName = "nazar-v30";
+const cacheName = "nazar-v31";
 const localAssets = [
-  "./", "./index.html", "./styles.css?v=30", "./game.js?v=30",
-  "./data.js?v=30", "./engine.js?v=30", "./attribute-enrichment.js?v=30", "./answer-model.js?v=30", "./learning.js?v=30", "./question-model.js?v=30", "./play-stats.js?v=30", "./question-format.js?v=30", "./platform.js",
-  "./llm-questions.js?v=30", "./local-ai-worker.js", "./model-download.js", "./runtime-probe.js", "./feature-schema.js?v=30", "./generated-questions.js?v=30", "./assets/data/people.json.gz?v=30", "./question-ranking.js?v=30", "./ranking-model.js?v=30", "./release-policy.js?v=30", "./knowledge-loader.js?v=30", "./profile-details.js?v=30", "./assets/nazar-genie.png"
+  "./", "./index.html", "./styles.css?v=31", "./game.js?v=31",
+  "./data.js?v=31", "./engine.js?v=31", "./attribute-enrichment.js?v=31", "./answer-model.js?v=31", "./learning.js?v=31", "./question-model.js?v=31", "./play-stats.js?v=31", "./question-format.js?v=31", "./platform.js",
+  "./llm-questions.js?v=31", "./local-ai-worker.js", "./model-download.js", "./runtime-probe.js", "./feature-schema.js?v=31", "./generated-questions.js?v=31", "./assets/data/people.json.gz?v=31", "./question-ranking.js?v=31", "./ranking-model.js?v=31", "./release-policy.js?v=31", "./knowledge-loader.js?v=31", "./profile-details.js?v=31", "./assets/nazar-genie.png"
 ];
 
 self.addEventListener("install", (event) => {

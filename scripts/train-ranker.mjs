@@ -8,6 +8,10 @@ engine.refreshGeneratedQuestions();
 // Explicit bootstrap assumptions about user knowledge. Never present these as
 // observed player labels. A future consented dataset can replace this teacher.
 export const assumptions={basic:.92,group:.82,evidence:.82,genre:.78,party:.75,team:.79,member:.66,award:.48,work:.84,universe:.92,appearance:.88,instrument:.8,office:.86,position:.7,field:.67,label:.3,conflict:.55,birthplace:.25,education:.22,employer:.38};
+Object.assign(assumptions,{occupation:.85,language:.65,nativeLanguage:.65,movement:.4,creator:.52,inspiration:.35,father:.45,mother:.45,spouse:.6,child:.48,sibling:.48,partner:.55,burial:.2,deathCause:.35,castWork:.84,voiceWork:.8,authorWork:.84,performerWork:.82,composerWork:.73,directorWork:.82,firstAppearance:.55,comicDebut:.35,entityType:.8,event:.65,participation:.7,militaryBranch:.6,militaryRank:.55});
+Object.assign(assumptions,{militaryUnit:.55,constituency:.48,creditedWork:.8,weightClass:.8});
+Object.assign(assumptions,{transformation:.92,adBrand:.84});
+for(const kind of rankingKinds) if(!Number.isFinite(assumptions[kind]))throw Error(`Missing answerability assumption: ${kind}`);
 let seed=731; const random=()=>((seed=Math.imul(seed,1664525)+1013904223>>>0)/2**32);
 const all=[...engine.questions,...engine.generatedQuestions];
 const samples=[];

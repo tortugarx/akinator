@@ -7,22 +7,22 @@
       "facts": {
         "rounds": 16,
         "solved": 15,
-        "meanQuestions": 17.125,
-        "meanSolvedQuestions": 16.066666666666666,
+        "meanQuestions": 17.0625,
+        "meanSolvedQuestions": 16,
         "wrongGuesses": 0
       },
       "uncertain": {
         "rounds": 16,
         "solved": 13,
-        "meanQuestions": 24,
-        "meanSolvedQuestions": 19.692307692307693,
+        "meanQuestions": 23.625,
+        "meanSolvedQuestions": 19.384615384615383,
         "wrongGuesses": 0
       },
       "mistake": {
         "rounds": 16,
         "solved": 3,
-        "meanQuestions": 31.4375,
-        "meanSolvedQuestions": 16,
+        "meanQuestions": 31.0625,
+        "meanSolvedQuestions": 17,
         "wrongGuesses": 1
       }
     },
@@ -30,23 +30,23 @@
       "facts": {
         "rounds": 16,
         "solved": 15,
-        "meanQuestions": 15.375,
-        "meanSolvedQuestions": 14.333333333333334,
+        "meanQuestions": 15.0625,
+        "meanSolvedQuestions": 14.2,
         "wrongGuesses": 0
       },
       "uncertain": {
         "rounds": 16,
-        "solved": 15,
-        "meanQuestions": 23.125,
-        "meanSolvedQuestions": 22.466666666666665,
+        "solved": 14,
+        "meanQuestions": 19.5,
+        "meanSolvedQuestions": 17,
         "wrongGuesses": 0
       },
       "mistake": {
         "rounds": 16,
         "solved": 4,
-        "meanQuestions": 28.8125,
+        "meanQuestions": 27.625,
         "meanSolvedQuestions": 15.75,
-        "wrongGuesses": 0
+        "wrongGuesses": 1
       }
     }
   },
@@ -158,7 +158,7 @@
       "policy": "baseline",
       "target": "Angela Merkel",
       "success": true,
-      "questions": 20,
+      "questions": 21,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -182,8 +182,12 @@
           "answer": 0
         },
         {
-          "id": "group:athlete|musician|politician|writer",
-          "answer": 1
+          "id": "group:athlete|musician|writer",
+          "answer": 0
+        },
+        {
+          "id": "entertainment",
+          "answer": 0
         },
         {
           "id": "alive",
@@ -202,10 +206,6 @@
           "answer": 0
         },
         {
-          "id": "entertainment",
-          "answer": 0
-        },
-        {
           "id": "singer",
           "answer": 0
         },
@@ -214,11 +214,15 @@
           "answer": 1
         },
         {
-          "id": "group:athlete|politician|writer",
-          "answer": 1
+          "id": "asian",
+          "answer": 0
         },
         {
-          "id": "group:athlete|politician",
+          "id": "athlete",
+          "answer": 0
+        },
+        {
+          "id": "group:entrepreneur|politician|scientist|writer",
           "answer": 1
         },
         {
@@ -226,8 +230,8 @@
           "answer": 1
         },
         {
-          "id": "athlete",
-          "answer": 0
+          "id": "group:entrepreneur|politician|scientist",
+          "answer": 1
         },
         {
           "id": "group:entrepreneur|politician",
@@ -378,12 +382,12 @@
           "answer": 0
         },
         {
-          "id": "group:american|german|japanese",
-          "answer": 1
-        },
-        {
           "id": "musician",
           "answer": 0
+        },
+        {
+          "id": "group:american|german|japanese",
+          "answer": 1
         },
         {
           "id": "group:american|japanese",
@@ -492,7 +496,7 @@
       "policy": "baseline",
       "target": "Taylor Swift",
       "success": true,
-      "questions": 14,
+      "questions": 15,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -548,6 +552,10 @@
           "answer": 1
         },
         {
+          "id": "fact:P136:Q83440",
+          "answer": 1
+        },
+        {
           "id": "countryMusician",
           "answer": 1
         }
@@ -558,7 +566,7 @@
       "policy": "baseline",
       "target": "Adele",
       "success": true,
-      "questions": 14,
+      "questions": 16,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -611,6 +619,14 @@
         },
         {
           "id": "popMusician",
+          "answer": 1
+        },
+        {
+          "id": "fact:P136:Q885561",
+          "answer": 1
+        },
+        {
+          "id": "fact:P136:Q45981",
           "answer": 1
         },
         {
@@ -722,7 +738,7 @@
           "answer": 1
         },
         {
-          "id": "game",
+          "id": "wizard",
           "answer": 1
         }
       ]
@@ -822,7 +838,7 @@
       "policy": "baseline",
       "target": "Tom Hanks",
       "success": true,
-      "questions": 18,
+      "questions": 19,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -862,11 +878,19 @@
           "answer": 0
         },
         {
+          "id": "group:american|british|german",
+          "answer": 1
+        },
+        {
           "id": "group:american|british",
           "answer": 1
         },
         {
           "id": "alive",
+          "answer": 1
+        },
+        {
+          "id": "group:american|german",
           "answer": 1
         },
         {
@@ -892,10 +916,6 @@
         {
           "id": "fact:P463:Q8038459",
           "answer": 1
-        },
-        {
-          "id": "fact:P463:Q1227533",
-          "answer": 1
         }
       ]
     },
@@ -904,7 +924,7 @@
       "policy": "baseline",
       "target": "Leonardo DiCaprio",
       "success": true,
-      "questions": 25,
+      "questions": 23,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -924,11 +944,11 @@
           "answer": 1
         },
         {
-          "id": "group:actor|athlete",
+          "id": "entertainment",
           "answer": 1
         },
         {
-          "id": "entertainment",
+          "id": "group:actor|musician",
           "answer": 1
         },
         {
@@ -940,20 +960,12 @@
           "answer": 1
         },
         {
-          "id": "asian",
-          "answer": 0
-        },
-        {
           "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
-          "id": "japanese",
+          "id": "asian",
           "answer": 0
-        },
-        {
-          "id": "group:american|german",
-          "answer": 1
         },
         {
           "id": "alive",
@@ -1014,7 +1026,7 @@
       "policy": "baseline",
       "target": "Serena Williams",
       "success": true,
-      "questions": 13,
+      "questions": 14,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -1039,6 +1051,10 @@
         },
         {
           "id": "asian",
+          "answer": 0
+        },
+        {
+          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
@@ -1076,7 +1092,7 @@
       "policy": "baseline",
       "target": "Roger Federer",
       "success": true,
-      "questions": 27,
+      "questions": 23,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -1092,11 +1108,11 @@
           "answer": 0
         },
         {
-          "id": "group:american|german|japanese",
+          "id": "group:actor|musician",
           "answer": 0
         },
         {
-          "id": "group:actor|musician",
+          "id": "group:american|german|japanese",
           "answer": 0
         },
         {
@@ -1106,6 +1122,10 @@
         {
           "id": "group:athlete|musician|politician",
           "answer": 1
+        },
+        {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
         },
         {
           "id": "musician",
@@ -1124,18 +1144,6 @@
           "answer": 0
         },
         {
-          "id": "politician",
-          "answer": 0
-        },
-        {
-          "id": "group:athlete|entrepreneur|scientist|writer",
-          "answer": 1
-        },
-        {
-          "id": "group:athlete|writer",
-          "answer": 1
-        },
-        {
           "id": "athlete",
           "answer": 1
         },
@@ -1144,16 +1152,8 @@
           "answer": 0
         },
         {
-          "id": "group:american|french|german",
-          "answer": 0
-        },
-        {
           "id": "alive",
           "answer": 1
-        },
-        {
-          "id": "group:american|french|german|italian",
-          "answer": 0
         },
         {
           "id": "tennis",
@@ -1194,7 +1194,7 @@
       "policy": "baseline",
       "target": "Albert Einstein",
       "success": true,
-      "questions": 27,
+      "questions": 26,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -1266,10 +1266,6 @@
           "answer": 1
         },
         {
-          "id": "group:musician|politician",
-          "answer": 0
-        },
-        {
           "id": "musician",
           "answer": 0
         },
@@ -1312,7 +1308,7 @@
       "policy": "ranker",
       "target": "Olaf Scholz",
       "success": true,
-      "questions": 23,
+      "questions": 19,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -1320,8 +1316,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": -1
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -1330,10 +1326,6 @@
         {
           "id": "group:american|french|german|japanese",
           "answer": 1
-        },
-        {
-          "id": "group:actor|athlete|musician",
-          "answer": 0
         },
         {
           "id": "group:american|german|japanese",
@@ -1353,6 +1345,10 @@
         },
         {
           "id": "group:athlete|musician",
+          "answer": 0
+        },
+        {
+          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
@@ -1380,10 +1376,6 @@
           "answer": 1
         },
         {
-          "id": "fact:P1303:Q17172850",
-          "answer": 0
-        },
-        {
           "id": "politician",
           "answer": 1
         },
@@ -1393,18 +1385,6 @@
         },
         {
           "id": "fact:P39:Q4970706",
-          "answer": 1
-        },
-        {
-          "id": "fact:P39:Q30533351",
-          "answer": 1
-        },
-        {
-          "id": "fact:P39:Q26822284",
-          "answer": 1
-        },
-        {
-          "id": "fact:P39:Q19360355",
           "answer": 1
         }
       ]
@@ -1422,8 +1402,8 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": -1
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "actor",
@@ -1442,15 +1422,15 @@
           "answer": 0
         },
         {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
           "id": "singer",
           "answer": 0
         },
         {
           "id": "group:american|japanese",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
@@ -1500,8 +1480,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": -1
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -1524,15 +1504,15 @@
           "answer": 1
         },
         {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
           "id": "group:american|japanese",
           "answer": 0
         },
         {
           "id": "singer",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
@@ -1560,11 +1540,11 @@
           "answer": 1
         },
         {
-          "id": "internet",
+          "id": "creator",
           "answer": 1
         },
         {
-          "id": "varietyStreamer",
+          "id": "podcaster",
           "answer": 1
         }
       ]
@@ -1574,7 +1554,7 @@
       "policy": "ranker",
       "target": "Gronkh",
       "success": false,
-      "questions": 31,
+      "questions": 28,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -1582,8 +1562,8 @@
           "answer": 0
         },
         {
-          "id": "fictional",
-          "answer": -1
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -1646,15 +1626,11 @@
           "answer": 1
         },
         {
-          "id": "internet",
+          "id": "creator",
           "answer": 1
         },
         {
-          "id": "reviewed:minecraft-series",
-          "answer": 1
-        },
-        {
-          "id": "varietyStreamer",
+          "id": "podcaster",
           "answer": 0
         },
         {
@@ -1662,11 +1638,15 @@
           "answer": 0
         },
         {
-          "id": "podcaster",
+          "id": "varietyStreamer",
           "answer": 0
         },
         {
-          "id": "reviewed:edeltalk",
+          "id": "twitchStreamer",
+          "answer": 1
+        },
+        {
+          "id": "fact:P69:Q51985",
           "answer": 0
         },
         {
@@ -1674,32 +1654,20 @@
           "answer": 0
         },
         {
-          "id": "fact:P69:Q51985",
-          "answer": 0
+          "id": "reviewed:minecraft-series",
+          "answer": 1
         },
         {
           "id": "evidence:YouTube",
           "answer": 1
         },
         {
-          "id": "german",
-          "answer": 1
+          "id": "reviewed:edeltalk",
+          "answer": 0
         },
         {
           "id": "fact:P19:Q64",
           "answer": 0
-        },
-        {
-          "id": "fact:P136:Q131578",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q185226",
-          "answer": 0
-        },
-        {
-          "id": "streamer",
-          "answer": 1
         }
       ]
     },
@@ -1707,60 +1675,6 @@
       "scenario": "facts",
       "policy": "ranker",
       "target": "Taylor Swift",
-      "success": true,
-      "questions": 11,
-      "wrongGuesses": 0,
-      "trace": [
-        {
-          "id": "female",
-          "answer": 1
-        },
-        {
-          "id": "fictional",
-          "answer": -1
-        },
-        {
-          "id": "actor",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
-          "answer": 1
-        },
-        {
-          "id": "musician",
-          "answer": 1
-        },
-        {
-          "id": "singer",
-          "answer": 1
-        },
-        {
-          "id": "fact:P1303:Q17172850",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q37073",
-          "answer": 1
-        },
-        {
-          "id": "alive",
-          "answer": 1
-        },
-        {
-          "id": "soloSinger",
-          "answer": 1
-        },
-        {
-          "id": "folkSinger",
-          "answer": 1
-        }
-      ]
-    },
-    {
-      "scenario": "facts",
-      "policy": "ranker",
-      "target": "Adele",
       "success": true,
       "questions": 12,
       "wrongGuesses": 0,
@@ -1770,8 +1684,66 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": -1
+          "id": "real",
+          "answer": 1
+        },
+        {
+          "id": "actor",
+          "answer": 0
+        },
+        {
+          "id": "entertainment",
+          "answer": 1
+        },
+        {
+          "id": "musician",
+          "answer": 1
+        },
+        {
+          "id": "singer",
+          "answer": 1
+        },
+        {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
+          "id": "fact:P136:Q37073",
+          "answer": 1
+        },
+        {
+          "id": "alive",
+          "answer": 1
+        },
+        {
+          "id": "popMusician",
+          "answer": 1
+        },
+        {
+          "id": "fact:P1303:Q5994",
+          "answer": 1
+        },
+        {
+          "id": "countryMusician",
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "scenario": "facts",
+      "policy": "ranker",
+      "target": "Adele",
+      "success": true,
+      "questions": 13,
+      "wrongGuesses": 0,
+      "trace": [
+        {
+          "id": "female",
+          "answer": 1
+        },
+        {
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "actor",
@@ -1798,11 +1770,15 @@
           "answer": 1
         },
         {
+          "id": "fact:P1303:Q6607",
+          "answer": 0
+        },
+        {
           "id": "alive",
           "answer": 1
         },
         {
-          "id": "soloSinger",
+          "id": "popMusician",
           "answer": 1
         },
         {
@@ -1820,7 +1796,7 @@
       "policy": "ranker",
       "target": "Freddie Mercury",
       "success": true,
-      "questions": 13,
+      "questions": 14,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -1828,8 +1804,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": -1
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -1868,11 +1844,15 @@
           "answer": 0
         },
         {
-          "id": "group:rapper|rockMusician",
+          "id": "fact:P1303:Q5994",
           "answer": 1
         },
         {
-          "id": "musicGroup",
+          "id": "fact:P1303:Q6607",
+          "answer": 1
+        },
+        {
+          "id": "rockMusician",
           "answer": 1
         }
       ]
@@ -1890,8 +1870,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 1
+          "id": "real",
+          "answer": -1
         },
         {
           "id": "masked",
@@ -1902,7 +1882,7 @@
           "answer": 1
         },
         {
-          "id": "game",
+          "id": "wizard",
           "answer": 1
         }
       ]
@@ -1912,7 +1892,7 @@
       "policy": "ranker",
       "target": "Hermione Granger",
       "success": true,
-      "questions": 7,
+      "questions": 5,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -1920,28 +1900,20 @@
           "answer": 1
         },
         {
-          "id": "fictional",
+          "id": "real",
+          "answer": -1
+        },
+        {
+          "id": "magic",
           "answer": 1
         },
         {
-          "id": "book",
-          "answer": 1
+          "id": "animated",
+          "answer": -1
         },
         {
-          "id": "fact:P1441:Q20711488",
-          "answer": 1
-        },
-        {
-          "id": "fact:P1441:Q46758",
-          "answer": 1
-        },
-        {
-          "id": "fact:P39:Q6017614",
-          "answer": 1
-        },
-        {
-          "id": "fact:P39:Q2646546",
-          "answer": 1
+          "id": "powers",
+          "answer": -1
         }
       ]
     },
@@ -1958,8 +1930,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 1
+          "id": "real",
+          "answer": -1
         },
         {
           "id": "masked",
@@ -1992,8 +1964,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 1
+          "id": "real",
+          "answer": -1
         },
         {
           "id": "masked",
@@ -2018,8 +1990,8 @@
           "answer": 0
         },
         {
-          "id": "fictional",
-          "answer": -1
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -2030,11 +2002,11 @@
           "answer": 1
         },
         {
-          "id": "group:american|german|japanese",
-          "answer": 1
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
         },
         {
-          "id": "group:american|japanese",
+          "id": "group:american|german|japanese",
           "answer": 1
         },
         {
@@ -2042,8 +2014,8 @@
           "answer": 0
         },
         {
-          "id": "fact:P1303:Q17172850",
-          "answer": 0
+          "id": "group:american|japanese",
+          "answer": 1
         },
         {
           "id": "japanese",
@@ -2062,23 +2034,23 @@
           "answer": 1
         },
         {
-          "id": "fact:P136:Q191489",
-          "answer": 1
-        },
-        {
           "id": "fact:P136:Q40831",
           "answer": 1
         },
         {
-          "id": "fact:P463:Q463303",
+          "id": "fact:P136:Q191489",
           "answer": 1
         },
         {
-          "id": "fact:P463:Q8038459",
+          "id": "fact:P463:Q1141037",
           "answer": 1
         },
         {
           "id": "fact:P463:Q1227533",
+          "answer": 1
+        },
+        {
+          "id": "fact:P463:Q8038459",
           "answer": 1
         }
       ]
@@ -2096,8 +2068,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": -1
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -2144,11 +2116,11 @@
           "answer": 1
         },
         {
-          "id": "fact:P136:Q191489",
+          "id": "fact:P136:Q40831",
           "answer": 0
         },
         {
-          "id": "fact:P136:Q40831",
+          "id": "fact:P136:Q191489",
           "answer": 0
         },
         {
@@ -2156,11 +2128,7 @@
           "answer": 1
         },
         {
-          "id": "fact:P463:Q463303",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q8038459",
+          "id": "fact:P463:Q1141037",
           "answer": 0
         },
         {
@@ -2168,19 +2136,23 @@
           "answer": 0
         },
         {
-          "id": "fact:P463:Q1141037",
+          "id": "fact:P463:Q8038459",
           "answer": 0
         },
         {
-          "id": "fact:P166:Q25338504",
+          "id": "fact:P463:Q463303",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q28950956",
           "answer": 1
         },
         {
-          "id": "fact:P166:Q400007",
+          "id": "fact:P166:Q819973",
           "answer": 1
         },
         {
-          "id": "fact:P166:Q4649797",
+          "id": "fact:P166:Q13452528",
           "answer": 1
         }
       ]
@@ -2198,15 +2170,11 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": -1
-        },
-        {
-          "id": "actor",
+          "id": "real",
           "answer": 1
         },
         {
-          "id": "alive",
+          "id": "actor",
           "answer": 1
         },
         {
@@ -2214,12 +2182,16 @@
           "answer": 0
         },
         {
+          "id": "asian",
+          "answer": 0
+        },
+        {
           "id": "group:american|japanese",
           "answer": 1
         },
         {
-          "id": "asian",
-          "answer": 0
+          "id": "alive",
+          "answer": 1
         },
         {
           "id": "japanese",
@@ -2244,7 +2216,7 @@
       "policy": "ranker",
       "target": "Roger Federer",
       "success": true,
-      "questions": 23,
+      "questions": 24,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -2252,8 +2224,8 @@
           "answer": 0
         },
         {
-          "id": "fictional",
-          "answer": -1
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -2276,16 +2248,16 @@
           "answer": 0
         },
         {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
           "id": "group:athlete|politician|scientist|writer",
           "answer": 1
         },
         {
           "id": "group:athlete|politician",
           "answer": 1
-        },
-        {
-          "id": "politician",
-          "answer": 0
         },
         {
           "id": "athlete",
@@ -2308,11 +2280,11 @@
           "answer": 1
         },
         {
-          "id": "fact:P54:Q1619662",
+          "id": "fact:P54:Q4105531",
           "answer": 0
         },
         {
-          "id": "fact:P54:Q4105531",
+          "id": "fact:P54:Q1619662",
           "answer": 0
         },
         {
@@ -2324,11 +2296,7 @@
           "answer": 1
         },
         {
-          "id": "germanSpeaking",
-          "answer": 1
-        },
-        {
-          "id": "southAfrican",
+          "id": "swiss",
           "answer": 1
         },
         {
@@ -2336,7 +2304,15 @@
           "answer": 1
         },
         {
-          "id": "fact:P166:Q56509472",
+          "id": "entrepreneur",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q693708",
+          "answer": 1
+        },
+        {
+          "id": "fact:P166:Q137862818",
           "answer": 1
         }
       ]
@@ -2354,8 +2330,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": -1
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -2364,10 +2340,6 @@
         {
           "id": "group:american|french|german|japanese",
           "answer": 1
-        },
-        {
-          "id": "group:actor|athlete|musician",
-          "answer": 0
         },
         {
           "id": "group:american|german|japanese",
@@ -2394,6 +2366,10 @@
           "answer": 0
         },
         {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
           "id": "japanese",
           "answer": 0
         },
@@ -2411,10 +2387,6 @@
         },
         {
           "id": "musician",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
@@ -2446,6 +2418,10 @@
           "answer": 1
         },
         {
+          "id": "fact:P1303:Q8355",
+          "answer": 1
+        },
+        {
           "id": "physicist",
           "answer": 1
         }
@@ -2456,7 +2432,7 @@
       "policy": "baseline",
       "target": "Olaf Scholz",
       "success": true,
-      "questions": 27,
+      "questions": 26,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -2562,10 +2538,6 @@
         {
           "id": "fact:P39:Q504272",
           "answer": 1
-        },
-        {
-          "id": "nationalLeader",
-          "answer": 1
         }
       ]
     },
@@ -2598,8 +2570,12 @@
           "answer": 0
         },
         {
-          "id": "group:athlete|musician|politician|writer",
-          "answer": 1
+          "id": "group:athlete|musician|writer",
+          "answer": 0
+        },
+        {
+          "id": "entertainment",
+          "answer": 0
         },
         {
           "id": "alive",
@@ -2618,10 +2594,6 @@
           "answer": 0
         },
         {
-          "id": "entertainment",
-          "answer": 0
-        },
-        {
           "id": "singer",
           "answer": 0
         },
@@ -2630,7 +2602,7 @@
           "answer": 1
         },
         {
-          "id": "group:athlete|politician|writer",
+          "id": "asian",
           "answer": 0
         },
         {
@@ -2834,12 +2806,12 @@
           "answer": 0
         },
         {
-          "id": "group:american|german|japanese",
-          "answer": 1
-        },
-        {
           "id": "musician",
           "answer": 0
+        },
+        {
+          "id": "group:american|german|japanese",
+          "answer": 1
         },
         {
           "id": "group:american|japanese",
@@ -3070,7 +3042,7 @@
       "policy": "baseline",
       "target": "Adele",
       "success": true,
-      "questions": 28,
+      "questions": 25,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -3094,19 +3066,19 @@
           "answer": 0
         },
         {
-          "id": "group:athlete|musician|politician|writer",
+          "id": "group:athlete|musician|writer",
           "answer": 1
         },
         {
-          "id": "alive",
-          "answer": 1
-        },
-        {
-          "id": "group:athlete|musician",
+          "id": "group:musician|writer",
           "answer": 1
         },
         {
           "id": "fact:P1303:Q17172850",
+          "answer": 1
+        },
+        {
+          "id": "singer",
           "answer": 0
         },
         {
@@ -3114,35 +3086,11 @@
           "answer": 1
         },
         {
-          "id": "singer",
-          "answer": 1
-        },
-        {
           "id": "fact:P136:Q37073",
           "answer": 1
         },
         {
-          "id": "popMusician",
-          "answer": 1
-        },
-        {
-          "id": "fact:P136:Q11399",
-          "answer": 0
-        },
-        {
-          "id": "fact:P264:Q183387",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q5994",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q83440",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q258896",
+          "id": "group:american|british|japanese",
           "answer": 0
         },
         {
@@ -3150,39 +3098,51 @@
           "answer": 0
         },
         {
-          "id": "fact:P1303:Q61285",
+          "id": "fact:P136:Q11399",
           "answer": 0
         },
         {
-          "id": "fact:P101:Q37073",
+          "id": "group:popMusician|rapper|rockMusician",
+          "answer": 1
+        },
+        {
+          "id": "alive",
+          "answer": 1
+        },
+        {
+          "id": "group:popMusician|rockMusician",
           "answer": 0
         },
         {
-          "id": "fact:P101:Q83440",
-          "answer": 0
-        },
-        {
-          "id": "fact:P101:Q373342",
-          "answer": 0
-        },
-        {
-          "id": "fact:P264:Q2902300",
-          "answer": 0
-        },
-        {
-          "id": "fact:P264:Q4413456",
-          "answer": 0
-        },
-        {
-          "id": "countryMusician",
-          "answer": 0
-        },
-        {
-          "id": "folkSinger",
-          "answer": 0
+          "id": "popMusician",
+          "answer": 1
         },
         {
           "id": "rnbSoulSinger",
+          "answer": 0
+        },
+        {
+          "id": "fact:P136:Q885561",
+          "answer": 1
+        },
+        {
+          "id": "fact:P136:Q45981",
+          "answer": 1
+        },
+        {
+          "id": "fact:P136:Q131272",
+          "answer": 1
+        },
+        {
+          "id": "fact:P136:Q8341",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q12201526",
+          "answer": 0
+        },
+        {
+          "id": "fact:P101:Q11895763",
           "answer": 1
         }
       ]
@@ -3264,11 +3224,11 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q131272",
+          "id": "rnbSoulSinger",
           "answer": 0
         },
         {
-          "id": "rnbSoulSinger",
+          "id": "fact:P136:Q131272",
           "answer": 0
         },
         {
@@ -3398,7 +3358,7 @@
           "answer": 1
         },
         {
-          "id": "powers",
+          "id": "protagonist",
           "answer": 1
         }
       ]
@@ -3856,7 +3816,7 @@
       "policy": "baseline",
       "target": "Roger Federer",
       "success": false,
-      "questions": 43,
+      "questions": 41,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -3872,11 +3832,11 @@
           "answer": 0
         },
         {
-          "id": "group:american|german|japanese",
+          "id": "group:actor|musician",
           "answer": 0
         },
         {
-          "id": "group:actor|musician",
+          "id": "group:american|german|japanese",
           "answer": 0
         },
         {
@@ -3888,35 +3848,19 @@
           "answer": 1
         },
         {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
           "id": "musician",
           "answer": 0
         },
         {
           "id": "group:athlete|politician|scientist|writer",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q17172850",
-          "answer": 0
-        },
-        {
-          "id": "asian",
-          "answer": 0
-        },
-        {
-          "id": "alive",
-          "answer": 1
-        },
-        {
-          "id": "group:athlete|entrepreneur|politician",
           "answer": 1
         },
         {
           "id": "group:athlete|politician",
-          "answer": 0
-        },
-        {
-          "id": "athlete",
           "answer": 1
         },
         {
@@ -3924,8 +3868,16 @@
           "answer": 0
         },
         {
+          "id": "athlete",
+          "answer": 1
+        },
+        {
           "id": "football",
           "answer": 0
+        },
+        {
+          "id": "alive",
+          "answer": 1
         },
         {
           "id": "tennis",
@@ -4152,7 +4104,7 @@
       "policy": "ranker",
       "target": "Olaf Scholz",
       "success": true,
-      "questions": 30,
+      "questions": 17,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -4160,31 +4112,19 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
           "answer": 0
         },
         {
-          "id": "group:actor|athlete|politician",
-          "answer": 0
-        },
-        {
-          "id": "real",
-          "answer": 1
-        },
-        {
           "id": "group:american|french|german|japanese",
-          "answer": 1
-        },
-        {
-          "id": "group:actor|athlete|musician",
           "answer": 0
         },
         {
-          "id": "group:american|german|japanese",
+          "id": "group:actor|athlete|politician",
           "answer": 1
         },
         {
@@ -4192,51 +4132,15 @@
           "answer": 0
         },
         {
-          "id": "group:american|japanese",
-          "answer": 0
-        },
-        {
           "id": "group:athlete|musician|politician",
           "answer": 1
         },
         {
-          "id": "group:athlete|musician",
-          "answer": 0
-        },
-        {
-          "id": "musician",
-          "answer": 0
-        },
-        {
-          "id": "group:athlete|politician|scientist",
-          "answer": 0
-        },
-        {
-          "id": "asian",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q17172850",
-          "answer": 0
-        },
-        {
-          "id": "athlete",
-          "answer": 0
-        },
-        {
-          "id": "germanSpeaking",
+          "id": "group:athlete|politician",
           "answer": 1
         },
         {
-          "id": "german",
-          "answer": 0
-        },
-        {
-          "id": "singer",
-          "answer": 0
-        },
-        {
-          "id": "alive",
+          "id": "athlete",
           "answer": 0
         },
         {
@@ -4244,19 +4148,11 @@
           "answer": 1
         },
         {
-          "id": "group:american|french|japanese",
-          "answer": 0
-        },
-        {
           "id": "legislator",
-          "answer": 0
+          "answer": 1
         },
         {
-          "id": "japanese",
-          "answer": 0
-        },
-        {
-          "id": "group:american|french|italian",
+          "id": "governor",
           "answer": 0
         },
         {
@@ -4264,11 +4160,15 @@
           "answer": 1
         },
         {
-          "id": "fact:P39:Q4970706",
+          "id": "fact:P39:Q504272",
           "answer": 0
         },
         {
-          "id": "governor",
+          "id": "fact:P102:Q49768",
+          "answer": 1
+        },
+        {
+          "id": "fact:P39:Q4970706",
           "answer": 0
         },
         {
@@ -4282,7 +4182,7 @@
       "policy": "ranker",
       "target": "Angela Merkel",
       "success": true,
-      "questions": 18,
+      "questions": 16,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -4290,20 +4190,16 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "actor",
           "answer": 0
         },
         {
-          "id": "group:athlete|musician|politician|writer",
-          "answer": 1
+          "id": "entertainment",
+          "answer": 0
         },
         {
           "id": "alive",
@@ -4314,11 +4210,11 @@
           "answer": 0
         },
         {
-          "id": "singer",
+          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
-          "id": "fact:P1303:Q17172850",
+          "id": "singer",
           "answer": 0
         },
         {
@@ -4326,7 +4222,7 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q37073",
+          "id": "asian",
           "answer": 0
         },
         {
@@ -4334,20 +4230,16 @@
           "answer": 1
         },
         {
-          "id": "group:athlete|politician|writer",
-          "answer": 1
-        },
-        {
           "id": "athlete",
           "answer": 0
         },
         {
-          "id": "group:american|german",
+          "id": "group:entrepreneur|politician|scientist|writer",
           "answer": 1
         },
         {
-          "id": "group:entrepreneur|politician|scientist",
-          "answer": 1
+          "id": "group:american|german",
+          "answer": 0
         },
         {
           "id": "politician",
@@ -4372,8 +4264,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -4396,15 +4288,15 @@
           "answer": 1
         },
         {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
           "id": "group:american|japanese",
           "answer": 0
         },
         {
           "id": "singer",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
@@ -4440,7 +4332,7 @@
           "answer": 0
         },
         {
-          "id": "internet",
+          "id": "creator",
           "answer": 0
         },
         {
@@ -4448,7 +4340,7 @@
           "answer": 1
         },
         {
-          "id": "varietyStreamer",
+          "id": "podcaster",
           "answer": 1
         }
       ]
@@ -4458,7 +4350,7 @@
       "policy": "ranker",
       "target": "Gronkh",
       "success": false,
-      "questions": 33,
+      "questions": 32,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -4466,8 +4358,8 @@
           "answer": 0
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -4514,10 +4406,6 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q37073",
-          "answer": 0
-        },
-        {
           "id": "japanese",
           "answer": 0
         },
@@ -4539,18 +4427,22 @@
         },
         {
           "id": "german",
+          "answer": 0
+        },
+        {
+          "id": "group:american|british",
+          "answer": 0
+        },
+        {
+          "id": "creator",
+          "answer": 0
+        },
+        {
+          "id": "youtuber",
           "answer": 1
         },
         {
-          "id": "internet",
-          "answer": 1
-        },
-        {
-          "id": "reviewed:minecraft-series",
-          "answer": 1
-        },
-        {
-          "id": "varietyStreamer",
+          "id": "podcaster",
           "answer": 0
         },
         {
@@ -4558,15 +4450,7 @@
           "answer": 0
         },
         {
-          "id": "podcaster",
-          "answer": 0
-        },
-        {
-          "id": "reviewed:edeltalk",
-          "answer": 0
-        },
-        {
-          "id": "fact:P69:Q1457843",
+          "id": "varietyStreamer",
           "answer": 0
         },
         {
@@ -4574,7 +4458,15 @@
           "answer": 0
         },
         {
-          "id": "evidence:YouTube",
+          "id": "fact:P69:Q1457843",
+          "answer": 0
+        },
+        {
+          "id": "reviewed:minecraft-series",
+          "answer": 1
+        },
+        {
+          "id": "reviewed:edeltalk",
           "answer": 0
         },
         {
@@ -4582,11 +4474,7 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q131578",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q185226",
+          "id": "twitchStreamer",
           "answer": 0
         },
         {
@@ -4600,7 +4488,7 @@
       "policy": "ranker",
       "target": "Taylor Swift",
       "success": true,
-      "questions": 18,
+      "questions": 13,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -4608,16 +4496,20 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
+          "id": "real",
           "answer": 1
         },
         {
           "id": "actor",
           "answer": 0
+        },
+        {
+          "id": "entertainment",
+          "answer": 0
+        },
+        {
+          "id": "alive",
+          "answer": 1
         },
         {
           "id": "musician",
@@ -4633,46 +4525,22 @@
         },
         {
           "id": "fact:P136:Q37073",
+          "answer": 0
+        },
+        {
+          "id": "popMusician",
           "answer": 1
-        },
-        {
-          "id": "alive",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q6607",
-          "answer": 0
         },
         {
           "id": "fact:P1303:Q5994",
           "answer": 1
         },
         {
-          "id": "soloSinger",
-          "answer": 1
-        },
-        {
-          "id": "songwriter",
-          "answer": 1
-        },
-        {
-          "id": "folkSinger",
-          "answer": 0
-        },
-        {
           "id": "countryMusician",
           "answer": 0
         },
         {
-          "id": "fact:P1303:Q61285",
-          "answer": 1
-        },
-        {
-          "id": "fact:P1303:Q258896",
-          "answer": 1
-        },
-        {
-          "id": "fact:P136:Q83440",
+          "id": "folkSinger",
           "answer": 1
         }
       ]
@@ -4682,7 +4550,7 @@
       "policy": "ranker",
       "target": "Adele",
       "success": true,
-      "questions": 17,
+      "questions": 12,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -4690,16 +4558,20 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
+          "id": "real",
           "answer": 1
         },
         {
           "id": "actor",
           "answer": 0
+        },
+        {
+          "id": "entertainment",
+          "answer": 0
+        },
+        {
+          "id": "alive",
+          "answer": 1
         },
         {
           "id": "musician",
@@ -4715,30 +4587,6 @@
         },
         {
           "id": "fact:P136:Q37073",
-          "answer": 1
-        },
-        {
-          "id": "alive",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q6607",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q5994",
-          "answer": 0
-        },
-        {
-          "id": "group:american|british|japanese",
-          "answer": 0
-        },
-        {
-          "id": "westernEuropean",
-          "answer": 1
-        },
-        {
-          "id": "soloSinger",
           "answer": 0
         },
         {
@@ -4760,7 +4608,7 @@
       "policy": "ranker",
       "target": "Freddie Mercury",
       "success": true,
-      "questions": 28,
+      "questions": 27,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -4768,8 +4616,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -4816,7 +4664,7 @@
           "answer": 0
         },
         {
-          "id": "group:american|british|french|japanese",
+          "id": "group:american|british|japanese",
           "answer": 0
         },
         {
@@ -4856,23 +4704,19 @@
           "answer": 0
         },
         {
-          "id": "fact:P800:Q238564",
+          "id": "fact:P1303:Q5994",
           "answer": 0
         },
         {
-          "id": "fact:P800:Q187745",
-          "answer": 0
-        },
-        {
-          "id": "fact:P800:Q262417",
-          "answer": 1
-        },
-        {
-          "id": "fact:P800:Q2572",
+          "id": "fact:P1303:Q105891",
           "answer": 1
         },
         {
           "id": "fact:P1303:Q52954",
+          "answer": 1
+        },
+        {
+          "id": "fact:P800:Q2572",
           "answer": 1
         }
       ]
@@ -4882,7 +4726,7 @@
       "policy": "ranker",
       "target": "Harry Potter",
       "success": true,
-      "questions": 10,
+      "questions": 6,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -4890,39 +4734,23 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
-          "answer": -1
-        },
-        {
           "id": "real",
-          "answer": 0
-        },
-        {
-          "id": "group:athlete|politician",
           "answer": -1
         },
         {
-          "id": "asian",
+          "id": "masked",
           "answer": -1
         },
         {
-          "id": "european",
-          "answer": 1
-        },
-        {
-          "id": "tv",
-          "answer": -1
-        },
-        {
-          "id": "wizard",
+          "id": "young",
           "answer": 0
         },
         {
           "id": "magic",
+          "answer": 1
+        },
+        {
+          "id": "harryPotter",
           "answer": 1
         }
       ]
@@ -4932,7 +4760,7 @@
       "policy": "ranker",
       "target": "Hermione Granger",
       "success": true,
-      "questions": 11,
+      "questions": 6,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -4940,44 +4768,24 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
-          "answer": -1
-        },
-        {
           "id": "real",
-          "answer": 0
-        },
-        {
-          "id": "group:american|french|german|japanese",
           "answer": -1
-        },
-        {
-          "id": "european",
-          "answer": 1
-        },
-        {
-          "id": "athlete",
-          "answer": -1
-        },
-        {
-          "id": "tv",
-          "answer": -1
-        },
-        {
-          "id": "wizard",
-          "answer": 0
         },
         {
           "id": "magic",
           "answer": 1
         },
         {
-          "id": "movie",
-          "answer": 1
+          "id": "animated",
+          "answer": 0
+        },
+        {
+          "id": "anime",
+          "answer": -1
+        },
+        {
+          "id": "powers",
+          "answer": -1
         }
       ]
     },
@@ -4986,7 +4794,7 @@
       "policy": "ranker",
       "target": "Spider-Man",
       "success": true,
-      "questions": 12,
+      "questions": 7,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -4994,28 +4802,12 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
-          "answer": -1
-        },
-        {
           "id": "real",
-          "answer": 0
-        },
-        {
-          "id": "group:athlete|politician",
           "answer": -1
         },
         {
-          "id": "asian",
-          "answer": -1
-        },
-        {
-          "id": "european",
-          "answer": -1
+          "id": "masked",
+          "answer": 1
         },
         {
           "id": "dc",
@@ -5023,10 +4815,6 @@
         },
         {
           "id": "young",
-          "answer": 0
-        },
-        {
-          "id": "masked",
           "answer": 1
         },
         {
@@ -5034,7 +4822,7 @@
           "answer": 1
         },
         {
-          "id": "powers",
+          "id": "protagonist",
           "answer": 1
         }
       ]
@@ -5044,7 +4832,7 @@
       "policy": "ranker",
       "target": "Batman",
       "success": true,
-      "questions": 12,
+      "questions": 6,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -5052,28 +4840,12 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
-          "answer": -1
-        },
-        {
           "id": "real",
-          "answer": 0
-        },
-        {
-          "id": "group:athlete|politician",
           "answer": -1
         },
         {
-          "id": "asian",
-          "answer": -1
-        },
-        {
-          "id": "european",
-          "answer": -1
+          "id": "masked",
+          "answer": 1
         },
         {
           "id": "dc",
@@ -5081,14 +4853,6 @@
         },
         {
           "id": "young",
-          "answer": 0
-        },
-        {
-          "id": "masked",
-          "answer": 1
-        },
-        {
-          "id": "red",
           "answer": -1
         },
         {
@@ -5102,7 +4866,7 @@
       "policy": "ranker",
       "target": "Tom Hanks",
       "success": true,
-      "questions": 27,
+      "questions": 33,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -5110,8 +4874,8 @@
           "answer": 0
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -5158,10 +4922,6 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q37073",
-          "answer": 0
-        },
-        {
           "id": "japanese",
           "answer": 0
         },
@@ -5190,15 +4950,19 @@
           "answer": 1
         },
         {
-          "id": "fact:P136:Q191489",
-          "answer": 1
-        },
-        {
           "id": "fact:P136:Q40831",
           "answer": 1
         },
         {
-          "id": "fact:P463:Q463303",
+          "id": "fact:P136:Q191489",
+          "answer": 1
+        },
+        {
+          "id": "fact:P463:Q1141037",
+          "answer": 1
+        },
+        {
+          "id": "fact:P463:Q1227533",
           "answer": 0
         },
         {
@@ -5206,11 +4970,35 @@
           "answer": 1
         },
         {
-          "id": "fact:P463:Q1227533",
-          "answer": 1
+          "id": "fact:P463:Q463303",
+          "answer": 0
         },
         {
-          "id": "fact:P463:Q1141037",
+          "id": "fact:P463:Q25349951",
+          "answer": 0
+        },
+        {
+          "id": "fact:P463:Q16781948",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q849771",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q1738793",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q292044",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q17144",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q10855271",
           "answer": 1
         }
       ]
@@ -5220,7 +5008,7 @@
       "policy": "ranker",
       "target": "Leonardo DiCaprio",
       "success": true,
-      "questions": 42,
+      "questions": 35,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -5228,8 +5016,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -5252,15 +5040,11 @@
           "answer": 1
         },
         {
-          "id": "group:american|japanese",
-          "answer": 1
-        },
-        {
           "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
-          "id": "asian",
+          "id": "group:american|japanese",
           "answer": 0
         },
         {
@@ -5268,27 +5052,19 @@
           "answer": 0
         },
         {
-          "id": "japanese",
+          "id": "asian",
+          "answer": 0
+        },
+        {
+          "id": "alive",
+          "answer": 1
+        },
+        {
+          "id": "group:athlete|creator|politician|scientist",
           "answer": 0
         },
         {
           "id": "group:american|german",
-          "answer": 1
-        },
-        {
-          "id": "alive",
-          "answer": 0
-        },
-        {
-          "id": "germanSpeaking",
-          "answer": 0
-        },
-        {
-          "id": "german",
-          "answer": 0
-        },
-        {
-          "id": "group:american|british",
           "answer": 0
         },
         {
@@ -5296,7 +5072,7 @@
           "answer": 1
         },
         {
-          "id": "childActor",
+          "id": "fact:P463:Q25349951",
           "answer": 0
         },
         {
@@ -5304,15 +5080,7 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q11366",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q484641",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q25349951",
+          "id": "fact:P136:Q40831",
           "answer": 0
         },
         {
@@ -5320,15 +5088,7 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q40831",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q463303",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q8038459",
+          "id": "fact:P463:Q1141037",
           "answer": 0
         },
         {
@@ -5336,35 +5096,47 @@
           "answer": 0
         },
         {
-          "id": "fact:P463:Q1141037",
+          "id": "fact:P463:Q8038459",
           "answer": 0
         },
         {
-          "id": "fact:P166:Q1131356",
+          "id": "fact:P463:Q463303",
           "answer": 0
         },
         {
-          "id": "fact:P166:Q654620",
+          "id": "childActor",
           "answer": 0
         },
         {
-          "id": "fact:P166:Q181883",
+          "id": "fact:P136:Q484641",
+          "answer": 0
+        },
+        {
+          "id": "fact:P136:Q11366",
+          "answer": 0
+        },
+        {
+          "id": "group:indian|japanese",
+          "answer": 0
+        },
+        {
+          "id": "japanese",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q28950956",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q819973",
           "answer": 1
         },
         {
-          "id": "fact:P166:Q593098",
-          "answer": 0
-        },
-        {
-          "id": "fact:P166:Q103916",
-          "answer": 0
-        },
-        {
-          "id": "fact:P166:Q1011547",
+          "id": "fact:P166:Q13452528",
           "answer": 1
         },
         {
-          "id": "fact:P166:Q25338504",
+          "id": "fact:P166:Q4220901",
           "answer": 1
         },
         {
@@ -5377,18 +5149,6 @@
         },
         {
           "id": "fact:P166:Q1161102",
-          "answer": 0
-        },
-        {
-          "id": "fact:P166:Q4220901",
-          "answer": 1
-        },
-        {
-          "id": "fact:P166:Q13452528",
-          "answer": 1
-        },
-        {
-          "id": "fact:P166:Q819973",
           "answer": 1
         }
       ]
@@ -5398,7 +5158,7 @@
       "policy": "ranker",
       "target": "Serena Williams",
       "success": true,
-      "questions": 26,
+      "questions": 12,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -5406,39 +5166,15 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
+          "id": "real",
           "answer": 1
         },
         {
           "id": "actor",
-          "answer": 0
-        },
-        {
-          "id": "musician",
-          "answer": 0
-        },
-        {
-          "id": "singer",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q17172850",
-          "answer": 0
-        },
-        {
-          "id": "alive",
           "answer": 1
         },
         {
-          "id": "group:american|japanese",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q37073",
+          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
@@ -5446,43 +5182,19 @@
           "answer": 0
         },
         {
-          "id": "westernEuropean",
-          "answer": 0
+          "id": "group:american|japanese",
+          "answer": 1
+        },
+        {
+          "id": "alive",
+          "answer": 1
         },
         {
           "id": "japanese",
           "answer": 0
         },
         {
-          "id": "group:american|british|german",
-          "answer": 0
-        },
-        {
-          "id": "soloSinger",
-          "answer": 0
-        },
-        {
-          "id": "popMusician",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q6607",
-          "answer": 0
-        },
-        {
-          "id": "songwriter",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q5994",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q11399",
-          "answer": 0
-        },
-        {
-          "id": "germanSpeaking",
+          "id": "group:american|british",
           "answer": 0
         },
         {
@@ -5494,15 +5206,7 @@
           "answer": 1
         },
         {
-          "id": "fact:P54:Q1619662",
-          "answer": 0
-        },
-        {
           "id": "fact:P54:Q4105531",
-          "answer": 1
-        },
-        {
-          "id": "fact:P463:Q1180052",
           "answer": 1
         }
       ]
@@ -5511,8 +5215,8 @@
       "scenario": "uncertain",
       "policy": "ranker",
       "target": "Roger Federer",
-      "success": true,
-      "questions": 28,
+      "success": false,
+      "questions": 42,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -5520,8 +5224,8 @@
           "answer": 0
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -5532,8 +5236,8 @@
           "answer": 0
         },
         {
-          "id": "group:athlete|musician|politician|writer",
-          "answer": 1
+          "id": "group:american|german|japanese",
+          "answer": 0
         },
         {
           "id": "group:athlete|musician|politician",
@@ -5544,19 +5248,27 @@
           "answer": 0
         },
         {
-          "id": "group:athlete|politician|writer",
-          "answer": 1
-        },
-        {
-          "id": "politician",
+          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
-          "id": "athlete",
-          "answer": 1
+          "id": "group:athlete|politician|scientist|writer",
+          "answer": 0
+        },
+        {
+          "id": "asian",
+          "answer": 0
         },
         {
           "id": "alive",
+          "answer": 1
+        },
+        {
+          "id": "group:athlete|entrepreneur|politician",
+          "answer": 1
+        },
+        {
+          "id": "athlete",
           "answer": 1
         },
         {
@@ -5569,22 +5281,14 @@
         },
         {
           "id": "tennis",
-          "answer": 0
-        },
-        {
-          "id": "fact:P39:Q19969187",
           "answer": 1
-        },
-        {
-          "id": "retired",
-          "answer": 1
-        },
-        {
-          "id": "fact:P54:Q1619662",
-          "answer": 0
         },
         {
           "id": "fact:P54:Q4105531",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q1619662",
           "answer": 0
         },
         {
@@ -5596,27 +5300,15 @@
           "answer": 0
         },
         {
-          "id": "germanSpeaking",
+          "id": "swiss",
           "answer": 1
         },
         {
-          "id": "southAfrican",
+          "id": "fact:P39:Q19969187",
           "answer": 1
         },
         {
           "id": "entrepreneur",
-          "answer": 0
-        },
-        {
-          "id": "fact:P166:Q56509472",
-          "answer": 0
-        },
-        {
-          "id": "fact:P166:Q4896696",
-          "answer": 1
-        },
-        {
-          "id": "fact:P166:Q3494048",
           "answer": 0
         },
         {
@@ -5626,6 +5318,74 @@
         {
           "id": "fact:P166:Q137862818",
           "answer": 1
+        },
+        {
+          "id": "fact:P166:Q3494048",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q4896696",
+          "answer": 1
+        },
+        {
+          "id": "fact:P166:Q56509472",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q5020532",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q6837811",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q4896642",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q16275104",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q743122",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q6952077",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q918534",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q1648927",
+          "answer": 0
+        },
+        {
+          "id": "retired",
+          "answer": 1
+        },
+        {
+          "id": "fact:P19:Q78",
+          "answer": 0
+        },
+        {
+          "id": "fact:P69:Q83602",
+          "answer": 0
+        },
+        {
+          "id": "fact:P69:Q14715617",
+          "answer": 0
+        },
+        {
+          "id": "fact:P69:Q7714375",
+          "answer": 0
+        },
+        {
+          "id": "fact:P19:Q719",
+          "answer": 0
         }
       ]
     },
@@ -5634,7 +5394,7 @@
       "policy": "ranker",
       "target": "Albert Einstein",
       "success": true,
-      "questions": 37,
+      "questions": 27,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -5642,11 +5402,15 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
+          "answer": 0
+        },
+        {
+          "id": "group:american|french|german|japanese",
           "answer": 0
         },
         {
@@ -5654,31 +5418,11 @@
           "answer": 0
         },
         {
-          "id": "real",
-          "answer": 1
-        },
-        {
-          "id": "group:american|french|german|japanese",
-          "answer": 1
-        },
-        {
-          "id": "group:actor|athlete|musician",
-          "answer": 0
-        },
-        {
-          "id": "group:american|german|japanese",
-          "answer": 1
-        },
-        {
           "id": "actor",
           "answer": 0
         },
         {
-          "id": "group:american|japanese",
-          "answer": 1
-        },
-        {
-          "id": "group:athlete|musician|politician|scientist",
+          "id": "group:athlete|musician|politician",
           "answer": 0
         },
         {
@@ -5686,39 +5430,15 @@
           "answer": 0
         },
         {
-          "id": "japanese",
-          "answer": 0
-        },
-        {
-          "id": "group:american|german",
-          "answer": 0
-        },
-        {
-          "id": "alive",
-          "answer": -1
-        },
-        {
-          "id": "group:athlete|musician|politician",
-          "answer": 0
-        },
-        {
-          "id": "musician",
-          "answer": 0
-        },
-        {
-          "id": "group:athlete|politician|scientist|writer",
-          "answer": 1
-        },
-        {
-          "id": "group:athlete|politician|scientist",
-          "answer": 0
-        },
-        {
           "id": "athlete",
           "answer": 0
         },
         {
-          "id": "group:politician|scientist|writer",
+          "id": "group:entrepreneur|musician|politician|scientist",
+          "answer": 1
+        },
+        {
+          "id": "group:musician|politician|scientist",
           "answer": 1
         },
         {
@@ -5726,11 +5446,15 @@
           "answer": 0
         },
         {
-          "id": "group:scientist|writer",
-          "answer": 1
+          "id": "musician",
+          "answer": 0
         },
         {
-          "id": "scientist",
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
+          "id": "singer",
           "answer": 0
         },
         {
@@ -5738,51 +5462,47 @@
           "answer": 1
         },
         {
+          "id": "group:american|german|japanese",
+          "answer": 1
+        },
+        {
           "id": "german",
           "answer": 1
         },
         {
+          "id": "alive",
+          "answer": 0
+        },
+        {
+          "id": "space",
+          "answer": 0
+        },
+        {
+          "id": "legislator",
+          "answer": 0
+        },
+        {
+          "id": "fact:P101:Q7163",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q1939555",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q504272",
+          "answer": 0
+        },
+        {
+          "id": "scientist",
+          "answer": 1
+        },
+        {
+          "id": "physicist",
+          "answer": 1
+        },
+        {
           "id": "fact:P39:Q121594",
-          "answer": 1
-        },
-        {
-          "id": "fact:P800:Q56100717",
-          "answer": 1
-        },
-        {
-          "id": "fact:P800:Q273711",
-          "answer": 0
-        },
-        {
-          "id": "fact:P800:Q35875",
-          "answer": 1
-        },
-        {
-          "id": "fact:P800:Q83213",
-          "answer": 1
-        },
-        {
-          "id": "fact:P800:Q43514",
-          "answer": 1
-        },
-        {
-          "id": "fact:P800:Q1080745",
-          "answer": 1
-        },
-        {
-          "id": "fact:P800:Q853656",
-          "answer": 0
-        },
-        {
-          "id": "fact:P800:Q11455",
-          "answer": 0
-        },
-        {
-          "id": "fact:P800:Q11452",
-          "answer": 0
-        },
-        {
-          "id": "fact:P800:Q944",
           "answer": 1
         }
       ]
@@ -5982,7 +5702,7 @@
       "policy": "baseline",
       "target": "Angela Merkel",
       "success": true,
-      "questions": 20,
+      "questions": 21,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -6006,8 +5726,12 @@
           "answer": 0
         },
         {
-          "id": "group:athlete|musician|politician|writer",
-          "answer": 1
+          "id": "group:athlete|musician|writer",
+          "answer": 0
+        },
+        {
+          "id": "entertainment",
+          "answer": 0
         },
         {
           "id": "alive",
@@ -6026,10 +5750,6 @@
           "answer": 0
         },
         {
-          "id": "entertainment",
-          "answer": 0
-        },
-        {
           "id": "singer",
           "answer": 0
         },
@@ -6038,11 +5758,15 @@
           "answer": 1
         },
         {
-          "id": "group:athlete|politician|writer",
-          "answer": 1
+          "id": "asian",
+          "answer": 0
         },
         {
-          "id": "group:athlete|politician",
+          "id": "athlete",
+          "answer": 0
+        },
+        {
+          "id": "group:entrepreneur|politician|scientist|writer",
           "answer": 1
         },
         {
@@ -6050,8 +5774,8 @@
           "answer": 1
         },
         {
-          "id": "athlete",
-          "answer": 0
+          "id": "group:entrepreneur|politician|scientist",
+          "answer": 1
         },
         {
           "id": "group:entrepreneur|politician",
@@ -6132,15 +5856,15 @@
           "answer": 0
         },
         {
-          "id": "asian",
-          "answer": 0
-        },
-        {
           "id": "french",
           "answer": 0
         },
         {
           "id": "group:british|indian|italian|spanish",
+          "answer": 0
+        },
+        {
+          "id": "asian",
           "answer": 0
         },
         {
@@ -6204,6 +5928,10 @@
           "answer": 0
         },
         {
+          "id": "fact:P106:Q33999",
+          "answer": 0
+        },
+        {
           "id": "instrumentalist",
           "answer": 0
         },
@@ -6236,6 +5964,10 @@
           "answer": 0
         },
         {
+          "id": "fact:P1412:Q652",
+          "answer": 0
+        },
+        {
           "id": "fact:P136:Q1062400",
           "answer": 0
         },
@@ -6245,14 +5977,6 @@
         },
         {
           "id": "fact:P800:Q19220704",
-          "answer": 0
-        },
-        {
-          "id": "fact:P101:Q9730",
-          "answer": 0
-        },
-        {
-          "id": "fact:P101:Q9748",
           "answer": 0
         }
       ]
@@ -6290,12 +6014,12 @@
           "answer": 0
         },
         {
-          "id": "group:american|german|japanese",
-          "answer": 1
-        },
-        {
           "id": "musician",
           "answer": 0
+        },
+        {
+          "id": "group:american|german|japanese",
+          "answer": 1
         },
         {
           "id": "group:american|japanese",
@@ -6404,7 +6128,7 @@
       "policy": "baseline",
       "target": "Taylor Swift",
       "success": true,
-      "questions": 15,
+      "questions": 16,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -6460,6 +6184,10 @@
           "answer": 1
         },
         {
+          "id": "fact:P136:Q83440",
+          "answer": 1
+        },
+        {
           "id": "countryMusician",
           "answer": 0
         },
@@ -6474,7 +6202,7 @@
       "policy": "baseline",
       "target": "Adele",
       "success": true,
-      "questions": 13,
+      "questions": 14,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -6498,15 +6226,11 @@
           "answer": 0
         },
         {
-          "id": "group:athlete|musician|politician|writer",
+          "id": "group:athlete|musician|writer",
           "answer": 1
         },
         {
-          "id": "alive",
-          "answer": 1
-        },
-        {
-          "id": "group:athlete|musician",
+          "id": "group:musician|writer",
           "answer": 1
         },
         {
@@ -6519,6 +6243,14 @@
         },
         {
           "id": "fact:P136:Q37073",
+          "answer": 1
+        },
+        {
+          "id": "group:american|british|japanese",
+          "answer": 0
+        },
+        {
+          "id": "alive",
           "answer": 1
         },
         {
@@ -6726,7 +6458,7 @@
       "policy": "baseline",
       "target": "Harry Potter",
       "success": false,
-      "questions": 15,
+      "questions": 10,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -6746,47 +6478,27 @@
           "answer": 1
         },
         {
-          "id": "game",
+          "id": "wizard",
           "answer": -1
         },
         {
-          "id": "book",
+          "id": "monster",
+          "answer": -1
+        },
+        {
+          "id": "protagonist",
           "answer": 1
         },
         {
-          "id": "fact:P463:Q842408",
-          "answer": 1
+          "id": "animated",
+          "answer": -1
         },
         {
-          "id": "fact:P54:Q4833247",
-          "answer": 1
+          "id": "superhero",
+          "answer": -1
         },
         {
-          "id": "fact:P463:Q178453",
-          "answer": 1
-        },
-        {
-          "id": "fact:P1441:Q161678",
-          "answer": 1
-        },
-        {
-          "id": "fact:P1441:Q232009",
-          "answer": 1
-        },
-        {
-          "id": "fact:P413:Q18237877",
-          "answer": 1
-        },
-        {
-          "id": "fact:P108:Q193584",
-          "answer": 0
-        },
-        {
-          "id": "glasses",
-          "answer": 1
-        },
-        {
-          "id": "harryPotter",
+          "id": "magic",
           "answer": 1
         }
       ]
@@ -7050,12 +6762,12 @@
           "answer": 1
         },
         {
-          "id": "group:american|german|japanese",
-          "answer": 1
-        },
-        {
           "id": "fact:P1303:Q17172850",
           "answer": 0
+        },
+        {
+          "id": "group:american|german|japanese",
+          "answer": 1
         },
         {
           "id": "group:american|japanese",
@@ -7224,95 +6936,27 @@
           "answer": 1
         },
         {
-          "id": "group:actor|athlete",
+          "id": "entertainment",
           "answer": -1
         },
         {
-          "id": "group:american|french|german",
+          "id": "group:american|french|japanese",
           "answer": 1
-        },
-        {
-          "id": "entertainment",
-          "answer": 1
-        },
-        {
-          "id": "group:musician|politician",
-          "answer": 0
-        },
-        {
-          "id": "musician",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q17172850",
-          "answer": 0
-        },
-        {
-          "id": "group:creator|politician|scientist|writer",
-          "answer": 0
-        },
-        {
-          "id": "singer",
-          "answer": 0
-        },
-        {
-          "id": "group:american|german",
-          "answer": 1
-        },
-        {
-          "id": "germanSpeaking",
-          "answer": 0
-        },
-        {
-          "id": "german",
-          "answer": 0
         },
         {
           "id": "group:american|french",
           "answer": 1
         },
         {
-          "id": "songwriter",
+          "id": "group:athlete|politician",
           "answer": 0
         },
         {
-          "id": "group:jazzSinger|rapper|rockMusician",
+          "id": "athlete",
           "answer": 0
         },
         {
-          "id": "alive",
-          "answer": 1
-        },
-        {
-          "id": "internet",
-          "answer": 0
-        },
-        {
-          "id": "creator",
-          "answer": 0
-        },
-        {
-          "id": "youtuber",
-          "answer": 0
-        },
-        {
-          "id": "streamer",
-          "answer": 0
-        },
-        {
-          "id": "twitchStreamer",
-          "answer": 0
-        },
-        {
-          "id": "gamingStreamer",
-          "answer": 0
-        },
-        {
-          "id": "minecraftStreamer",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q37073",
+          "id": "group:entrepreneur|politician|scientist|writer",
           "answer": 0
         },
         {
@@ -7320,71 +6964,139 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q131272",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q850412",
-          "answer": 0
-        },
-        {
-          "id": "rnbSoulSinger",
-          "answer": 0
-        },
-        {
-          "id": "fact:P800:Q509722",
-          "answer": 0
-        },
-        {
-          "id": "fact:P264:Q27184",
-          "answer": 0
-        },
-        {
-          "id": "fact:P264:Q7355459",
-          "answer": 0
-        },
-        {
-          "id": "fact:P264:Q202585",
-          "answer": 0
-        },
-        {
           "id": "french",
           "answer": 0
         },
         {
-          "id": "group:american|italian",
+          "id": "group:american|japanese",
           "answer": 1
-        },
-        {
-          "id": "fact:P463:Q16781948",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q6607",
-          "answer": 0
         },
         {
           "id": "group:politician|scientist|writer",
           "answer": 0
         },
         {
-          "id": "journalist",
+          "id": "americanFootball",
           "answer": 0
         },
         {
-          "id": "comedian",
+          "id": "asian",
           "answer": 0
         },
         {
-          "id": "fact:P463:Q8038459",
+          "id": "japanese",
           "answer": 0
         },
         {
-          "id": "fact:P463:Q1227533",
+          "id": "group:american|german",
+          "answer": 1
+        },
+        {
+          "id": "fact:P413:Q772148",
           "answer": 0
         },
         {
-          "id": "fact:P166:Q428808",
+          "id": "basketball",
+          "answer": 0
+        },
+        {
+          "id": "baseball",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q204862",
+          "answer": 0
+        },
+        {
+          "id": "fact:P413:Q912985",
+          "answer": 0
+        },
+        {
+          "id": "young",
+          "answer": 0
+        },
+        {
+          "id": "group:british|german",
+          "answer": 0
+        },
+        {
+          "id": "alive",
+          "answer": 1
+        },
+        {
+          "id": "fact:P413:Q273199",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q131371",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q132893",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q4171772",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q162990",
+          "answer": 0
+        },
+        {
+          "id": "fact:P413:Q212413",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q6879746",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q670376",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q650855",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q825838",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q334634",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q692417",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q329816",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q650829",
+          "answer": 0
+        },
+        {
+          "id": "fact:P463:Q1004347",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q5061427",
+          "answer": 0
+        },
+        {
+          "id": "fact:P413:Q622747",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q7864002",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q653772",
           "answer": 0
         }
       ]
@@ -7438,12 +7150,12 @@
           "answer": 1
         },
         {
-          "id": "alive",
-          "answer": 1
-        },
-        {
           "id": "singer",
           "answer": 0
+        },
+        {
+          "id": "alive",
+          "answer": 1
         },
         {
           "id": "fact:P1303:Q6607",
@@ -7499,10 +7211,6 @@
         },
         {
           "id": "fact:P136:Q83440",
-          "answer": 0
-        },
-        {
-          "id": "group:rapper|rockMusician",
           "answer": 0
         },
         {
@@ -7576,6 +7284,10 @@
         {
           "id": "fact:P463:Q12043957",
           "answer": 0
+        },
+        {
+          "id": "fact:P1303:Q8343",
+          "answer": 0
         }
       ]
     },
@@ -7584,7 +7296,7 @@
       "policy": "baseline",
       "target": "Roger Federer",
       "success": false,
-      "questions": 45,
+      "questions": 41,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -7600,11 +7312,11 @@
           "answer": 0
         },
         {
-          "id": "group:american|german|japanese",
+          "id": "group:actor|musician",
           "answer": 0
         },
         {
-          "id": "group:actor|musician",
+          "id": "group:american|german|japanese",
           "answer": 0
         },
         {
@@ -7614,6 +7326,10 @@
         {
           "id": "group:athlete|musician|politician",
           "answer": 1
+        },
+        {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
         },
         {
           "id": "musician",
@@ -7632,18 +7348,6 @@
           "answer": 0
         },
         {
-          "id": "politician",
-          "answer": 0
-        },
-        {
-          "id": "group:athlete|entrepreneur|scientist|writer",
-          "answer": 1
-        },
-        {
-          "id": "group:athlete|writer",
-          "answer": 1
-        },
-        {
           "id": "athlete",
           "answer": 1
         },
@@ -7652,16 +7356,8 @@
           "answer": 0
         },
         {
-          "id": "group:american|french|german",
-          "answer": 0
-        },
-        {
           "id": "alive",
           "answer": 1
-        },
-        {
-          "id": "group:american|french|german|italian",
-          "answer": 0
         },
         {
           "id": "tennis",
@@ -7822,15 +7518,15 @@
           "answer": 0
         },
         {
-          "id": "asian",
-          "answer": 0
-        },
-        {
           "id": "french",
           "answer": 0
         },
         {
           "id": "group:british|indian|italian|spanish",
+          "answer": 0
+        },
+        {
+          "id": "asian",
           "answer": 0
         },
         {
@@ -7963,8 +7659,8 @@
       "scenario": "mistake",
       "policy": "ranker",
       "target": "Olaf Scholz",
-      "success": true,
-      "questions": 17,
+      "success": false,
+      "questions": 45,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -7972,11 +7668,23 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
+          "answer": 0
+        },
+        {
+          "id": "group:american|french|german|japanese",
+          "answer": 1
+        },
+        {
+          "id": "group:american|german|japanese",
+          "answer": -1
+        },
+        {
+          "id": "westernEuropean",
           "answer": 0
         },
         {
@@ -7984,16 +7692,12 @@
           "answer": 1
         },
         {
+          "id": "group:actor|politician",
+          "answer": 1
+        },
+        {
           "id": "actor",
           "answer": 0
-        },
-        {
-          "id": "group:athlete|musician|politician",
-          "answer": 1
-        },
-        {
-          "id": "group:athlete|politician",
-          "answer": 1
         },
         {
           "id": "politician",
@@ -8004,19 +7708,11 @@
           "answer": 0
         },
         {
-          "id": "group:american|french|german|japanese",
-          "answer": 1
-        },
-        {
-          "id": "group:american|german|japanese",
-          "answer": 1
+          "id": "group:british|french|indian|italian",
+          "answer": 0
         },
         {
           "id": "legislator",
-          "answer": 1
-        },
-        {
-          "id": "fact:P39:Q504272",
           "answer": 1
         },
         {
@@ -8024,16 +7720,128 @@
           "answer": 0
         },
         {
-          "id": "fact:P39:Q1939555",
-          "answer": 1
-        },
-        {
-          "id": "fact:P39:Q4970706",
+          "id": "fact:P39:Q21030356",
           "answer": 0
         },
         {
-          "id": "nationalLeader",
-          "answer": 1
+          "id": "fact:P39:Q103163",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q4479442",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q3044918",
+          "answer": 0
+        },
+        {
+          "id": "fact:P102:Q19079",
+          "answer": 0
+        },
+        {
+          "id": "fact:P102:Q1236315",
+          "answer": 0
+        },
+        {
+          "id": "turkish",
+          "answer": 0
+        },
+        {
+          "id": "fact:P463:Q989437",
+          "answer": 0
+        },
+        {
+          "id": "fact:P463:Q3476393",
+          "answer": 0
+        },
+        {
+          "id": "french",
+          "answer": 0
+        },
+        {
+          "id": "fact:P607:Q362",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q2354210",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q2662165",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q34927065",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q18171345",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q2430415",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q5261074",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q130586016",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q65494714",
+          "answer": 0
+        },
+        {
+          "id": "mayor",
+          "answer": 0
+        },
+        {
+          "id": "fact:P102:Q731357",
+          "answer": 0
+        },
+        {
+          "id": "fact:P102:Q138198",
+          "answer": 0
+        },
+        {
+          "id": "fact:P102:Q942515",
+          "answer": 0
+        },
+        {
+          "id": "fact:P101:Q35760",
+          "answer": 0
+        },
+        {
+          "id": "fact:P101:Q11030",
+          "answer": 0
+        },
+        {
+          "id": "fact:P101:Q8242",
+          "answer": 0
+        },
+        {
+          "id": "fact:P101:Q156035",
+          "answer": 0
+        },
+        {
+          "id": "fact:P463:Q939743",
+          "answer": 0
+        },
+        {
+          "id": "spanish",
+          "answer": 0
+        },
+        {
+          "id": "southernEuropean",
+          "answer": 0
+        },
+        {
+          "id": "religious",
+          "answer": 0
         }
       ]
     },
@@ -8042,7 +7850,7 @@
       "policy": "ranker",
       "target": "Angela Merkel",
       "success": false,
-      "questions": 43,
+      "questions": 45,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -8050,7 +7858,11 @@
           "answer": 1
         },
         {
-          "id": "fictional",
+          "id": "real",
+          "answer": 1
+        },
+        {
+          "id": "actor",
           "answer": 0
         },
         {
@@ -8058,27 +7870,31 @@
           "answer": 0
         },
         {
-          "id": "actor",
-          "answer": 0
-        },
-        {
-          "id": "group:athlete|musician|politician|writer",
+          "id": "alive",
           "answer": -1
-        },
-        {
-          "id": "real",
-          "answer": 1
         },
         {
           "id": "asian",
           "answer": 0
         },
         {
-          "id": "group:american|german|japanese",
-          "answer": 1
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
         },
         {
           "id": "group:american|japanese",
+          "answer": 0
+        },
+        {
+          "id": "group:athlete|musician|politician|writer",
+          "answer": 1
+        },
+        {
+          "id": "musician",
+          "answer": 0
+        },
+        {
+          "id": "singer",
           "answer": 0
         },
         {
@@ -8086,7 +7902,39 @@
           "answer": 0
         },
         {
-          "id": "group:american|british|german",
+          "id": "group:american|british|french",
+          "answer": 0
+        },
+        {
+          "id": "group:athlete|politician|writer",
+          "answer": 1
+        },
+        {
+          "id": "group:american|french",
+          "answer": 0
+        },
+        {
+          "id": "writer",
+          "answer": 0
+        },
+        {
+          "id": "westernEuropean",
+          "answer": 0
+        },
+        {
+          "id": "group:athlete|politician",
+          "answer": 1
+        },
+        {
+          "id": "politician",
+          "answer": 1
+        },
+        {
+          "id": "french",
+          "answer": 0
+        },
+        {
+          "id": "group:american|british|german|italian",
           "answer": 1
         },
         {
@@ -8094,7 +7942,23 @@
           "answer": 1
         },
         {
-          "id": "alive",
+          "id": "activist",
+          "answer": 0
+        },
+        {
+          "id": "fact:P102:Q29468",
+          "answer": 0
+        },
+        {
+          "id": "fact:P1303:Q6607",
+          "answer": 0
+        },
+        {
+          "id": "american",
+          "answer": 0
+        },
+        {
+          "id": "group:british|german|italian",
           "answer": 1
         },
         {
@@ -8106,87 +7970,23 @@
           "answer": 1
         },
         {
-          "id": "internet",
-          "answer": 0
-        },
-        {
-          "id": "youtuber",
-          "answer": 0
-        },
-        {
-          "id": "creator",
-          "answer": 0
-        },
-        {
-          "id": "minecraftStreamer",
-          "answer": 0
-        },
-        {
-          "id": "gamingStreamer",
-          "answer": 0
-        },
-        {
-          "id": "streamer",
-          "answer": 0
-        },
-        {
-          "id": "twitchStreamer",
-          "answer": 0
-        },
-        {
-          "id": "reviewed:minecraft-series",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q879171",
-          "answer": 0
-        },
-        {
-          "id": "space",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q414110",
-          "answer": 0
-        },
-        {
-          "id": "filmActor",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q16781948",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q40831",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q191489",
-          "answer": 0
-        },
-        {
-          "id": "fact:P39:Q1939555",
+          "id": "legislator",
           "answer": 1
         },
         {
-          "id": "fact:P39:Q30543531",
-          "answer": 1
-        },
-        {
-          "id": "fact:P39:Q114141437",
-          "answer": 1
-        },
-        {
-          "id": "fact:P39:Q16321109",
-          "answer": 1
-        },
-        {
-          "id": "fact:P39:Q58908504",
+          "id": "fact:P39:Q504272",
           "answer": 0
         },
         {
-          "id": "fact:P39:Q55616682",
+          "id": "fact:P39:Q30544097",
+          "answer": 1
+        },
+        {
+          "id": "fact:P39:Q4970706",
+          "answer": 0
+        },
+        {
+          "id": "nationalLeader",
           "answer": 1
         },
         {
@@ -8194,7 +7994,27 @@
           "answer": 0
         },
         {
-          "id": "fact:P102:Q49754",
+          "id": "fact:P39:Q55616682",
+          "answer": 1
+        },
+        {
+          "id": "fact:P39:Q58908504",
+          "answer": 0
+        },
+        {
+          "id": "fact:P39:Q16321109",
+          "answer": 1
+        },
+        {
+          "id": "fact:P39:Q114141437",
+          "answer": 1
+        },
+        {
+          "id": "fact:P39:Q30543531",
+          "answer": 1
+        },
+        {
+          "id": "fact:P102:Q677182",
           "answer": 0
         },
         {
@@ -8202,19 +8022,15 @@
           "answer": 1
         },
         {
-          "id": "fact:P463:Q632985",
+          "id": "fact:P101:Q413",
           "answer": 1
         },
         {
-          "id": "fact:P463:Q76845",
+          "id": "fact:P101:Q2346",
           "answer": 1
         },
         {
-          "id": "fact:P463:Q560584",
-          "answer": 1
-        },
-        {
-          "id": "fact:P463:Q560590",
+          "id": "fact:P101:Q321150",
           "answer": 1
         }
       ]
@@ -8224,7 +8040,7 @@
       "policy": "ranker",
       "target": "Papaplatte",
       "success": true,
-      "questions": 20,
+      "questions": 21,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -8232,8 +8048,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -8256,15 +8072,15 @@
           "answer": 1
         },
         {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
           "id": "group:american|japanese",
           "answer": 0
         },
         {
           "id": "singer",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
@@ -8300,11 +8116,15 @@
           "answer": 0
         },
         {
-          "id": "internet",
+          "id": "creator",
+          "answer": 0
+        },
+        {
+          "id": "youtuber",
           "answer": 1
         },
         {
-          "id": "varietyStreamer",
+          "id": "podcaster",
           "answer": 1
         }
       ]
@@ -8314,7 +8134,7 @@
       "policy": "ranker",
       "target": "Gronkh",
       "success": false,
-      "questions": 31,
+      "questions": 30,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -8322,8 +8142,8 @@
           "answer": 0
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -8390,15 +8210,15 @@
           "answer": 1
         },
         {
-          "id": "internet",
+          "id": "creator",
+          "answer": 0
+        },
+        {
+          "id": "youtuber",
           "answer": 1
         },
         {
-          "id": "reviewed:minecraft-series",
-          "answer": 1
-        },
-        {
-          "id": "varietyStreamer",
+          "id": "podcaster",
           "answer": 0
         },
         {
@@ -8406,15 +8226,7 @@
           "answer": 0
         },
         {
-          "id": "podcaster",
-          "answer": 0
-        },
-        {
-          "id": "reviewed:edeltalk",
-          "answer": 0
-        },
-        {
-          "id": "fact:P69:Q1457843",
+          "id": "varietyStreamer",
           "answer": 0
         },
         {
@@ -8422,19 +8234,23 @@
           "answer": 0
         },
         {
-          "id": "evidence:YouTube",
+          "id": "fact:P69:Q1457843",
+          "answer": 0
+        },
+        {
+          "id": "reviewed:minecraft-series",
           "answer": 1
+        },
+        {
+          "id": "reviewed:edeltalk",
+          "answer": 0
         },
         {
           "id": "fact:P19:Q64",
           "answer": 0
         },
         {
-          "id": "fact:P136:Q131578",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q185226",
+          "id": "twitchStreamer",
           "answer": 0
         },
         {
@@ -8456,16 +8272,16 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
+          "id": "real",
           "answer": 1
         },
         {
           "id": "actor",
           "answer": 0
+        },
+        {
+          "id": "entertainment",
+          "answer": 1
         },
         {
           "id": "musician",
@@ -8504,11 +8320,11 @@
           "answer": 0
         },
         {
-          "id": "fact:P54:Q1619662",
+          "id": "fact:P54:Q4105531",
           "answer": 0
         },
         {
-          "id": "fact:P54:Q4105531",
+          "id": "fact:P54:Q1619662",
           "answer": 0
         },
         {
@@ -8536,14 +8352,6 @@
           "answer": 0
         },
         {
-          "id": "internet",
-          "answer": 0
-        },
-        {
-          "id": "youtuber",
-          "answer": 0
-        },
-        {
           "id": "creator",
           "answer": 0
         },
@@ -8552,7 +8360,19 @@
           "answer": 0
         },
         {
+          "id": "youtuber",
+          "answer": 0
+        },
+        {
+          "id": "internet",
+          "answer": 0
+        },
+        {
           "id": "westernEuropean",
+          "answer": 0
+        },
+        {
+          "id": "fact:P1303:Q17172850",
           "answer": 0
         },
         {
@@ -8564,14 +8384,6 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q40831",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q191489",
-          "answer": 0
-        },
-        {
           "id": "athlete",
           "answer": 0
         },
@@ -8580,11 +8392,23 @@
           "answer": 0
         },
         {
-          "id": "fact:P463:Q8038459",
+          "id": "fact:P136:Q40831",
+          "answer": 0
+        },
+        {
+          "id": "fact:P136:Q191489",
+          "answer": 0
+        },
+        {
+          "id": "fact:P101:Q222749",
           "answer": 0
         },
         {
           "id": "fact:P463:Q1227533",
+          "answer": 0
+        },
+        {
+          "id": "fact:P463:Q8038459",
           "answer": 0
         },
         {
@@ -8593,14 +8417,6 @@
         },
         {
           "id": "fact:P463:Q1141037",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q17172850",
-          "answer": 0
-        },
-        {
-          "id": "fact:P101:Q222749",
           "answer": 0
         },
         {
@@ -8620,15 +8436,15 @@
           "answer": 0
         },
         {
-          "id": "minecraftStreamer",
-          "answer": 0
-        },
-        {
-          "id": "gamingStreamer",
+          "id": "twitchStreamer",
           "answer": 0
         },
         {
           "id": "streamer",
+          "answer": 0
+        },
+        {
+          "id": "gamingStreamer",
           "answer": 0
         }
       ]
@@ -8646,16 +8462,16 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
+          "id": "real",
           "answer": 1
         },
         {
           "id": "actor",
           "answer": 0
+        },
+        {
+          "id": "entertainment",
+          "answer": 1
         },
         {
           "id": "musician",
@@ -8738,7 +8554,11 @@
           "answer": 1
         },
         {
-          "id": "fact:P136:Q45981",
+          "id": "fact:P136:Q8341",
+          "answer": 0
+        },
+        {
+          "id": "fact:P136:Q11399",
           "answer": 1
         },
         {
@@ -8746,23 +8566,7 @@
           "answer": 1
         },
         {
-          "id": "fact:P136:Q11399",
-          "answer": 1
-        },
-        {
-          "id": "fact:P136:Q8341",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q131272",
-          "answer": 1
-        },
-        {
-          "id": "fact:P101:Q11895763",
-          "answer": 1
-        },
-        {
-          "id": "fact:P101:Q753110",
+          "id": "fact:P136:Q45981",
           "answer": 1
         },
         {
@@ -8770,15 +8574,19 @@
           "answer": 1
         },
         {
+          "id": "fact:P101:Q753110",
+          "answer": 1
+        },
+        {
+          "id": "fact:P101:Q11895763",
+          "answer": 1
+        },
+        {
+          "id": "fact:P136:Q131272",
+          "answer": 1
+        },
+        {
           "id": "folkSinger",
-          "answer": 0
-        },
-        {
-          "id": "countryMusician",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q6607",
           "answer": 0
         },
         {
@@ -8786,7 +8594,11 @@
           "answer": 0
         },
         {
-          "id": "fact:P1303:Q61285",
+          "id": "fact:P1303:Q6607",
+          "answer": 0
+        },
+        {
+          "id": "countryMusician",
           "answer": 0
         },
         {
@@ -8794,11 +8606,15 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q83440",
+          "id": "fact:P1303:Q61285",
           "answer": 0
         },
         {
           "id": "fact:P101:Q37073",
+          "answer": 0
+        },
+        {
+          "id": "fact:P136:Q83440",
           "answer": 0
         },
         {
@@ -8818,8 +8634,8 @@
           "answer": 0
         },
         {
-          "id": "fact:P166:Q904344",
-          "answer": 1
+          "id": "fact:P264:Q4413456",
+          "answer": 0
         }
       ]
     },
@@ -8836,8 +8652,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -8872,11 +8688,11 @@
           "answer": 0
         },
         {
-          "id": "group:rapper|rockMusician",
+          "id": "fact:P1303:Q5994",
           "answer": 1
         },
         {
-          "id": "musicGroup",
+          "id": "fact:P1303:Q6607",
           "answer": 0
         },
         {
@@ -8898,31 +8714,31 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
-          "answer": -1
-        },
-        {
           "id": "real",
           "answer": -1
         },
         {
           "id": "masked",
-          "answer": 1
-        },
-        {
-          "id": "dc",
-          "answer": 0
+          "answer": -1
         },
         {
           "id": "young",
           "answer": 1
         },
         {
-          "id": "red",
+          "id": "wizard",
+          "answer": -1
+        },
+        {
+          "id": "monster",
+          "answer": -1
+        },
+        {
+          "id": "protagonist",
+          "answer": 1
+        },
+        {
+          "id": "animated",
           "answer": -1
         },
         {
@@ -8930,7 +8746,7 @@
           "answer": -1
         },
         {
-          "id": "game",
+          "id": "magic",
           "answer": 1
         }
       ]
@@ -8940,7 +8756,7 @@
       "policy": "ranker",
       "target": "Hermione Granger",
       "success": false,
-      "questions": 12,
+      "questions": 5,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -8948,27 +8764,7 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
-          "answer": -1
-        },
-        {
           "id": "real",
-          "answer": -1
-        },
-        {
-          "id": "book",
-          "answer": -1
-        },
-        {
-          "id": "superhero",
-          "answer": -1
-        },
-        {
-          "id": "anime",
           "answer": -1
         },
         {
@@ -8976,20 +8772,12 @@
           "answer": 1
         },
         {
-          "id": "movie",
+          "id": "animated",
+          "answer": -1
+        },
+        {
+          "id": "powers",
           "answer": 1
-        },
-        {
-          "id": "game",
-          "answer": -1
-        },
-        {
-          "id": "glasses",
-          "answer": -1
-        },
-        {
-          "id": "protagonist",
-          "answer": -1
         }
       ]
     },
@@ -8998,19 +8786,11 @@
       "policy": "ranker",
       "target": "Spider-Man",
       "success": false,
-      "questions": 13,
-      "wrongGuesses": 0,
+      "questions": 7,
+      "wrongGuesses": 1,
       "trace": [
         {
           "id": "female",
-          "answer": -1
-        },
-        {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
           "answer": -1
         },
         {
@@ -9019,38 +8799,22 @@
         },
         {
           "id": "masked",
-          "answer": -1
-        },
-        {
-          "id": "young",
           "answer": 1
         },
         {
-          "id": "game",
-          "answer": -1
-        },
-        {
-          "id": "book",
-          "answer": -1
-        },
-        {
-          "id": "magic",
-          "answer": -1
-        },
-        {
-          "id": "fact:P1080:Q1152150",
+          "id": "dc",
           "answer": 0
         },
         {
-          "id": "red",
-          "answer": 1
+          "id": "young",
+          "answer": -1
         },
         {
           "id": "protagonist",
           "answer": 1
         },
         {
-          "id": "powers",
+          "id": "superhero",
           "answer": 1
         }
       ]
@@ -9060,19 +8824,11 @@
       "policy": "ranker",
       "target": "Batman",
       "success": false,
-      "questions": 19,
+      "questions": 16,
       "wrongGuesses": 0,
       "trace": [
         {
           "id": "female",
-          "answer": -1
-        },
-        {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
           "answer": -1
         },
         {
@@ -9081,50 +8837,14 @@
         },
         {
           "id": "masked",
-          "answer": -1
-        },
-        {
-          "id": "young",
-          "answer": -1
-        },
-        {
-          "id": "fact:P1080:Q1152150",
           "answer": 1
-        },
-        {
-          "id": "fact:P463:Q2422891",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1441:Q3696459",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1441:Q1636082",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q735744",
-          "answer": 1
-        },
-        {
-          "id": "fact:P463:Q956739",
-          "answer": 0
         },
         {
           "id": "dc",
           "answer": 0
         },
         {
-          "id": "protagonist",
-          "answer": 1
-        },
-        {
-          "id": "book",
-          "answer": -1
-        },
-        {
-          "id": "superhero",
+          "id": "young",
           "answer": 1
         },
         {
@@ -9132,12 +8852,44 @@
           "answer": -1
         },
         {
-          "id": "powers",
-          "answer": -1
+          "id": "protagonist",
+          "answer": 1
+        },
+        {
+          "id": "superhero",
+          "answer": 1
         },
         {
           "id": "marvel",
           "answer": -1
+        },
+        {
+          "id": "powers",
+          "answer": -1
+        },
+        {
+          "id": "fact:P1441:Q24717189",
+          "answer": 1
+        },
+        {
+          "id": "fact:P1441:Q3206906",
+          "answer": 1
+        },
+        {
+          "id": "fact:P1441:Q166262",
+          "answer": 1
+        },
+        {
+          "id": "fact:P1441:Q18604504",
+          "answer": 1
+        },
+        {
+          "id": "fact:P1441:Q1339570",
+          "answer": 1
+        },
+        {
+          "id": "fact:P1441:Q3222067",
+          "answer": 1
         }
       ]
     },
@@ -9145,8 +8897,8 @@
       "scenario": "mistake",
       "policy": "ranker",
       "target": "Tom Hanks",
-      "success": false,
-      "questions": 45,
+      "success": true,
+      "questions": 17,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -9154,8 +8906,8 @@
           "answer": 0
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -9166,139 +8918,35 @@
           "answer": 1
         },
         {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
           "id": "group:american|german|japanese",
-          "answer": -1
-        },
-        {
-          "id": "westernEuropean",
-          "answer": 0
-        },
-        {
-          "id": "group:british|french|indian|italian",
-          "answer": 0
+          "answer": 1
         },
         {
           "id": "asian",
           "answer": 0
         },
         {
-          "id": "fact:P1303:Q17172850",
+          "id": "group:american|japanese",
+          "answer": 1
+        },
+        {
+          "id": "japanese",
           "answer": 0
         },
         {
-          "id": "southernEuropean",
-          "answer": 0
+          "id": "group:american|german",
+          "answer": 1
         },
         {
           "id": "alive",
           "answer": 1
         },
         {
-          "id": "group:british|french|italian|spanish",
-          "answer": 0
-        },
-        {
-          "id": "british",
-          "answer": 0
-        },
-        {
-          "id": "group:french|italian|spanish",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q37073",
-          "answer": 0
-        },
-        {
-          "id": "group:athlete|entrepreneur|musician|politician",
-          "answer": 0
-        },
-        {
-          "id": "french",
-          "answer": 0
-        },
-        {
-          "id": "european",
-          "answer": 1
-        },
-        {
-          "id": "group:italian|spanish",
-          "answer": 0
-        },
-        {
-          "id": "italian",
-          "answer": 0
-        },
-        {
-          "id": "musician",
-          "answer": 0
-        },
-        {
-          "id": "group:athlete|entrepreneur|politician|writer",
-          "answer": 0
-        },
-        {
-          "id": "germanSpeaking",
-          "answer": 0
-        },
-        {
-          "id": "singer",
-          "answer": 0
-        },
-        {
-          "id": "fact:P101:Q222749",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1303:Q6607",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q11399",
-          "answer": 0
-        },
-        {
-          "id": "athlete",
-          "answer": 0
-        },
-        {
-          "id": "fact:P39:Q12201526",
-          "answer": 0
-        },
-        {
-          "id": "group:entrepreneur|politician|writer",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q131272",
-          "answer": 0
-        },
-        {
-          "id": "fact:P101:Q7366",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q8341",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q45981",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q885561",
-          "answer": 0
-        },
-        {
           "id": "filmActor",
-          "answer": 1
-        },
-        {
-          "id": "fact:P463:Q16781948",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q191489",
           "answer": 1
         },
         {
@@ -9306,15 +8954,7 @@
           "answer": 1
         },
         {
-          "id": "fact:P463:Q463303",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q8038459",
-          "answer": 1
-        },
-        {
-          "id": "fact:P463:Q1227533",
+          "id": "fact:P136:Q191489",
           "answer": 1
         },
         {
@@ -9322,12 +8962,12 @@
           "answer": 1
         },
         {
-          "id": "fact:P166:Q518675",
-          "answer": 0
+          "id": "fact:P463:Q1227533",
+          "answer": 1
         },
         {
-          "id": "fact:P166:Q7243506",
-          "answer": 0
+          "id": "fact:P463:Q8038459",
+          "answer": 1
         }
       ]
     },
@@ -9344,8 +8984,8 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -9384,6 +9024,10 @@
           "answer": 0
         },
         {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
           "id": "italian",
           "answer": 0
         },
@@ -9400,27 +9044,19 @@
           "answer": 0
         },
         {
-          "id": "fact:P1303:Q17172850",
-          "answer": 0
-        },
-        {
           "id": "alive",
           "answer": 1
-        },
-        {
-          "id": "european",
-          "answer": 0
         },
         {
           "id": "filmActor",
           "answer": 1
         },
         {
-          "id": "fact:P463:Q16781948",
+          "id": "indian",
           "answer": 0
         },
         {
-          "id": "indian",
+          "id": "fact:P463:Q16781948",
           "answer": 0
         },
         {
@@ -9428,19 +9064,15 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q191489",
-          "answer": 0
-        },
-        {
           "id": "fact:P136:Q40831",
           "answer": 0
         },
         {
-          "id": "fact:P463:Q463303",
+          "id": "fact:P136:Q191489",
           "answer": 0
         },
         {
-          "id": "fact:P463:Q8038459",
+          "id": "fact:P463:Q1141037",
           "answer": 0
         },
         {
@@ -9448,7 +9080,15 @@
           "answer": 0
         },
         {
-          "id": "fact:P463:Q1141037",
+          "id": "fact:P463:Q8038459",
+          "answer": 0
+        },
+        {
+          "id": "fact:P463:Q463303",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q1293276",
           "answer": 0
         },
         {
@@ -9464,11 +9104,19 @@
           "answer": 0
         },
         {
-          "id": "fact:P166:Q1293276",
+          "id": "fact:P166:Q708135",
+          "answer": 1
+        },
+        {
+          "id": "fact:P166:Q1011547",
+          "answer": 1
+        },
+        {
+          "id": "fact:P166:Q103916",
           "answer": 0
         },
         {
-          "id": "fact:P166:Q654620",
+          "id": "fact:P166:Q593098",
           "answer": 0
         },
         {
@@ -9476,23 +9124,19 @@
           "answer": 1
         },
         {
-          "id": "fact:P166:Q593098",
+          "id": "fact:P166:Q28950956",
           "answer": 0
         },
         {
-          "id": "fact:P166:Q103916",
-          "answer": 0
-        },
-        {
-          "id": "fact:P166:Q1011547",
+          "id": "fact:P166:Q819973",
           "answer": 1
         },
         {
-          "id": "fact:P166:Q708135",
+          "id": "fact:P166:Q13452528",
           "answer": 1
         },
         {
-          "id": "fact:P166:Q25338504",
+          "id": "fact:P166:Q4220901",
           "answer": 1
         },
         {
@@ -9508,15 +9152,11 @@
           "answer": 1
         },
         {
-          "id": "fact:P166:Q4220901",
+          "id": "fact:P166:Q25338504",
           "answer": 1
         },
         {
-          "id": "fact:P166:Q13452528",
-          "answer": 1
-        },
-        {
-          "id": "fact:P166:Q819973",
+          "id": "fact:P69:Q7864033",
           "answer": 1
         }
       ]
@@ -9526,7 +9166,7 @@
       "policy": "ranker",
       "target": "Serena Williams",
       "success": true,
-      "questions": 13,
+      "questions": 12,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -9534,11 +9174,7 @@
           "answer": 1
         },
         {
-          "id": "fictional",
-          "answer": 0
-        },
-        {
-          "id": "entertainment",
+          "id": "real",
           "answer": 1
         },
         {
@@ -9550,24 +9186,20 @@
           "answer": 0
         },
         {
-          "id": "group:american|japanese",
-          "answer": 1
-        },
-        {
           "id": "asian",
           "answer": 0
         },
         {
-          "id": "japanese",
-          "answer": 0
-        },
-        {
-          "id": "group:american|french",
+          "id": "group:american|japanese",
           "answer": 1
         },
         {
           "id": "alive",
           "answer": 1
+        },
+        {
+          "id": "japanese",
+          "answer": 0
         },
         {
           "id": "group:american|british",
@@ -9580,6 +9212,10 @@
         {
           "id": "retired",
           "answer": 1
+        },
+        {
+          "id": "fact:P54:Q4105531",
+          "answer": 1
         }
       ]
     },
@@ -9588,7 +9224,7 @@
       "policy": "ranker",
       "target": "Roger Federer",
       "success": false,
-      "questions": 45,
+      "questions": 41,
       "wrongGuesses": 0,
       "trace": [
         {
@@ -9596,8 +9232,8 @@
           "answer": 0
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
@@ -9608,155 +9244,15 @@
           "answer": 0
         },
         {
-          "id": "group:athlete|musician|politician|writer",
-          "answer": -1
-        },
-        {
-          "id": "real",
-          "answer": 1
-        },
-        {
           "id": "group:american|german|japanese",
           "answer": 0
         },
         {
-          "id": "asian",
-          "answer": 0
-        },
-        {
-          "id": "alive",
+          "id": "group:athlete|musician|politician",
           "answer": 1
         },
         {
-          "id": "germanSpeaking",
-          "answer": 1
-        },
-        {
-          "id": "group:american|german",
-          "answer": 0
-        },
-        {
-          "id": "german",
-          "answer": 0
-        },
-        {
-          "id": "group:american|british|japanese",
-          "answer": 0
-        },
-        {
-          "id": "group:creator|entrepreneur|scientist",
-          "answer": 0
-        },
-        {
-          "id": "japanese",
-          "answer": 0
-        },
-        {
-          "id": "group:american|british|french|italian",
-          "answer": 0
-        },
-        {
-          "id": "space",
-          "answer": 0
-        },
-        {
-          "id": "internet",
-          "answer": 0
-        },
-        {
-          "id": "youtuber",
-          "answer": 0
-        },
-        {
-          "id": "creator",
-          "answer": 0
-        },
-        {
-          "id": "minecraftStreamer",
-          "answer": 0
-        },
-        {
-          "id": "gamingStreamer",
-          "answer": 0
-        },
-        {
-          "id": "streamer",
-          "answer": 0
-        },
-        {
-          "id": "twitchStreamer",
-          "answer": 0
-        },
-        {
-          "id": "young",
-          "answer": 0
-        },
-        {
-          "id": "filmActor",
-          "answer": 0
-        },
-        {
-          "id": "european",
-          "answer": 1
-        },
-        {
-          "id": "group:british|french|italian",
-          "answer": 0
-        },
-        {
-          "id": "british",
-          "answer": 0
-        },
-        {
-          "id": "group:french|italian",
-          "answer": 0
-        },
-        {
-          "id": "reviewed:minecraft-series",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q16781948",
-          "answer": 0
-        },
-        {
-          "id": "french",
-          "answer": 0
-        },
-        {
-          "id": "varietyStreamer",
-          "answer": 0
-        },
-        {
-          "id": "vlogger",
-          "answer": 0
-        },
-        {
-          "id": "podcaster",
-          "answer": 0
-        },
-        {
-          "id": "group:entrepreneur|scientist",
-          "answer": 0
-        },
-        {
-          "id": "reviewed:edeltalk",
-          "answer": 0
-        },
-        {
-          "id": "italian",
-          "answer": 0
-        },
-        {
-          "id": "fact:P136:Q40831",
-          "answer": 0
-        },
-        {
-          "id": "fact:P101:Q222749",
-          "answer": 0
-        },
-        {
-          "id": "entrepreneur",
+          "id": "musician",
           "answer": 0
         },
         {
@@ -9764,11 +9260,135 @@
           "answer": 0
         },
         {
-          "id": "fact:P136:Q191489",
+          "id": "group:athlete|politician|scientist|writer",
+          "answer": 1
+        },
+        {
+          "id": "group:athlete|politician",
+          "answer": 1
+        },
+        {
+          "id": "athlete",
+          "answer": 1
+        },
+        {
+          "id": "football",
           "answer": 0
         },
         {
-          "id": "fact:P463:Q463303",
+          "id": "alive",
+          "answer": 1
+        },
+        {
+          "id": "group:american|french|german|japanese",
+          "answer": 0
+        },
+        {
+          "id": "tennis",
+          "answer": 1
+        },
+        {
+          "id": "fact:P54:Q4105531",
+          "answer": 0
+        },
+        {
+          "id": "fact:P54:Q1619662",
+          "answer": 0
+        },
+        {
+          "id": "fact:P463:Q1180052",
+          "answer": 0
+        },
+        {
+          "id": "fact:P463:Q1675504",
+          "answer": 0
+        },
+        {
+          "id": "swiss",
+          "answer": 1
+        },
+        {
+          "id": "fact:P39:Q19969187",
+          "answer": 1
+        },
+        {
+          "id": "entrepreneur",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q693708",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q137862818",
+          "answer": 1
+        },
+        {
+          "id": "fact:P166:Q3494048",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q4896696",
+          "answer": 1
+        },
+        {
+          "id": "fact:P166:Q56509472",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q5020532",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q6837811",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q4896642",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q16275104",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q743122",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q6952077",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q918534",
+          "answer": 0
+        },
+        {
+          "id": "fact:P166:Q1648927",
+          "answer": 0
+        },
+        {
+          "id": "retired",
+          "answer": 1
+        },
+        {
+          "id": "fact:P19:Q78",
+          "answer": 0
+        },
+        {
+          "id": "fact:P69:Q83602",
+          "answer": 0
+        },
+        {
+          "id": "fact:P69:Q14715617",
+          "answer": 0
+        },
+        {
+          "id": "fact:P69:Q7714375",
+          "answer": 0
+        },
+        {
+          "id": "fact:P19:Q719",
           "answer": 0
         }
       ]
@@ -9786,11 +9406,23 @@
           "answer": -1
         },
         {
-          "id": "fictional",
-          "answer": 0
+          "id": "real",
+          "answer": 1
         },
         {
           "id": "entertainment",
+          "answer": 0
+        },
+        {
+          "id": "group:american|french|german|japanese",
+          "answer": 1
+        },
+        {
+          "id": "group:american|german|japanese",
+          "answer": -1
+        },
+        {
+          "id": "westernEuropean",
           "answer": 0
         },
         {
@@ -9798,11 +9430,79 @@
           "answer": 0
         },
         {
-          "id": "real",
+          "id": "group:british|french|italian|spanish",
+          "answer": 0
+        },
+        {
+          "id": "actor",
+          "answer": 0
+        },
+        {
+          "id": "group:athlete|musician|politician",
+          "answer": 0
+        },
+        {
+          "id": "french",
+          "answer": 0
+        },
+        {
+          "id": "asian",
+          "answer": 0
+        },
+        {
+          "id": "politician",
+          "answer": 0
+        },
+        {
+          "id": "group:athlete|entrepreneur|musician|writer",
+          "answer": 0
+        },
+        {
+          "id": "athlete",
+          "answer": 0
+        },
+        {
+          "id": "group:entrepreneur|musician|scientist|writer",
+          "answer": 1
+        },
+        {
+          "id": "musician",
+          "answer": 0
+        },
+        {
+          "id": "group:entrepreneur|scientist|writer",
+          "answer": 0
+        },
+        {
+          "id": "fact:P1303:Q17172850",
+          "answer": 0
+        },
+        {
+          "id": "group:british|italian|spanish",
+          "answer": 0
+        },
+        {
+          "id": "alive",
           "answer": -1
         },
         {
-          "id": "masked",
+          "id": "entrepreneur",
+          "answer": 0
+        },
+        {
+          "id": "group:scientist|writer",
+          "answer": 1
+        },
+        {
+          "id": "writer",
+          "answer": 0
+        },
+        {
+          "id": "southernEuropean",
+          "answer": 0
+        },
+        {
+          "id": "group:british|italian",
           "answer": 0
         },
         {
@@ -9810,156 +9510,76 @@
           "answer": 0
         },
         {
-          "id": "protagonist",
+          "id": "scientist",
+          "answer": 1
+        },
+        {
+          "id": "physicist",
+          "answer": 1
+        },
+        {
+          "id": "fact:P101:Q1144457",
           "answer": 0
         },
         {
-          "id": "dc",
+          "id": "fact:P101:Q18334",
           "answer": 0
         },
         {
-          "id": "marvel",
+          "id": "fact:P39:Q121594",
+          "answer": 1
+        },
+        {
+          "id": "fact:P1303:Q8355",
+          "answer": 1
+        },
+        {
+          "id": "fact:P800:Q122894",
+          "answer": 1
+        },
+        {
+          "id": "fact:P800:Q944",
+          "answer": 1
+        },
+        {
+          "id": "fact:P800:Q11455",
           "answer": 0
         },
         {
-          "id": "glasses",
+          "id": "fact:P800:Q11452",
           "answer": 0
         },
         {
-          "id": "harryPotter",
+          "id": "fact:P800:Q853656",
           "answer": 0
         },
         {
-          "id": "superhero",
-          "answer": 0
+          "id": "fact:P800:Q83213",
+          "answer": 1
         },
         {
-          "id": "book",
-          "answer": 0
+          "id": "fact:P800:Q43514",
+          "answer": 1
         },
         {
-          "id": "magic",
-          "answer": 0
+          "id": "fact:P800:Q1080745",
+          "answer": 1
         },
         {
-          "id": "fact:P1080:Q1152150",
-          "answer": 0
+          "id": "fact:P800:Q35875",
+          "answer": 1
         },
         {
-          "id": "powers",
-          "answer": 0
+          "id": "fact:P800:Q273711",
+          "answer": 1
         },
         {
-          "id": "wizard",
-          "answer": 0
+          "id": "fact:P800:Q56100717",
+          "answer": 1
         },
         {
-          "id": "red",
-          "answer": 0
-        },
-        {
-          "id": "game",
-          "answer": 0
-        },
-        {
-          "id": "scienceFiction",
-          "answer": 0
-        },
-        {
-          "id": "fantasy",
-          "answer": 0
-        },
-        {
-          "id": "policeCharacter",
-          "answer": 0
-        },
-        {
-          "id": "crimeFiction",
-          "answer": 0
-        },
-        {
-          "id": "electric",
-          "answer": 0
-        },
-        {
-          "id": "lordOfTheRings",
-          "answer": 0
-        },
-        {
-          "id": "studentCharacter",
-          "answer": 0
-        },
-        {
-          "id": "sitcom",
-          "answer": 0
-        },
-        {
-          "id": "mario",
-          "answer": 0
-        },
-        {
-          "id": "sonic",
-          "answer": 0
-        },
-        {
-          "id": "gameOfThrones",
-          "answer": 0
-        },
-        {
-          "id": "detective",
-          "answer": 0
-        },
-        {
-          "id": "alien",
-          "answer": 0
-        },
-        {
-          "id": "monster",
-          "answer": 0
-        },
-        {
-          "id": "hat",
-          "answer": 0
-        },
-        {
-          "id": "horror",
-          "answer": 0
-        },
-        {
-          "id": "robot",
-          "answer": 0
-        },
-        {
-          "id": "starWars",
-          "answer": 0
-        },
-        {
-          "id": "pokemon",
-          "answer": 0
-        },
-        {
-          "id": "princess",
-          "answer": 0
-        },
-        {
-          "id": "animated",
-          "answer": 0
-        },
-        {
-          "id": "fact:P1080:Q2246088",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q735744",
-          "answer": 0
-        },
-        {
-          "id": "fact:P463:Q2422891",
-          "answer": 0
-        },
-        {
-          "id": "movie",
-          "answer": 0
+          "id": "fact:P102:Q328195",
+          "answer": 1
         }
       ]
     }

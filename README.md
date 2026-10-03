@@ -164,6 +164,16 @@ Das Training des Bayes-Antwortmodells läuft beim Erstellen des Spiels; das fert
 
 Die Wissensbasis unterscheidet neben Unterhaltung, Politik, Sport und Wissenschaft auch Musikgenres, Creator-Plattformen, politische Ämter, Berufsstatus, Journalismus, Produktion, Gaming, zahlreiche einzelne Sportarten und Wissenschaftsgebiete, Militär, Erwachsenen-Inhalte, Industrie/Fertigung, Medizin, Recht und Religion. Länder werden hierarchisch über Region und Teilregion eingegrenzt. Zusätzliche Fragen grenzen fiktive Figuren nach Genre, Rolle und Universum ein. Zentrale Themenwörter werden in Fragen optisch hervorgehoben.
 
+## Profilreparatur v31
+
+Die 1.155 zuvor ununterscheidbaren Einträge wurden gezielt überprüft. Alle 1.154 gültigen Profile bleiben spielbar und haben nun unterschiedliche, tatsächlich abfragbare Merkmalsprofile. Ein irrtümlich importierter Kriminalfall ist in `excludedProfiles` mit Originaldaten und Quelle aufbewahrt und wird nicht als Person ausgespielt. Der Gesamt-Audit findet bei 19.494 spielbaren Einträgen keine identischen Frageprofile und keine doppelten IDs.
+
+9.927 zusätzliche Faktenzuordnungen ergänzen die betroffenen Profile: unter anderem Film-/Synchronrollen, Werke, Familienbeziehungen, Ämter, Wahlkreise, Vereine und konkrete Figurenmerkmale. Die Recherche erfolgt nur beim Bauen, über Wikidata und Wikipedia. Die ausgelieferte Wissensbasis bleibt statisch und lokal auswertbar; das Spiel benötigt dafür keinen eigenen Backend-Dienst. Frage-Ranking und Antwortmodell wurden auf dem erweiterten Datenstand neu trainiert, nicht das optionale Sprachmodell.
+
+`npm run check:profile-gaps` überprüft die ursprüngliche Liste erneut. Der Ausgangsstand steht in `reports/profile-gaps-baseline.json`, das Ergebnis in `reports/gap-resolution.json`. Die Regression verlangt, dass kein gültiger Originaleintrag verschwindet, jede ursprüngliche Person belegte abfragbare Fakten besitzt und keine gleichen Frageprofile verbleiben. Das misst **Unterscheidbarkeit der Daten**, nicht garantierte Erkennung bei unbekannten, falschen oder unvollständigen Antworten.
+
+Die zusätzlichen Fragetypen werden nach geschätzter Beantwortbarkeit gewichtet. Werk-/Rollenfragen erhalten höheres Gewicht als schwer bekannte Bildungs- oder Begräbnisangaben. Bestätigte strukturierte Politik- und Amtsfragen übernehmen die zugehörige Themenantwort, damit die Engine nicht wieder unpassende Berufsbereiche abfragt. Nebenberufe werden dabei nicht zur Hauptberuf-Identität erklärt. Figurenfragen bleiben bei bestätigten realen Personen gesperrt.
+
 ## Lokal starten
 
 ```bash

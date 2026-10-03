@@ -16,9 +16,9 @@ try {
   await page.goto('http://127.0.0.1:4173');
   await page.locator('#start-screen.active').waitFor();
   const result=await page.evaluate(async()=>{
-    const {GuessEngine}=await import('./engine.js?v=30');
-    const {characters,questions}=await import('./data.js?v=30');
-    const database=await (await fetch('./wikidata-people.json?v=30')).json();
+    const {GuessEngine}=await import('./engine.js?v=31');
+    const {characters,questions}=await import('./data.js?v=31');
+    const database=await (await fetch('./wikidata-people.json?v=31')).json();
     const engine=new GuessEngine(structuredClone(characters),questions);
     engine.addDatabase(database);
     const first=engine.nextQuestion();

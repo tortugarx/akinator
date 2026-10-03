@@ -1,14 +1,14 @@
-import { characters, questions } from "./data.js?v=30";
-import { GuessEngine } from "./engine.js?v=30";
+import { characters, questions } from "./data.js?v=31";
+import { GuessEngine } from "./engine.js?v=31";
 import { platform } from "./platform.js";
-import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=30";
-import { questionModel } from "./question-model.js?v=30";
-import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=30";
-import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=30";
-import { LocalQuestionAI } from './llm-questions.js?v=30';
-import { rankingModel } from './ranking-model.js?v=30';
-import { suitableForYouth, safeQuestion, licensedPortrait } from './release-policy.js?v=30';
-import { readKnowledge } from './knowledge-loader.js?v=30';
+import { canStoreLearnedCharacter, findLocalKnowledge } from "./learning.js?v=31";
+import { questionModel } from "./question-model.js?v=31";
+import { playCount, recordConfirmedPlay, readPlayStats, recentPlays } from "./play-stats.js?v=31";
+import { contextualQuestionText, highlightedQuestionHtml } from "./question-format.js?v=31";
+import { LocalQuestionAI } from './llm-questions.js?v=31';
+import { rankingModel } from './ranking-model.js?v=31';
+import { suitableForYouth, safeQuestion, licensedPortrait } from './release-policy.js?v=31';
+import { readKnowledge } from './knowledge-loader.js?v=31';
 
 const translations = {
   en: {

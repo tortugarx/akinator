@@ -18,6 +18,9 @@ export function youthDatabase(database) {
     const fact=database.factDefinitions?.[id];
     return fact && !restrictedText.test(`${fact.de} ${fact.en}`);
   })}));
-  const used=new Set(characters.flatMap(person=>person.factIds||[]));
-  return {...database,characters,count:characters.length,factDefinitions:Object.fromEntries(Object.entries(database.factDefinitions||{}).filter(([id])=>used.has(id))),releasePolicy:'youth-filter-v1'};
+  const curatedFactSupplements=(database.curatedFactSupplements||[]).map(person=>({...person,factIds:person.factIds.filter(id=>{
+    const fact=database.factDefinitions?.[id];return fact&&!restrictedText.test(`${fact.de} ${fact.en}`);
+  })}));
+  const used=new Set([...characters,...curatedFactSupplements].flatMap(person=>person.factIds||[]));
+  return {...database,characters,curatedFactSupplements,count:characters.length,factDefinitions:Object.fromEntries(Object.entries(database.factDefinitions||{}).filter(([id])=>used.has(id))),releasePolicy:'youth-filter-v1'};
 }

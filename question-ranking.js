@@ -1,6 +1,9 @@
 // Small learned readability/answerability ranker. The numerical engine remains
 // authoritative: no generated biography or learned score can bypass relevance.
 export const rankingKinds = ['basic','group','evidence','genre','party','team','member','award','work','universe','appearance','instrument','office','position','field','label','conflict','birthplace','education','employer'];
+rankingKinds.push('occupation','language','nativeLanguage','movement','creator','inspiration','father','mother','spouse','child','sibling','partner','burial','deathCause','castWork','voiceWork','authorWork','performerWork','composerWork','directorWork','firstAppearance','comicDebut','entityType','event','participation','militaryBranch','militaryRank');
+rankingKinds.push('militaryUnit','constituency','creditedWork','weightClass');
+rankingKinds.push('transformation','adBrand');
 export function questionKind(question) {
   if (question.kind) return question.kind;
   const properties={P136:'genre',P102:'party',P54:'team',P463:'member',P166:'award',P800:'work',P1080:'universe',P1441:'appearance',P1303:'instrument',P39:'office',P413:'position',P101:'field',P264:'label',P607:'conflict',P19:'birthplace',P69:'education',P108:'employer'};

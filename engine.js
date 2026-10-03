@@ -1,9 +1,9 @@
-import { enrichCharacterAttributes } from "./attribute-enrichment.js?v=30";
-import { predictAnswer, isImplicitNegative, invalidateAnswerTraits } from "./answer-model.js?v=30";
-import {contextualQuestionText} from './question-format.js?v=30';
-import { descriptionQuestions, generateGroupedQuestions } from "./generated-questions.js?v=30";
-import { rankedQuestionValue } from './question-ranking.js?v=30';
-import { addReviewedDetails } from './profile-details.js?v=30';
+import { enrichCharacterAttributes } from "./attribute-enrichment.js?v=31";
+import { predictAnswer, isImplicitNegative, invalidateAnswerTraits } from "./answer-model.js?v=31";
+import {contextualQuestionText} from './question-format.js?v=31';
+import { descriptionQuestions, generateGroupedQuestions } from "./generated-questions.js?v=31";
+import { rankedQuestionValue } from './question-ranking.js?v=31';
+import { addReviewedDetails } from './profile-details.js?v=31';
 
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const binaryEntropy = (probability) => {
@@ -69,6 +69,7 @@ export class GuessEngine {
     this.answerCache = new WeakMap();
     this.profileSignatures = new WeakMap();
     this.questionAliases = new Map();
+    this.generatedQuestionKinds = new Map();
     this.redundantAfterYes = new Map();
     this.generatedImplications = new Map();
     this.charactersById = new Map(this.characters.map((item) => [this.key(item), item]));
@@ -147,8 +148,18 @@ export class GuessEngine {
 
   addDatabase(database) {
     for(const item of database.characters || []) {
+      if((database.excludedProfiles||[]).some(record=>record.profile?.id===item.id))continue;
       const facts=item.facts || item.factIds?.map(id=>database.factDefinitions?.[id]).filter(Boolean);
       this.addCharacter({...item,attributes:{...item.attributes},...(facts ? {facts} : {})});
+    }
+    for(const supplement of database.curatedFactSupplements || []) {
+      const person=this.charactersById.get(supplement.id);
+      if(!person) continue; // Supplements never create an unverified profile.
+      const facts=supplement.factIds?.map(id=>database.factDefinitions?.[id]).filter(Boolean)||[];
+      person.facts=[...new Map([...(person.facts||[]),...facts].map(fact=>[fact.id,fact])).values()];
+      this.generatedSize=-1;
+      invalidateAnswerTraits(person);
+      this.profileSignatures.delete(person);
     }
   }
 
@@ -234,6 +245,9 @@ export class GuessEngine {
   isRelevant(question) {
     if(this.model.questionFilter && !this.model.questionFilter(question)) return false;
     const id = question.id;
+    const kind=question.kind || this.generatedQuestionKinds.get(id);
+    if (['universe','appearance','creator','inspiration','firstAppearance','comicDebut','transformation','adBrand'].includes(kind) && this.isRealPerson()) return false;
+    if (['burial','deathCause'].includes(kind) && this.answeredYes('alive')) return false;
     if ((this.questionAliases.get(id)||[]).some(alias=>this.responses.has(alias)||this.asked.has(alias))) return false;
     if ((this.redundantAfterYes.get(id)||[]).some(parent=>this.answeredYes(parent))) return false;
     if (this.answeredYes('chancellor') && ['politician','nationalLeader','usPresident'].includes(id)) return false;
@@ -245,7 +259,6 @@ export class GuessEngine {
     if (id.startsWith('fact:')) {
       const property=id.split(':')[1];
       if(property==='P102' && [...this.responses].some(([other,value])=>value>=.5 && other!==id && (other.startsWith('fact:P102:') || /^evidence:(?:SPD|CDU|CSU|FDP|AfD|Bündnis|Republican Party|Democratic Party)/.test(other)))) return false;
-      if (['P1080','P1441'].includes(property) && this.isRealPerson()) return false;
       // Fictional people can also play instruments, hold offices or belong to
       // teams. Their sourced facts remain usable with "Figur" wording.
       return !this.answeredYes('personallyKnown');
@@ -447,6 +460,7 @@ export class GuessEngine {
       this.answerCache = new WeakMap();
       this.profileSignatures = new WeakMap();
       this.questionAliases = new Map();
+      this.generatedQuestionKinds = new Map(this.generatedQuestions.map(question=>[question.id,question.kind]));
       this.redundantAfterYes = new Map(this.generatedQuestions.map(question=>[question.id,question.redundantAfterYes||[]]));
       this.generatedImplications = new Map(this.generatedQuestions.map(question=>[question.id,question.implies||[]]));
       for(const question of this.generatedQuestions) for(const alias of question.aliases || []) {

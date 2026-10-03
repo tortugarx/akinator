@@ -65,6 +65,39 @@ export function descriptionQuestions(people) {
       birthplace:fact=>[`Wurde deine Person in „${fact.de}“ geboren?`,`Was your person born in “${fact.en}”?`],
       education:fact=>[`Hat deine Person an der Einrichtung „${fact.de}“ gelernt oder studiert?`,`Did your person study at the institution “${fact.en}”?`],
       employer:fact=>[`Hat deine Person für „${fact.de}“ gearbeitet?`,`Has your person worked for “${fact.en}”?`]
+      ,occupation:fact=>[`Ist oder war deine Person beruflich „${fact.de}“?`,`Is or was your person a ${fact.en}?`]
+      ,language:fact=>[`Spricht deine Person ${fact.de}?`,`Does your person speak ${fact.en}?`]
+      ,nativeLanguage:fact=>[`Ist ${fact.de} eine Muttersprache deiner Person?`,`Is ${fact.en} a native language of your person?`]
+      ,movement:fact=>[`Wird deine Person der künstlerischen Bewegung „${fact.de}“ zugeordnet?`,`Is your person associated with the artistic movement “${fact.en}”?`]
+      ,creator:fact=>[`Wurde deine Figur von „${fact.de}“ erschaffen?`,`Was your character created by “${fact.en}”?`]
+      ,inspiration:fact=>[`Ist deine Figur von „${fact.de}“ inspiriert?`,`Is your character inspired by “${fact.en}”?`]
+      ,father:fact=>[`Ist „${fact.de}“ der Vater deiner Person oder Figur?`,`Is “${fact.en}” the father of your person or character?`]
+      ,mother:fact=>[`Ist „${fact.de}“ die Mutter deiner Person oder Figur?`,`Is “${fact.en}” the mother of your person or character?`]
+      ,spouse:fact=>[`Ist oder war deine Person mit „${fact.de}“ verheiratet?`,`Is or was your person married to “${fact.en}”?`]
+      ,child:fact=>[`Gehört „${fact.de}“ zu den Kindern deiner Person?`,`Is “${fact.en}” one of your person’s children?`]
+      ,sibling:fact=>[`Ist „${fact.de}“ ein Geschwisterteil deiner Person oder Figur?`,`Is “${fact.en}” a sibling of your person or character?`]
+      ,partner:fact=>[`Ist oder war deine Person mit „${fact.de}“ in einer Beziehung?`,`Is or was your person in a relationship with “${fact.en}”?`]
+      ,burial:fact=>[`Ist deine Person in „${fact.de}“ bestattet?`,`Is your person buried in “${fact.en}”?`]
+      ,deathCause:fact=>[`Starb deine Person durch „${fact.de}“?`,`Did your person die from “${fact.en}”?`]
+      ,castWork:fact=>[`Hat deine Person in „${fact.de}“ mitgespielt?`,`Did your person act in “${fact.en}”?`]
+      ,voiceWork:fact=>[`Hat deine Person in „${fact.de}“ einer Figur die Stimme geliehen?`,`Did your person voice a character in “${fact.en}”?`]
+      ,authorWork:fact=>[`Hat deine Person „${fact.de}“ geschrieben?`,`Did your person write “${fact.en}”?`]
+      ,performerWork:fact=>[`Hat deine Person „${fact.de}“ musikalisch aufgeführt oder eingesungen?`,`Did your person perform or sing “${fact.en}”?`]
+      ,composerWork:fact=>[`Hat deine Person die Musik zu „${fact.de}“ komponiert?`,`Did your person compose the music for “${fact.en}”?`]
+      ,directorWork:fact=>[`Hat deine Person bei „${fact.de}“ Regie geführt?`,`Did your person direct “${fact.en}”?`]
+      ,firstAppearance:fact=>[`Trat deine Figur erstmals in „${fact.de}“ auf?`,`Did your character first appear in “${fact.en}”?`]
+      ,comicDebut:fact=>[`Trat deine Figur erstmals im Comic „${fact.de}“ auf?`,`Did your character first appear in the comic “${fact.en}”?`]
+      ,entityType:fact=>[`Gehört deine Person oder Figur zum Typ „${fact.de}“?`,`Is your person or character a “${fact.en}”?`]
+      ,event:fact=>[`War deine Person am Ereignis „${fact.de}“ beteiligt?`,`Was your person involved in the event “${fact.en}”?`]
+      ,participation:fact=>[`Hat deine Person an „${fact.de}“ teilgenommen?`,`Did your person participate in “${fact.en}”?`]
+      ,militaryBranch:fact=>[`Diente deine Person bei „${fact.de}“?`,`Did your person serve in “${fact.en}”?`]
+      ,militaryRank:fact=>[`Hatte deine Person den militärischen Rang „${fact.de}“?`,`Did your person hold the military rank “${fact.en}”?`]
+      ,militaryUnit:fact=>[`Diente deine Person in der Einheit „${fact.de}“?`,`Did your person serve in the unit “${fact.en}”?`]
+      ,constituency:fact=>[`Vertrat deine Person den Wahlkreis „${fact.de}“?`,`Did your person represent the constituency “${fact.en}”?`]
+      ,creditedWork:fact=>[`Hat deine Person an der Produktion „${fact.de}“ mitgewirkt?`,`Did your person contribute to the production “${fact.en}”?`]
+      ,weightClass:fact=>[`Kämpft oder kämpfte deine Person in der Gewichtsklasse „${fact.de}“?`,`Does or did your person fight in the weight class “${fact.en}”?`]
+      ,transformation:fact=>[`Kann sich deine Figur in ${fact.de} verwandeln?`,`Can your character transform into ${fact.en}?`]
+      ,adBrand:fact=>[`Ist deine Figur aus der Werbung für „${fact.de}“ bekannt?`,`Is your character known from advertisements for “${fact.en}”?`]
     };
   for (const fact of facts.values()) {
     const text=templates[fact.kind]?.(fact);
@@ -72,6 +105,15 @@ export function descriptionQuestions(people) {
     if(fact.kind==='office' && /bundeskanzler|chancellor of germany|federal chancellor/i.test(`${fact.de} ${fact.en}`)) aliases.push('chancellor');
     if(fact.kind==='office' && /präsident der vereinigten staaten|president of the united states/i.test(`${fact.de} ${fact.en}`)) aliases.push('usPresident');
     const redundantAfterYes=[];
+    if(fact.kind==='occupation') {
+      const broadOccupations={Q33999:'actor',Q10800557:'filmActor',Q2405480:'voiceActor',Q177220:'singer',Q639669:'musician',Q82955:'politician',Q937857:'football',Q28389:'screenwriter',Q36180:'writer',Q193018:'journalist'};
+      const broad=broadOccupations[fact.id.split(':').at(-1)];
+      // A secondary occupation does not establish the person's main fame.
+      // Politics is phrased as a connection, not a primary-career claim.
+      if(broad==='politician')aliases.push(broad);
+      else if(broad)redundantAfterYes.push(broad);
+    }
+    if(fact.kind==='language') redundantAfterYes.push(`fact:P103:${fact.id.split(':').at(-1)}`);
     if(fact.kind==='genre') {
       const broadGenres=[['popMusician',/^(?:popmusik|pop music)$/i],['rockMusician',/^(?:rockmusik|rock music)$/i],['classicalMusician',/^(?:klassische musik|classical music)$/i],['electronicMusician',/^(?:elektronische musik|electronic music)$/i],['countryMusician',/^(?:country-musik|country music)$/i]];
       for(const [id,pattern] of broadGenres) if(pattern.test(fact.de)||pattern.test(fact.en)) redundantAfterYes.push(id);
@@ -82,6 +124,7 @@ export function descriptionQuestions(people) {
       if(redundantAfterYes.includes('politician')) redundantAfterYes.push('chancellor','usPresident','nationalLeader');
     }
     const implies=fact.kind==='office' && /mitglied.*(?:bundestag|landtag|parlament|nationalversammlung)|member of.*(?:parliament|congress|assembly|legislature)/i.test(`${fact.de} ${fact.en}`) ? ['legislator'] : [];
+    if(['occupation','office'].includes(fact.kind))implies.push(...aliases);
     if(text) generated.push({id:fact.id,kind:fact.kind,de:text[0],en:text[1],generated:true,source:fact.source,aliases,redundantAfterYes,implies});
   }
   // Different Wikidata items can share a label (e.g. Republican parties in
